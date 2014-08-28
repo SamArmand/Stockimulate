@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JMSX", "JMSX\JMSX.csproj", "{D37EE335-297F-4E0B-A83B-948CB806A72F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishScripts", "PublishScripts", "{5999AF51-3B31-4152-9507-7F8C1C3276EF}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\AzureWebsitePublishModule.psm1 = PublishScripts\AzureWebsitePublishModule.psm1
+		PublishScripts\Publish-WebApplicationWebsite.ps1 = PublishScripts\Publish-WebApplicationWebsite.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configurations", "{F77641D5-0B07-49B7-9489-A4D543AD06ED}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Configurations\JMSX-WAWS-dev.json = PublishScripts\Configurations\JMSX-WAWS-dev.json
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://samarmand.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = JMSX\\JMSX.csproj
+		SccProjectName1 = JMSX
+		SccLocalPath1 = JMSX
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D37EE335-297F-4E0B-A83B-948CB806A72F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D37EE335-297F-4E0B-A83B-948CB806A72F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D37EE335-297F-4E0B-A83B-948CB806A72F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D37EE335-297F-4E0B-A83B-948CB806A72F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F77641D5-0B07-49B7-9489-A4D543AD06ED} = {5999AF51-3B31-4152-9507-7F8C1C3276EF}
+	EndGlobalSection
+EndGlobal
