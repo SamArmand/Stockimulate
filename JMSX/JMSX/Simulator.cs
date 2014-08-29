@@ -16,7 +16,19 @@ namespace JMSX
         public static string Index1_NewsItem;
         public static string Index2_NewsItem;
 
+        public DAO Dao;
 
+        public void UpdateDay()
+        {
+
+            //logic here
+
+            if (DayNumber == 255)
+            {
+                Dao.ClosePositions();
+            }
+
+        }
 
     }
 }
