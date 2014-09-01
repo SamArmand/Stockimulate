@@ -22,12 +22,14 @@ namespace JMSX
 
             ErrorDiv.Style.Value = "display: none";
             SuccessDiv.Style.Value = "display: none";
+            WarningDiv.Style.Value = "display: none";
             
             if (BuyerID.Value == "" || SellerID.Value == "" || Quantity.Value == "" || Price.Value == "")
             {
                 ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> All fields are required.";
                 ErrorDiv.Style.Value = "display: inline";
                 SuccessDiv.Style.Value = "display: none";
+                WarningDiv.Style.Value = "display: none";
                 return;
 
             }
@@ -38,6 +40,7 @@ namespace JMSX
                 ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> IDs cannot be negative.";
                 ErrorDiv.Style.Value = "display: inline";
                 SuccessDiv.Style.Value = "display: none";
+                WarningDiv.Style.Value = "display: none";
                 return;
             }
 
@@ -46,40 +49,99 @@ namespace JMSX
                 ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> Buyer ID and Seller ID must be different.";
                 ErrorDiv.Style.Value = "display: inline";
                 SuccessDiv.Style.Value = "display: none";
+                WarningDiv.Style.Value = "display: none";
                 return;
             }
 
-            if (Convert.ToInt32(Quantity.Value) < 0)
+            if (Convert.ToInt32(Quantity.Value) <= 0)
             {
-                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> Quantity cannot be negative.";
+                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> Quantity must be at least 1.";
                 ErrorDiv.Style.Value = "display: inline";
                 SuccessDiv.Style.Value = "display: none";
+                WarningDiv.Style.Value = "display: none";
                 return;
             }
 
-            if (Convert.ToInt32(Price.Value) < 0)
+            if (Convert.ToInt32(Price.Value) <= 0)
             {
-                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> Price cannot be negative.";
+                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> Price must be at least 1.";
                 ErrorDiv.Style.Value = "display: inline";
                 SuccessDiv.Style.Value = "display: none";
+                WarningDiv.Style.Value = "display: none";
                 return;
             }
 
-            if (!Dao.IDExists(BuyerID.Value))
-            {
+            Player Buyer = Dao.GetPlayer(Convert.ToInt32(BuyerID.Value));
+            Player Seller = Dao.GetPlayer(Convert.ToInt32(SellerID.Value));
 
-                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> Invalid Buyer ID.";
+            if (Buyer.GetID() == -1)
+            {
+                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> Buyer does not exist.";
                 ErrorDiv.Style.Value = "display: inline";
                 SuccessDiv.Style.Value = "display: none";
+                WarningDiv.Style.Value = "display: none";
                 return;
             }
 
-            if (!Dao.IDExists(SellerID.Value))
+            if (Seller.GetID() == -1)
             {
-
-                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> Invalid Seller ID.";
+                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> Seller does not exist.";
                 ErrorDiv.Style.Value = "display: inline";
                 SuccessDiv.Style.Value = "display: none";
+                WarningDiv.Style.Value = "display: none";
+                return;
+            }
+
+            if (Buyer.GetTeamID() == Seller.GetTeamID())
+            {
+                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> Buyer and Seller must be on different teams.";
+                ErrorDiv.Style.Value = "display: inline";
+                SuccessDiv.Style.Value = "display: none";
+                WarningDiv.Style.Value = "display: none";
+                return;
+            }
+
+            if (Security.Value == "SEC1" && (Buyer.GetPositionIndex1() + Convert.ToInt32(Quantity.Value)) > 100)
+            {
+                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> This trade puts the buyer's SEC1 position at over 100.";
+                ErrorDiv.Style.Value = "display: inline";
+                SuccessDiv.Style.Value = "display: none";
+                WarningDiv.Style.Value = "display: none";
+                return;
+            }
+
+            if (Security.Value == "SEC1" && (Seller.GetPositionIndex1() - Convert.ToInt32(Quantity.Value)) < -100)
+            {
+                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> This trade puts the seller's SEC1 position at below -100.";
+                ErrorDiv.Style.Value = "display: inline";
+                SuccessDiv.Style.Value = "display: none";
+                WarningDiv.Style.Value = "display: none";
+                return;
+            }
+
+            if (Security.Value == "SEC2" && (Buyer.GetPositionIndex2() + Convert.ToInt32(Quantity.Value)) > 100)
+            {
+                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> This trade puts the buyer's SEC2 position at over 100.";
+                ErrorDiv.Style.Value = "display: inline";
+                SuccessDiv.Style.Value = "display: none";
+                WarningDiv.Style.Value = "display: none";
+                return;
+            }
+
+            if (Security.Value == "SEC2" && (Seller.GetPositionIndex2() - Convert.ToInt32(Quantity.Value)) < -100)
+            {
+                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> This trade puts the seller's SEC2 position at below -100.";
+                ErrorDiv.Style.Value = "display: inline";
+                SuccessDiv.Style.Value = "display: none";
+                WarningDiv.Style.Value = "display: none";
+                return;
+            }
+
+            if (!Verify.Checked)
+            {
+                ErrorDiv.Style.Value = "display: none";
+                SuccessDiv.Style.Value = "display: none";
+                WarningDiv.Style.Value = "display: inline";
                 return;
             }
 
@@ -87,6 +149,7 @@ namespace JMSX
             
             ErrorDiv.Style.Value = "display: none";
             SuccessDiv.Style.Value = "display: inline";
+            WarningDiv.Style.Value = "display: none";
 
 
 

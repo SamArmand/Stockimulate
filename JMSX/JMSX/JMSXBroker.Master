@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="JMSX.master.cs" Inherits="JMSX.JMSX" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="JMSXBroker.Master.cs" Inherits="JMSX.JMSX" %>
 
 <!DOCTYPE html>
 
@@ -27,9 +27,10 @@
         <div class="row">
             <nav class="navbar navbar-inverse" role="navigation">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">New Trade</a>             </li>
-                    <li><a href="#">Index 1</a>             </li>
-                    <li><a href="#">Index 2</a>             </li>
+                    <li><a href="NewTrade.aspx">New Trade</a></li>
+                    <li><a href="Admin.aspx">Admin Panel</a>             </li>
+                    <li><a href="Index1.aspx">Index 1</a>             </li>
+                    <li><a href="Index2.aspx">Index 2</a>             </li>
                 </ul>
             </nav>
         </div>
