@@ -58,6 +58,15 @@ namespace JMSX {
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl Price;
         
         /// <summary>
+        /// Verify control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox Verify;
+        
+        /// <summary>
         /// Cancel control.
         /// </summary>
         /// <remarks>
@@ -92,5 +101,14 @@ namespace JMSX {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl SuccessDiv;
+        
+        /// <summary>
+        /// WarningDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl WarningDiv;
     }
 }

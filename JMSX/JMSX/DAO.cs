@@ -148,11 +148,11 @@ namespace JMSX
 
         }
 
-        public bool IDExists(string ID)
-        {
+        public Player GetPlayer(int ID) {
+            
             SqlConnection Connection = new SqlConnection(ConnectionString);
 
-            string Query = "SELECT ID FROM Players WHERE ID=@ID;";
+            string Query = "SELECT FirstName, LastName, TeamID, PositionIndex1, PositionIndex2, Funds FROM Players WHERE ID=@ID;";
 
             SqlCommand Command = new SqlCommand(Query);
             Command.CommandType = CommandType.Text;
@@ -165,15 +165,27 @@ namespace JMSX
 
             SqlDataReader Reader = Command.ExecuteReader();
 
-            bool HasRows = Reader.HasRows;
+            Reader.Read();
+
+            string FirstName = Reader.GetString(Reader.GetOrdinal("FirstName"));
+            string LastName = Reader.GetString(Reader.GetOrdinal("LastName"));
+            int TeamID = Reader.GetInt32(Reader.GetOrdinal("PositionIndex1"));
+            int PositionIndex1 = Reader.GetInt32(Reader.GetOrdinal("PositionIndex1"));
+            int PositionIndex2 = Reader.GetInt32(Reader.GetOrdinal("PositionIndex2"));
+            int Funds = Reader.GetInt32(Reader.GetOrdinal("Funds"));
+
+            Player ThePlayer = new Player(ID, FirstName, LastName, TeamID, PositionIndex1, PositionIndex2, Funds);
 
             Reader.Dispose();
             Command.Dispose();
             Connection.Dispose();
 
-            return HasRows;
-
+            return ThePlayer;
         }
+
+        
+
+        /*
 
         public void ClosePositions()
         {
@@ -231,6 +243,81 @@ namespace JMSX
             }
 
         }
+ 
+         */
 
+
+        internal Team GetTeam(int ID, string Code)
+        {
+
+            if (ID < 0)
+            {
+                return null;
+            }
+
+            SqlConnection Connection = new SqlConnection(ConnectionString);
+
+            string Query = "SELECT ID, Name FROM Teams WHERE ID=@ID AND Code=@Code;";
+
+            SqlCommand Command = new SqlCommand(Query);
+            Command.CommandType = CommandType.Text;
+
+            Command.Parameters.AddWithValue("@ID", ID);
+            Command.Parameters.AddWithValue("@Code", Code);
+
+            Connection.Open();
+
+            Command.Connection = Connection;
+
+            SqlDataReader Reader = Command.ExecuteReader();
+
+            if (!Reader.HasRows)
+            {
+                Reader.Dispose();
+                Command.Dispose();
+                Connection.Dispose();
+                return null;
+            }
+
+            Reader.Read();
+
+            string Name = Reader.GetString(Reader.GetOrdinal("Name"));
+
+            Team TheTeam = new Team(ID, Name);
+
+            Reader.Dispose();
+            Command.Dispose();
+            Connection.Dispose();
+
+            Connection = new SqlConnection(ConnectionString);
+
+            Query = "SELECT ID, FirstName, LastName, PositionIndex1, PositionIndex2, Funds FROM Players WHERE TeamID=@TeamID;";
+
+            Command = new SqlCommand(Query);
+            Command.CommandType = CommandType.Text;
+
+            Command.Parameters.AddWithValue("@TeamID", TheTeam.GetID());
+
+            Connection.Open();
+
+            Command.Connection = Connection;
+
+            Reader = Command.ExecuteReader();
+
+            while (Reader.Read())
+            {
+                int PlayerID = Reader.GetInt32(Reader.GetOrdinal("ID"));
+                string FirstName = Reader.GetString(Reader.GetOrdinal("FirstName"));
+                string LastName = Reader.GetString(Reader.GetOrdinal("LastName"));
+                int PositionIndex1 = Reader.GetInt32(Reader.GetOrdinal("PositionIndex1"));
+                int PositionIndex2 = Reader.GetInt32(Reader.GetOrdinal("PositionIndex2"));
+                int Funds = Reader.GetInt32(Reader.GetOrdinal("Funds")); 
+
+                TheTeam.AddPlayer(PlayerID, FirstName, LastName, PositionIndex1, PositionIndex2, Funds);
+
+            }
+
+            return TheTeam;
+        }
     }
 }

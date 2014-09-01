@@ -7,11 +7,11 @@ namespace JMSX
 {
     public class Simulator
     {
-        public static int CaseNumber;
+        public static int SimulationNumber;
         public static int DayNumber;
 
-        public static int Index1_Price;
-        public static int Index2_Price;
+        public static int Index1_Price = 1700;
+        public static int Index2_Price = 1700;
 
         public static string Index1_NewsItem;
         public static string Index2_NewsItem;
@@ -23,10 +23,6 @@ namespace JMSX
 
             //logic here
 
-            if (DayNumber == 255)
-            {
-                Dao.ClosePositions();
-            }
 
         }
 
