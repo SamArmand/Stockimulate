@@ -7,30 +7,38 @@ namespace JMSX
 {
     public class Team
     {
-        private int ID;
-        private string Name;
-        private List<Player> Players;
-
-        public Team(int ID, string Name)
+        private int id;
+        public int Id
         {
-            this.ID = ID;
-            this.Name = Name;
-            Players = new List<Player>();
+            get
+            {
+                return id;
+            }
         }
 
-        public int GetID()
+        private string name;
+        public string Name
         {
-            return ID;
+            get
+            {
+                return name;
+            }
         }
 
-        public string GetName()
+        private List<Player> players;
+        public List<Player> Players
         {
-            return Name;
+            get
+            {
+                return Players;
+            }
         }
 
-        public List<Player> GetPlayers()
+        public Team(int id, string name)
         {
-            return Players;
+            this.id = id;
+            this.name = name;
+            players = new List<Player>();
         }
 
         public void AddPlayer(int ID, string FirstName, string LastName, int PositionIndex1, int PostitionIndex2, int Funds)

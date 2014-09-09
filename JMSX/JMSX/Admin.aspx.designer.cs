@@ -10,51 +10,69 @@
 namespace JMSX {
     
     
-    public partial class Index1 {
+    public partial class Admin {
         
         /// <summary>
-        /// IndexPriceDiv control.
+        /// PlayPractice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexPriceDiv;
+        protected global::System.Web.UI.WebControls.Button PlayPractice;
         
         /// <summary>
-        /// IndexChangePositive control.
+        /// PlayCompetition control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangePositive;
+        protected global::System.Web.UI.WebControls.Button PlayCompetition;
         
         /// <summary>
-        /// IndexChangeNegative control.
+        /// Continue control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangeNegative;
+        protected global::System.Web.UI.WebControls.Button Continue;
         
         /// <summary>
-        /// IndexChangeNone control.
+        /// ResetTrades control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangeNone;
+        protected global::System.Web.UI.WebControls.Button ResetTrades;
         
         /// <summary>
-        /// NewsDiv control.
+        /// Verify control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NewsDiv;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox Verify;
+        
+        /// <summary>
+        /// ErrorDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ErrorDiv;
+        
+        /// <summary>
+        /// WarningDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl WarningDiv;
     }
 }

@@ -10,11 +10,11 @@ namespace JMSX
     public partial class _default : System.Web.UI.Page
     {
 
-        private DAO Dao;
+        private DAO dao;
         
         protected void Page_Load(object sender, EventArgs e)
         {
-            Dao = DAO.GetSessionInstance();
+            dao = DAO.SessionInstance;
         }
 
         protected void Submit_Click(object sender, EventArgs e)
@@ -71,10 +71,10 @@ namespace JMSX
                 return;
             }
 
-            Player Buyer = Dao.GetPlayer(Convert.ToInt32(BuyerID.Value));
-            Player Seller = Dao.GetPlayer(Convert.ToInt32(SellerID.Value));
+            Player buyer = dao.GetPlayer(Convert.ToInt32(BuyerID.Value));
+            Player seller = dao.GetPlayer(Convert.ToInt32(SellerID.Value));
 
-            if (Buyer.GetID() == -1)
+            if (buyer.Id == -1)
             {
                 ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> Buyer does not exist.";
                 ErrorDiv.Style.Value = "display: inline";
@@ -83,7 +83,7 @@ namespace JMSX
                 return;
             }
 
-            if (Seller.GetID() == -1)
+            if (seller.Id == -1)
             {
                 ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> Seller does not exist.";
                 ErrorDiv.Style.Value = "display: inline";
@@ -92,7 +92,7 @@ namespace JMSX
                 return;
             }
 
-            if (Buyer.GetTeamID() == Seller.GetTeamID())
+            if (buyer.TeamId == seller.TeamId)
             {
                 ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> Buyer and Seller must be on different teams.";
                 ErrorDiv.Style.Value = "display: inline";
@@ -101,7 +101,7 @@ namespace JMSX
                 return;
             }
 
-            if (Security.Value == "SEC1" && (Buyer.GetPositionIndex1() + Convert.ToInt32(Quantity.Value)) > 100)
+            if (Security.Value == "SEC1" && (buyer.PositionIndex1 + Convert.ToInt32(Quantity.Value)) > 100)
             {
                 ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> This trade puts the buyer's SEC1 position at over 100.";
                 ErrorDiv.Style.Value = "display: inline";
@@ -110,7 +110,7 @@ namespace JMSX
                 return;
             }
 
-            if (Security.Value == "SEC1" && (Seller.GetPositionIndex1() - Convert.ToInt32(Quantity.Value)) < -100)
+            if (Security.Value == "SEC1" && (seller.PositionIndex1 - Convert.ToInt32(Quantity.Value)) < -100)
             {
                 ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> This trade puts the seller's SEC1 position at below -100.";
                 ErrorDiv.Style.Value = "display: inline";
@@ -119,7 +119,7 @@ namespace JMSX
                 return;
             }
 
-            if (Security.Value == "SEC2" && (Buyer.GetPositionIndex2() + Convert.ToInt32(Quantity.Value)) > 100)
+            if (Security.Value == "SEC2" && (buyer.PositionIndex2 + Convert.ToInt32(Quantity.Value)) > 100)
             {
                 ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> This trade puts the buyer's SEC2 position at over 100.";
                 ErrorDiv.Style.Value = "display: inline";
@@ -128,7 +128,7 @@ namespace JMSX
                 return;
             }
 
-            if (Security.Value == "SEC2" && (Seller.GetPositionIndex2() - Convert.ToInt32(Quantity.Value)) < -100)
+            if (Security.Value == "SEC2" && (seller.PositionIndex2 - Convert.ToInt32(Quantity.Value)) < -100)
             {
                 ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> This trade puts the seller's SEC2 position at below -100.";
                 ErrorDiv.Style.Value = "display: inline";
@@ -145,7 +145,7 @@ namespace JMSX
                 return;
             }
 
-            Dao.InsertTrade(Convert.ToInt32(BuyerID.Value), Convert.ToInt32(SellerID.Value), Security.Value, Convert.ToInt32(Quantity.Value), Convert.ToInt32(Price.Value));
+            dao.InsertTrade(Convert.ToInt32(BuyerID.Value), Convert.ToInt32(SellerID.Value), Security.Value, Convert.ToInt32(Quantity.Value), Convert.ToInt32(Price.Value));
             
             ErrorDiv.Style.Value = "display: none";
             SuccessDiv.Style.Value = "display: inline";

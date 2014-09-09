@@ -72,7 +72,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BrokerReports.aspx" />
+    <Content Include="Admin.aspx" />
+    <Content Include="Content\tables.css" />
     <Content Include="Index1.aspx" />
     <Content Include="Index2.aspx" />
     <Content Include="packages.config" />
@@ -80,6 +81,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="JMSXBroker.Master" />
+    <Content Include="JMSXAdmin.Master" />
+    <None Include="Properties\PublishProfiles\JMSX %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\JMSX.pubxml" />
     <Content Include="JMSXTeam.Master" />
     <None Include="Web.Debug.config">
@@ -147,12 +150,12 @@
     <Content Include="scripts\jquery-1.9.0.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BrokerReports.aspx.cs">
-      <DependentUpon>BrokerReports.aspx</DependentUpon>
+    <Compile Include="Admin.aspx.cs">
+      <DependentUpon>Admin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="BrokerReports.aspx.designer.cs">
-      <DependentUpon>BrokerReports.aspx</DependentUpon>
+    <Compile Include="Admin.aspx.designer.cs">
+      <DependentUpon>Admin.aspx</DependentUpon>
     </Compile>
     <Compile Include="DAO.cs" />
     <Compile Include="Index1.aspx.cs">
@@ -168,6 +171,13 @@
     </Compile>
     <Compile Include="Index2.aspx.designer.cs">
       <DependentUpon>Index2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="JMSXAdmin.Master.cs">
+      <DependentUpon>JMSXAdmin.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="JMSXAdmin.Master.designer.cs">
+      <DependentUpon>JMSXAdmin.Master</DependentUpon>
     </Compile>
     <Compile Include="NewTrade.aspx.cs">
       <DependentUpon>NewTrade.aspx</DependentUpon>

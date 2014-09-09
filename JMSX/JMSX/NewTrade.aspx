@@ -41,9 +41,6 @@
             </div>
           </div>
 
-
-
-
           <div class="form-group">
             <label class="col-sm-1 control-label " for="textinput">Price</label>
             <div class="col-sm-2 ">

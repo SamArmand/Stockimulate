@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="JMSXBroker.Master.cs" Inherits="JMSX.JMSX" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="JMSXAdmin.master.cs" Inherits="JMSX.JMSXAdmin" %>
 
 <!DOCTYPE html>
 
@@ -16,7 +16,6 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
-
     <div class="container">
         <div class="row" style="margin-top: 10px;">
             <div class="col-md-6">
@@ -27,7 +26,7 @@
         <div class="row">
             <nav class="navbar navbar-inverse" role="navigation">
                 <ul class="nav navbar-nav">
-                    <li><a href="NewTrade.aspx">New Trade</a></li>
+                    <li><a href="Admin.aspx">New Trade</a></li>
                     <li><a href="Index1.aspx">Index 1</a>             </li>
                     <li><a href="Index2.aspx">Index 2</a>             </li>
                 </ul>
@@ -43,6 +42,5 @@
         </asp:ContentPlaceHolder>
 
     </div>
-
 </body>
 </html>
