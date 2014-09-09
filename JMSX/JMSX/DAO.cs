@@ -10,177 +10,191 @@ namespace JMSX
     public class DAO
     {
 
-        private static DAO Instance;
 
-        private const string ConnectionString = "Data Source=h98ohmld2f.database.windows.net;Initial Catalog=JMSX;Integrated Security=False;User ID=JMSXTech;Password=jmsx!2014;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;";
+        private static DAO instance;
 
-        private DAO() { }
+        private const string connectionString = "Data Source=h98ohmld2f.database.windows.net;Initial Catalog=JMSX;Integrated Security=False;User ID=JMSXTech;Password=jmsx!2014;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;";
 
-        public static DAO GetSessionInstance()
+        private DAO() 
+        { 
+        }
+
+        public static DAO SessionInstance
         {
-            if (HttpContext.Current.Session["DAOInstance"] == null)
-                HttpContext.Current.Session["DAOInstance"] = new DAO();
 
-            return (DAO)HttpContext.Current.Session["DAOInstance"];
+            get
+            {
+                if (HttpContext.Current.Session["DAOInstance"] == null)
+                    HttpContext.Current.Session["DAOInstance"] = new DAO();
+
+                return (DAO)HttpContext.Current.Session["DAOInstance"];
+            }
+
+
 
         }
 
-        public static DAO GetInstance()
+        public static DAO Instance
         {
-            if (Instance == null)
-                Instance = new DAO();
+            
+            get 
+            {
+                if (instance == null)
+                    instance = new DAO();
 
-            return Instance;
+                return instance;
+            }
+            
+
 
         }
 
-        public void InsertTrade(int BuyerID, int SellerID, string SecuritySymbol, int Quantity, int Price)
+        public void InsertTrade(int buyerId, int sellerId, string securitySymbol, int quantity, int price)
         {
-            SqlConnection Connection = new SqlConnection(ConnectionString);
+            SqlConnection connection = new SqlConnection(connectionString);
 
-            string Query = "INSERT INTO Trades (BuyerID, SellerID, SecuritySymbol, Quantity, Price) VALUES (@BuyerID, @SellerID, @SecuritySymbol, @Quantity, @Price);";
+            string query = "INSERT INTO Trades (BuyerID, SellerID, SecuritySymbol, Quantity, Price) VALUES (@BuyerID, @SellerID, @SecuritySymbol, @Quantity, @Price);";
 
-            SqlCommand Command = new SqlCommand(Query);
-            Command.CommandType = CommandType.Text;
+            SqlCommand command = new SqlCommand(query);
+            command.CommandType = CommandType.Text;
 
-            Command.Parameters.AddWithValue("@BuyerID", BuyerID);
-            Command.Parameters.AddWithValue("@SellerID", SellerID);
-            Command.Parameters.AddWithValue("@SecuritySymbol", SecuritySymbol);
-            Command.Parameters.AddWithValue("@Quantity", Quantity);
-            Command.Parameters.AddWithValue("@Price", Price);
+            command.Parameters.AddWithValue("@BuyerID", buyerId);
+            command.Parameters.AddWithValue("@SellerID", sellerId);
+            command.Parameters.AddWithValue("@SecuritySymbol", securitySymbol);
+            command.Parameters.AddWithValue("@Quantity", quantity);
+            command.Parameters.AddWithValue("@Price", price);
 
-            Connection.Open();
+            connection.Open();
 
-            Command.Connection = Connection;
+            command.Connection = connection;
 
-            Command.ExecuteNonQuery();
+            command.ExecuteNonQuery();
 
-            Command.Dispose();
-            Connection.Dispose();
+            command.Dispose();
+            connection.Dispose();
 
-            string Index;
+            string index;
 
-            if (SecuritySymbol == "SEC1")
-                Index = "PositionIndex1";
+            if (securitySymbol == "SEC1")
+                index = "PositionIndex1";
             else
-                Index = "PositionIndex2";
+                index = "PositionIndex2";
 
             //Fetch + Update Buyer Info
 
-            Connection = new SqlConnection(ConnectionString);
+            connection = new SqlConnection(connectionString);
 
-            Query = "SELECT ID, PositionIndex1, PositionIndex2, Funds FROM Players WHERE ID=@ID";
+            query = "SELECT ID, PositionIndex1, PositionIndex2, Funds FROM Players WHERE ID=@ID";
 
-            Command = new SqlCommand(Query);
-            Command.CommandType = CommandType.Text;
+            command = new SqlCommand(query);
+            command.CommandType = CommandType.Text;
 
-            Command.Parameters.AddWithValue("@ID", BuyerID);
+            command.Parameters.AddWithValue("@ID", buyerId);
 
-            Connection.Open();
+            connection.Open();
 
-            Command.Connection = Connection;
+            command.Connection = connection;
 
-            SqlDataReader Reader = Command.ExecuteReader();
+            SqlDataReader reader = command.ExecuteReader();
 
-            Reader.Read();                               
+            reader.Read();                               
                                     
-            int BuyerPosition = Reader.GetInt32(Reader.GetOrdinal(Index)) + Quantity;
-            int BuyerFunds = Reader.GetInt32(Reader.GetOrdinal("Funds")) - (Price * Quantity);
+            int buyerPosition = reader.GetInt32(reader.GetOrdinal(index)) + quantity;
+            int buyerFunds = reader.GetInt32(reader.GetOrdinal("Funds")) - (price * quantity);
 
-            Reader.Dispose();
-            Command.Dispose();
-            Connection.Dispose();
+            reader.Dispose();
+            command.Dispose();
+            connection.Dispose();
 
-            UpdatePlayerPositionBalance(BuyerID, Index, BuyerPosition, BuyerFunds);
-
-
+            UpdatePlayerPositionBalance(buyerId, index, buyerPosition, buyerFunds);
+            
             //Fetch + Update Seller Info
 
-            Connection = new SqlConnection(ConnectionString);
+            connection = new SqlConnection(connectionString);
 
-            Query = "SELECT ID, PositionIndex1, PositionIndex2, Funds FROM Players WHERE ID=@ID";
+            query = "SELECT ID, PositionIndex1, PositionIndex2, Funds FROM Players WHERE ID=@ID";
 
-            Command = new SqlCommand(Query);
-            Command.CommandType = CommandType.Text;
+            command = new SqlCommand(query);
+            command.CommandType = CommandType.Text;
 
-            Command.Parameters.AddWithValue("@ID", SellerID);
+            command.Parameters.AddWithValue("@ID", sellerId);
 
-            Connection.Open();
+            connection.Open();
 
-            Command.Connection = Connection;
+            command.Connection = connection;
 
-            Reader = Command.ExecuteReader();
+            reader = command.ExecuteReader();
 
-            Reader.Read();
+            reader.Read();
 
-            int SellerPosition = Reader.GetInt32(Reader.GetOrdinal(Index)) - Quantity;
-            int SellerFunds = Reader.GetInt32(Reader.GetOrdinal("Funds")) + (Price * Quantity);
+            int sellerPosition = reader.GetInt32(reader.GetOrdinal(index)) - quantity;
+            int sellerFunds = reader.GetInt32(reader.GetOrdinal("Funds")) + (price * quantity);
 
-            Reader.Dispose();
-            Command.Dispose();
-            Connection.Dispose();
+            reader.Dispose();
+            command.Dispose();
+            connection.Dispose();
 
-            UpdatePlayerPositionBalance(SellerID, Index, SellerPosition, SellerFunds);
+            UpdatePlayerPositionBalance(sellerId, index, sellerPosition, sellerFunds);
 
         }
 
-        private void UpdatePlayerPositionBalance(int ID, string Index, int Position, int Funds)
+        private void UpdatePlayerPositionBalance(int id, string index, int position, int funds)
         {
-            SqlConnection Connection = new SqlConnection(ConnectionString);
+            SqlConnection connection = new SqlConnection(connectionString);
 
-            string Query = "UPDATE Players SET " + Index + "=@Position, Funds=@Funds WHERE ID=@ID;";
+            string query = "UPDATE Players SET " + index + "=@Position, Funds=@Funds WHERE ID=@ID;";
                         
-            SqlCommand Command = new SqlCommand(Query);
-            Command.CommandType = CommandType.Text;
+            SqlCommand command = new SqlCommand(query);
+            command.CommandType = CommandType.Text;
 
-            Command.Parameters.AddWithValue("@Position", Position);
-            Command.Parameters.AddWithValue("@Funds", Funds);
-            Command.Parameters.AddWithValue("@ID", ID);
+            command.Parameters.AddWithValue("@Position", position);
+            command.Parameters.AddWithValue("@Funds", funds);
+            command.Parameters.AddWithValue("@ID", id);
 
-            Connection.Open();
+            connection.Open();
 
-            Command.Connection = Connection;
+            command.Connection = connection;
 
-            Command.ExecuteNonQuery();
+            command.ExecuteNonQuery();
 
-            Command.Dispose();
-            Connection.Dispose();
+            command.Dispose();
+            connection.Dispose();
 
         }
 
-        public Player GetPlayer(int ID) {
+        public Player GetPlayer(int id) {
             
-            SqlConnection Connection = new SqlConnection(ConnectionString);
+            SqlConnection connection = new SqlConnection(connectionString);
 
-            string Query = "SELECT FirstName, LastName, TeamID, PositionIndex1, PositionIndex2, Funds FROM Players WHERE ID=@ID;";
+            string query = "SELECT FirstName, LastName, TeamID, PositionIndex1, PositionIndex2, Funds FROM Players WHERE ID=@ID;";
 
-            SqlCommand Command = new SqlCommand(Query);
-            Command.CommandType = CommandType.Text;
+            SqlCommand command = new SqlCommand(query);
+            command.CommandType = CommandType.Text;
 
-            Command.Parameters.AddWithValue("@ID", ID);
+            command.Parameters.AddWithValue("@ID", id);
 
-            Connection.Open();
+            connection.Open();
 
-            Command.Connection = Connection;
+            command.Connection = connection;
 
-            SqlDataReader Reader = Command.ExecuteReader();
+            SqlDataReader reader = command.ExecuteReader();
 
-            Reader.Read();
+            reader.Read();
 
-            string FirstName = Reader.GetString(Reader.GetOrdinal("FirstName"));
-            string LastName = Reader.GetString(Reader.GetOrdinal("LastName"));
-            int TeamID = Reader.GetInt32(Reader.GetOrdinal("PositionIndex1"));
-            int PositionIndex1 = Reader.GetInt32(Reader.GetOrdinal("PositionIndex1"));
-            int PositionIndex2 = Reader.GetInt32(Reader.GetOrdinal("PositionIndex2"));
-            int Funds = Reader.GetInt32(Reader.GetOrdinal("Funds"));
+            string firstName = reader.GetString(reader.GetOrdinal("FirstName"));
+            string lastName = reader.GetString(reader.GetOrdinal("LastName"));
+            int teamId = reader.GetInt32(reader.GetOrdinal("PositionIndex1"));
+            int positionIndex1 = reader.GetInt32(reader.GetOrdinal("PositionIndex1"));
+            int positionIndex2 = reader.GetInt32(reader.GetOrdinal("PositionIndex2"));
+            int funds = reader.GetInt32(reader.GetOrdinal("Funds"));
 
-            Player ThePlayer = new Player(ID, FirstName, LastName, TeamID, PositionIndex1, PositionIndex2, Funds);
+            Player player = new Player(id, firstName, lastName, teamId, positionIndex1, positionIndex2, funds);
 
-            Reader.Dispose();
-            Command.Dispose();
-            Connection.Dispose();
+            reader.Dispose();
+            command.Dispose();
+            connection.Dispose();
 
-            return ThePlayer;
+            return player;
         }
 
         
@@ -246,78 +260,111 @@ namespace JMSX
  
          */
 
-
-        internal Team GetTeam(int ID, string Code)
+        internal Team GetTeam(int id, string code)
         {
 
-            if (ID < 0)
+            if (id < 0)
             {
                 return null;
             }
 
-            SqlConnection Connection = new SqlConnection(ConnectionString);
+            SqlConnection connection = new SqlConnection(connectionString);
 
-            string Query = "SELECT ID, Name FROM Teams WHERE ID=@ID AND Code=@Code;";
+            string query = "SELECT ID, Name FROM Teams WHERE ID=@ID AND Code=@Code;";
 
-            SqlCommand Command = new SqlCommand(Query);
-            Command.CommandType = CommandType.Text;
+            SqlCommand command = new SqlCommand(query);
+            command.CommandType = CommandType.Text;
 
-            Command.Parameters.AddWithValue("@ID", ID);
-            Command.Parameters.AddWithValue("@Code", Code);
+            command.Parameters.AddWithValue("@ID", id);
+            command.Parameters.AddWithValue("@Code", code);
 
-            Connection.Open();
+            connection.Open();
 
-            Command.Connection = Connection;
+            command.Connection = connection;
 
-            SqlDataReader Reader = Command.ExecuteReader();
+            SqlDataReader reader = command.ExecuteReader();
 
-            if (!Reader.HasRows)
+            if (!reader.HasRows)
             {
-                Reader.Dispose();
-                Command.Dispose();
-                Connection.Dispose();
+                reader.Dispose();
+                command.Dispose();
+                connection.Dispose();
                 return null;
             }
 
-            Reader.Read();
+            reader.Read();
 
-            string Name = Reader.GetString(Reader.GetOrdinal("Name"));
+            string name = reader.GetString(reader.GetOrdinal("Name"));
 
-            Team TheTeam = new Team(ID, Name);
+            Team team = new Team(id, name);
 
-            Reader.Dispose();
-            Command.Dispose();
-            Connection.Dispose();
+            reader.Dispose();
+            command.Dispose();
+            connection.Dispose();
 
-            Connection = new SqlConnection(ConnectionString);
+            connection = new SqlConnection(connectionString);
 
-            Query = "SELECT ID, FirstName, LastName, PositionIndex1, PositionIndex2, Funds FROM Players WHERE TeamID=@TeamID;";
+            query = "SELECT ID, FirstName, LastName, PositionIndex1, PositionIndex2, Funds FROM Players WHERE TeamID=@TeamID;";
 
-            Command = new SqlCommand(Query);
-            Command.CommandType = CommandType.Text;
+            command = new SqlCommand(query);
+            command.CommandType = CommandType.Text;
 
-            Command.Parameters.AddWithValue("@TeamID", TheTeam.GetID());
+            command.Parameters.AddWithValue("@TeamID", team.Id);
 
-            Connection.Open();
+            connection.Open();
 
-            Command.Connection = Connection;
+            command.Connection = connection;
 
-            Reader = Command.ExecuteReader();
+            reader = command.ExecuteReader();
 
-            while (Reader.Read())
+            while (reader.Read())
             {
-                int PlayerID = Reader.GetInt32(Reader.GetOrdinal("ID"));
-                string FirstName = Reader.GetString(Reader.GetOrdinal("FirstName"));
-                string LastName = Reader.GetString(Reader.GetOrdinal("LastName"));
-                int PositionIndex1 = Reader.GetInt32(Reader.GetOrdinal("PositionIndex1"));
-                int PositionIndex2 = Reader.GetInt32(Reader.GetOrdinal("PositionIndex2"));
-                int Funds = Reader.GetInt32(Reader.GetOrdinal("Funds")); 
+                int playerId = reader.GetInt32(reader.GetOrdinal("ID"));
+                string firstName = reader.GetString(reader.GetOrdinal("FirstName"));
+                string lastName = reader.GetString(reader.GetOrdinal("LastName"));
+                int positionIndex1 = reader.GetInt32(reader.GetOrdinal("PositionIndex1"));
+                int positionIndex2 = reader.GetInt32(reader.GetOrdinal("PositionIndex2"));
+                int funds = reader.GetInt32(reader.GetOrdinal("Funds")); 
 
-                TheTeam.AddPlayer(PlayerID, FirstName, LastName, PositionIndex1, PositionIndex2, Funds);
+                team.AddPlayer(playerId, firstName, lastName, positionIndex1, positionIndex2, funds);
 
             }
 
-            return TheTeam;
+            return team;
+        }
+
+
+        internal string[] GetDayInfo(string table, int tradingDay)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            string query = "SELECT News, EffectIndex1, EffectIndex2 FROM " + table + " WHERE TradingDay=@TradingDay;";
+
+            SqlCommand command = new SqlCommand(query);
+            command.CommandType = CommandType.Text;
+
+            command.Parameters.AddWithValue("@TradingDay", tradingDay);
+
+            connection.Open();
+
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            string[] dayInfo = new string[3];
+
+            reader.Read();
+
+            dayInfo[0] = reader.GetString(reader.GetOrdinal("News"));
+            dayInfo[1] = Convert.ToString(reader.GetInt32(reader.GetOrdinal("EffectIndex1")));
+            dayInfo[2] = Convert.ToString(reader.GetInt32(reader.GetOrdinal("EffectIndex2")));
+
+            reader.Dispose();
+            command.Dispose();
+            connection.Dispose();
+
+            return dayInfo;
+
         }
     }
 }

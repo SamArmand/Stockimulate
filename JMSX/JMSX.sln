@@ -16,20 +16,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configura
 		PublishScripts\Configurations\JMSX-WAWS-dev.json = PublishScripts\Configurations\JMSX-WAWS-dev.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailService", "EmailService\EmailService.csproj", "{4F326E70-1B6B-423C-89B7-55C39D5BEE5F}"
-EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
+		SccNumberOfProjects = 2
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://samarmand.visualstudio.com/defaultcollection
 		SccLocalPath0 = .
 		SccProjectUniqueName1 = JMSX\\JMSX.csproj
 		SccProjectName1 = JMSX
 		SccLocalPath1 = JMSX
-		SccProjectUniqueName2 = EmailService\\EmailService.csproj
-		SccProjectName2 = EmailService
-		SccLocalPath2 = EmailService
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,10 +35,6 @@ Global
 		{D37EE335-297F-4E0B-A83B-948CB806A72F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D37EE335-297F-4E0B-A83B-948CB806A72F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D37EE335-297F-4E0B-A83B-948CB806A72F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F326E70-1B6B-423C-89B7-55C39D5BEE5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F326E70-1B6B-423C-89B7-55C39D5BEE5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F326E70-1B6B-423C-89B7-55C39D5BEE5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F326E70-1B6B-423C-89B7-55C39D5BEE5F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

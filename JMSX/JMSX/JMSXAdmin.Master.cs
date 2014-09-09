@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace JMSX
 {
-    public partial class BrokerReports : System.Web.UI.Page
+    public partial class JMSXAdmin : System.Web.UI.MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

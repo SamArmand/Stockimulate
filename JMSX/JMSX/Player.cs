@@ -7,58 +7,79 @@ namespace JMSX
 {
     public class Player
     {
-        private int ID;
-        private string FirstName;
-        private string LastName;
-        private int TeamID;
-        private int PositionIndex1;
-        private int PositionIndex2;
-        private int Funds;
-
-        public Player(int ID, string FirstName, string LastName, int TeamID, int PositionIndex1, int PositionIndex2, int Funds) {
-            this.ID = ID;
-            this.FirstName = FirstName;
-            this.LastName = LastName;
-            this.TeamID = TeamID;
-            this.PositionIndex1 = PositionIndex1;
-            this.PositionIndex2 = PositionIndex2;
-            this.Funds = Funds;
-        }
-
-        public int GetID()
+        private int id;
+        public int Id
         {
-            return ID;
+            get
+            {
+                return id;
+            }
         }
 
-        public string GetFirstName()
+        private string firstName;
+        public string FirstName
         {
-            return FirstName;
+            get
+            {
+                return firstName;
+            }
+        }
+        
+        private string lastName;
+        public string LastName
+        {
+            get
+            {
+                return lastName;
+            }
+        }
+        
+        private int teamId;
+        public int TeamId
+        {
+            get
+            {
+                return teamId;
+            }
         }
 
-        public string GetLastName()
+        private int positionIndex1;
+        public int PositionIndex1
         {
-            return LastName;
+            get
+            {
+                return positionIndex1;
+            }
         }
 
-        public int GetTeamID()
+        private int positionIndex2;
+        public int PositionIndex2
         {
-            return TeamID;
+            get
+            {
+                return positionIndex2;
+            }
         }
 
-        public int GetPositionIndex1()
+        private int funds;
+        public int Funds
         {
-            return PositionIndex1;
+            get
+            {
+                return funds;
+            }
         }
 
-        public int GetPositionIndex2()
-        {
-            return PositionIndex2;
+        public Player(int id, string firstName, string lastName, int teamId, int positionIndex1, int positionIndex2, int funds) {
+            this.id = id;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.teamId = teamId;
+            this.positionIndex1 = positionIndex1;
+            this.positionIndex2 = positionIndex2;
+            this.funds = funds;
         }
 
-        public int GetFunds()
-        {
-            return Funds;
-        }
 
     }
 }
