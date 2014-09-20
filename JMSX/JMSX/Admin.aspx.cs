@@ -100,7 +100,7 @@ namespace JMSX
                 return;
             }
 
-
+            simulator.Reset();
 
         }
 

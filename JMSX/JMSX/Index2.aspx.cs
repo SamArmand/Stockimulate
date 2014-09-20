@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DotNet.Highcharts;
+using DotNet.Highcharts.Helpers;
+using DotNet.Highcharts.Options;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,6 +16,9 @@ namespace JMSX
         public static int indexChange = 0;
         public static string news = "";
 
+        private static List<string> days = new List<string>();
+        private static List<int> prices = new List<int>();
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -20,35 +26,78 @@ namespace JMSX
             IndexChangeNegative.Style.Value = "display: none;";
             IndexChangeNone.Style.Value = "display: none;";
 
-            IndexPriceDiv.InnerHtml = "<h3>$" + indexPrice + "</h3>";
+            IndexPriceDiv.InnerHtml = "<h2>$" + indexPrice + "</h2>";
 
             if (indexChange > 0)
             {
-                IndexChangePositive.InnerHtml = "<h3>+" + indexChange + "</h3>";
-                IndexChangePositive.Style.Value = "display: inline;";
+                IndexChangePositive.InnerHtml = "<h2>+" + indexChange + "</h2>";
+                IndexChangePositive.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;";
             }
             else if (indexChange < 0)
             {
-                IndexChangeNegative.InnerHtml = "<h3>-" + indexChange + "</h3>";
-                IndexChangeNegative.Style.Value = "display: inline;";
+                IndexChangeNegative.InnerHtml = "<h2>-" + indexChange + "</h2>";
+                IndexChangeNegative.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;";
             }
             else if (indexChange == 0)
             {
-                IndexChangeNone.InnerHtml = "<h3>+/-" + indexChange + "</h3>";
-                IndexChangeNone.Style.Value = "display: inline;";
+                IndexChangeNone.InnerHtml = "<h2>+/-" + indexChange + "</h2>";
+                IndexChangeNone.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;";
             }
 
             NewsDiv.InnerHtml = "<h2>" + news + "</h2>";
 
+            Highcharts chart = new Highcharts("chart")
+    .SetXAxis(new XAxis
+    {
+        Categories = days.ToArray(),
+        Title = new XAxisTitle 
+        {
+            Text = "Trading Day"
+        }
+    })
+    .SetSeries(new Series
+    {
+        Data = new Data(prices.Cast<object>().ToArray<object>())
+    });
+
+            Title title = new Title();
+            title.Text = "SEC2";
+
+            chart.SetTitle(title);
+
+            chart.SetYAxis(new YAxis
+            {
+                Title = new YAxisTitle
+                {
+                    Text = "Price ($)"
+                }
+                
+            });
+
+            Graph.Text = chart.ToHtmlString();
+
+            
+
         }
 
-        public static void Update(int _indexPrice, int _indexChange, string _news)
+        public static void Update(int _indexPrice, int _indexChange, string _news, int dayNumber)
         {
+            
             indexPrice = _indexPrice;
             indexChange = _indexChange;
-            
+
+            prices.Add(indexPrice);
+            days.Add(Convert.ToString(dayNumber));
+
             if (_news != "null")
                 news = _news;
         }
+
+        public static void Reset()
+        {
+            prices = new List<int>();
+            days = new List<string>();
+        }
+
     }
 }
