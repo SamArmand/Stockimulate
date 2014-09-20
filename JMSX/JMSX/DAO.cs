@@ -30,8 +30,6 @@ namespace JMSX
                 return (DAO)HttpContext.Current.Session["DAOInstance"];
             }
 
-
-
         }
 
         public static DAO Instance
@@ -43,9 +41,7 @@ namespace JMSX
                     instance = new DAO();
 
                 return instance;
-            }
-            
-
+            }          
 
         }
 
@@ -353,7 +349,7 @@ namespace JMSX
 
             string[] dayInfo = new string[3];
 
-            reader.Read();
+            reader.Read(); 
 
             dayInfo[0] = reader.GetString(reader.GetOrdinal("News"));
             dayInfo[1] = Convert.ToString(reader.GetInt32(reader.GetOrdinal("EffectIndex1")));
@@ -365,6 +361,42 @@ namespace JMSX
 
             return dayInfo;
 
+        }
+
+        internal void Reset()
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            string query = "UPDATE Players SET PositionIndex1='0', PositionIndex2='0', Funds='1000000';";
+
+            SqlCommand command = new SqlCommand(query);
+            command.CommandType = CommandType.Text;
+
+            connection.Open();
+
+            command.Connection = connection;
+
+            command.ExecuteNonQuery();
+
+            command.Dispose();
+            connection.Dispose();
+
+            connection = new SqlConnection(connectionString);
+
+            query = "DELETE FROM Trades;";
+
+            command = new SqlCommand(query);
+            command.CommandType = CommandType.Text;
+
+            connection.Open();
+
+            command.Connection = connection;
+
+            command.ExecuteNonQuery();
+
+            command.Dispose();
+            connection.Dispose();
+        
         }
     }
 }

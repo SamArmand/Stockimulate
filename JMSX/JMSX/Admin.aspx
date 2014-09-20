@@ -15,6 +15,7 @@
             <asp:Button id="Continue" class="btn btn-primary" runat="server" Text="Continue" OnClick="Continue_Click" />
 
             <br />
+            <br />
 
             <asp:Button id="ResetTrades" class="btn btn-primary" runat="server" Text="Reset Trades" OnClick="ResetTrades_Click" />
             
@@ -28,6 +29,9 @@
  
 
     </form>
+
+    <br />
+    <br />
 
     <div id="ErrorDiv" runat="server" class="alert alert-danger bg-danger col-lg-5" style="display: none;">
 

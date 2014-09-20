@@ -30,7 +30,7 @@ namespace JMSX
         {
             get
             {
-                return Players;
+                return players;
             }
         }
 

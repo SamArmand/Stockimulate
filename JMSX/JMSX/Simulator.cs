@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.SignalR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
@@ -6,7 +7,8 @@ using System.Web;
 
 namespace JMSX
 {
-    public class Simulator
+
+    public class Simulator : Hub
     {
         
         private const int QUARTER_1_DAY = 2;
@@ -33,13 +35,6 @@ namespace JMSX
         }
 
         private int dayNumber;
-        public int DayNumber
-        {
-            get
-            {
-                return dayNumber;
-            }
-        }
 
         private int index1_Change;
         public int Index1_Change
@@ -128,9 +123,12 @@ namespace JMSX
             index1_Change = 0;
             index2_Change = 0;
 
-            Index1.Update(index1_Price, index1_Change, newsItem);
+            Index1.Update(index1_Price, index1_Change, newsItem, dayNumber);
 
-            Index2.Update(index2_Price, index2_Change, newsItem);
+            Index2.Update(index2_Price, index2_Change, newsItem, dayNumber);
+
+            var context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
+            context.Clients.All.sendMessage();
 
         }
 
@@ -148,19 +146,24 @@ namespace JMSX
             index1_Change = 0;
             index2_Change = 0;
 
-            Index1.Update(index1_Price, index1_Change, newsItem);
+            Index1.Update(index1_Price, index1_Change, newsItem, dayNumber);
 
-            Index2.Update(index2_Price, index2_Change, newsItem);
+            Index2.Update(index2_Price, index2_Change, newsItem, dayNumber);
+
+            var context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
+            context.Clients.All.sendMessage();
+
+            int i = 0;
 
         }
 
         private Simulator()
         {
             dao = DAO.Instance;            
-            SetPracticeMode();
             timer = new Timer();
             timer.Interval = 10000; 
             timer.Elapsed += new ElapsedEventHandler(UpdateDay);
+            timer.Enabled = false;
 
             status = Status.READY;
         }
@@ -201,9 +204,9 @@ namespace JMSX
 
             index2_Price += index2_Change * 10;
 
-            Index1.Update(index1_Price, index1_Change, newsItem);
+            Index1.Update(index1_Price, index1_Change, newsItem, dayNumber);
 
-            Index2.Update(index2_Price, index2_Change, newsItem);
+            Index2.Update(index2_Price, index2_Change, newsItem, dayNumber);
 
             //update charts
 
@@ -212,6 +215,9 @@ namespace JMSX
 
             else if ((dayNumber == QUARTER_1_DAY && mode == Mode.PRACTICE) || dayNumber == QUARTER_4_DAY)
                 Stop();
+
+            var context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
+            context.Clients.All.sendMessage();
 
         }
 
@@ -238,6 +244,12 @@ namespace JMSX
         public void Reset()
         {
             status = Status.READY;
+            Index1.Reset();
+            Index2.Reset();
+            dao.Reset();
+
+            var context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
+            context.Clients.All.sendMessage();
         }
 
 
