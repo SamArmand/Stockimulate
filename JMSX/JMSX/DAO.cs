@@ -193,69 +193,6 @@ namespace JMSX
             return player;
         }
 
-        
-
-        /*
-
-        public void ClosePositions()
-        {
-
-            SqlConnection Connection = new SqlConnection(ConnectionString);
-            
-            string Query = "SELECT ID, PositionIndex1, PositionIndex2, Funds FROM Players WHERE NOT (ID=0)";
-
-            SqlCommand Command = new SqlCommand(Query);
-            Command.CommandType = CommandType.Text;
-
-            Connection.Open();
-
-            Command.Connection = Connection;
-
-            SqlDataReader Reader = Command.ExecuteReader();
-
-            List<Player> PlayersToUpdate = new List<Player>();
-
-            while (Reader.Read())
-            {
-                int ID = Reader.GetInt32(Reader.GetOrdinal("ID"));
-                int PositionIndex1 = Reader.GetInt32(Reader.GetOrdinal("PositionIndex1"));
-                int PositionIndex2 = Reader.GetInt32(Reader.GetOrdinal("PositionIndex2"));
-                int Funds = Reader.GetInt32(Reader.GetOrdinal("Funds"));
-
-                if (PositionIndex1 != 0 || PositionIndex2 != 0)
-                    PlayersToUpdate.Add(new Player(ID, PositionIndex1, PositionIndex2, Funds));
-
-            }
-
-            Reader.Dispose();
-            Command.Dispose();
-            Connection.Dispose();
-
-            foreach (Player Player in PlayersToUpdate) {
-
-                if (Player.GetPositionIndex1() > 0)
-                {
-                    InsertTrade(0, Player.GetID(), "SEC1", Player.GetPositionIndex1(), Simulator.Index1_Price);
-                }
-                else if (Player.GetPositionIndex1() < 0)
-                {
-                    InsertTrade(Player.GetID(), 0, "SEC1", (Player.GetPositionIndex1() * -1), Simulator.Index1_Price);
-                }
-                if (Player.GetPositionIndex2() > 0)
-                {
-                    InsertTrade(0, Player.GetID(), "SEC2", Player.GetPositionIndex1(), Simulator.Index1_Price);
-                }
-                else if (Player.GetPositionIndex1() < 0)
-                {
-                    InsertTrade(Player.GetID(), 0, "SEC2", (Player.GetPositionIndex1() * -1), Simulator.Index1_Price);
-                }
-
-            }
-
-        }
- 
-         */
-
         internal Team GetTeam(int id, string code)
         {
 
