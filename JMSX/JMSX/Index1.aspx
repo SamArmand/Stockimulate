@@ -12,23 +12,65 @@
     <script src="scripts/Highcharts-4.0.1/js/highcharts.js"></script>
     <script src="/signalr/hubs"></script>
 
+    <script>
+        $(function () {
+            var text = $('#data').text();
 
-    <script type="text/javascript">
-    $(function () {
-        // Proxy created on the fly          
-        var sim = $.connection.simulator;
+            $('#GraphDiv').highcharts({
 
-        // Declare a function on the chat hub so the server can invoke it          
-        sim.client.sendMessage = function () {
-            location.reload();
-        };
+                xAxis: {
+                    min: 0,
+                    max: 252,
+                },
 
-        $.connection.hub.start().done(function () {
-            
+                series: [{
+                    data: eval(text)
+                }]
+
+            });
+
+            var sim = $.connection.simulator
+
+            // Declare a function on the chat hub so the server can invoke it          
+
+            sim.client.sendMessage = function (price1, price2, day, change1, change2, news) {
+                $('#GraphDiv').highcharts().series[0].addPoint([day, price1]);
+                
+                $(".IndexPriceDiv").html("<h2>$" + price1 + "</h2>");
+
+                $('.IndexChangePositive').hide();
+                $('.IndexChangeNegative').hide();
+                $('.IndexChangeNone').hide();
+
+                if (change1 > 0) {
+                    $('.IndexChangePositiveSpan').html(change1);
+                    $('.IndexChangePositive').show();
+                }
+
+                else if (change1 < 0) {
+                    $('.IndexChangeNegativeSpan').html(change1*-1);
+                    $('.IndexChangeNegative').show();
+                }
+
+                else if (change1 == 0) {
+                    $('.IndexChangeNoneSpan').html(change1);
+                    $('.IndexChangeNone').show();
+                }
+
+                if (news != "null") {
+                    $('.NewsDiv').html("<h2>" + news + "</h2>");
+                }
+
+            };
+
+            $.connection.hub.start().done(function () {
+
+            });
+
+
         });
-        
-    });
-</script>
+
+    </script>
 
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
     <link href="Content/bootstrap-theme.css" rel="stylesheet" />
@@ -45,50 +87,50 @@
         
         <div class="col-lg-10 bg-info" id="GraphDiv">
     
-                <asp:Literal ID="Graph" runat="server"></asp:Literal>
+                
 </div>
 
             
             <div class="col-lg-2">
     
-                <div class="col-lg-12 bg-primary" id="IndexPriceDiv" runat="server">
-    
-
+                <div class="col-lg-12 bg-primary IndexPriceDiv" id="IndexPriceDiv" runat="server">
 
                 </div>
 
-                <div class="col-lg-12 bg-success" id="IndexChangePositive" style="display:none;" runat="server">
+                <div class="col-lg-12 bg-success IndexChangePositive" id="IndexChangePositive" style="display:none;" runat="server">
     
-                    <span class="glyphicon glyphicon-arrow-up" id="IndexChangePositiveSpan" runat="server"></span>
+                    <h2><span class="glyphicon glyphicon-arrow-up"></span></h2>
+
+                    <h2 class="IndexChangePositiveSpan" id="IndexChangePositiveSpan" runat="server"></h2>
 
                 </div>
 
-                <div class="col-lg-12 bg-danger" id="IndexChangeNegative" style="display:none;" runat="server">
+                <div class="col-lg-12 bg-danger IndexChangeNegative" id="IndexChangeNegative" style="display:none;" runat="server">
     
-                    <span class="glyphicon glyphicon-arrow-down" id="IndexChangeNegativeSpan" runat="server"></span>
+                    <h2><span class="glyphicon glyphicon-arrow-down"></span></h2>
+
+                    <h2 class="IndexChangeNegativeSpan" id="IndexChangeNegativeSpan" runat="server"></h2>
 
                 </div>
 
-                <div class="col-lg-12 bg-warning" id="IndexChangeNone" style="display:none;" runat="server">
+                <div class="col-lg-12 bg-warning IndexChangeNone" id="IndexChangeNone" style="display:none;" runat="server">
     
-                    <span class="glyphicon glyphicon-resize-horizontal" id="IndexChangeNoneSpan" runat="server"></span>
+                    <h2><span class="glyphicon glyphicon-resize-horizontal"></span></h2>
+
+                    <h2 class="IndexChangeNoneSpan" id="IndexChangeNoneSpan" runat="server"></h2>
 
                 </div>
-
 
            </div>
 
-                            <div class="col-lg-12" id="NewsDiv" runat="server">
-    <h2>News Item Here</h2>
+                            <div class="col-lg-12 NewsDiv" id="NewsDiv" runat="server">
 
 </div>
 
 </div>
 
-    <form runat="server">
+    <div id="data" style="display:none;" runat="server"></div>
 
-        <asp:Button ID="HiddenRefresh" runat="server" style="display: none;" OnClick="Page_Load"/>
-    </form>
 
     
 

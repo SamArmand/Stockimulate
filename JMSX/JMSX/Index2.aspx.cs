@@ -30,51 +30,37 @@ namespace JMSX
 
             if (indexChange > 0)
             {
-                IndexChangePositive.InnerHtml = "<h2>+" + indexChange + "</h2>";
+                IndexChangePositive.InnerHtml = "" + indexChange;
                 IndexChangePositive.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;";
             }
             else if (indexChange < 0)
             {
-                IndexChangeNegative.InnerHtml = "<h2>-" + indexChange + "</h2>";
+                IndexChangeNegative.InnerHtml = "" + indexChange;
                 IndexChangeNegative.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;";
             }
             else if (indexChange == 0)
             {
-                IndexChangeNone.InnerHtml = "<h2>+/-" + indexChange + "</h2>";
+                IndexChangeNone.InnerHtml = "" + indexChange;
                 IndexChangeNone.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;";
             }
 
             NewsDiv.InnerHtml = "<h2>" + news + "</h2>";
 
-            Highcharts chart = new Highcharts("chart")
-    .SetXAxis(new XAxis
-    {
-        Categories = days.ToArray(),
-        Title = new XAxisTitle 
-        {
-            Text = "Trading Day"
-        }
-    })
-    .SetSeries(new Series
-    {
-        Data = new Data(prices.Cast<object>().ToArray<object>())
-    });
 
-            Title title = new Title();
-            title.Text = "SEC2";
+            string javascriptArray = "[";
 
-            chart.SetTitle(title);
-
-            chart.SetYAxis(new YAxis
+            for (int i = 0; i < days.Count; i++)
             {
-                Title = new YAxisTitle
-                {
-                    Text = "Price ($)"
-                }
-                
-            });
+                javascriptArray += "[" + days.ElementAt(i) + "," + prices.ElementAt(i) + "]";
 
-            Graph.Text = chart.ToHtmlString();
+                if (i + 1 != days.Count)
+                    javascriptArray += ", ";
+
+            }
+
+            javascriptArray += "]";
+
+            data.InnerHtml = javascriptArray;
 
             
 

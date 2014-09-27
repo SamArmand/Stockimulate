@@ -13,15 +13,6 @@ namespace JMSX {
     public partial class Index2 {
         
         /// <summary>
-        /// Graph control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Graph;
-        
-        /// <summary>
         /// IndexPriceDiv control.
         /// </summary>
         /// <remarks>
@@ -94,12 +85,12 @@ namespace JMSX {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl NewsDiv;
         
         /// <summary>
-        /// HiddenRefresh control.
+        /// data control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button HiddenRefresh;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl data;
     }
 }

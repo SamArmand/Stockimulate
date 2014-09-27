@@ -128,7 +128,7 @@ namespace JMSX
             Index2.Update(index2_Price, index2_Change, newsItem, dayNumber);
 
             var context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
-            context.Clients.All.sendMessage();
+            context.Clients.All.sendMessage(index1_Price, Index2_Price, dayNumber, index1_Change, index2_Change, newsItem);
 
         }
 
@@ -151,9 +151,7 @@ namespace JMSX
             Index2.Update(index2_Price, index2_Change, newsItem, dayNumber);
 
             var context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
-            context.Clients.All.sendMessage();
-
-            int i = 0;
+            context.Clients.All.sendMessage(index1_Price, Index2_Price, dayNumber, index1_Change, index2_Change, newsItem);
 
         }
 
@@ -217,7 +215,7 @@ namespace JMSX
                 Stop();
 
             var context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
-            context.Clients.All.sendMessage();
+            context.Clients.All.sendMessage(index1_Price, Index2_Price, dayNumber, index1_Change, index2_Change, newsItem);
 
         }
 
@@ -249,7 +247,7 @@ namespace JMSX
             dao.Reset();
 
             var context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
-            context.Clients.All.sendMessage();
+            context.Clients.All.sendMessage(index1_Price, Index2_Price, dayNumber, index1_Change, index2_Change, newsItem);
         }
 
 

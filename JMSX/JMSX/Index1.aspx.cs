@@ -4,6 +4,7 @@ using DotNet.Highcharts.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -31,17 +32,17 @@ namespace JMSX
 
             if (indexChange > 0)
             {
-                IndexChangePositiveSpan.InnerHtml = "<h2>+" + indexChange + "</h2>";
+                IndexChangePositiveSpan.InnerHtml = "" + indexChange;
                 IndexChangePositive.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;";
             }
             else if (indexChange < 0)
             {
-                IndexChangeNegativeSpan.InnerHtml = "<h2>-" + indexChange + "</h2>";
+                IndexChangeNegativeSpan.InnerHtml = "" + indexChange*-1;
                 IndexChangeNegative.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;";
             }
             else if (indexChange == 0)
             {
-                IndexChangeNoneSpan.InnerHtml = "<h2>+/-" + indexChange + "</h2>";
+                IndexChangeNoneSpan.InnerHtml = "" + indexChange;
                 IndexChangeNone.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;";
             }
 
@@ -50,36 +51,20 @@ namespace JMSX
                 NewsDiv.InnerHtml = "<h2>" + news + "</h2>";
             }
 
-            Highcharts chart = new Highcharts("chart")
-    .SetXAxis(new XAxis
-    {
-        Categories = days.ToArray(),
-        Title = new XAxisTitle
-        {
-            Text = "Trading Day"
-        }
-    })
-    .SetSeries(new Series
-    {
-        Data = new Data(prices.Cast<object>().ToArray<object>())
-    });
+            string javascriptArray = "[";
 
-            Title title = new Title();
-            title.Text = "SEC2";
-
-            chart.SetTitle(title);
-
-            chart.SetYAxis(new YAxis
+            for(int i=0; i<days.Count; i++)
             {
-                Title = new YAxisTitle
-                {
-                    Text = "Price ($)"
-                }
+                javascriptArray += "[" + days.ElementAt(i) +"," + prices.ElementAt(i) +"]";
 
-            });
+                if (i + 1 != days.Count)
+                    javascriptArray += ", ";
 
-            Graph.Text = chart.ToHtmlString();
+            }
 
+            javascriptArray += "]";
+
+            data.InnerHtml = javascriptArray;
         }
 
         public static void Update(int _indexPrice, int _indexChange, string _news, int dayNumber)
