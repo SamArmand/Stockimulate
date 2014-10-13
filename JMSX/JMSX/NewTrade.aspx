@@ -30,8 +30,8 @@
             <label class="col-sm-1 control-label" for="textinput">Security</label>
             <div class="col-sm-2">
                 <select id="Security" class="form-control" runat="server">
-                    <option value="SEC1">SEC1</option>
-                    <option value="SEC2">SEC2</option>
+                    <option value="MCS">MCS</option>
+                    <option value="IND">IND</option>
                 </select>
             </div>
 

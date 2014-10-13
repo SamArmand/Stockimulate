@@ -94,13 +94,13 @@ namespace JMSX {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell TeamIndex1PriceData;
         
         /// <summary>
-        /// TeamIndex1PnLData control.
+        /// TeamIndex1ValueData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell TeamIndex1PnLData;
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell TeamIndex1ValueData;
         
         /// <summary>
         /// TeamPosition2Data control.
@@ -121,13 +121,13 @@ namespace JMSX {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell TeamIndex2PriceData;
         
         /// <summary>
-        /// TeamIndex2PnLData control.
+        /// TeamIndex2ValueData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell TeamIndex2PnLData;
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell TeamIndex2ValueData;
         
         /// <summary>
         /// TeamFundsData control.
@@ -139,13 +139,13 @@ namespace JMSX {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell TeamFundsData;
         
         /// <summary>
-        /// TeamTotalPnLData control.
+        /// TeamTotalValueData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell TeamTotalPnLData;
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell TeamTotalValueData;
         
         /// <summary>
         /// Player1Table control.
@@ -184,13 +184,13 @@ namespace JMSX {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell Player1Index1PriceData;
         
         /// <summary>
-        /// Player1Index1PnLData control.
+        /// Player1Index1ValueData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player1Index1PnLData;
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player1Index1ValueData;
         
         /// <summary>
         /// Player1Position2Data control.
@@ -211,13 +211,13 @@ namespace JMSX {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell Player1Index2PriceData;
         
         /// <summary>
-        /// Player1Index2PnLData control.
+        /// Player1Index2ValueData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player1Index2PnLData;
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player1Index2ValueData;
         
         /// <summary>
         /// Player1FundsData control.
@@ -229,13 +229,22 @@ namespace JMSX {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell Player1FundsData;
         
         /// <summary>
-        /// Player1TotalPnLData control.
+        /// Player1TotalValueData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player1TotalPnLData;
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player1TotalValueData;
+        
+        /// <summary>
+        /// Player1PnLData control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player1PnLData;
         
         /// <summary>
         /// Player2Table control.
@@ -274,13 +283,13 @@ namespace JMSX {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell Player2Index1PriceData;
         
         /// <summary>
-        /// Player2Index1PnLData control.
+        /// Player2Index1ValueData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player2Index1PnLData;
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player2Index1ValueData;
         
         /// <summary>
         /// Player2Position2Data control.
@@ -301,13 +310,13 @@ namespace JMSX {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell Player2Index2PriceData;
         
         /// <summary>
-        /// Player2Index2PnLData control.
+        /// Player2Index2ValueData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player2Index2PnLData;
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player2Index2ValueData;
         
         /// <summary>
         /// Player2FundsData control.
@@ -319,13 +328,22 @@ namespace JMSX {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell Player2FundsData;
         
         /// <summary>
-        /// Player2TotalPnLData control.
+        /// Player2TotalValueData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player2TotalPnLData;
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player2TotalValueData;
+        
+        /// <summary>
+        /// Player2PnLData control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player2PnLData;
         
         /// <summary>
         /// Player3Table control.
@@ -364,13 +382,13 @@ namespace JMSX {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell Player3Index1PriceData;
         
         /// <summary>
-        /// Player3Index1PnLData control.
+        /// Player3Index1ValueData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player3Index1PnLData;
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player3Index1ValueData;
         
         /// <summary>
         /// Player3Position2Data control.
@@ -391,13 +409,13 @@ namespace JMSX {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell Player3Index2PriceData;
         
         /// <summary>
-        /// Player3Index2PnLData control.
+        /// Player3Index2ValueData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player3Index2PnLData;
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player3Index2ValueData;
         
         /// <summary>
         /// Player3FundsData control.
@@ -409,13 +427,22 @@ namespace JMSX {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell Player3FundsData;
         
         /// <summary>
-        /// Player3TotalPnLData control.
+        /// Player3TotalValueData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player3TotalPnLData;
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player3TotalValueData;
+        
+        /// <summary>
+        /// Player3PnLData control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player3PnLData;
         
         /// <summary>
         /// Player4Table control.
@@ -454,13 +481,13 @@ namespace JMSX {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell Player4Index1PriceData;
         
         /// <summary>
-        /// Player4Index1PnLData control.
+        /// Player4Index1ValueData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player4Index1PnLData;
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player4Index1ValueData;
         
         /// <summary>
         /// Player4Position2Data control.
@@ -481,13 +508,13 @@ namespace JMSX {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell Player4Index2PriceData;
         
         /// <summary>
-        /// Player4Index2PnLData control.
+        /// Player4Index2ValueData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player4Index2PnLData;
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player4Index2ValueData;
         
         /// <summary>
         /// Player4FundsData control.
@@ -499,12 +526,21 @@ namespace JMSX {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell Player4FundsData;
         
         /// <summary>
-        /// Player4TotalPnLData control.
+        /// Player4TotalValueData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player4TotalPnLData;
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player4TotalValueData;
+        
+        /// <summary>
+        /// Player4PnLData control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell Player4PnLData;
     }
 }

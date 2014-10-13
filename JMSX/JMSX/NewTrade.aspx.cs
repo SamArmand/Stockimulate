@@ -101,36 +101,36 @@ namespace JMSX
                 return;
             }
 
-            if (Security.Value == "SEC1" && (buyer.PositionIndex1 + Convert.ToInt32(Quantity.Value)) > 100)
+            if (Security.Value == "MCS" && ((buyer.PositionIndex1 + Convert.ToInt32(Quantity.Value)) > 100 && buyer.Id != 0))
             {
-                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> This trade puts the buyer's SEC1 position at over 100.";
+                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> This trade puts the buyer's MCS position at over 100.";
                 ErrorDiv.Style.Value = "display: inline";
                 SuccessDiv.Style.Value = "display: none";
                 WarningDiv.Style.Value = "display: none";
                 return;
             }
 
-            if (Security.Value == "SEC1" && (seller.PositionIndex1 - Convert.ToInt32(Quantity.Value)) < -100)
+            if (Security.Value == "MCS" && ((seller.PositionIndex1 - Convert.ToInt32(Quantity.Value)) < -100 && seller.Id != 0))
             {
-                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> This trade puts the seller's SEC1 position at below -100.";
+                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> This trade puts the seller's MCS position at below -100.";
                 ErrorDiv.Style.Value = "display: inline";
                 SuccessDiv.Style.Value = "display: none";
                 WarningDiv.Style.Value = "display: none";
                 return;
             }
 
-            if (Security.Value == "SEC2" && (buyer.PositionIndex2 + Convert.ToInt32(Quantity.Value)) > 100)
+            if (Security.Value == "IND" && ((buyer.PositionIndex2 + Convert.ToInt32(Quantity.Value)) > 100 && buyer.Id != 0))
             {
-                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> This trade puts the buyer's SEC2 position at over 100.";
+                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> This trade puts the buyer's IND position at over 100.";
                 ErrorDiv.Style.Value = "display: inline";
                 SuccessDiv.Style.Value = "display: none";
                 WarningDiv.Style.Value = "display: none";
                 return;
             }
 
-            if (Security.Value == "SEC2" && (seller.PositionIndex2 - Convert.ToInt32(Quantity.Value)) < -100)
+            if (Security.Value == "IND" && ((seller.PositionIndex2 - Convert.ToInt32(Quantity.Value)) < -100 && seller.Id != 0))
             {
-                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> This trade puts the seller's SEC2 position at below -100.";
+                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> This trade puts the seller's IND position at below -100.";
                 ErrorDiv.Style.Value = "display: inline";
                 SuccessDiv.Style.Value = "display: none";
                 WarningDiv.Style.Value = "display: none";

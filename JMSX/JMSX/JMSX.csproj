@@ -95,10 +95,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin.aspx" />
+    <Content Include="Content\signin.css" />
     <Content Include="Content\tables.css" />
     <Content Include="default.aspx" />
     <Content Include="Index1.aspx" />
     <Content Include="Index2.aspx" />
+    <Content Include="Login.aspx" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -210,6 +212,13 @@
     <Compile Include="JMSXAdmin.Master.designer.cs">
       <DependentUpon>JMSXAdmin.Master</DependentUpon>
     </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
     <Compile Include="NewTrade.aspx.cs">
       <DependentUpon>NewTrade.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -259,7 +268,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1328</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
