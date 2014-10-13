@@ -11,28 +11,14 @@ namespace JMSX
     public class Simulator : Hub
     {
         
-        private const int QUARTER_1_DAY = 2;
-        private const int QUARTER_2_DAY = 3;
-        private const int QUARTER_3_DAY = 4;
-        private const int QUARTER_4_DAY = 5;
+        private const int QUARTER_1_DAY = 61;
+        private const int QUARTER_2_DAY = 124;
+        private const int QUARTER_3_DAY = 188;
+        private const int QUARTER_4_DAY = 252;
 
         private DAO dao;
 
         private Timer timer;
-
-        private string simulationName;
-        public string SimulationName
-        {
-            get
-            {
-                return simulationName;
-            }
-
-            set
-            {
-                simulationName = value;
-            }
-        }
 
         private int dayNumber;
 
@@ -159,7 +145,7 @@ namespace JMSX
         {
             dao = DAO.Instance;            
             timer = new Timer();
-            timer.Interval = 10000; 
+            timer.Interval = 28000; 
             timer.Elapsed += new ElapsedEventHandler(UpdateDay);
             timer.Enabled = false;
 

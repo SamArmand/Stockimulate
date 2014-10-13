@@ -61,23 +61,23 @@
             <th>Security</th>
             <th>Position</th>
             <th>Current Price</th>
-            <th>PnL</th>
+            <th>Value</th>
         </tr>
     </thead>
 
     <tbody>
         <tr>
-            <td>Security1 (SEC1)</td>
+            <td>MCS</td>
             <td id="TeamPosition1Data" runat="server"></td>
             <td id="TeamIndex1PriceData" runat="server"></td>
-            <td id="TeamIndex1PnLData" runat="server"></td>
+            <td id="TeamIndex1ValueData" runat="server"></td>
         </tr>
 
        <tr>
-            <td>Security2 (SEC2)</td>
+            <td>IND</td>
             <td id="TeamPosition2Data" runat="server"></td>
             <td id="TeamIndex2PriceData" runat="server"></td>
-            <td id="TeamIndex2PnLData" runat="server"></td>
+            <td id="TeamIndex2ValueData" runat="server"></td>
         </tr>
 
        <tr>
@@ -91,7 +91,7 @@
             <td><strong>Total</strong></td>
             <td></td>
             <td></td>
-            <td id="TeamTotalPnLData" runat="server"></td>
+            <td id="TeamTotalValueData" runat="server"></td>
         </tr>
 
     </tbody>
@@ -106,23 +106,23 @@
             <th>Security</th>
             <th>Position</th>
             <th>Current Price</th>
-            <th>PnL</th>
+            <th>Value</th>
         </tr>
     </thead>
 
     <tbody>
         <tr>
-            <td>Security1 (SEC1)</td>
+            <td>MCS</td>
             <td id="Player1Position1Data" runat="server"></td>
             <td id="Player1Index1PriceData" runat="server"></td>
-            <td id="Player1Index1PnLData" runat="server"></td>
+            <td id="Player1Index1ValueData" runat="server"></td>
         </tr>
 
        <tr>
-            <td>Security2 (SEC2)</td>
+            <td>IND</td>
             <td id="Player1Position2Data" runat="server"></td>
             <td id="Player1Index2PriceData" runat="server"></td>
-            <td id="Player1Index2PnLData" runat="server"></td>
+            <td id="Player1Index2ValueData" runat="server"></td>
         </tr>
 
        <tr>
@@ -136,7 +136,14 @@
             <td><strong>Total</strong></td>
             <td></td>
             <td></td>
-            <td id="Player1TotalPnLData" runat="server"></td>
+            <td id="Player1TotalValueData" runat="server"></td>
+        </tr>
+
+        <tr>
+            <td><strong>PnL</strong></td>
+            <td></td>
+            <td></td>
+            <td id="Player1PnLData" runat="server"></td>
         </tr>
 
     </tbody>
@@ -151,23 +158,23 @@
                     <th>Security</th>
                     <th>Position</th>
                     <th>Current Price</th>
-                    <th>PnL</th>
+                    <th>Value</th>
                 </tr>
             </thead>
 
             <tbody>
                 <tr>
-                    <td>Security1 (SEC1)</td>
+                    <td>MCS</td>
                     <td id="Player2Position1Data" runat="server"></td>
                     <td id="Player2Index1PriceData" runat="server"></td>
-                    <td id="Player2Index1PnLData" runat="server"></td>
+                    <td id="Player2Index1ValueData" runat="server"></td>
                 </tr>
 
                 <tr>
-                    <td>Security2 (SEC2)</td>
+                    <td>IND</td>
                     <td id="Player2Position2Data" runat="server"></td>
                     <td id="Player2Index2PriceData" runat="server"></td>
-                    <td id="Player2Index2PnLData" runat="server"></td>
+                    <td id="Player2Index2ValueData" runat="server"></td>
                 </tr>
 
                 <tr>
@@ -181,8 +188,15 @@
                     <td><strong>Total</strong></td>
                     <td></td>
                     <td></td>
-                    <td id="Player2TotalPnLData" runat="server"></td>
+                    <td id="Player2TotalValueData" runat="server"></td>
                 </tr>
+
+                        <tr>
+            <td><strong>PnL</strong></td>
+            <td></td>
+            <td></td>
+            <td id="Player2PnLData" runat="server"></td>
+        </tr>
 
             </tbody>
         </table>
@@ -196,23 +210,23 @@
                     <th>Security</th>
                     <th>Position</th>
                     <th>Current Price</th>
-                    <th>PnL</th>
+                    <th>Value</th>
                 </tr>
             </thead>
 
             <tbody>
                 <tr>
-                    <td>Security1 (SEC1)</td>
+                    <td>MCS</td>
                     <td id="Player3Position1Data" runat="server"></td>
                     <td id="Player3Index1PriceData" runat="server"></td>
-                    <td id="Player3Index1PnLData" runat="server"></td>
+                    <td id="Player3Index1ValueData" runat="server"></td>
                 </tr>
 
                 <tr>
-                    <td>Security2 (SEC2)</td>
+                    <td>IND</td>
                     <td id="Player3Position2Data" runat="server"></td>
                     <td id="Player3Index2PriceData" runat="server"></td>
-                    <td id="Player3Index2PnLData" runat="server"></td>
+                    <td id="Player3Index2ValueData" runat="server"></td>
                 </tr>
 
                 <tr>
@@ -226,8 +240,15 @@
                     <td><strong>Total</strong></td>
                     <td></td>
                     <td></td>
-                    <td id="Player3TotalPnLData" runat="server"></td>
+                    <td id="Player3TotalValueData" runat="server"></td>
                 </tr>
+
+                        <tr>
+            <td><strong>PnL</strong></td>
+            <td></td>
+            <td></td>
+            <td id="Player3PnLData" runat="server"></td>
+        </tr>
 
             </tbody>
         </table>
@@ -241,23 +262,23 @@
                     <th>Security</th>
                     <th>Position</th>
                     <th>Current Price</th>
-                    <th>PnL</th>
+                    <th>Value</th>
                 </tr>
             </thead>
 
             <tbody>
                 <tr>
-                    <td>Security1 (SEC1)</td>
+                    <td>MCS</td>
                     <td id="Player4Position1Data" runat="server"></td>
                     <td id="Player4Index1PriceData" runat="server"></td>
-                    <td id="Player4Index1PnLData" runat="server"></td>
+                    <td id="Player4Index1ValueData" runat="server"></td>
                 </tr>
 
                 <tr>
-                    <td>Security2 (SEC2)</td>
+                    <td>IND</td>
                     <td id="Player4Position2Data" runat="server"></td>
                     <td id="Player4Index2PriceData" runat="server"></td>
-                    <td id="Player4Index2PnLData" runat="server"></td>
+                    <td id="Player4Index2ValueData" runat="server"></td>
                 </tr>
 
                 <tr>
@@ -271,8 +292,15 @@
                     <td><strong>Total</strong></td>
                     <td></td>
                     <td></td>
-                    <td id="Player4TotalPnLData" runat="server"></td>
+                    <td id="Player4TotalValueData" runat="server"></td>
                 </tr>
+
+                        <tr>
+            <td><strong>PnL</strong></td>
+            <td></td>
+            <td></td>
+            <td id="Player4PnLData" runat="server"></td>
+        </tr>
 
             </tbody>
         </table>

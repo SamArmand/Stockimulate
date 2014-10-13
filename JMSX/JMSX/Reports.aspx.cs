@@ -35,7 +35,7 @@ namespace JMSX
                 return;
             }
 
-            Team team = dao.GetTeam(Convert.ToInt32(TeamNumber.Value), TeamCode.Value);
+            Team team = dao.GetTeam(Convert.ToInt32(TeamNumber.Value), TeamCode.Value, true);
 
             if (team == null)
             {
@@ -51,40 +51,40 @@ namespace JMSX
             int index1_Price = simulator.Index1_Price;
             int index2_Price = simulator.Index2_Price;
 
-            int teamPnLPositionIndex1 = 0;
-            int teamPnLPositionIndex2 = 0;
+            int teamValuePositionIndex1 = 0;
+            int teamValuePositionIndex2 = 0;
 
-            int teamPnLClosed = 0;
+            int teamValueClosed = 0;
 
-            int teamPnLTotal = 0;
+            int teamValueTotal = 0;
 
             foreach (Player player in team.Players)
             {
                 teamPositionIndex1 += player.PositionIndex1;
                 teamPositionIndex2 += player.PositionIndex2;
-                teamPnLClosed += player.Funds;
+                teamValueClosed += player.Funds;
             }
 
             teamPositionsTotal = teamPositionIndex1 + teamPositionIndex2;
 
-            teamPnLPositionIndex1 = teamPositionIndex1 * index1_Price;
-            teamPnLPositionIndex2 = teamPositionIndex2 * index2_Price;
+            teamValuePositionIndex1 = teamPositionIndex1 * index1_Price;
+            teamValuePositionIndex2 = teamPositionIndex2 * index2_Price;
 
-            teamPnLTotal = teamPnLPositionIndex1 + teamPnLPositionIndex2 + teamPnLClosed;
+            teamValueTotal = teamValuePositionIndex1 + teamValuePositionIndex2 + teamValueClosed;
 
             TeamNameHeader.InnerHtml = team.Name + " - " + team.Id;
             
             TeamPosition1Data.InnerHtml = "" + teamPositionIndex1;
             TeamIndex1PriceData.InnerHtml = "" + index1_Price;
-            TeamIndex1PnLData.InnerHtml = "" + teamPnLPositionIndex1;
+            TeamIndex1ValueData.InnerHtml = "" + teamValuePositionIndex1;
 
             TeamPosition2Data.InnerHtml = "" + teamPositionIndex2;
             TeamIndex2PriceData.InnerHtml = "" + index2_Price;
-            TeamIndex2PnLData.InnerHtml = "" + teamPnLPositionIndex2;
+            TeamIndex2ValueData.InnerHtml = "" + teamValuePositionIndex2;
 
-            TeamFundsData.InnerHtml = "" + teamPnLClosed;
+            TeamFundsData.InnerHtml = "" + teamValueClosed;
 
-            TeamTotalPnLData.InnerHtml = "<strong>" + teamPnLTotal + "</strong>";
+            TeamTotalValueData.InnerHtml = "<strong>" + teamValueTotal + "</strong>";
 
             TeamTable.Style.Value = "display: inline;";
 
@@ -94,28 +94,32 @@ namespace JMSX
                 int playerPositionIndex1 = team.Players.ElementAt(0).PositionIndex1;
                 int playerPositionIndex2 = team.Players.ElementAt(0).PositionIndex2;
 
-                int playerPnLClosed = team.Players.ElementAt(0).Funds;
+                int playerValueClosed = team.Players.ElementAt(0).Funds;
 
-                int playerPnLPositionIndex1 = team.Players.ElementAt(0).PositionIndex1 * index1_Price;
-                int playerPnLPositionIndex2 = team.Players.ElementAt(0).PositionIndex2 * index2_Price;
+                int playerValuePositionIndex1 = team.Players.ElementAt(0).PositionIndex1 * index1_Price;
+                int playerValuePositionIndex2 = team.Players.ElementAt(0).PositionIndex2 * index2_Price;
 
-                int playerPnLPositionsTotal = playerPnLPositionIndex1 + playerPnLPositionIndex2;
+                int playerValuePositionsTotal = playerValuePositionIndex1 + playerValuePositionIndex2;
 
-                int playerPnLTotal = team.Players.ElementAt(0).Funds + playerPnLPositionsTotal;
+                int playerValueTotal = team.Players.ElementAt(0).Funds + playerValuePositionsTotal;
+
+                int playerPnL = playerValueTotal - 1000000;
 
                 Player1NameHeader.InnerHtml = team.Players.ElementAt(0).FirstName + " " + team.Players.ElementAt(0).LastName + " - " + team.Players.ElementAt(0).Id;
 
                 Player1Position1Data.InnerHtml = "" + playerPositionIndex1;
                 Player1Index1PriceData.InnerHtml = "" + index1_Price;
-                Player1Index1PnLData.InnerHtml = "" + playerPnLPositionIndex1;
+                Player1Index1ValueData.InnerHtml = "" + playerValuePositionIndex1;
 
                 Player1Position2Data.InnerHtml = "" + playerPositionIndex2;
                 Player1Index2PriceData.InnerHtml = "" + index2_Price;
-                Player1Index2PnLData.InnerHtml = "" + playerPnLPositionIndex2;
+                Player1Index2ValueData.InnerHtml = "" + playerValuePositionIndex2;
 
-                Player1FundsData.InnerHtml = "" + playerPnLClosed;
+                Player1FundsData.InnerHtml = "" + playerValueClosed;
 
-                Player1TotalPnLData.InnerHtml = "<strong>" + playerPnLTotal + "</strong>";
+                Player1TotalValueData.InnerHtml = "" + playerValueTotal + "";
+
+                Player1PnLData.InnerHtml = "<strong>" + playerPnL + "</strong>";
 
                 Player1Table.Style.Value = "display: inline;";
 
@@ -127,28 +131,32 @@ namespace JMSX
                 int playerPositionIndex1 = team.Players.ElementAt(1).PositionIndex1;
                 int playerPositionIndex2 = team.Players.ElementAt(1).PositionIndex2;
 
-                int playerPnLClosed = team.Players.ElementAt(1).Funds;
+                int playerValueClosed = team.Players.ElementAt(1).Funds;
 
-                int playerPnLPositionIndex1 = team.Players.ElementAt(1).PositionIndex1 * index1_Price;
-                int playerPnLPositionIndex2 = team.Players.ElementAt(1).PositionIndex2 * index2_Price;
+                int playerValuePositionIndex1 = team.Players.ElementAt(1).PositionIndex1 * index1_Price;
+                int playerValuePositionIndex2 = team.Players.ElementAt(1).PositionIndex2 * index2_Price;
 
-                int playerPnLPositionsTotal = playerPnLPositionIndex1 + playerPnLPositionIndex2;
+                int playerValuePositionsTotal = playerValuePositionIndex1 + playerValuePositionIndex2;
 
-                int playerPnLTotal = team.Players.ElementAt(1).Funds + playerPnLPositionsTotal;
+                int playerValueTotal = team.Players.ElementAt(1).Funds + playerValuePositionsTotal;
+
+                int playerPnL = playerValueTotal - 1000000;
 
                 Player1NameHeader.InnerHtml = team.Players.ElementAt(1).FirstName + " " + team.Players.ElementAt(1).LastName + " - " + team.Players.ElementAt(1).Id;
 
                 Player2Position1Data.InnerHtml = "" + playerPositionIndex1;
                 Player2Index1PriceData.InnerHtml = "" + index1_Price;
-                Player2Index1PnLData.InnerHtml = "" + playerPnLPositionIndex1;
+                Player2Index1ValueData.InnerHtml = "" + playerValuePositionIndex1;
 
                 Player2Position2Data.InnerHtml = "" + playerPositionIndex2;
                 Player2Index2PriceData.InnerHtml = "" + index2_Price;
-                Player2Index2PnLData.InnerHtml = "" + playerPnLPositionIndex2;
+                Player2Index2ValueData.InnerHtml = "" + playerValuePositionIndex2;
 
-                Player2FundsData.InnerHtml = "" + playerPnLClosed;
+                Player2FundsData.InnerHtml = "" + playerValueClosed;
 
-                Player2TotalPnLData.InnerHtml = "<strong>" + playerPnLTotal + "</strong>";
+                Player2TotalValueData.InnerHtml = "" + playerValueTotal + "";
+
+                Player2PnLData.InnerHtml = "<strong>" + playerPnL + "</strong>";
 
                 Player2Table.Style.Value = "display: inline;";
 
@@ -160,28 +168,32 @@ namespace JMSX
                 int playerPositionIndex1 = team.Players.ElementAt(2).PositionIndex1;
                 int playerPositionIndex2 = team.Players.ElementAt(2).PositionIndex2;
 
-                int playerPnLClosed = team.Players.ElementAt(2).Funds;
+                int playerValueClosed = team.Players.ElementAt(2).Funds;
 
-                int playerPnLPositionIndex1 = team.Players.ElementAt(2).PositionIndex1 * index1_Price;
-                int playerPnLPositionIndex2 = team.Players.ElementAt(2).PositionIndex2 * index2_Price;
+                int playerValuePositionIndex1 = team.Players.ElementAt(2).PositionIndex1 * index1_Price;
+                int playerValuePositionIndex2 = team.Players.ElementAt(2).PositionIndex2 * index2_Price;
 
-                int playerPnLPositionsTotal = playerPnLPositionIndex1 + playerPnLPositionIndex2;
+                int playerValuePositionsTotal = playerValuePositionIndex1 + playerValuePositionIndex2;
 
-                int playerPnLTotal = team.Players.ElementAt(2).Funds + playerPnLPositionsTotal;
+                int playerValueTotal = team.Players.ElementAt(2).Funds + playerValuePositionsTotal;
+
+                int playerPnL = playerValueTotal - 1000000;
 
                 Player1NameHeader.InnerHtml = team.Players.ElementAt(2).FirstName + " " + team.Players.ElementAt(2).LastName + " - " + team.Players.ElementAt(2).Id;
 
                 Player3Position1Data.InnerHtml = "" + playerPositionIndex1;
                 Player3Index1PriceData.InnerHtml = "" + index1_Price;
-                Player3Index1PnLData.InnerHtml = "" + playerPnLPositionIndex1;
+                Player3Index1ValueData.InnerHtml = "" + playerValuePositionIndex1;
 
                 Player3Position2Data.InnerHtml = "" + playerPositionIndex2;
                 Player3Index2PriceData.InnerHtml = "" + index2_Price;
-                Player3Index2PnLData.InnerHtml = "" + playerPnLPositionIndex2;
+                Player3Index2ValueData.InnerHtml = "" + playerValuePositionIndex2;
 
-                Player3FundsData.InnerHtml = "" + playerPnLClosed;
+                Player3FundsData.InnerHtml = "" + playerValueClosed;
 
-                Player3TotalPnLData.InnerHtml = "<strong>" + playerPnLTotal + "</strong>";
+                Player3TotalValueData.InnerHtml = "" + playerValueTotal + "";
+
+                Player3PnLData.InnerHtml = "<strong>" + playerPnL + "</strong>";
 
                 Player3Table.Style.Value = "display: inline;";
 
@@ -193,28 +205,32 @@ namespace JMSX
                 int playerPositionIndex1 = team.Players.ElementAt(3).PositionIndex1;
                 int playerPositionIndex2 = team.Players.ElementAt(3).PositionIndex2;
 
-                int playerPnLClosed = team.Players.ElementAt(3).Funds;
+                int playerValueClosed = team.Players.ElementAt(3).Funds;
 
-                int playerPnLPositionIndex1 = team.Players.ElementAt(3).PositionIndex1 * index1_Price;
-                int playerPnLPositionIndex2 = team.Players.ElementAt(3).PositionIndex2 * index2_Price;
+                int playerValuePositionIndex1 = team.Players.ElementAt(3).PositionIndex1 * index1_Price;
+                int playerValuePositionIndex2 = team.Players.ElementAt(3).PositionIndex2 * index2_Price;
 
-                int playerPnLPositionsTotal = playerPnLPositionIndex1 + playerPnLPositionIndex2;
+                int playerValuePositionsTotal = playerValuePositionIndex1 + playerValuePositionIndex2;
 
-                int playerPnLTotal = team.Players.ElementAt(3).Funds + playerPnLPositionsTotal;
+                int playerValueTotal = team.Players.ElementAt(3).Funds + playerValuePositionsTotal;
+
+                int playerPnL = playerValueTotal - 1000000;
 
                 Player1NameHeader.InnerHtml = team.Players.ElementAt(3).FirstName + " " + team.Players.ElementAt(3).LastName + " - " + team.Players.ElementAt(3).Id;
 
                 Player4Position1Data.InnerHtml = "" + playerPositionIndex1;
                 Player4Index1PriceData.InnerHtml = "" + index1_Price;
-                Player4Index1PnLData.InnerHtml = "" + playerPnLPositionIndex1;
+                Player4Index1ValueData.InnerHtml = "" + playerValuePositionIndex1;
 
                 Player4Position2Data.InnerHtml = "" + playerPositionIndex2;
                 Player4Index2PriceData.InnerHtml = "" + index2_Price;
-                Player4Index2PnLData.InnerHtml = "" + playerPnLPositionIndex2;
+                Player4Index2ValueData.InnerHtml = "" + playerValuePositionIndex2;
 
-                Player4FundsData.InnerHtml = "" + playerPnLClosed;
+                Player4FundsData.InnerHtml = "" + playerValueClosed;
 
-                Player4TotalPnLData.InnerHtml = "<strong>" + playerPnLTotal + "</strong>";
+                Player3TotalValueData.InnerHtml = "" + playerValueTotal + "";
+
+                Player3PnLData.InnerHtml = "<strong>" + playerPnL + "</strong>";
 
                 Player4Table.Style.Value = "display: inline;";
 

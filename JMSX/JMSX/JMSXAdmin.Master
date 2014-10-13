@@ -27,8 +27,8 @@
             <nav class="navbar navbar-inverse" role="navigation">
                 <ul class="nav navbar-nav">
                     <li><a href="Admin.aspx">New Trade</a></li>
-                    <li><a href="Index1.aspx">Index 1</a>             </li>
-                    <li><a href="Index2.aspx">Index 2</a>             </li>
+                    <li><a href="Index1.aspx">MCS</a>             </li>
+                    <li><a href="Index2.aspx">IND</a>             </li>
                 </ul>
             </nav>
         </div>

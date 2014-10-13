@@ -158,7 +158,7 @@ namespace JMSX
 
         }
 
-        public Player GetPlayer(int id) {
+        internal Player GetPlayer(int id) {
             
             SqlConnection connection = new SqlConnection(connectionString);
 
@@ -193,7 +193,7 @@ namespace JMSX
             return player;
         }
 
-        internal Team GetTeam(int id, string code)
+        internal Team GetTeam(int id, string code, bool needCode)
         {
 
             if (id < 0)
@@ -203,13 +203,20 @@ namespace JMSX
 
             SqlConnection connection = new SqlConnection(connectionString);
 
-            string query = "SELECT ID, Name FROM Teams WHERE ID=@ID AND Code=@Code;";
+            string query = "";
+
+            if (needCode)
+                query = "SELECT ID, Name FROM Teams WHERE ID=@ID AND Code=@Code;";
+            else
+                query = "SELECT ID, Name FROM Teams WHERE ID=@ID;";
 
             SqlCommand command = new SqlCommand(query);
             command.CommandType = CommandType.Text;
 
             command.Parameters.AddWithValue("@ID", id);
-            command.Parameters.AddWithValue("@Code", code);
+
+            if (needCode)
+                command.Parameters.AddWithValue("@Code", code);
 
             connection.Open();
 
@@ -263,9 +270,88 @@ namespace JMSX
 
             }
 
+            reader.Dispose();
+            command.Dispose();
+            connection.Dispose();
+
             return team;
         }
 
+        internal List<Team> GetAllTeams()
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            string query = "SELECT ID FROM Teams WHERE NOT ID=0;";
+
+            SqlCommand command = new SqlCommand(query);
+            command.CommandType = CommandType.Text;
+
+            connection.Open();
+
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            List<Team> teams = new List<Team>();
+
+            List<int> ids = new List<int>();
+
+            while (reader.Read())
+            {
+                int id = reader.GetInt32(reader.GetOrdinal("ID"));
+                ids.Add(id);
+            }
+
+            reader.Dispose();
+            command.Dispose();
+            connection.Dispose();
+
+            foreach (int id in ids)
+            {
+                teams.Add(GetTeam(id, "0", false));
+            }
+
+            return teams;
+
+        }
+
+        internal List<Player> GetAllPlayers()
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            string query = "SELECT ID FROM Players WHERE NOT ID=0;";
+
+            SqlCommand command = new SqlCommand(query);
+            command.CommandType = CommandType.Text;
+
+            connection.Open();
+
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            List<Player> players = new List<Player>();
+
+            List<int> ids = new List<int>();
+
+            while (reader.Read())
+            {
+                int id = reader.GetInt32(reader.GetOrdinal("ID"));
+                ids.Add(id);
+            }
+
+            reader.Dispose();
+            command.Dispose();
+            connection.Dispose();
+
+            foreach (int id in ids)
+            {
+                players.Add(GetPlayer(id));
+            }
+
+            return players;
+
+        }
 
         internal string[] GetDayInfo(string table, int tradingDay)
         {
