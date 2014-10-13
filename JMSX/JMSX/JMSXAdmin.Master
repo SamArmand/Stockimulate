@@ -26,7 +26,9 @@
         <div class="row">
             <nav class="navbar navbar-inverse" role="navigation">
                 <ul class="nav navbar-nav">
-                    <li><a href="Admin.aspx">New Trade</a></li>
+                    <li><a href="Admin.aspx">Admin Panel</a></li>
+                    <li><a href="TeamStandings.aspx">Team Standings</a></li>
+                    <li><a href="IndividualStandings.aspx">Individual Standings</a></li>
                     <li><a href="Index1.aspx">MCS</a>             </li>
                     <li><a href="Index2.aspx">IND</a>             </li>
                 </ul>

@@ -70,6 +70,15 @@ namespace JMSX
             }
         }
 
+        private int pnl;
+        public int Pnl
+        {
+            get
+            {
+                return pnl;
+            }
+        }
+
         public Player(int id, string firstName, string lastName, int teamId, int positionIndex1, int positionIndex2, int funds) {
             this.id = id;
             this.firstName = firstName;
@@ -78,6 +87,11 @@ namespace JMSX
             this.positionIndex1 = positionIndex1;
             this.positionIndex2 = positionIndex2;
             this.funds = funds;
+        }
+
+        public void CalculatePnl(int price1, int price2)
+        {
+            pnl = ((positionIndex1 * price1) + (positionIndex2 * price2) + funds) - 1000000;
         }
 
 

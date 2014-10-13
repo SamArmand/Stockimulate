@@ -16,6 +16,15 @@ namespace JMSX
             }
         }
 
+        private int averagePnl;
+        public int AveragePnl
+        {
+            get
+            {
+                return averagePnl;
+            }
+        }
+
         private string name;
         public string Name
         {
@@ -44,6 +53,22 @@ namespace JMSX
         public void AddPlayer(int ID, string FirstName, string LastName, int PositionIndex1, int PostitionIndex2, int Funds)
         {
             Players.Add(new Player(ID, FirstName, LastName, ID, PositionIndex1, PostitionIndex2, Funds));
+        }
+
+        public void CalculateAveragePnl(int price1, int price2)
+        {
+            int totalPnl = 0;
+            int playerCount = 0;
+            
+            foreach (Player player in players)
+            {
+                player.CalculatePnl(price1, price2);
+                totalPnl += player.Pnl;
+                playerCount++;
+            }
+
+            averagePnl = totalPnl / playerCount;
+
         }
 
     }

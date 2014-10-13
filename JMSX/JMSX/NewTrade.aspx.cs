@@ -151,8 +151,6 @@ namespace JMSX
             SuccessDiv.Style.Value = "display: inline";
             WarningDiv.Style.Value = "display: none";
 
-
-
         }
     }
 }
