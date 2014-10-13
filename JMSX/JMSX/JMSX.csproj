@@ -100,6 +100,7 @@
     <Content Include="default.aspx" />
     <Content Include="Index1.aspx" />
     <Content Include="Index2.aspx" />
+    <Content Include="IndividualStandings.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
@@ -172,6 +173,7 @@
     <Content Include="scripts\jquery-1.9.0.min.js" />
     <Content Include="scripts\jquery.signalR-2.1.2.js" />
     <Content Include="scripts\jquery.signalR-2.1.2.min.js" />
+    <Content Include="TeamStandings.aspx" />
     <Content Include="Web.config" />
     <Content Include="scripts\jquery-1.9.0.min.map" />
   </ItemGroup>
@@ -204,6 +206,13 @@
     </Compile>
     <Compile Include="Index2.aspx.designer.cs">
       <DependentUpon>Index2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IndividualStandings.aspx.cs">
+      <DependentUpon>IndividualStandings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IndividualStandings.aspx.designer.cs">
+      <DependentUpon>IndividualStandings.aspx</DependentUpon>
     </Compile>
     <Compile Include="JMSXAdmin.Master.cs">
       <DependentUpon>JMSXAdmin.Master</DependentUpon>
@@ -255,6 +264,13 @@
     <Compile Include="Simulator.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Team.cs" />
+    <Compile Include="TeamStandings.aspx.cs">
+      <DependentUpon>TeamStandings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TeamStandings.aspx.designer.cs">
+      <DependentUpon>TeamStandings.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
