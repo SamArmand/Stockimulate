@@ -16,9 +16,27 @@
             var text = $('#data').text();
             $('#GraphDiv').highcharts({
 
+                title: {
+                    text: 'IND'
+                },
+
                 xAxis: {
+                    title: {
+                        text: 'Trading Day'
+                    },
+
                     min: 0,
                     max: 252,
+                },
+
+                yAxis: {
+
+                    title: {
+                        text: 'Price'
+                    },
+
+                    min: 0,
+                    max: 3000,
                 },
 
                 series: [{

@@ -30,22 +30,24 @@ namespace JMSX
 
             if (indexChange > 0)
             {
-                IndexChangePositive.InnerHtml = "" + indexChange;
+                IndexChangePositiveSpan.InnerHtml = "" + indexChange;
                 IndexChangePositive.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;";
             }
             else if (indexChange < 0)
             {
-                IndexChangeNegative.InnerHtml = "" + indexChange;
+                IndexChangeNegativeSpan.InnerHtml = "" + indexChange * -1;
                 IndexChangeNegative.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;";
             }
             else if (indexChange == 0)
             {
-                IndexChangeNone.InnerHtml = "" + indexChange;
+                IndexChangeNoneSpan.InnerHtml = "" + indexChange;
                 IndexChangeNone.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;";
             }
 
-            NewsDiv.InnerHtml = "<h2>" + news + "</h2>";
-
+            if (news != "null")
+            {
+                NewsDiv.InnerHtml = "<h2>" + news + "</h2>";
+            }
 
             string javascriptArray = "[";
 

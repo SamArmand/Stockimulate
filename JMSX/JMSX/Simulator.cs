@@ -184,9 +184,9 @@ namespace JMSX
             index1_Change = Convert.ToInt32(dayInfo[1]);
             index2_Change = Convert.ToInt32(dayInfo[2]);
 
-            index1_Price += index1_Change * 10;
+            index1_Price += index1_Change;
 
-            index2_Price += index2_Change * 10;
+            index2_Price += index2_Change;
 
             Index1.Update(index1_Price, index1_Change, newsItem, dayNumber);
 

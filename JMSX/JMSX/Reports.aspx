@@ -16,12 +16,12 @@
           <div class="form-group">
             <label class="col-sm-1 control-label" for="textinput">Team Number</label>
             <div class="col-sm-2">
-              <input id="TeamNumber" type="number" placeholder="Team Number" class="form-control" runat="server"/>
+              <input id="TeamNumber" type="number" placeholder="Team Number" class="form-control" runat="server" required/>
             </div>
 
             <label class="col-sm-1 col-sm-offset-1 control-label" for="textinput">Team Code</label>
             <div class="col-sm-2">
-              <input id="TeamCode" type="text" placeholder="Team Code" class="form-control" runat="server"/>
+              <input id="TeamCode" type="text" placeholder="Team Code" class="form-control" runat="server" required/>
             </div>
           </div>
 

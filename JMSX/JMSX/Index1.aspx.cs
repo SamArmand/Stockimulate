@@ -13,7 +13,6 @@ namespace JMSX
 {
     public partial class Index1 : System.Web.UI.Page
     {
-
         public static int indexPrice = 0;
         public static int indexChange = 0;
         public static string news = "";
