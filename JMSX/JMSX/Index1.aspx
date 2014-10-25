@@ -18,9 +18,27 @@
 
             $('#GraphDiv').highcharts({
 
+                title: {
+                    text: 'MCS'
+                },
+
                 xAxis: {
+                    title: {
+                        text: 'Trading Day'
+                    },
+
                     min: 0,
                     max: 252,
+                },
+
+                yAxis: {
+
+                    title: {
+                        text: 'Price'
+                    },
+
+                    min: 0,
+                    max: 3000,
                 },
 
                 series: [{
