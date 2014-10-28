@@ -98,50 +98,50 @@
     <div class="container-fluid">
     
             
-                    <div class="col-lg-12">
+                    <div class="col-sm-12">
     <img style="max-height: 100px;" src="img/JMSX.png"/>
 
 </div>
         
-        <div class="col-lg-10 bg-info" id="GraphDiv">
+        <div class="col-sm-10" id="GraphDiv">
     
                 
 </div>
 
             
-            <div class="col-lg-2">
+            <div class="col-sm-2">
     
-                <div class="col-lg-12 bg-primary IndexPriceDiv" id="IndexPriceDiv" runat="server">
+                <div class="col-sm-12 bg-primary IndexPriceDiv" id="IndexPriceDiv" style="text-align:center" runat="server">
 
                 </div>
 
-                <div class="col-lg-12 bg-success IndexChangePositive" id="IndexChangePositive" style="display:none;" runat="server">
+                <div class="col-sm-12 bg-success IndexChangePositive" id="IndexChangePositive" style="display:none;text-align:center" runat="server">
     
-                    <h2><span class="glyphicon glyphicon-arrow-up"></span></h2>
+                    <h1 style="display:inline-block"><span class="glyphicon glyphicon-arrow-up"></span></h1>
 
-                    <h2 class="IndexChangePositiveSpan" id="IndexChangePositiveSpan" runat="server"></h2>
+                    <h1 style="display:inline-block" class="IndexChangePositiveSpan" id="IndexChangePositiveSpan" runat="server"></h1>
 
                 </div>
 
-                <div class="col-lg-12 bg-danger IndexChangeNegative" id="IndexChangeNegative" style="display:none;" runat="server">
+                <div class="col-sm-12 bg-danger IndexChangeNegative" id="IndexChangeNegative" style="display:none;text-align:center" runat="server">
     
-                    <h2><span class="glyphicon glyphicon-arrow-down"></span></h2>
+                    <h1 style="display:inline-block"><span class="glyphicon glyphicon-arrow-down"></span></h1>
 
-                    <h2 class="IndexChangeNegativeSpan" id="IndexChangeNegativeSpan" runat="server"></h2>
+                    <h1 style="display:inline-block" class="IndexChangeNegativeSpan" id="IndexChangeNegativeSpan" runat="server"></h1>
 
                 </div>
 
-                <div class="col-lg-12 bg-warning IndexChangeNone" id="IndexChangeNone" style="display:none;" runat="server">
+                <div class="col-sm-12 bg-warning IndexChangeNone" id="IndexChangeNone" style="display:none;text-align:center" runat="server">
     
-                    <h2><span class="glyphicon glyphicon-resize-horizontal"></span></h2>
+                    <h1 style="display:inline-block"><span class="glyphicon glyphicon-resize-horizontal"></span></h1>
 
-                    <h2 class="IndexChangeNoneSpan" id="IndexChangeNoneSpan" runat="server"></h2>
+                    <h1 style="display:inline-block" class="IndexChangeNoneSpan" id="IndexChangeNoneSpan" runat="server"></h1>
 
                 </div>
 
            </div>
 
-                            <div class="col-lg-12 NewsDiv" id="NewsDiv" runat="server">
+                            <div class="col-sm-12 NewsDiv" id="NewsDiv" runat="server">
 
 </div>
 

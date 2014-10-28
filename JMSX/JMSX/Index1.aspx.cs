@@ -27,22 +27,22 @@ namespace JMSX
             IndexChangeNegative.Style.Value = "display: none;";
             IndexChangeNone.Style.Value = "display: none;";
 
-            IndexPriceDiv.InnerHtml = "<h2>$" + indexPrice + "</h2>";
+            IndexPriceDiv.InnerHtml = "<h1>$" + indexPrice + "</h1>";
 
             if (indexChange > 0)
             {
                 IndexChangePositiveSpan.InnerHtml = "" + indexChange;
-                IndexChangePositive.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;";
+                IndexChangePositive.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;text-align:center;";
             }
             else if (indexChange < 0)
             {
                 IndexChangeNegativeSpan.InnerHtml = "" + indexChange*-1;
-                IndexChangeNegative.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;";
+                IndexChangeNegative.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;text-align:center;";
             }
             else if (indexChange == 0)
             {
                 IndexChangeNoneSpan.InnerHtml = "" + indexChange;
-                IndexChangeNone.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;";
+                IndexChangeNone.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;text-align:center;";
             }
 
             if (news != "null")
