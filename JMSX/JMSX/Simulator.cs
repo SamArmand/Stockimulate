@@ -145,7 +145,7 @@ namespace JMSX
         {
             dao = DAO.Instance;            
             timer = new Timer();
-            timer.Interval = 28000; 
+            timer.Interval = 3000; 
             timer.Elapsed += new ElapsedEventHandler(UpdateDay);
             timer.Enabled = false;
 
