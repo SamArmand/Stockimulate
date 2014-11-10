@@ -502,17 +502,65 @@ namespace JMSX
 
         internal void UpdatePrice1(int index1_Price)
         {
-            throw new NotImplementedException();
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            string query = "UPDATE AppSettings SET Price1=@Price1;";
+
+            SqlCommand command = new SqlCommand(query);
+            command.CommandType = CommandType.Text;
+
+            command.Parameters.AddWithValue("@Price1", index1_Price);
+
+            connection.Open();
+
+            command.Connection = connection;
+
+            command.ExecuteNonQuery();
+
+            command.Dispose();
+            connection.Dispose();
         }
 
         internal void UpdatePrice2(int index2_Price)
         {
-            throw new NotImplementedException();
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            string query = "UPDATE AppSettings SET Price2=@Price2;";
+
+            SqlCommand command = new SqlCommand(query);
+            command.CommandType = CommandType.Text;
+
+            command.Parameters.AddWithValue("@Price2", index2_Price);
+
+            connection.Open();
+
+            command.Connection = connection;
+
+            command.ExecuteNonQuery();
+
+            command.Dispose();
+            connection.Dispose();
         }
 
         internal void UpdateReportsEnabled(string p)
         {
-            throw new NotImplementedException();
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            string query = "UPDATE AppSettings SET ReportsEnabled=@ReportsEnabled;";
+
+            SqlCommand command = new SqlCommand(query);
+            command.CommandType = CommandType.Text;
+
+            command.Parameters.AddWithValue("@ReportsEnabled", p);
+
+            connection.Open();
+
+            command.Connection = connection;
+
+            command.ExecuteNonQuery();
+
+            command.Dispose();
+            connection.Dispose();
         }
     }
 }
