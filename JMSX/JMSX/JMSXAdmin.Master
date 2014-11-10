@@ -27,6 +27,7 @@
             <nav class="navbar navbar-inverse" role="navigation">
                 <ul class="nav navbar-nav">
                     <li><a href="Admin.aspx">Admin Panel</a></li>
+                    <li><a href="Override.aspx">Override Panel</a></li>
                     <li><a href="TeamStandings.aspx">Team Standings</a></li>
                     <li><a href="IndividualStandings.aspx">Individual Standings</a></li>
                     <li><a href="Index1.aspx">MCS</a>             </li>

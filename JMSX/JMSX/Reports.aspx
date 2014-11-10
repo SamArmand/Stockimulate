@@ -51,6 +51,11 @@
         <strong>Error!</strong> No such Team ID/Code combination exists.
     </div>
 
+    <div id="InfoDiv" runat="server" class="alert alert-info bg-info col-lg-5" style="display: none;">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong>Info.</strong> The quarterly reports system is not yet open.
+    </div>
+
     <br />
 
     <div id="TeamTable" runat="server" style="display: none;">

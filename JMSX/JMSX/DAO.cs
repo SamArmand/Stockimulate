@@ -421,5 +421,98 @@ namespace JMSX
             connection.Dispose();
         
         }
+
+        internal bool IsReportsEnabled()
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            string query = "SELECT ReportsEnabled FROM AppSettings WHERE ID=0;";
+
+            SqlCommand command = new SqlCommand(query);
+            command.CommandType = CommandType.Text;
+
+            connection.Open();
+
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            reader.Read();
+
+            string result = reader.GetString(reader.GetOrdinal("ReportsEnabled"));
+
+            reader.Dispose();
+            command.Dispose();
+            connection.Dispose();
+
+            return (result == "True");
+        }
+
+        internal int GetPrice1()
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            string query = "SELECT Price1 FROM AppSettings WHERE ID=0;";
+
+            SqlCommand command = new SqlCommand(query);
+            command.CommandType = CommandType.Text;
+
+            connection.Open();
+
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            reader.Read();
+
+            int result = reader.GetInt32(reader.GetOrdinal("Price1"));
+
+            reader.Dispose();
+            command.Dispose();
+            connection.Dispose();
+
+            return result;
+        }
+
+        internal int GetPrice2()
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            string query = "SELECT Price2 FROM AppSettings WHERE ID=0;";
+
+            SqlCommand command = new SqlCommand(query);
+            command.CommandType = CommandType.Text;
+
+            connection.Open();
+
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            reader.Read();
+
+            int result = reader.GetInt32(reader.GetOrdinal("Price2"));
+
+            reader.Dispose();
+            command.Dispose();
+            connection.Dispose();
+
+            return result;
+        }
+
+        internal void UpdatePrice1(int index1_Price)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void UpdatePrice2(int index2_Price)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void UpdateReportsEnabled(string p)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -102,6 +102,7 @@
     <Content Include="Index2.aspx" />
     <Content Include="IndividualStandings.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="Override.aspx" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -244,6 +245,13 @@
     </Compile>
     <Compile Include="JMSXBroker.Master.designer.cs">
       <DependentUpon>JMSXBroker.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Override.aspx.cs">
+      <DependentUpon>Override.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Override.aspx.designer.cs">
+      <DependentUpon>Override.aspx</DependentUpon>
     </Compile>
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
