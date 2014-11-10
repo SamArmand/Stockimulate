@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/JMSXAdmin.Master" AutoEventWireup="true" CodeBehind="IndividualStandings.aspx.cs" Inherits="JMSX.IndividualStandings" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="Content/tables.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
