@@ -98,6 +98,7 @@
     <Content Include="Content\signin.css" />
     <Content Include="Content\tables.css" />
     <Content Include="default.aspx" />
+    <Content Include="img\JMSX.png" />
     <Content Include="Index1.aspx" />
     <Content Include="Index2.aspx" />
     <Content Include="IndividualStandings.aspx" />
@@ -126,7 +127,6 @@
     <Content Include="NewTrade.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="img\JMSX.png" />
     <Content Include="Reports.aspx" />
     <Content Include="scripts\ai.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
