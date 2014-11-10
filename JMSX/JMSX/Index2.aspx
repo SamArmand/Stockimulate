@@ -20,6 +20,18 @@
                     text: 'IND'
                 },
 
+                legend: {
+                    enabled: false
+                },
+
+                plotOptions: {
+                    line: {
+                        marker: {
+                            enabled: false
+                        }
+                    }
+                },
+
                 xAxis: {
                     title: {
                         text: 'Trading Day'
@@ -40,6 +52,7 @@
                 },
 
                 series: [{
+                    color: '#000000',
                     data: eval(text)
                 }]
 
