@@ -317,7 +317,7 @@ namespace JMSX
         {
             SqlConnection connection = new SqlConnection(connectionString);
 
-            string query = "SELECT ID FROM Players WHERE NOT ID=0;";
+            string query = "SELECT ID FROM Players WHERE NOT TeamID=0;";
 
             SqlCommand command = new SqlCommand(query);
             command.CommandType = CommandType.Text;
