@@ -11,15 +11,13 @@ namespace JMSX
     public partial class IndividualStandings : System.Web.UI.Page
     {
         private DAO dao;
-        private Simulator simulator;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             dao = DAO.SessionInstance;
-            simulator = Simulator.Instance;
 
-            int price1 = simulator.Index1_Price;
-            int price2 = simulator.Index2_Price;
+            int price1 = dao.GetPrice1();
+            int price2 = dao.GetPrice2();
 
             List<Player> players = dao.GetAllPlayers();
 

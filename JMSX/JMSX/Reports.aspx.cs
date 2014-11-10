@@ -11,12 +11,10 @@ namespace JMSX
     {
 
         private DAO dao;
-        private Simulator simulator;
         
         protected void Page_Load(object sender, EventArgs e)
         {
             dao = DAO.SessionInstance;
-            simulator = Simulator.Instance;
         }
 
         protected void Submit_Click(object sender, EventArgs e)
@@ -28,6 +26,13 @@ namespace JMSX
             Player2Table.Style.Value = "display: none;";
             Player3Table.Style.Value = "display: none;";
             Player4Table.Style.Value = "display: none;";
+
+            if (!dao.IsReportsEnabled())
+            {
+                InfoDiv.Style.Value = "display: inline;";
+                return;
+            }
+
 
             if (Convert.ToInt32(TeamNumber.Value) < 1)
             {
@@ -48,8 +53,8 @@ namespace JMSX
 
             int teamPositionsTotal = 0;
 
-            int index1_Price = simulator.Index1_Price;
-            int index2_Price = simulator.Index2_Price;
+            int index1_Price = dao.GetPrice1();
+            int index2_Price = dao.GetPrice2();
 
             int teamValuePositionIndex1 = 0;
             int teamValuePositionIndex2 = 0;

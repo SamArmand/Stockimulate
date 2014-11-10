@@ -79,6 +79,8 @@ namespace JMSX
 
             timer.Enabled = true;
 
+            dao.UpdateReportsEnabled("False");
+
         }
 
         public void Pause()
@@ -86,6 +88,8 @@ namespace JMSX
             status = Status.PAUSED;
 
             timer.Enabled = false;
+
+            dao.UpdateReportsEnabled("True");
         }
 
         public void Stop()
@@ -93,6 +97,8 @@ namespace JMSX
             status = Status.STOPPED;
 
             timer.Enabled = false;
+
+            dao.UpdateReportsEnabled("True");
         }
 
         public void SetPracticeMode()
@@ -131,6 +137,9 @@ namespace JMSX
             index2_Price = Convert.ToInt32(dayInfo[2]);
             index1_Change = 0;
             index2_Change = 0;
+
+            dao.UpdatePrice1(index1_Price);
+            dao.UpdatePrice2(index2_Price);
 
             Index1.Update(index1_Price, index1_Change, newsItem, dayNumber);
 
@@ -188,6 +197,9 @@ namespace JMSX
 
             index2_Price += index2_Change;
 
+            dao.UpdatePrice1(index1_Price);
+            dao.UpdatePrice2(index2_Price);
+
             Index1.Update(index1_Price, index1_Change, newsItem, dayNumber);
 
             Index2.Update(index2_Price, index2_Change, newsItem, dayNumber);
@@ -231,6 +243,12 @@ namespace JMSX
             Index1.Reset();
             Index2.Reset();
             dao.Reset();
+
+            index1_Price = 0;
+            index2_Price = 0;
+
+            dao.UpdatePrice1(index1_Price);
+            dao.UpdatePrice2(index2_Price);
 
             var context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
             context.Clients.All.sendMessage(index1_Price, Index2_Price, dayNumber, index1_Change, index2_Change, newsItem);

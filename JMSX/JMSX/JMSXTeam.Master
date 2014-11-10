@@ -28,8 +28,6 @@
             <nav class="navbar navbar-inverse" role="navigation">
                 <ul class="nav navbar-nav">
                     <li><a href="Reports.aspx">Reports</a></li>
-                    <li><a href="Index1.aspx">MCS</a>             </li>
-                    <li><a href="Index2.aspx">IND</a>             </li>
                 </ul>
             </nav>
         </div>
