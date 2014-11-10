@@ -162,7 +162,7 @@ namespace JMSX
             
             SqlConnection connection = new SqlConnection(connectionString);
 
-            string query = "SELECT FirstName, LastName, TeamID, PositionIndex1, PositionIndex2, Funds FROM Players WHERE ID=@ID;";
+            string query = "SELECT Name, TeamID, PositionIndex1, PositionIndex2, Funds FROM Players WHERE ID=@ID;";
 
             SqlCommand command = new SqlCommand(query);
             command.CommandType = CommandType.Text;
@@ -177,14 +177,13 @@ namespace JMSX
 
             reader.Read();
 
-            string firstName = reader.GetString(reader.GetOrdinal("FirstName"));
-            string lastName = reader.GetString(reader.GetOrdinal("LastName"));
+            string name = reader.GetString(reader.GetOrdinal("Name"));
             int teamId = reader.GetInt32(reader.GetOrdinal("PositionIndex1"));
             int positionIndex1 = reader.GetInt32(reader.GetOrdinal("PositionIndex1"));
             int positionIndex2 = reader.GetInt32(reader.GetOrdinal("PositionIndex2"));
             int funds = reader.GetInt32(reader.GetOrdinal("Funds"));
 
-            Player player = new Player(id, firstName, lastName, teamId, positionIndex1, positionIndex2, funds);
+            Player player = new Player(id, name, teamId, positionIndex1, positionIndex2, funds);
 
             reader.Dispose();
             command.Dispose();
@@ -244,7 +243,7 @@ namespace JMSX
 
             connection = new SqlConnection(connectionString);
 
-            query = "SELECT ID, FirstName, LastName, PositionIndex1, PositionIndex2, Funds FROM Players WHERE TeamID=@TeamID;";
+            query = "SELECT ID, Name, PositionIndex1, PositionIndex2, Funds FROM Players WHERE TeamID=@TeamID;";
 
             command = new SqlCommand(query);
             command.CommandType = CommandType.Text;
@@ -260,13 +259,12 @@ namespace JMSX
             while (reader.Read())
             {
                 int playerId = reader.GetInt32(reader.GetOrdinal("ID"));
-                string firstName = reader.GetString(reader.GetOrdinal("FirstName"));
-                string lastName = reader.GetString(reader.GetOrdinal("LastName"));
+                string player_name = reader.GetString(reader.GetOrdinal("Name"));
                 int positionIndex1 = reader.GetInt32(reader.GetOrdinal("PositionIndex1"));
                 int positionIndex2 = reader.GetInt32(reader.GetOrdinal("PositionIndex2"));
                 int funds = reader.GetInt32(reader.GetOrdinal("Funds")); 
 
-                team.AddPlayer(playerId, firstName, lastName, positionIndex1, positionIndex2, funds);
+                team.AddPlayer(playerId, player_name, positionIndex1, positionIndex2, funds);
 
             }
 

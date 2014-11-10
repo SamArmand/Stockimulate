@@ -110,7 +110,7 @@ namespace JMSX
 
                 int playerPnL = playerValueTotal - 1000000;
 
-                Player1NameHeader.InnerHtml = team.Players.ElementAt(0).FirstName + " " + team.Players.ElementAt(0).LastName + " - " + team.Players.ElementAt(0).Id;
+                Player1NameHeader.InnerHtml = team.Players.ElementAt(0).Name + " - " + team.Players.ElementAt(0).Id;
 
                 Player1Position1Data.InnerHtml = "" + playerPositionIndex1;
                 Player1Index1PriceData.InnerHtml = "" + index1_Price;
@@ -147,7 +147,7 @@ namespace JMSX
 
                 int playerPnL = playerValueTotal - 1000000;
 
-                Player1NameHeader.InnerHtml = team.Players.ElementAt(1).FirstName + " " + team.Players.ElementAt(1).LastName + " - " + team.Players.ElementAt(1).Id;
+                Player1NameHeader.InnerHtml = team.Players.ElementAt(1).Name + " - " + team.Players.ElementAt(1).Id;
 
                 Player2Position1Data.InnerHtml = "" + playerPositionIndex1;
                 Player2Index1PriceData.InnerHtml = "" + index1_Price;
@@ -184,7 +184,7 @@ namespace JMSX
 
                 int playerPnL = playerValueTotal - 1000000;
 
-                Player1NameHeader.InnerHtml = team.Players.ElementAt(2).FirstName + " " + team.Players.ElementAt(2).LastName + " - " + team.Players.ElementAt(2).Id;
+                Player1NameHeader.InnerHtml = team.Players.ElementAt(2).Name + " - " + team.Players.ElementAt(2).Id;
 
                 Player3Position1Data.InnerHtml = "" + playerPositionIndex1;
                 Player3Index1PriceData.InnerHtml = "" + index1_Price;
@@ -221,7 +221,7 @@ namespace JMSX
 
                 int playerPnL = playerValueTotal - 1000000;
 
-                Player1NameHeader.InnerHtml = team.Players.ElementAt(3).FirstName + " " + team.Players.ElementAt(3).LastName + " - " + team.Players.ElementAt(3).Id;
+                Player1NameHeader.InnerHtml = team.Players.ElementAt(3).Name + " - " + team.Players.ElementAt(3).Id;
 
                 Player4Position1Data.InnerHtml = "" + playerPositionIndex1;
                 Player4Index1PriceData.InnerHtml = "" + index1_Price;

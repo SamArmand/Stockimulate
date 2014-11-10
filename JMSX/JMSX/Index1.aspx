@@ -19,7 +19,7 @@
             $('#GraphDiv').highcharts({
 
                 title: {
-                    text: 'MCS'
+                    text: 'OIL'
                 },
 
                 xAxis: {

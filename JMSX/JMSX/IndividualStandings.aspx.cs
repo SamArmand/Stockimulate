@@ -56,7 +56,7 @@ namespace JMSX
 
                 sb.Append("<tr>");
                 sb.Append("<td>" + rankString + "</td>");
-                sb.Append("<td>" + sortedPlayers.ElementAt(i).FirstName + " " + sortedPlayers.ElementAt(i).LastName + " - " + sortedPlayers.ElementAt(i).Id + "</td>");
+                sb.Append("<td>" + sortedPlayers.ElementAt(i).Name + " - " + sortedPlayers.ElementAt(i).Id + "</td>");
                 sb.Append("<td>" + "$" + sortedPlayers.ElementAt(i).Pnl + "</td>");
                 sb.Append("</tr>");
             }
