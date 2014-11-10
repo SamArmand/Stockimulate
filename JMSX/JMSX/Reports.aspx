@@ -72,7 +72,7 @@
 
     <tbody>
         <tr>
-            <td>MCS</td>
+            <td>OIL</td>
             <td id="TeamPosition1Data" runat="server"></td>
             <td id="TeamIndex1PriceData" runat="server"></td>
             <td id="TeamIndex1ValueData" runat="server"></td>
@@ -117,7 +117,7 @@
 
     <tbody>
         <tr>
-            <td>MCS</td>
+            <td>OIL</td>
             <td id="Player1Position1Data" runat="server"></td>
             <td id="Player1Index1PriceData" runat="server"></td>
             <td id="Player1Index1ValueData" runat="server"></td>
@@ -169,7 +169,7 @@
 
             <tbody>
                 <tr>
-                    <td>MCS</td>
+                    <td>OIL</td>
                     <td id="Player2Position1Data" runat="server"></td>
                     <td id="Player2Index1PriceData" runat="server"></td>
                     <td id="Player2Index1ValueData" runat="server"></td>
@@ -221,7 +221,7 @@
 
             <tbody>
                 <tr>
-                    <td>MCS</td>
+                    <td>OIL</td>
                     <td id="Player3Position1Data" runat="server"></td>
                     <td id="Player3Index1PriceData" runat="server"></td>
                     <td id="Player3Index1ValueData" runat="server"></td>
@@ -273,7 +273,7 @@
 
             <tbody>
                 <tr>
-                    <td>MCS</td>
+                    <td>OIL</td>
                     <td id="Player4Position1Data" runat="server"></td>
                     <td id="Player4Index1PriceData" runat="server"></td>
                     <td id="Player4Index1ValueData" runat="server"></td>

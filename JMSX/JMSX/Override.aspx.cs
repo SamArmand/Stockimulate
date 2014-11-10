@@ -9,7 +9,18 @@ namespace JMSX
 {
     public partial class Override : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
+
+        protected void UpdatePrice1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void UpdatePrice2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ToggleReportsEnabled_Click(object sender, EventArgs e)
         {
 
         }

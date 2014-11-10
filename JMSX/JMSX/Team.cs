@@ -50,9 +50,9 @@ namespace JMSX
             players = new List<Player>();
         }
 
-        public void AddPlayer(int ID, string FirstName, string LastName, int PositionIndex1, int PostitionIndex2, int Funds)
+        public void AddPlayer(int ID, string name, int PositionIndex1, int PostitionIndex2, int Funds)
         {
-            Players.Add(new Player(ID, FirstName, LastName, ID, PositionIndex1, PostitionIndex2, Funds));
+            Players.Add(new Player(ID, name, ID, PositionIndex1, PostitionIndex2, Funds));
         }
 
         public void CalculateAveragePnl(int price1, int price2)

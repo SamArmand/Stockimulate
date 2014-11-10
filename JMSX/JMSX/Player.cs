@@ -16,21 +16,12 @@ namespace JMSX
             }
         }
 
-        private string firstName;
-        public string FirstName
+        private string name;
+        public string Name
         {
             get
             {
-                return firstName;
-            }
-        }
-        
-        private string lastName;
-        public string LastName
-        {
-            get
-            {
-                return lastName;
+                return name;
             }
         }
         
@@ -79,10 +70,9 @@ namespace JMSX
             }
         }
 
-        public Player(int id, string firstName, string lastName, int teamId, int positionIndex1, int positionIndex2, int funds) {
+        public Player(int id, string name, int teamId, int positionIndex1, int positionIndex2, int funds) {
             this.id = id;
-            this.firstName = firstName;
-            this.lastName = lastName;
+            this.name = name;
             this.teamId = teamId;
             this.positionIndex1 = positionIndex1;
             this.positionIndex2 = positionIndex2;
