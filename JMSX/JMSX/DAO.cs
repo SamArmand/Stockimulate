@@ -159,7 +159,9 @@ namespace JMSX
         }
 
         internal Player GetPlayer(int id) {
-            
+
+            Player player;
+
             SqlConnection connection = new SqlConnection(connectionString);
 
             string query = "SELECT Name, TeamID, PositionIndex1, PositionIndex2, Funds FROM Players WHERE ID=@ID;";
@@ -175,15 +177,23 @@ namespace JMSX
 
             SqlDataReader reader = command.ExecuteReader();
 
-            reader.Read();
+            if (reader.Read())
+            {
 
-            string name = reader.GetString(reader.GetOrdinal("Name"));
-            int teamId = reader.GetInt32(reader.GetOrdinal("PositionIndex1"));
-            int positionIndex1 = reader.GetInt32(reader.GetOrdinal("PositionIndex1"));
-            int positionIndex2 = reader.GetInt32(reader.GetOrdinal("PositionIndex2"));
-            int funds = reader.GetInt32(reader.GetOrdinal("Funds"));
+                string name = reader.GetString(reader.GetOrdinal("Name"));
+                int teamId = reader.GetInt32(reader.GetOrdinal("TeamID"));
+                int positionIndex1 = reader.GetInt32(reader.GetOrdinal("PositionIndex1"));
+                int positionIndex2 = reader.GetInt32(reader.GetOrdinal("PositionIndex2"));
+                int funds = reader.GetInt32(reader.GetOrdinal("Funds"));
 
-            Player player = new Player(id, name, teamId, positionIndex1, positionIndex2, funds);
+                player = new Player(id, name, teamId, positionIndex1, positionIndex2, funds);
+
+            }
+
+            else
+            {
+                player = new Player(-1, "null", -1, -1, -1, -1);
+            }
 
             reader.Dispose();
             command.Dispose();
