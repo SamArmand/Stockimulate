@@ -13,6 +13,15 @@ namespace JMSX {
     public partial class Override {
         
         /// <summary>
+        /// Price1Input control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl Price1Input;
+        
+        /// <summary>
         /// UpdatePrice1 control.
         /// </summary>
         /// <remarks>
@@ -20,6 +29,15 @@ namespace JMSX {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button UpdatePrice1;
+        
+        /// <summary>
+        /// Price2Input control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl Price2Input;
         
         /// <summary>
         /// UpdatePrice2 control.
@@ -38,5 +56,32 @@ namespace JMSX {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ToggleReportsEnabled;
+        
+        /// <summary>
+        /// ReportsEnabled control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ReportsEnabled;
+        
+        /// <summary>
+        /// Price1Current control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Price1Current;
+        
+        /// <summary>
+        /// Price2Current control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Price2Current;
     }
 }
