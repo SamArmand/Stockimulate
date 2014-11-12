@@ -124,6 +124,16 @@ namespace JMSX
             }
 
             simulator.Play();
+
+            ClearForm();
         }
+
+        protected void ClearForm()
+        {
+            
+            Verify.Checked = false;
+            //Clear other form fields
+        }
+
     }
 }
