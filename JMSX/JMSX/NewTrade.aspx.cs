@@ -110,7 +110,7 @@ namespace JMSX
                 return;
             }
 
-            if (Security.Value == "OIL" && ((seller.PositionIndex1 - Convert.ToInt32(Quantity.Value)) < -100 && seller.Id != 0))
+            if (Security.Value == "OIL" && ((seller.PositionIndex1 - Convert.ToInt32(Quantity.Value)) < -100 && seller.TeamId != 0))
             {
                 ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> This trade puts the seller's OIL position at below -100.";
                 ErrorDiv.Style.Value = "display: inline";
@@ -119,7 +119,7 @@ namespace JMSX
                 return;
             }
 
-            if (Security.Value == "IND" && ((buyer.PositionIndex2 + Convert.ToInt32(Quantity.Value)) > 100 && buyer.Id != 0))
+            if (Security.Value == "IND" && ((buyer.PositionIndex2 + Convert.ToInt32(Quantity.Value)) > 100 && buyer.TeamId != 0))
             {
                 ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> This trade puts the buyer's IND position at over 100.";
                 ErrorDiv.Style.Value = "display: inline";
@@ -151,6 +151,19 @@ namespace JMSX
             SuccessDiv.Style.Value = "display: inline";
             WarningDiv.Style.Value = "display: none";
 
+            ClearForm();
+
+        }
+
+        protected void ClearForm()
+        {
+            BuyerID.Value = string.Empty;
+            SellerID.Value = string.Empty;
+            Quantity.Value = string.Empty;
+            Price.Value = string.Empty;
+
+            Verify.Checked = false;
+            //Clear other form fields
         }
     }
 }

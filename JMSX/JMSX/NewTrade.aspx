@@ -6,7 +6,7 @@
     
   <div class="row">
     <div class="col-md-12">
-      <form class="form-horizontal" role="form" runat="server">
+      <form class="form-horizontal" role="form" runat="server" id="myform">
         <fieldset>
 
           <!-- Form Name -->

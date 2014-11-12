@@ -147,7 +147,7 @@ namespace JMSX
 
                 int playerPnL = playerValueTotal - 1000000;
 
-                Player1NameHeader.InnerHtml = team.Players.ElementAt(1).Name + " - " + team.Players.ElementAt(1).Id;
+                Player2NameHeader.InnerHtml = team.Players.ElementAt(1).Name + " - " + team.Players.ElementAt(1).Id;
 
                 Player2Position1Data.InnerHtml = "" + playerPositionIndex1;
                 Player2Index1PriceData.InnerHtml = "" + index1_Price;
@@ -184,7 +184,7 @@ namespace JMSX
 
                 int playerPnL = playerValueTotal - 1000000;
 
-                Player1NameHeader.InnerHtml = team.Players.ElementAt(2).Name + " - " + team.Players.ElementAt(2).Id;
+                Player3NameHeader.InnerHtml = team.Players.ElementAt(2).Name + " - " + team.Players.ElementAt(2).Id;
 
                 Player3Position1Data.InnerHtml = "" + playerPositionIndex1;
                 Player3Index1PriceData.InnerHtml = "" + index1_Price;
@@ -221,7 +221,7 @@ namespace JMSX
 
                 int playerPnL = playerValueTotal - 1000000;
 
-                Player1NameHeader.InnerHtml = team.Players.ElementAt(3).Name + " - " + team.Players.ElementAt(3).Id;
+                Player4NameHeader.InnerHtml = team.Players.ElementAt(3).Name + " - " + team.Players.ElementAt(3).Id;
 
                 Player4Position1Data.InnerHtml = "" + playerPositionIndex1;
                 Player4Index1PriceData.InnerHtml = "" + index1_Price;
@@ -233,9 +233,9 @@ namespace JMSX
 
                 Player4FundsData.InnerHtml = "" + playerValueClosed;
 
-                Player3TotalValueData.InnerHtml = "" + playerValueTotal + "";
+                Player4TotalValueData.InnerHtml = "" + playerValueTotal + "";
 
-                Player3PnLData.InnerHtml = "<strong>" + playerPnL + "</strong>";
+                Player4PnLData.InnerHtml = "<strong>" + playerPnL + "</strong>";
 
                 Player4Table.Style.Value = "display: inline;";
 

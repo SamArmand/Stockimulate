@@ -51,11 +51,11 @@ namespace JMSX
 
             if (dao.IsReportsEnabled())
             {
-                dao.UpdateReportsEnabled("No");
+                dao.UpdateReportsEnabled("False");
             }
             else
             {
-                dao.UpdateReportsEnabled("Yes");
+                dao.UpdateReportsEnabled("True");
             }
 
             Response.Redirect("Override.aspx");

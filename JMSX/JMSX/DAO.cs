@@ -71,7 +71,7 @@ namespace JMSX
 
             string index;
 
-            if (securitySymbol == "SEC1")
+            if (securitySymbol == "OIL")
                 index = "PositionIndex1";
             else
                 index = "PositionIndex2";
