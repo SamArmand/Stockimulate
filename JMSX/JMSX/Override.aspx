@@ -11,9 +11,23 @@
 
         <div class="row">
 
+            <input id="Price1Input" type="number" class="form-control" runat="server" required="required"/>
             <asp:Button id="UpdatePrice1" class="btn btn-primary" runat="server" Text="Update" OnClick="UpdatePrice1_Click" />
+            <input id="Price2Input" type="number" class="form-control" runat="server" required="required"/>
             <asp:Button id="UpdatePrice2" class="btn btn-primary" runat="server" Text="Update" OnClick="UpdatePrice2_Click" />
             <asp:Button id="ToggleReportsEnabled" class="btn btn-primary" runat="server" Text="Toggle Reports" OnClick="ToggleReportsEnabled_Click" />
+            
+            <br />
+            
+            <span id="ReportsEnabled" runat="server"></span>
+
+            <br />
+
+            <span id="Price1Current" runat="server"></span>
+
+            <br />
+
+            <span id="Price2Current" runat="server"></span>
 
             <br />
             <br />

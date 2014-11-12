@@ -16,6 +16,8 @@ namespace JMSX
         private const int QUARTER_3_DAY = 188;
         private const int QUARTER_4_DAY = 252;
 
+        private const int TIME_INTERVAL = 28000;
+
         private DAO dao;
 
         private Timer timer;
@@ -154,7 +156,7 @@ namespace JMSX
         {
             dao = DAO.Instance;            
             timer = new Timer();
-            timer.Interval = 3000; 
+            timer.Interval = TIME_INTERVAL; 
             timer.Elapsed += new ElapsedEventHandler(UpdateDay);
             timer.Enabled = false;
 
