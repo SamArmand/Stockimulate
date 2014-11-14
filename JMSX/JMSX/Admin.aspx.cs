@@ -93,9 +93,9 @@ namespace JMSX
                 return;
             }
 
-            if (!simulator.IsStopped())
+            if (!simulator.IsStopped() && !simulator.IsReady())
             {
-                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> Simulator is not STOPPED!";
+                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> Simulator is not STOPPED or READY!";
                 ErrorDiv.Style.Value = "display: inline;";
                 return;
             }
