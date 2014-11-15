@@ -32,6 +32,8 @@ namespace JMSX
                 WarningDiv.Style.Value = "display: inline;";
                 return;
             }
+
+            ClearForm();
             
             if (simulator.IsPlaying() || simulator.IsPaused())
             {
@@ -63,6 +65,8 @@ namespace JMSX
                 return;
             }
 
+            ClearForm();
+
             if (simulator.IsPlaying() || simulator.IsPaused())
             {
                 ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> Simulator is not READY to play another simulation. <br/> Another simulation is in progress.";
@@ -93,12 +97,7 @@ namespace JMSX
                 return;
             }
 
-            if (!simulator.IsStopped() && !simulator.IsReady())
-            {
-                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> Simulator is not STOPPED or READY!";
-                ErrorDiv.Style.Value = "display: inline;";
-                return;
-            }
+            ClearForm();
 
             simulator.Reset();
 
@@ -116,6 +115,8 @@ namespace JMSX
                 return;
             }
 
+            ClearForm();
+
             if (!simulator.IsPaused())
             {
                 ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> There is no PAUSED simulation in progress.";
@@ -125,7 +126,6 @@ namespace JMSX
 
             simulator.Play();
 
-            ClearForm();
         }
 
         protected void ClearForm()

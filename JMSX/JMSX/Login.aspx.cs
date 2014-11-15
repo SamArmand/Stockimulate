@@ -17,13 +17,13 @@ namespace JMSX
         //LOL!!!
         protected void signIn_Click(object sender, EventArgs e)
         {
-            if (user.Value == "admin" && password.Value == "admin")
+            if (user.Value == "admin" && password.Value == "charlesisadmin")
             {
                 HttpContext.Current.Session["Login"] = "Admin";
                 Response.Redirect("Admin.aspx");
             }
 
-            else if (user.Value == "broker" && password.Value == "broker")
+            else if (user.Value == "broker" && password.Value == "brokershavepower")
             {
                 HttpContext.Current.Session["Login"] = "Broker";
                 Response.Redirect("NewTrade.aspx");

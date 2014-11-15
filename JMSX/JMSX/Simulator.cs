@@ -241,6 +241,7 @@ namespace JMSX
 
         public void Reset()
         {
+            Stop();
             status = Status.READY;
             Index1.Reset();
             Index2.Reset();
