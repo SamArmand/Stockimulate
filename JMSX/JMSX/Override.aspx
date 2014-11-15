@@ -9,11 +9,11 @@
         <!-- Form Name -->
           <legend><h1>Override Panel</h1></legend>
 
-        <div class="row">
+        <div class="form-group">
 
-            <input id="Price1Input" type="number" class="form-control" runat="server" required="required"/>
+            <input id="Price1Input" type="number" class="form-control" runat="server"/>
             <asp:Button id="UpdatePrice1" class="btn btn-primary" runat="server" Text="Update" OnClick="UpdatePrice1_Click" />
-            <input id="Price2Input" type="number" class="form-control" runat="server" required="required"/>
+            <input id="Price2Input" type="number" class="form-control" runat="server"/>
             <asp:Button id="UpdatePrice2" class="btn btn-primary" runat="server" Text="Update" OnClick="UpdatePrice2_Click" />
             <asp:Button id="ToggleReportsEnabled" class="btn btn-primary" runat="server" Text="Toggle Reports" OnClick="ToggleReportsEnabled_Click" />
             
