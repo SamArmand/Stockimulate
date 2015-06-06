@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNet.SignalR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Timers;
-using System.Web;
+using Stockimulate.Views;
 
 namespace Stockimulate
 {
@@ -11,250 +9,211 @@ namespace Stockimulate
     public class Simulator : Hub
     {
         
-        private const int QUARTER_1_DAY = 61;
-        private const int QUARTER_2_DAY = 124;
-        private const int QUARTER_3_DAY = 188;
-        private const int QUARTER_4_DAY = 252;
+        private const int Quarter1Day = 61;
+        private const int Quarter2Day = 124;
+        private const int Quarter3Day = 188;
+        private const int Quarter4Day = 252;
 
-        private const int TIME_INTERVAL = 28000;
+        private const int TimeInterval = 28000;
 
-        private DAO dao;
+        private readonly DataAccess _dataAccess;
 
-        private Timer timer;
+        private readonly Timer _timer;
 
-        private int dayNumber;
+        private int _dayNumber;
 
-        private int index1_Change;
-        public int Index1_Change
-        {
-            get
-            {
-                return index1_Change;
-            }
-        }
+        public int Index1Change { get; private set; }
 
-        public int index2_Change;
-        public int Index2_Change
-        {
-            get
-            {
-                return index2_Change;
-            }
-        }
+        public int Index2Change { get; private set; }
 
-        private int index1_Price;
-        public int Index1_Price
-        {
-            get
-            {
-                return index1_Price;
-            }
-        }
+        public int Index1Price { get; private set; }
 
-        private int index2_Price;
-        public int Index2_Price
-        {
-            get
-            {
-                return index2_Price;
-            }
-        }
+        public int Index2Price { get; private set; }
 
-        private string newsItem;
-        public string NewsItem
-        {
-            get
-            {
-                return newsItem;
-            }
-        }
+        public string NewsItem { get; private set; }
 
-        private enum Status {PLAYING, PAUSED, STOPPED, READY}
-        private enum Mode {PRACTICE, COMPETITION}
+        private enum Status {Playing, Paused, Stopped, Ready}
+        private enum Mode {Practice, Competition}
 
-        private Status status;
-        private Mode mode;
+        private Status _status;
+        private Mode _mode;
 
         public void Play()
         {
-            status = Status.PLAYING;
+            _status = Status.Playing;
 
-            timer.Enabled = true;
+            _timer.Enabled = true;
 
-            dao.UpdateReportsEnabled("False");
+            _dataAccess.UpdateReportsEnabled("False");
 
         }
 
         public void Pause()
         {
-            status = Status.PAUSED;
+            _status = Status.Paused;
 
-            timer.Enabled = false;
+            _timer.Enabled = false;
 
-            dao.UpdateReportsEnabled("True");
+            _dataAccess.UpdateReportsEnabled("True");
         }
 
         public void Stop()
         {
-            status = Status.STOPPED;
+            _status = Status.Stopped;
 
-            timer.Enabled = false;
+            _timer.Enabled = false;
 
-            dao.UpdateReportsEnabled("True");
+            _dataAccess.UpdateReportsEnabled("True");
         }
 
         public void SetPracticeMode()
         {
-            mode = Mode.PRACTICE;
-            dayNumber = 0;
+            _mode = Mode.Practice;
+            _dayNumber = 0;
 
-            string[] dayInfo = dao.GetDayInfo("PracticeEvents", 0);
+            string[] dayInfo = _dataAccess.GetDayInfo("PracticeEvents", 0);
 
-            newsItem = "";
+            NewsItem = "";
 
-            index1_Price = Convert.ToInt32(dayInfo[1]);
-            index2_Price = Convert.ToInt32(dayInfo[2]);
-            index1_Change = 0;
-            index2_Change = 0;
+            Index1Price = Convert.ToInt32(dayInfo[1]);
+            Index2Price = Convert.ToInt32(dayInfo[2]);
+            Index1Change = 0;
+            Index2Change = 0;
 
-            Index1.Update(index1_Price, index1_Change, newsItem, dayNumber);
+            Index1.Update(Index1Price, Index1Change, NewsItem, _dayNumber);
 
-            Index2.Update(index2_Price, index2_Change, newsItem, dayNumber);
+            Index2.Update(Index2Price, Index2Change, NewsItem, _dayNumber);
 
             var context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
-            context.Clients.All.sendMessage(index1_Price, Index2_Price, dayNumber, index1_Change, index2_Change, newsItem);
+            context.Clients.All.sendMessage(Index1Price, Index2Price, _dayNumber, Index1Change, Index2Change, NewsItem);
 
         }
 
         public void SetCompetitionMode()
         {
-            mode = Mode.COMPETITION;
-            dayNumber = 0;
+            _mode = Mode.Competition;
+            _dayNumber = 0;
 
-            string[] dayInfo = dao.GetDayInfo("Events", 0);
+            string[] dayInfo = _dataAccess.GetDayInfo("Events", 0);
 
-            newsItem = "";
+            NewsItem = "";
 
-            index1_Price = Convert.ToInt32(dayInfo[1]);
-            index2_Price = Convert.ToInt32(dayInfo[2]);
-            index1_Change = 0;
-            index2_Change = 0;
+            Index1Price = Convert.ToInt32(dayInfo[1]);
+            Index2Price = Convert.ToInt32(dayInfo[2]);
+            Index1Change = 0;
+            Index2Change = 0;
 
-            dao.UpdatePrice1(index1_Price);
-            dao.UpdatePrice2(index2_Price);
+            _dataAccess.UpdatePrice1(Index1Price);
+            _dataAccess.UpdatePrice2(Index2Price);
 
-            Index1.Update(index1_Price, index1_Change, newsItem, dayNumber);
+            Index1.Update(Index1Price, Index1Change, NewsItem, _dayNumber);
 
-            Index2.Update(index2_Price, index2_Change, newsItem, dayNumber);
+            Index2.Update(Index2Price, Index2Change, NewsItem, _dayNumber);
 
             var context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
-            context.Clients.All.sendMessage(index1_Price, Index2_Price, dayNumber, index1_Change, index2_Change, newsItem);
+            context.Clients.All.sendMessage(Index1Price, Index2Price, _dayNumber, Index1Change, Index2Change, NewsItem);
 
         }
 
         private Simulator()
         {
-            dao = DAO.Instance;            
-            timer = new Timer();
-            timer.Interval = TIME_INTERVAL; 
-            timer.Elapsed += new ElapsedEventHandler(UpdateDay);
-            timer.Enabled = false;
+            _dataAccess = DataAccess.Instance;
+            _timer = new Timer {Interval = TimeInterval};
 
-            status = Status.READY;
+            _timer.Elapsed += UpdateDay;
+            _timer.Enabled = false;
+
+            _status = Status.Ready;
         }
 
-        private static Simulator instance;
-        public static Simulator Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new Simulator();
-
-                return instance;
-            }
-        }
+        private static Simulator _instance;
+        public static Simulator Instance => _instance ?? (_instance = new Simulator());
 
         private void UpdateDay(object source, ElapsedEventArgs e) 
         {
             
-            dayNumber++;
+            _dayNumber++;
             
-            string table = "";
+            var table = "";
 
-            if (mode == Mode.PRACTICE)
-                table = "PracticeEvents";
-            else if (mode == Mode.COMPETITION)
-                table = "Events";
+            switch (_mode)
+            {
+                case Mode.Practice:
+                    table = "PracticeEvents";
+                    break;
+                case Mode.Competition:
+                    table = "Events";
+                    break;
+            }
 
-            string[] dayInfo = dao.GetDayInfo(table, dayNumber);
+            var dayInfo = _dataAccess.GetDayInfo(table, _dayNumber);
 
             if (dayInfo[0] != "null")
-                newsItem = dayInfo[0];
+                NewsItem = dayInfo[0];
 
-            index1_Change = Convert.ToInt32(dayInfo[1]);
-            index2_Change = Convert.ToInt32(dayInfo[2]);
+            Index1Change = Convert.ToInt32(dayInfo[1]);
+            Index2Change = Convert.ToInt32(dayInfo[2]);
 
-            index1_Price += index1_Change;
+            Index1Price += Index1Change;
 
-            index2_Price += index2_Change;
+            Index2Price += Index2Change;
 
-            dao.UpdatePrice1(index1_Price);
-            dao.UpdatePrice2(index2_Price);
+            _dataAccess.UpdatePrice1(Index1Price);
+            _dataAccess.UpdatePrice2(Index2Price);
 
-            Index1.Update(index1_Price, index1_Change, newsItem, dayNumber);
+            Index1.Update(Index1Price, Index1Change, NewsItem, _dayNumber);
 
-            Index2.Update(index2_Price, index2_Change, newsItem, dayNumber);
+            Index2.Update(Index2Price, Index2Change, NewsItem, _dayNumber);
 
             //update charts
 
-            if ((dayNumber == QUARTER_1_DAY && mode == Mode.COMPETITION) || dayNumber == QUARTER_2_DAY || dayNumber == QUARTER_3_DAY)
+            if ((_dayNumber == Quarter1Day && _mode == Mode.Competition) || _dayNumber == Quarter2Day || _dayNumber == Quarter3Day)
                 Pause();
 
-            else if ((dayNumber == QUARTER_1_DAY && mode == Mode.PRACTICE) || dayNumber == QUARTER_4_DAY)
+            else if ((_dayNumber == Quarter1Day && _mode == Mode.Practice) || _dayNumber == Quarter4Day)
                 Stop();
 
             var context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
-            context.Clients.All.sendMessage(index1_Price, Index2_Price, dayNumber, index1_Change, index2_Change, newsItem);
+            context.Clients.All.sendMessage(Index1Price, Index2Price, _dayNumber, Index1Change, Index2Change, NewsItem);
 
         }
 
         public bool IsPlaying()
         {
-            return (status == Status.PLAYING);
+            return (_status == Status.Playing);
         }
 
         public bool IsPaused()
         {
-            return (status == Status.PAUSED);
+            return (_status == Status.Paused);
         }
 
         public bool IsStopped()
         {
-            return (status == Status.STOPPED);
+            return (_status == Status.Stopped);
         }
 
         public bool IsReady()
         {
-            return (status == Status.READY);
+            return (_status == Status.Ready);
         }
 
         public void Reset()
         {
             Stop();
-            status = Status.READY;
+            _status = Status.Ready;
             Index1.Reset();
             Index2.Reset();
-            dao.Reset();
+            _dataAccess.Reset();
 
-            index1_Price = 0;
-            index2_Price = 0;
+            Index1Price = 0;
+            Index2Price = 0;
 
-            dao.UpdatePrice1(index1_Price);
-            dao.UpdatePrice2(index2_Price);
+            _dataAccess.UpdatePrice1(Index1Price);
+            _dataAccess.UpdatePrice2(Index2Price);
 
             var context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
-            context.Clients.All.sendMessage(index1_Price, Index2_Price, dayNumber, index1_Change, index2_Change, newsItem);
+            context.Clients.All.sendMessage(Index1Price, Index2Price, _dayNumber, Index1Change, Index2Change, NewsItem);
         }
 
 

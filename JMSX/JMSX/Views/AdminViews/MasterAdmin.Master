@@ -1,0 +1,49 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterAdmin.Master.cs" Inherits="Stockimulate.Views.AdminViews.MasterAdmin" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Stockimulator</title>
+
+    <link rel="stylesheet" type="text/css" href="../../Content/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../Content/bootstrap-theme.min.css" />
+
+    <script src="scripts/jquery-1.9.0.min.js"></script>
+    <script src="scripts/bootstrap.js"></script>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <div class="container">
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-md-6">
+                <img style="max-height: 100px;" src="/img/JMSX.png"/>
+            </div>
+
+        </div>
+        <div class="row">
+            <nav class="navbar navbar-inverse" role="navigation">
+                <ul class="nav navbar-nav">
+                    <li><a href="Admin.aspx">Admin Panel</a></li>
+                    <li><a href="Override.aspx">Override Panel</a></li>
+                    <li><a href="TeamStandings.aspx">Team Standings</a></li>
+                    <li><a href="IndividualStandings.aspx">Individual Standings</a></li>
+                    <li><a href="../Index1.aspx">OIL</a>             </li>
+                    <li><a href="../Index2.aspx">IND</a>             </li>
+                </ul>
+            </nav>
+        </div>
+
+    </div> 
+
+    <div class="container">
+
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+
+    </div>
+</body>
+</html>
