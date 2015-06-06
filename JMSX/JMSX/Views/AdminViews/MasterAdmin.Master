@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterAdmin.Master.cs" Inherits="Stockimulate.Views.AdminViews.MasterAdmin" %>
+﻿<%@ Master AutoEventWireup="true" CodeBehind="MasterAdmin.Master.cs" Inherits="Stockimulate.Views.AdminViews.MasterAdmin" Language="C#" %>
 
 <!DOCTYPE html>
 
@@ -19,7 +19,7 @@
     <div class="container">
         <div class="row" style="margin-top: 10px;">
             <div class="col-md-6">
-                <img style="max-height: 100px;" src="/img/JMSX.png"/>
+                <img style="max-height: 100px;" src="/img/JMSX.png" alt="Banner"/>
             </div>
 
         </div>
