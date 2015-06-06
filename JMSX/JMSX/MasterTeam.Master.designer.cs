@@ -10,7 +10,7 @@
 namespace Stockimulate {
     
     
-    public partial class JMSX {
+    public partial class MasterTeam {
         
         /// <summary>
         /// head control.

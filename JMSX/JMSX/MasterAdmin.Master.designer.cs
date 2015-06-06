@@ -10,7 +10,7 @@
 namespace Stockimulate {
     
     
-    public partial class JMSXAdmin {
+    public partial class MasterAdmin {
         
         /// <summary>
         /// head control.

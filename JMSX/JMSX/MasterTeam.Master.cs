@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace Stockimulate
 {
-    public partial class JMSXTeam : System.Web.UI.MasterPage
+    public partial class MasterTeam : System.Web.UI.MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

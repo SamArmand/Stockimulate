@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="JMSXAdmin.master.cs" Inherits="Stockimulate.JMSXAdmin" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterAdmin.Master.cs" Inherits="Stockimulate.MasterAdmin" %>
 
 <!DOCTYPE html>
 

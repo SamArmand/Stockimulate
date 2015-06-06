@@ -7,11 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace Stockimulate
 {
-    public partial class JMSXAdmin : System.Web.UI.MasterPage
+    public partial class MasterBroker : System.Web.UI.MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if ((string)HttpContext.Current.Session["Login"] != "Admin")
+            if ((string)HttpContext.Current.Session["Login"] != "Admin" && (string)HttpContext.Current.Session["Login"] != "Broker")
             {
                 Response.Redirect("Login.aspx");
             }
