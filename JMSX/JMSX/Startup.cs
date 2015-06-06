@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartup(typeof(JMSX.Startup))]
+[assembly: OwinStartup(typeof(Stockimulate.Startup))]
 
-namespace JMSX
+namespace Stockimulate
 {
     public class Startup
     {

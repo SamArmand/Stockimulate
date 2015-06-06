@@ -5,7 +5,7 @@ using System.Linq;
 using System.Timers;
 using System.Web;
 
-namespace JMSX
+namespace Stockimulate
 {
 
     public class Simulator : Hub

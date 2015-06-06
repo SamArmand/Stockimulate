@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="JMSXBroker.Master.cs" Inherits="JMSX.JMSX" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="JMSXBroker.Master.cs" Inherits="Stockimulate.JMSX" %>
 
 <!DOCTYPE html>
 

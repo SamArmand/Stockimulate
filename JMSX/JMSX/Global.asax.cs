@@ -6,7 +6,7 @@ using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
 
-namespace JMSX
+namespace Stockimulate
 {
     public class Global : System.Web.HttpApplication
     {

@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 //       ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> No such Team ID/Code combination exists.";
 
-namespace JMSX
+namespace Stockimulate
 {
     public partial class Admin : System.Web.UI.Page
     {

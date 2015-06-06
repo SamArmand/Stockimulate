@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace JMSX
+namespace Stockimulate
 {
     public class DAO
     {

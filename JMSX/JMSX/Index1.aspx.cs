@@ -9,7 +9,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace JMSX
+namespace Stockimulate
 {
     public partial class Index1 : System.Web.UI.Page
     {
