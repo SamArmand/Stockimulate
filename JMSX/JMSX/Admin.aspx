@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/JMSXAdmin.Master" AutoEventWireup="true" CodeBehind="Admin.aspx.cs" Inherits="JMSX.Admin" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/JMSXAdmin.Master" AutoEventWireup="true" CodeBehind="Admin.aspx.cs" Inherits="Stockimulate.Admin" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">

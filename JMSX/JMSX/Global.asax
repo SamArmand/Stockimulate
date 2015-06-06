@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="JMSX.Global" Language="C#" %>
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="Stockimulate.Global" Language="C#" %>

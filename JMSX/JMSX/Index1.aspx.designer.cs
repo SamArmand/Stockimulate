@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace JMSX {
+namespace Stockimulate {
     
     
     public partial class Index1 {

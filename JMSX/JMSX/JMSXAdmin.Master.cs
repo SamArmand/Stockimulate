@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace JMSX
+namespace Stockimulate
 {
     public partial class JMSXAdmin : System.Web.UI.MasterPage
     {

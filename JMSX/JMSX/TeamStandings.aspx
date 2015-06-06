@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/JMSXAdmin.Master" AutoEventWireup="true" CodeBehind="TeamStandings.aspx.cs" Inherits="JMSX.TeamStandings" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/JMSXAdmin.Master" AutoEventWireup="true" CodeBehind="TeamStandings.aspx.cs" Inherits="Stockimulate.TeamStandings" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="Content/tables.css" rel="stylesheet" />
 </asp:Content>
