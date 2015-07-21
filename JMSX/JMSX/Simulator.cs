@@ -71,7 +71,7 @@ namespace Stockimulate
             _mode = Mode.Practice;
             _dayNumber = 0;
 
-            string[] dayInfo = _dataAccess.GetDayInfo("PracticeEvents", 0);
+            var dayInfo = _dataAccess.GetDayInfo("PracticeEvents", 0);
 
             NewsItem = "";
 
@@ -94,7 +94,7 @@ namespace Stockimulate
             _mode = Mode.Competition;
             _dayNumber = 0;
 
-            string[] dayInfo = _dataAccess.GetDayInfo("Events", 0);
+            var dayInfo = _dataAccess.GetDayInfo("Events", 0);
 
             NewsItem = "";
 
@@ -118,12 +118,15 @@ namespace Stockimulate
         private Simulator()
         {
             _dataAccess = DataAccess.Instance;
+
+
             _timer = new Timer {Interval = TimeInterval};
 
             _timer.Elapsed += UpdateDay;
             _timer.Enabled = false;
 
             _status = Status.Ready;
+
         }
 
         private static Simulator _instance;
@@ -150,13 +153,6 @@ namespace Stockimulate
 
             if (dayInfo[0] != "null")
                 NewsItem = dayInfo[0];
-
-            Index1Change = Convert.ToInt32(dayInfo[1]);
-            Index2Change = Convert.ToInt32(dayInfo[2]);
-
-            Index1Price += Index1Change;
-
-            Index2Price += Index2Change;
 
             _dataAccess.UpdatePrice1(Index1Price);
             _dataAccess.UpdatePrice2(Index2Price);
@@ -215,7 +211,6 @@ namespace Stockimulate
             var context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
             context.Clients.All.sendMessage(Index1Price, Index2Price, _dayNumber, Index1Change, Index2Change, NewsItem);
         }
-
 
     }
 }
