@@ -1,73 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace Stockimulate
 {
     public class Team
     {
-        private int id;
-        public int Id
-        {
-            get
-            {
-                return id;
-            }
-        }
+        public int Id { get; }
 
-        private int averagePnl;
-        public int AveragePnl
-        {
-            get
-            {
-                return averagePnl;
-            }
-        }
+        public int AveragePnl { get; private set; }
 
-        private string name;
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-        }
+        public string Name { get; }
 
-        private List<Player> players;
-        public List<Player> Players
-        {
-            get
-            {
-                return players;
-            }
-        }
+        public List<Player> Players { get; }
 
         public Team(int id, string name)
         {
-            this.id = id;
-            this.name = name;
-            players = new List<Player>();
+            Id = id;
+            Name = name;
+            Players = new List<Player>();
         }
 
-        public void AddPlayer(int ID, string name, int PositionIndex1, int PostitionIndex2, int Funds)
+        public void AddPlayer(int id, string name, int positionIndex1, int postitionIndex2, int funds)
         {
-            Players.Add(new Player(ID, name, ID, PositionIndex1, PostitionIndex2, Funds));
+            Players.Add(new Player(id, name, id, positionIndex1, postitionIndex2, funds));
         }
 
         public void CalculateAveragePnl(int price1, int price2)
         {
-            int totalPnl = 0;
-            int playerCount = 0;
+            var totalPnl = 0;
+            var playerCount = 0;
             
-            foreach (Player player in players)
+            foreach (Player player in Players)
             {
                 player.CalculatePnl(price1, price2);
                 totalPnl += player.Pnl;
                 playerCount++;
             }
 
-            averagePnl = totalPnl / playerCount;
+            AveragePnl = totalPnl / playerCount;
 
         }
 
