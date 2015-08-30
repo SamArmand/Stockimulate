@@ -154,6 +154,11 @@ namespace Stockimulate
             if (dayInfo[0] != "null")
                 NewsItem = dayInfo[0];
 
+            Index1Change = Convert.ToInt32(dayInfo[1]);
+            Index2Change = Convert.ToInt32(dayInfo[2]);
+            Index1Price += Index1Change;
+            Index2Price += Index2Change;
+
             _dataAccess.UpdatePrice1(Index1Price);
             _dataAccess.UpdatePrice2(Index2Price);
 
