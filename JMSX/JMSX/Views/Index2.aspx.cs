@@ -65,8 +65,6 @@ namespace Stockimulate.Views
 
             data.InnerHtml = javascriptArray;
 
-            
-
         }
 
         public static void Update(int indexPrice, int indexChange, string news, int dayNumber)

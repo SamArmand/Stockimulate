@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Stockimulate
 {
-    public class DataAccess
+    internal class DataAccess
     {
 
 
@@ -15,11 +15,17 @@ namespace Stockimulate
 
         private const string ConnectionString = "Server=tcp:h98ohmld2f.database.windows.net,1433;Database=Stockimulate;User ID=JMSXTech@h98ohmld2f;Password=jmsx!2014;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
 
-        private DataAccess() 
-        { 
+        internal List<Index> GetIndices()
+        {
+            throw new NotImplementedException();
         }
 
-        public static DataAccess SessionInstance
+        private DataAccess() 
+        {
+             
+        }
+
+        internal static DataAccess SessionInstance
         {
 
             get
@@ -32,21 +38,21 @@ namespace Stockimulate
 
         }
 
-        public static DataAccess Instance => _instance ?? (_instance = new DataAccess());
+        internal static DataAccess Instance => _instance ?? (_instance = new DataAccess());
 
-        public void InsertTrade(int buyerId, int sellerId, string securitySymbol, int quantity, int price)
+        internal void InsertTrade(Trade trade)
         {
             var connection = new SqlConnection(ConnectionString);
 
-            var query = "INSERT INTO Trades (BuyerID, SellerID, SecuritySymbol, Quantity, Price) VALUES (@BuyerID, @SellerID, @SecuritySymbol, @Quantity, @Price);";
+            var query = "INSERT INTO Trades (BuyerID, SellerID, Symbol, Quantity, Price) VALUES (@BuyerID, @SellerID, @Symbol, @Quantity, @Price);";
 
             var command = new SqlCommand(query) {CommandType = CommandType.Text};
 
-            command.Parameters.AddWithValue("@BuyerID", buyerId);
-            command.Parameters.AddWithValue("@SellerID", sellerId);
-            command.Parameters.AddWithValue("@SecuritySymbol", securitySymbol);
-            command.Parameters.AddWithValue("@Quantity", quantity);
-            command.Parameters.AddWithValue("@Price", price);
+            command.Parameters.AddWithValue("@BuyerID", trade.Buyer.Id);
+            command.Parameters.AddWithValue("@SellerID", trade.Seller.Id);
+            command.Parameters.AddWithValue("@Symbol", trade.Symbol);
+            command.Parameters.AddWithValue("@Quantity", trade.Quantity);
+            command.Parameters.AddWithValue("@Price", trade.Price);
 
             connection.Open();
 
@@ -57,75 +63,28 @@ namespace Stockimulate
             command.Dispose();
             connection.Dispose();
 
-            var index = securitySymbol == "OIL" ? "PositionIndex1" : "PositionIndex2";
-
             //Fetch + Update Buyer Info
 
-            connection = new SqlConnection(ConnectionString);
-
-            query = "SELECT ID, PositionIndex1, PositionIndex2, Funds FROM Players WHERE ID=@ID";
-
-            command = new SqlCommand(query) {CommandType = CommandType.Text};
-
-            command.Parameters.AddWithValue("@ID", buyerId);
-
-            connection.Open();
-
-            command.Connection = connection;
-
-            SqlDataReader reader = command.ExecuteReader();
-
-            reader.Read();                               
-                                    
-            var buyerPosition = reader.GetInt32(reader.GetOrdinal(index)) + quantity;
-            var buyerFunds = reader.GetInt32(reader.GetOrdinal("Funds")) - (price * quantity);
-
-            reader.Dispose();
-            command.Dispose();
-            connection.Dispose();
-
-            UpdatePlayerPositionBalance(buyerId, index, buyerPosition, buyerFunds);
+            Update(trade.Buyer);
             
             //Fetch + Update Seller Info
 
-            connection = new SqlConnection(ConnectionString);
-
-            query = "SELECT ID, PositionIndex1, PositionIndex2, Funds FROM Players WHERE ID=@ID";
-
-            command = new SqlCommand(query) {CommandType = CommandType.Text};
-
-            command.Parameters.AddWithValue("@ID", sellerId);
-
-            connection.Open();
-
-            command.Connection = connection;
-
-            reader = command.ExecuteReader();
-
-            reader.Read();
-
-            var sellerPosition = reader.GetInt32(reader.GetOrdinal(index)) - quantity;
-            var sellerFunds = reader.GetInt32(reader.GetOrdinal("Funds")) + (price * quantity);
-
-            reader.Dispose();
-            command.Dispose();
-            connection.Dispose();
-
-            UpdatePlayerPositionBalance(sellerId, index, sellerPosition, sellerFunds);
+            Update(trade.Seller);
 
         }
 
-        private static void UpdatePlayerPositionBalance(int id, string index, int position, int funds)
+        private static void Update(Player player)
         {
             var connection = new SqlConnection(ConnectionString);
 
-            var query = "UPDATE Players SET " + index + "=@Position, Funds=@Funds WHERE ID=@ID;";
+            const string query = "UPDATE Players SET Position1=@Position1, Position2=@Position2, Funds=@Funds WHERE ID=@ID;";
 
             var command = new SqlCommand(query) {CommandType = CommandType.Text};
 
-            command.Parameters.AddWithValue("@Position", position);
-            command.Parameters.AddWithValue("@Funds", funds);
-            command.Parameters.AddWithValue("@ID", id);
+            command.Parameters.AddWithValue("@Position1", player.PositionIndex1);
+            command.Parameters.AddWithValue("@Position2", player.PositionIndex2);
+            command.Parameters.AddWithValue("@Funds", player.Funds);
+            command.Parameters.AddWithValue("@ID", player.Id);
 
             connection.Open();
 
@@ -181,7 +140,7 @@ namespace Stockimulate
             return player;
         }
 
-        internal Team GetTeam(int id, string code, bool needCode)
+        internal Team GetTeam(int id, string code="", bool needCode=false)
         {
 
             if (id < 0)
@@ -283,7 +242,7 @@ namespace Stockimulate
             command.Dispose();
             connection.Dispose();
 
-            return ids.Select(id => GetTeam(id, "0", false)).ToList();
+            return ids.Select(id => GetTeam(id, "0")).ToList();
 
         }
 
@@ -315,6 +274,72 @@ namespace Stockimulate
 
             return ids.Select(GetPlayer).ToList();
 
+        }
+
+        internal List<Trade> GetTrades(string[] criteria)
+        {
+
+            var connection = new SqlConnection(ConnectionString);
+
+            var query = "SELECT ID, SellerID, BuyerID, Symbol, Quantity, Price, MarketPrice, Flagged FROM Trades";
+
+            var criteriaSet = 0;
+
+            for (var i = 0; i < criteria.Length; ++i)
+            {
+                if (criteria[i] == "") continue;
+                if (criteriaSet == 0)
+                    query += " AND ";
+
+                ++criteriaSet;
+
+                switch (i)
+                {
+                    case 0:
+                        query += " SellerID=@SellerID";
+                        break;
+                    case 1:
+                        query += " BuyerID=@BuyerID";
+                        break;
+                    case 2:
+                        query += " Symbol=@Symbol";
+                        break;
+                    case 3:
+                        query += " Flagged=@Flagged";
+                        break;
+                    default:
+                        query += "";
+                        break;
+                }
+
+                query += ";";
+            }
+
+            var command = new SqlCommand(query) { CommandType = CommandType.Text };
+
+            connection.Open();
+
+            command.Connection = connection;
+
+            var reader = command.ExecuteReader();
+
+            var trades = new List<Trade>();
+
+            while (reader.Read())
+                trades.Add(new Trade(reader.GetInt32(reader.GetOrdinal("ID")), 
+                    reader.GetInt32(reader.GetOrdinal("BuyerID")),
+                    reader.GetInt32(reader.GetOrdinal("SellerID")),
+                    reader.GetString(reader.GetOrdinal("Symbol")),
+                    reader.GetInt32(reader.GetOrdinal("Price")),
+                    reader.GetInt32(reader.GetOrdinal("Quantity")),
+                    reader.GetInt32(reader.GetOrdinal("MarketPrice")),
+                    reader.GetBoolean(reader.GetOrdinal("Flagged"))));
+
+            reader.Dispose();
+            command.Dispose();
+            connection.Dispose();
+
+            return trades;
         }
 
         internal string[] GetDayInfo(string table, int tradingDay)
@@ -458,15 +483,18 @@ namespace Stockimulate
             return result;
         }
 
-        internal void UpdatePrice1(int index1Price)
+        internal void Update(Event anEvent)
         {
+            
             var connection = new SqlConnection(ConnectionString);
 
-            const string query = "UPDATE AppSettings SET Price1=@Price1;";
+            const string query = "UPDATE AppSettings SET Price=@Price WHERE id=@Id;";
 
             var command = new SqlCommand(query) {CommandType = CommandType.Text};
 
-            command.Parameters.AddWithValue("@Price1", index1Price);
+            command.Parameters.AddWithValue("@Price", anEvent.Price);
+            command.Parameters.AddWithValue("@Id", anEvent.Id);
+
 
             connection.Open();
 
@@ -476,26 +504,7 @@ namespace Stockimulate
 
             command.Dispose();
             connection.Dispose();
-        }
-
-        internal void UpdatePrice2(int index2Price)
-        {
-            var connection = new SqlConnection(ConnectionString);
-
-            const string query = "UPDATE AppSettings SET Price2=@Price2;";
-
-            var command = new SqlCommand(query) {CommandType = CommandType.Text};
-
-            command.Parameters.AddWithValue("@Price2", index2Price);
-
-            connection.Open();
-
-            command.Connection = connection;
-
-            command.ExecuteNonQuery();
-
-            command.Dispose();
-            connection.Dispose();
+            
         }
 
         internal void UpdateReportsEnabled(string p)
