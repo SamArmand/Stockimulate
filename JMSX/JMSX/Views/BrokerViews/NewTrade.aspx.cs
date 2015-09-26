@@ -12,10 +12,10 @@ namespace Stockimulate.Views.BrokerViews
         {
             _dataAccess = DataAccess.SessionInstance;
 
-            var indexNames = _dataAccess.GetIndexNames();
+            var indexNames = _dataAccess.GetInstruments();
 
-            index1Option.InnerText = indexNames[0];
-            index2Option.InnerText = indexNames[1];
+            index1Option.InnerText = indexNames[0].Name;
+            index2Option.InnerText = indexNames[1].Name;
 
         }
 

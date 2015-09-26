@@ -50,9 +50,9 @@ namespace Stockimulate.Views
                 NewsDiv.InnerHtml = "<h2>" + News + "</h2>";
             }
 
-            string javascriptArray = "[";
+            var javascriptArray = "[";
 
-            for (int i = 0; i < _days.Count; i++)
+            for (var i = 0; i < _days.Count; i++)
             {
                 javascriptArray += "[" + _days.ElementAt(i) + "," + _prices.ElementAt(i) + "]";
 

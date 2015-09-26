@@ -13,19 +13,19 @@ namespace Stockimulate.Views.AdminViews
         {
             _dataAccess = DataAccess.SessionInstance;
 
-            int price1 = _dataAccess.GetPrice1();
-            int price2 = _dataAccess.GetPrice2();
+            var price1 = _dataAccess.GetPrice(0);
+            var price2 = _dataAccess.GetPrice(1);
 
-            List<Player> players = _dataAccess.GetAllPlayers();
+            var players = _dataAccess.GetAllPlayers();
 
-            foreach (Player player in players)
+            foreach (var player in players)
             {
                 player.CalculatePnl(price1, price2);
             }
 
-            List<Player> sortedPlayers = players.OrderByDescending(t => t.Pnl).ToList();
+            var sortedPlayers = players.OrderByDescending(t => t.Pnl).ToList();
 
-            StringBuilder sb = new StringBuilder("");
+            var sb = new StringBuilder("");
 
             sb.Append("<table class='pure-table pure-table-bordered'>");
             sb.Append("    <thead>");

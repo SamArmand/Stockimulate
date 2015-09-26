@@ -13,17 +13,20 @@ namespace Stockimulate.Views.AdminViews
 
             ReportsEnabled.InnerHtml = "Reports Page Enabled: " + _dataAccess.IsReportsEnabled().ToString();
 
-            Price1Current.InnerHtml = "OIL Price: " + _dataAccess.GetPrice1();
+            Price1Current.InnerHtml = "OIL Price: " + _dataAccess.GetPrice(0);
 
-            Price2Current.InnerHtml = "IND Price: " + _dataAccess.GetPrice2();
+            Price2Current.InnerHtml = "IND Price: " + _dataAccess.GetPrice(1);
 
         }
 
         protected void UpdatePrice1_Click(object sender, EventArgs e)
         {
-            if (Price1Input.Value != "" && Int32.Parse(Price1Input.Value) >= 0)
+            if (Price1Input.Value != "" && int.Parse(Price1Input.Value) >= 0)
             {
-                _dataAccess.UpdatePrice1(Int32.Parse(Price1Input.Value));
+
+                var instrument = _dataAccess.GetInstruments()[0];
+                instrument.Price = int.Parse(Price1Input.Value);
+                _dataAccess.Update(instrument);
             }
 
             Response.Redirect("Override.aspx");
@@ -32,9 +35,11 @@ namespace Stockimulate.Views.AdminViews
 
         protected void UpdatePrice2_Click(object sender, EventArgs e)
         {
-            if (Price2Input.Value != "" && Int32.Parse(Price2Input.Value) >= 0)
+            if (Price2Input.Value != "" && int.Parse(Price2Input.Value) >= 0)
             {
-                _dataAccess.UpdatePrice2(Int32.Parse(Price2Input.Value));
+                var instrument = _dataAccess.GetInstruments()[1];
+                instrument.Price = int.Parse(Price1Input.Value);
+                _dataAccess.Update(instrument);
             }
 
             Response.Redirect("Override.aspx");
