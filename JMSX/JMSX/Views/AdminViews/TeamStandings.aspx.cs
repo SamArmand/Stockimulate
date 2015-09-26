@@ -13,8 +13,8 @@ namespace Stockimulate.Views.AdminViews
         {
             _dataAccess = DataAccess.SessionInstance;
 
-            var price1 = _dataAccess.GetPrice1();
-            var price2 = _dataAccess.GetPrice2();
+            var price1 = _dataAccess.GetPrice(0);
+            var price2 = _dataAccess.GetPrice(1);
 
             var teams = _dataAccess.GetAllTeams();
 

@@ -47,8 +47,8 @@ namespace Stockimulate.Views.TeamViews
             var teamPositionIndex1 = 0;
             var teamPositionIndex2 = 0;
 
-            var index1Price = _dataAccess.GetPrice1();
-            var index2Price = _dataAccess.GetPrice2();
+            var index1Price = _dataAccess.GetPrice(0);
+            var index2Price = _dataAccess.GetPrice(1);
 
             var teamValueClosed = 0;
 

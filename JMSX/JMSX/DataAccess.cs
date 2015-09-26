@@ -15,7 +15,7 @@ namespace Stockimulate
 
         private const string ConnectionString = "Server=tcp:h98ohmld2f.database.windows.net,1433;Database=Stockimulate;User ID=JMSXTech@h98ohmld2f;Password=jmsx!2014;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
 
-        internal List<Index> GetIndices()
+        internal List<Instrument> GetInstruments()
         {
             throw new NotImplementedException();
         }
@@ -342,7 +342,7 @@ namespace Stockimulate
             return trades;
         }
 
-        internal string[] GetDayInfo(string table, int tradingDay)
+        internal DayInfo GetDayInfo(string table, int tradingDay)
         {
             var connection = new SqlConnection(ConnectionString);
 
@@ -358,13 +358,9 @@ namespace Stockimulate
 
             var reader = command.ExecuteReader();
 
-            var dayInfo = new string[3];
-
             reader.Read(); 
 
-            dayInfo[0] = reader.GetString(reader.GetOrdinal("News"));
-            dayInfo[1] = Convert.ToString(reader.GetInt32(reader.GetOrdinal("EffectIndex1")));
-            dayInfo[2] = Convert.ToString(reader.GetInt32(reader.GetOrdinal("EffectIndex2")));
+            var dayInfo = new DayInfo(reader.GetInt32(reader.GetOrdinal("EffectIndex1")), reader.GetInt32(reader.GetOrdinal("EffectIndex2")), reader.GetString(reader.GetOrdinal("News")));
 
             reader.Dispose();
             command.Dispose();
@@ -433,13 +429,15 @@ namespace Stockimulate
             return (result == "True");
         }
 
-        internal int GetPrice1()
+        internal int GetPrice(int id)
         {
             var connection = new SqlConnection(ConnectionString);
 
-            const string query = "SELECT Price1 FROM AppSettings WHERE ID=0;";
+            const string query = "SELECT Price FROM Instruments WHERE ID=@ID;";
 
             var command = new SqlCommand(query) {CommandType = CommandType.Text};
+
+            command.Parameters.AddWithValue("@ID", id);
 
             connection.Open();
 
@@ -449,7 +447,7 @@ namespace Stockimulate
 
             reader.Read();
 
-            var result = reader.GetInt32(reader.GetOrdinal("Price1"));
+            var result = reader.GetInt32(reader.GetOrdinal("Price"));
 
             reader.Dispose();
             command.Dispose();
@@ -458,32 +456,7 @@ namespace Stockimulate
             return result;
         }
 
-        internal int GetPrice2()
-        {
-            var connection = new SqlConnection(ConnectionString);
-
-            const string query = "SELECT Price2 FROM AppSettings WHERE ID=0;";
-
-            var command = new SqlCommand(query) {CommandType = CommandType.Text};
-
-            connection.Open();
-
-            command.Connection = connection;
-
-            var reader = command.ExecuteReader();
-
-            reader.Read();
-
-            var result = reader.GetInt32(reader.GetOrdinal("Price2"));
-
-            reader.Dispose();
-            command.Dispose();
-            connection.Dispose();
-
-            return result;
-        }
-
-        internal void Update(Event anEvent)
+        internal void Update(Instrument instrument)
         {
             
             var connection = new SqlConnection(ConnectionString);
@@ -492,9 +465,8 @@ namespace Stockimulate
 
             var command = new SqlCommand(query) {CommandType = CommandType.Text};
 
-            command.Parameters.AddWithValue("@Price", anEvent.Price);
-            command.Parameters.AddWithValue("@Id", anEvent.Id);
-
+            command.Parameters.AddWithValue("@Price", instrument.Price);
+            command.Parameters.AddWithValue("@Id", instrument.Id);
 
             connection.Open();
 

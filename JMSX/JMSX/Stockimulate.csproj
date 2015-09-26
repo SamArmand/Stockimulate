@@ -182,7 +182,8 @@
     <Content Include="scripts\jquery-1.9.0.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Event.cs" />
+    <Compile Include="DayInfo.cs" />
+    <Compile Include="Instrument.cs" />
     <Compile Include="Trade.cs" />
     <Compile Include="TradeCreationException.cs" />
     <Compile Include="Views\AdminViews\Admin.aspx.cs">

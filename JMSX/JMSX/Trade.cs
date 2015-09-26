@@ -55,12 +55,12 @@ namespace Stockimulate
                 case "IND1":
                     Buyer.PositionIndex1 += Quantity;
                     Seller.PositionIndex1 -= Quantity;
-                    MarketPrice = dataAccess.GetPrice1();
+                    MarketPrice = dataAccess.GetPrice(0);
                     break;
                 case "IND2":
                     Buyer.PositionIndex2 += Quantity;
                     Seller.PositionIndex2 -= Quantity;
-                    MarketPrice = dataAccess.GetPrice2();
+                    MarketPrice = dataAccess.GetPrice(1);
                     break;
                 default:
                     MarketPrice = 0;

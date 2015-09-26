@@ -75,8 +75,8 @@ namespace Stockimulate
 
             NewsItem = "";
 
-            Index1Price = Convert.ToInt32(dayInfo[1]);
-            Index2Price = Convert.ToInt32(dayInfo[2]);
+            Index1Price = dayInfo.EffectPrice1;
+            Index2Price = dayInfo.EffectPrice2;
             Index1Change = 0;
             Index2Change = 0;
 
@@ -98,8 +98,8 @@ namespace Stockimulate
 
             NewsItem = "";
 
-            Index1Price = Convert.ToInt32(dayInfo[1]);
-            Index2Price = Convert.ToInt32(dayInfo[2]);
+            Index1Price = dayInfo.EffectPrice1;
+            Index2Price = dayInfo.EffectPrice2);
             Index1Change = 0;
             Index2Change = 0;
 
