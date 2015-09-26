@@ -16,6 +16,10 @@
             var text = $('#data').text();
             $('#GraphDiv').highcharts({
 
+                title: {
+                    text: "IND"
+                },
+
                 legend: {
                     enabled: false
                 },
@@ -101,8 +105,6 @@
     <link href="../Content/bootstrap-theme.css" rel="stylesheet" />
 </head>
 <body>
-    
-    <legend id="legend" runat="server"></legend>
 
     <div class="container-fluid">
     

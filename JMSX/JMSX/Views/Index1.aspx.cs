@@ -65,17 +65,16 @@ namespace Stockimulate.Views
             data.InnerHtml = javascriptArray;
         }
 
-        public static void Update(int indexPrice, int indexChange, string news, int dayNumber)
+        internal static void Update(DayInfo dayInfo)
         {
-            
-            IndexPrice = indexPrice;
-            IndexChange = indexChange;
+
+            IndexChange = dayInfo.EffectPrice1;
+            IndexPrice += IndexChange;
 
             _prices.Add(IndexPrice);
-            _days.Add(Convert.ToString(dayNumber));
+            _days.Add(Convert.ToString(dayInfo.TradingDay));
 
-            if (news != "null")
-                News = news;
+            News = dayInfo.NewsItem;
         }
 
         public static void Reset()

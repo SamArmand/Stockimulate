@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace Stockimulate.Views.BrokerViews
 {
@@ -14,8 +15,8 @@ namespace Stockimulate.Views.BrokerViews
 
             var indexNames = _dataAccess.GetInstruments();
 
-            index1Option.InnerText = indexNames[0].Name;
-            index2Option.InnerText = indexNames[1].Name;
+            foreach (var indexName in indexNames)
+                security.Items.Add(new ListItem(indexName.Symbol, indexName.Symbol));
 
         }
 
@@ -26,26 +27,12 @@ namespace Stockimulate.Views.BrokerViews
             SuccessDiv.Style.Value = "display: none";
             WarningDiv.Style.Value = "display: none";
 
-            var index = "";
-
-            if (Security.Value != "IND1")
-            {
-                if (Security.Value == "IND2")
-                {
-                    index = index2Option.InnerText;
-                }
-            }
-            else
-            {
-                index = index1Option.InnerText;
-            }
-
             var price = Convert.ToInt32(Price.Value);
 
             try
             {
 
-                var trade = new Trade(Convert.ToInt32(BuyerID.Value), Convert.ToInt32(SellerID.Value), index,
+                var trade = new Trade(Convert.ToInt32(BuyerID.Value), Convert.ToInt32(SellerID.Value), security.SelectedValue,
                     Convert.ToInt32(Quantity.Value), price);
                 _dataAccess.InsertTrade(trade);
             }

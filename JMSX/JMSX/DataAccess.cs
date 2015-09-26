@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -9,16 +8,9 @@ namespace Stockimulate
 {
     internal class DataAccess
     {
-
-
         private static DataAccess _instance;
 
         private const string ConnectionString = "Server=tcp:h98ohmld2f.database.windows.net,1433;Database=Stockimulate;User ID=JMSXTech@h98ohmld2f;Password=jmsx!2014;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
-
-        internal List<Instrument> GetInstruments()
-        {
-            throw new NotImplementedException();
-        }
 
         private DataAccess() 
         {
@@ -44,7 +36,7 @@ namespace Stockimulate
         {
             var connection = new SqlConnection(ConnectionString);
 
-            var query = "INSERT INTO Trades (BuyerID, SellerID, Symbol, Quantity, Price) VALUES (@BuyerID, @SellerID, @Symbol, @Quantity, @Price);";
+            var query = "INSERT INTO Trades (BuyerID, SellerID, Symbol, Quantity, Price, MarketPrice, Flagged) VALUES (@BuyerID, @SellerID, @Symbol, @Quantity, @Price, @MarketPrice, @Flagged);";
 
             var command = new SqlCommand(query) {CommandType = CommandType.Text};
 
@@ -53,6 +45,8 @@ namespace Stockimulate
             command.Parameters.AddWithValue("@Symbol", trade.Symbol);
             command.Parameters.AddWithValue("@Quantity", trade.Quantity);
             command.Parameters.AddWithValue("@Price", trade.Price);
+            command.Parameters.AddWithValue("@MarketPrice", trade.MarketPrice);
+            command.Parameters.AddWithValue("@Flagged", trade.Flagged.ToString());
 
             connection.Open();
 
@@ -77,12 +71,12 @@ namespace Stockimulate
         {
             var connection = new SqlConnection(ConnectionString);
 
-            const string query = "UPDATE Players SET Position1=@Position1, Position2=@Position2, Funds=@Funds WHERE ID=@ID;";
+            const string query = "UPDATE Players SET PositionIndex1=@PositionIndex1, PositionIndex2=@PositionIndex2, Funds=@Funds WHERE ID=@ID;";
 
             var command = new SqlCommand(query) {CommandType = CommandType.Text};
 
-            command.Parameters.AddWithValue("@Position1", player.PositionIndex1);
-            command.Parameters.AddWithValue("@Position2", player.PositionIndex2);
+            command.Parameters.AddWithValue("@PositionIndex1", player.PositionIndex1);
+            command.Parameters.AddWithValue("@PositionIndex2", player.PositionIndex2);
             command.Parameters.AddWithValue("@Funds", player.Funds);
             command.Parameters.AddWithValue("@ID", player.Id);
 
@@ -358,9 +352,14 @@ namespace Stockimulate
 
             var reader = command.ExecuteReader();
 
-            reader.Read(); 
+            reader.Read();
 
-            var dayInfo = new DayInfo(reader.GetInt32(reader.GetOrdinal("EffectIndex1")), reader.GetInt32(reader.GetOrdinal("EffectIndex2")), reader.GetString(reader.GetOrdinal("News")));
+            var newsItem = reader.GetString(reader.GetOrdinal("News"));
+
+            if (newsItem == "null")
+                newsItem = "";
+
+            var dayInfo = new DayInfo(tradingDay, reader.GetInt32(reader.GetOrdinal("EffectIndex1")), reader.GetInt32(reader.GetOrdinal("EffectIndex2")), newsItem);
 
             reader.Dispose();
             command.Dispose();
@@ -461,7 +460,7 @@ namespace Stockimulate
             
             var connection = new SqlConnection(ConnectionString);
 
-            const string query = "UPDATE AppSettings SET Price=@Price WHERE id=@Id;";
+            const string query = "UPDATE Instruments SET Price=@Price WHERE Id=@Id;";
 
             var command = new SqlCommand(query) {CommandType = CommandType.Text};
 
@@ -497,6 +496,36 @@ namespace Stockimulate
 
             command.Dispose();
             connection.Dispose();
+        }
+
+        internal List<Instrument> GetInstruments()
+        {
+            var connection = new SqlConnection(ConnectionString);
+
+            const string query = "SELECT Id, Symbol, Price, Name, Type FROM Instruments;";
+
+            var command = new SqlCommand(query) { CommandType = CommandType.Text };
+
+            connection.Open();
+
+            command.Connection = connection;
+
+            var reader = command.ExecuteReader();
+
+            var instruments = new List<Instrument>();
+
+            while (reader.Read())
+                instruments.Add(new Instrument(reader.GetInt32(reader.GetOrdinal("ID")), 
+                    reader.GetString(reader.GetOrdinal("Symbol")),
+                    reader.GetInt32(reader.GetOrdinal("Price")),
+                    reader.GetString(reader.GetOrdinal("Name")),
+                    reader.GetString(reader.GetOrdinal("Type"))));
+
+            reader.Dispose();
+            command.Dispose();
+            connection.Dispose();
+
+            return instruments;
         }
     }
 }

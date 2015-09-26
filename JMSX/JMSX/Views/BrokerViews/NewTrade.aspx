@@ -31,10 +31,9 @@
           <div class="form-group">
             <label class="col-sm-1 control-label">Security</label>
             <div class="col-sm-2">
-                <select id="Security" class="form-control" runat="server">
-                    <option id="index1Option" value="IND1" runat="server"></option>
-                    <option id="index2Option" value="IND2" runat="server"></option>
-                </select>
+                
+                <asp:DropDownList ID="security" runat="server"></asp:DropDownList>
+
             </div>
 
             <label class="col-sm-1 col-sm-offset-1 control-label">Quantity</label>

@@ -80,22 +80,31 @@ namespace Stockimulate.Views.TeamViews
 
             TeamTable.Style.Value = "display: inline;";
 
+            int playerPositionIndex1;
+            int playerPositionIndex2;
+            int playerValueClosed;
+            int playerValuePositionIndex1;
+            int playerValuePositionIndex2;
+            int playerValuePositionsTotal;
+            int playerValueTotal;
+            int playerPnL;
+
             if (team.Players.Count >= 1)
             {
 
-                int playerPositionIndex1 = team.Players.ElementAt(0).PositionIndex1;
-                int playerPositionIndex2 = team.Players.ElementAt(0).PositionIndex2;
+                playerPositionIndex1 = team.Players.ElementAt(0).PositionIndex1;
+                playerPositionIndex2 = team.Players.ElementAt(0).PositionIndex2;
 
-                int playerValueClosed = team.Players.ElementAt(0).Funds;
+                playerValueClosed = team.Players.ElementAt(0).Funds;
 
-                int playerValuePositionIndex1 = team.Players.ElementAt(0).PositionIndex1 * index1Price;
-                int playerValuePositionIndex2 = team.Players.ElementAt(0).PositionIndex2 * index2Price;
+                playerValuePositionIndex1 = team.Players.ElementAt(0).PositionIndex1 * index1Price;
+                playerValuePositionIndex2 = team.Players.ElementAt(0).PositionIndex2 * index2Price;
 
-                int playerValuePositionsTotal = playerValuePositionIndex1 + playerValuePositionIndex2;
+                playerValuePositionsTotal = playerValuePositionIndex1 + playerValuePositionIndex2;
 
-                int playerValueTotal = team.Players.ElementAt(0).Funds + playerValuePositionsTotal;
+                playerValueTotal = team.Players.ElementAt(0).Funds + playerValuePositionsTotal;
 
-                int playerPnL = playerValueTotal - 1000000;
+                playerPnL = playerValueTotal - 1000000;
 
                 Player1NameHeader.InnerHtml = team.Players.ElementAt(0).Name + " - " + team.Players.ElementAt(0).Id;
 
@@ -120,19 +129,19 @@ namespace Stockimulate.Views.TeamViews
             if (team.Players.Count >= 2)
             {
 
-                int playerPositionIndex1 = team.Players.ElementAt(1).PositionIndex1;
-                int playerPositionIndex2 = team.Players.ElementAt(1).PositionIndex2;
+                playerPositionIndex1 = team.Players.ElementAt(1).PositionIndex1;
+                playerPositionIndex2 = team.Players.ElementAt(1).PositionIndex2;
 
-                int playerValueClosed = team.Players.ElementAt(1).Funds;
+                playerValueClosed = team.Players.ElementAt(1).Funds;
 
-                int playerValuePositionIndex1 = team.Players.ElementAt(1).PositionIndex1 * index1Price;
-                int playerValuePositionIndex2 = team.Players.ElementAt(1).PositionIndex2 * index2Price;
+                playerValuePositionIndex1 = team.Players.ElementAt(1).PositionIndex1 * index1Price;
+                playerValuePositionIndex2 = team.Players.ElementAt(1).PositionIndex2 * index2Price;
 
-                int playerValuePositionsTotal = playerValuePositionIndex1 + playerValuePositionIndex2;
+                playerValuePositionsTotal = playerValuePositionIndex1 + playerValuePositionIndex2;
 
-                int playerValueTotal = team.Players.ElementAt(1).Funds + playerValuePositionsTotal;
+                playerValueTotal = team.Players.ElementAt(1).Funds + playerValuePositionsTotal;
 
-                int playerPnL = playerValueTotal - 1000000;
+                playerPnL = playerValueTotal - 1000000;
 
                 Player2NameHeader.InnerHtml = team.Players.ElementAt(1).Name + " - " + team.Players.ElementAt(1).Id;
 
@@ -157,19 +166,19 @@ namespace Stockimulate.Views.TeamViews
             if (team.Players.Count >= 3)
             {
 
-                int playerPositionIndex1 = team.Players.ElementAt(2).PositionIndex1;
-                int playerPositionIndex2 = team.Players.ElementAt(2).PositionIndex2;
+                playerPositionIndex1 = team.Players.ElementAt(2).PositionIndex1;
+                playerPositionIndex2 = team.Players.ElementAt(2).PositionIndex2;
 
-                int playerValueClosed = team.Players.ElementAt(2).Funds;
+                playerValueClosed = team.Players.ElementAt(2).Funds;
 
-                int playerValuePositionIndex1 = team.Players.ElementAt(2).PositionIndex1 * index1Price;
-                int playerValuePositionIndex2 = team.Players.ElementAt(2).PositionIndex2 * index2Price;
+                playerValuePositionIndex1 = team.Players.ElementAt(2).PositionIndex1 * index1Price;
+                playerValuePositionIndex2 = team.Players.ElementAt(2).PositionIndex2 * index2Price;
 
-                int playerValuePositionsTotal = playerValuePositionIndex1 + playerValuePositionIndex2;
+                playerValuePositionsTotal = playerValuePositionIndex1 + playerValuePositionIndex2;
 
-                int playerValueTotal = team.Players.ElementAt(2).Funds + playerValuePositionsTotal;
+                playerValueTotal = team.Players.ElementAt(2).Funds + playerValuePositionsTotal;
 
-                int playerPnL = playerValueTotal - 1000000;
+                playerPnL = playerValueTotal - 1000000;
 
                 Player3NameHeader.InnerHtml = team.Players.ElementAt(2).Name + " - " + team.Players.ElementAt(2).Id;
 
@@ -191,43 +200,38 @@ namespace Stockimulate.Views.TeamViews
 
             }
 
-            if (team.Players.Count == 4)
-            {
+            if (team.Players.Count != 4) return;
+            playerPositionIndex1 = team.Players.ElementAt(3).PositionIndex1;
+            playerPositionIndex2 = team.Players.ElementAt(3).PositionIndex2;
 
-                int playerPositionIndex1 = team.Players.ElementAt(3).PositionIndex1;
-                int playerPositionIndex2 = team.Players.ElementAt(3).PositionIndex2;
+            playerValueClosed = team.Players.ElementAt(3).Funds;
 
-                int playerValueClosed = team.Players.ElementAt(3).Funds;
+            playerValuePositionIndex1 = team.Players.ElementAt(3).PositionIndex1 * index1Price;
+            playerValuePositionIndex2 = team.Players.ElementAt(3).PositionIndex2 * index2Price;
 
-                int playerValuePositionIndex1 = team.Players.ElementAt(3).PositionIndex1 * index1Price;
-                int playerValuePositionIndex2 = team.Players.ElementAt(3).PositionIndex2 * index2Price;
+            playerValuePositionsTotal = playerValuePositionIndex1 + playerValuePositionIndex2;
 
-                int playerValuePositionsTotal = playerValuePositionIndex1 + playerValuePositionIndex2;
+            playerValueTotal = team.Players.ElementAt(3).Funds + playerValuePositionsTotal;
 
-                int playerValueTotal = team.Players.ElementAt(3).Funds + playerValuePositionsTotal;
+            playerPnL = playerValueTotal - 1000000;
 
-                int playerPnL = playerValueTotal - 1000000;
+            Player4NameHeader.InnerHtml = team.Players.ElementAt(3).Name + " - " + team.Players.ElementAt(3).Id;
 
-                Player4NameHeader.InnerHtml = team.Players.ElementAt(3).Name + " - " + team.Players.ElementAt(3).Id;
+            Player4Position1Data.InnerHtml = "" + playerPositionIndex1;
+            Player4Index1PriceData.InnerHtml = "" + index1Price;
+            Player4Index1ValueData.InnerHtml = "" + playerValuePositionIndex1;
 
-                Player4Position1Data.InnerHtml = "" + playerPositionIndex1;
-                Player4Index1PriceData.InnerHtml = "" + index1Price;
-                Player4Index1ValueData.InnerHtml = "" + playerValuePositionIndex1;
+            Player4Position2Data.InnerHtml = "" + playerPositionIndex2;
+            Player4Index2PriceData.InnerHtml = "" + index2Price;
+            Player4Index2ValueData.InnerHtml = "" + playerValuePositionIndex2;
 
-                Player4Position2Data.InnerHtml = "" + playerPositionIndex2;
-                Player4Index2PriceData.InnerHtml = "" + index2Price;
-                Player4Index2ValueData.InnerHtml = "" + playerValuePositionIndex2;
+            Player4FundsData.InnerHtml = "" + playerValueClosed;
 
-                Player4FundsData.InnerHtml = "" + playerValueClosed;
+            Player4TotalValueData.InnerHtml = "" + playerValueTotal + "";
 
-                Player4TotalValueData.InnerHtml = "" + playerValueTotal + "";
+            Player4PnLData.InnerHtml = "<strong>" + playerPnL + "</strong>";
 
-                Player4PnLData.InnerHtml = "<strong>" + playerPnL + "</strong>";
-
-                Player4Table.Style.Value = "display: inline;";
-
-            }
-
+            Player4Table.Style.Value = "display: inline;";
         }
     }
 }

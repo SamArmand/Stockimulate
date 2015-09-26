@@ -8,6 +8,7 @@ namespace Stockimulate.Views
 {
     public partial class Index2 : Page
     {
+
         public static int IndexPrice;
         public static int IndexChange;
         public static string News = "";
@@ -22,7 +23,7 @@ namespace Stockimulate.Views
             {
                 Response.Redirect("Login.aspx");
             }
-            
+
             IndexChangePositive.Style.Value = "display: none;";
             IndexChangeNegative.Style.Value = "display: none;";
             IndexChangeNone.Style.Value = "display: none;";
@@ -67,17 +68,16 @@ namespace Stockimulate.Views
 
         }
 
-        public static void Update(int indexPrice, int indexChange, string news, int dayNumber)
+        internal static void Update(DayInfo dayInfo)
         {
-            
-            IndexPrice = indexPrice;
-            IndexChange = indexChange;
+
+            IndexChange = dayInfo.EffectPrice2;
+            IndexPrice += IndexChange;
 
             _prices.Add(IndexPrice);
-            _days.Add(Convert.ToString(dayNumber));
+            _days.Add(Convert.ToString(dayInfo.TradingDay));
 
-            if (news != "null")
-                News = news;
+            News = dayInfo.NewsItem;
         }
 
         public static void Reset()

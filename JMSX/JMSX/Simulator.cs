@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNet.SignalR;
-using System;
+using System.Collections.Generic;
 using System.Timers;
 using Stockimulate.Views;
 
@@ -22,21 +22,17 @@ namespace Stockimulate
 
         private int _dayNumber;
 
-        public int Index1Change { get; private set; }
-
-        public int Index2Change { get; private set; }
-
-        public int Index1Price { get; private set; }
-
-        public int Index2Price { get; private set; }
-
-        public string NewsItem { get; private set; }
-
         private enum Status {Playing, Paused, Stopped, Ready}
         private enum Mode {Practice, Competition}
 
         private Status _status;
         private Mode _mode;
+
+        private readonly List<Instrument> _instruments; 
+
+        private DayInfo _dayInfo;
+
+        private string _table;
 
         public void Play()
         {
@@ -71,22 +67,30 @@ namespace Stockimulate
             _mode = Mode.Practice;
             _dayNumber = 0;
 
-            var dayInfo = _dataAccess.GetDayInfo("PracticeEvents", 0);
+            _instruments[0].Price = 0;
+            _instruments[1].Price = 0;
 
-            NewsItem = "";
+            _table = "PracticeEvents";
 
-            Index1Price = dayInfo.EffectPrice1;
-            Index2Price = dayInfo.EffectPrice2;
-            Index1Change = 0;
-            Index2Change = 0;
+            Update();
+        }
 
-            Index1.Update(Index1Price, Index1Change, NewsItem, _dayNumber);
+        private void Update()
+        {
+            _dayInfo = _dataAccess.GetDayInfo(_table, _dayNumber);
 
-            Index2.Update(Index2Price, Index2Change, NewsItem, _dayNumber);
+            _instruments[0].Price += _dayInfo.EffectPrice1;
+            _instruments[1].Price += _dayInfo.EffectPrice2;
+
+            foreach (var instrument in _instruments)
+                _dataAccess.Update(instrument);
+
+            Index1.Update(_dayInfo);
+            Index2.Update(_dayInfo);
 
             var context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
-            context.Clients.All.sendMessage(Index1Price, Index2Price, _dayNumber, Index1Change, Index2Change, NewsItem);
-
+            context.Clients.All.sendMessage(_instruments[0].Price, _instruments[1].Price, _dayNumber, _dayInfo.EffectPrice1,
+                _dayInfo.EffectPrice2, _dayInfo.NewsItem);
         }
 
         public void SetCompetitionMode()
@@ -94,35 +98,23 @@ namespace Stockimulate
             _mode = Mode.Competition;
             _dayNumber = 0;
 
-            var dayInfo = _dataAccess.GetDayInfo("Events", 0);
+            _instruments[0].Price = 0;
+            _instruments[1].Price = 0;
 
-            NewsItem = "";
+            _table = "Events";
 
-            Index1Price = dayInfo.EffectPrice1;
-            Index2Price = dayInfo.EffectPrice2);
-            Index1Change = 0;
-            Index2Change = 0;
-
-            _dataAccess.UpdatePrice1(Index1Price);
-            _dataAccess.UpdatePrice2(Index2Price);
-
-            Index1.Update(Index1Price, Index1Change, NewsItem, _dayNumber);
-
-            Index2.Update(Index2Price, Index2Change, NewsItem, _dayNumber);
-
-            var context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
-            context.Clients.All.sendMessage(Index1Price, Index2Price, _dayNumber, Index1Change, Index2Change, NewsItem);
-
+            Update();
         }
 
         private Simulator()
         {
             _dataAccess = DataAccess.Instance;
 
+            _instruments = _dataAccess.GetInstruments();
 
             _timer = new Timer {Interval = TimeInterval};
 
-            _timer.Elapsed += UpdateDay;
+            _timer.Elapsed += NextDay;
             _timer.Enabled = false;
 
             _status = Status.Ready;
@@ -132,50 +124,18 @@ namespace Stockimulate
         private static Simulator _instance;
         public static Simulator Instance => _instance ?? (_instance = new Simulator());
 
-        private void UpdateDay(object source, ElapsedEventArgs e) 
+        private void NextDay(object source, ElapsedEventArgs e) 
         {
             
             _dayNumber++;
-            
-            var table = "";
 
-            switch (_mode)
-            {
-                case Mode.Practice:
-                    table = "PracticeEvents";
-                    break;
-                case Mode.Competition:
-                    table = "Events";
-                    break;
-            }
-
-            var dayInfo = _dataAccess.GetDayInfo(table, _dayNumber);
-
-            if (dayInfo[0] != "null")
-                NewsItem = dayInfo[0];
-
-            Index1Change = Convert.ToInt32(dayInfo[1]);
-            Index2Change = Convert.ToInt32(dayInfo[2]);
-            Index1Price += Index1Change;
-            Index2Price += Index2Change;
-
-            _dataAccess.UpdatePrice1(Index1Price);
-            _dataAccess.UpdatePrice2(Index2Price);
-
-            Index1.Update(Index1Price, Index1Change, NewsItem, _dayNumber);
-
-            Index2.Update(Index2Price, Index2Change, NewsItem, _dayNumber);
-
-            //update charts
+            Update();
 
             if ((_dayNumber == Quarter1Day && _mode == Mode.Competition) || _dayNumber == Quarter2Day || _dayNumber == Quarter3Day)
                 Pause();
 
             else if ((_dayNumber == Quarter1Day && _mode == Mode.Practice) || _dayNumber == Quarter4Day)
                 Stop();
-
-            var context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
-            context.Clients.All.sendMessage(Index1Price, Index2Price, _dayNumber, Index1Change, Index2Change, NewsItem);
 
         }
 
@@ -207,15 +167,14 @@ namespace Stockimulate
             Index2.Reset();
             _dataAccess.Reset();
 
-            Index1Price = 0;
-            Index2Price = 0;
-
-            _dataAccess.UpdatePrice1(Index1Price);
-            _dataAccess.UpdatePrice2(Index2Price);
+            foreach (var instrument in _instruments)
+            {
+                instrument.Price = 0;
+                _dataAccess.Update(instrument);
+            }
 
             var context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
-            context.Clients.All.sendMessage(Index1Price, Index2Price, _dayNumber, Index1Change, Index2Change, NewsItem);
+            context.Clients.All.sendMessage(0, 0, 0, 0, 0, "");
         }
-
     }
 }

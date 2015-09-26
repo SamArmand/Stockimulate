@@ -52,12 +52,12 @@ namespace Stockimulate
 
             switch (symbol)
             {
-                case "IND1":
+                case "OIL":
                     Buyer.PositionIndex1 += Quantity;
                     Seller.PositionIndex1 -= Quantity;
                     MarketPrice = dataAccess.GetPrice(0);
                     break;
-                case "IND2":
+                case "IND":
                     Buyer.PositionIndex2 += Quantity;
                     Seller.PositionIndex2 -= Quantity;
                     MarketPrice = dataAccess.GetPrice(1);
