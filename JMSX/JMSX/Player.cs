@@ -1,22 +1,22 @@
 ﻿namespace Stockimulate
 {
-    public class Player
+    internal class Player
     {
-        public int Id { get; }
+        internal int Id { get; }
 
-        public string Name { get; }
+        internal string Name { get; }
 
-        public int TeamId { get; }
+        internal int TeamId { get; }
 
-        public int PositionIndex1 { get; }
+        internal int PositionIndex1 { get; set; }
 
-        public int PositionIndex2 { get; }
+        internal int PositionIndex2 { get; set; }
 
-        public int Funds { get; }
+        internal int Funds { get; set; }
 
-        public int Pnl { get; private set; }
+        internal int Pnl { get; private set; }
 
-        public Player(int id, string name, int teamId, int positionIndex1, int positionIndex2, int funds) {
+        internal Player(int id, string name, int teamId, int positionIndex1, int positionIndex2, int funds) {
             Id = id;
             Name = name;
             TeamId = teamId;
@@ -25,7 +25,7 @@
             Funds = funds;
         }
 
-        public void CalculatePnl(int price1, int price2)
+        internal void CalculatePnl(int price1, int price2)
         {
             Pnl = ((PositionIndex1 * price1) + (PositionIndex2 * price2) + Funds) - 1000000;
         }

@@ -2,29 +2,29 @@
 
 namespace Stockimulate
 {
-    public class Team
+    internal class Team
     {
-        public int Id { get; }
+        internal int Id { get; }
 
-        public int AveragePnl { get; private set; }
+        internal int AveragePnl { get; private set; }
 
-        public string Name { get; }
+        internal string Name { get; }
 
-        public List<Player> Players { get; }
+        internal List<Player> Players { get; }
 
-        public Team(int id, string name)
+        internal Team(int id, string name)
         {
             Id = id;
             Name = name;
             Players = new List<Player>();
         }
 
-        public void AddPlayer(int id, string name, int positionIndex1, int postitionIndex2, int funds)
+        internal void AddPlayer(int id, string name, int positionIndex1, int postitionIndex2, int funds)
         {
             Players.Add(new Player(id, name, id, positionIndex1, postitionIndex2, funds));
         }
 
-        public void CalculateAveragePnl(int price1, int price2)
+        internal void CalculateAveragePnl(int price1, int price2)
         {
             var totalPnl = 0;
             var playerCount = 0;

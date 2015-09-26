@@ -16,12 +16,14 @@
           <div class="form-group">
             <label class="col-sm-1 control-label">Buyer ID</label>
             <div class="col-sm-2">
-              <input id="BuyerID" type="number" placeholder="Buyer ID" class="form-control" runat="server"/>
+              <input id="BuyerID" type="number" placeholder="Buyer ID" class="form-control" runat="server"/>        
+                <asp:RequiredFieldValidator runat="server" id="buyerIdValidation" controltovalidate="BuyerID" errormessage="This field is required" />
             </div>
 
             <label class="col-sm-1 col-sm-offset-1 control-label">Seller ID</label>
             <div class="col-sm-2">
               <input id="SellerID" type="number" placeholder="Seller ID" class="form-control" runat="server"/>
+                <asp:RequiredFieldValidator runat="server" id="sellerIdValidation" controltovalidate="SellerID" errormessage="This field is required" />
             </div>
           </div>
 
@@ -30,14 +32,15 @@
             <label class="col-sm-1 control-label">Security</label>
             <div class="col-sm-2">
                 <select id="Security" class="form-control" runat="server">
-                    <option value="OIL">OIL</option>
-                    <option value="IND">IND</option>
+                    <option id="index1Option" value="IND1" runat="server"></option>
+                    <option id="index2Option" value="IND2" runat="server"></option>
                 </select>
             </div>
 
             <label class="col-sm-1 col-sm-offset-1 control-label">Quantity</label>
             <div class="col-sm-2">
               <input id="Quantity" type="number" placeholder="Quantity" class="form-control" runat="server"/>
+                <asp:RequiredFieldValidator runat="server" id="quantityValidation" controltovalidate="Quantity" errormessage="This field is required" />
             </div>
           </div>
 
@@ -45,6 +48,7 @@
             <label class="col-sm-1 control-label ">Price</label>
             <div class="col-sm-2 ">
               <input id="Price" type="number" placeholder="Price" class="form-control" runat="server"/>
+                <asp:RequiredFieldValidator runat="server" id="priceValidation" controltovalidate="Price" errormessage="This field is required" />
             </div>
           </div>
 

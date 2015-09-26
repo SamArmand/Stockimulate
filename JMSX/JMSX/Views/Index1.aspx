@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>OIL</title>
+    <title id="title" runat="server"></title>
 
     <script src="../scripts/jquery-1.9.0.min.js"></script>    
     <script src="../scripts/jquery.signalR-2.1.2.min.js"></script>
@@ -60,7 +60,7 @@
 
             });
 
-            var sim = $.connection.simulator
+            var sim = $.connection.simulator;
 
             // Declare a function on the chat hub so the server can invoke it          
 
@@ -107,6 +107,8 @@
     <link href="../Content/bootstrap-theme.css" rel="stylesheet" />
 </head>
 <body>
+    
+    <legend id="legend" runat="server"></legend>
 
     <div class="container-fluid">
     
