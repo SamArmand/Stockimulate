@@ -9,7 +9,7 @@ namespace Stockimulate.Views.BrokerViews
         {
             if ((string)HttpContext.Current.Session["Login"] != "Admin" && (string)HttpContext.Current.Session["Login"] != "Broker")
             {
-                Response.Redirect("Login.aspx");
+                Response.Redirect("../Login.aspx");
             }
         }
     }

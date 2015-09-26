@@ -19,7 +19,7 @@
             $('#GraphDiv').highcharts({
 
                 title: {
-                    text: 'OIL'
+                    text: "IND"
                 },
 
                 legend: {
@@ -107,8 +107,6 @@
     <link href="../Content/bootstrap-theme.css" rel="stylesheet" />
 </head>
 <body>
-    
-    <legend id="legend" runat="server"></legend>
 
     <div class="container-fluid">
     

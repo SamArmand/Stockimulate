@@ -58,31 +58,13 @@ namespace Stockimulate.Views.BrokerViews {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator sellerIdValidation;
         
         /// <summary>
-        /// Security control.
+        /// security control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect Security;
-        
-        /// <summary>
-        /// index1Option control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl index1Option;
-        
-        /// <summary>
-        /// index2Option control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl index2Option;
+        protected global::System.Web.UI.WebControls.DropDownList security;
         
         /// <summary>
         /// Quantity control.
