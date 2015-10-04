@@ -1,17 +1,17 @@
-﻿namespace Stockimulate
+﻿using System.Collections.Generic;
+
+namespace Stockimulate
 {
     internal class DayInfo
     {
-        internal int EffectPrice2 { get; }
-        internal int EffectPrice1 { get; }
+        internal List<int> Effects { get; }
         internal string NewsItem { get; }
         internal int TradingDay { get; }
 
-        internal DayInfo(int tradingDay, int effectPrice1, int effectPrice2, string newsItem)
+        internal DayInfo(int tradingDay, List<int> effects, string newsItem)
         {
             TradingDay = tradingDay;
-            EffectPrice1 = effectPrice1;
-            EffectPrice2 = effectPrice2;
+            Effects = effects;
             NewsItem = newsItem;
         }
 

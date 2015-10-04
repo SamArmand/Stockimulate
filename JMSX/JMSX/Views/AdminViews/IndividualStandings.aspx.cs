@@ -13,15 +13,15 @@ namespace Stockimulate.Views.AdminViews
         {
             _dataAccess = DataAccess.SessionInstance;
 
-            var price1 = _dataAccess.GetPrice(0);
-            var price2 = _dataAccess.GetPrice(1);
+            var prices = new List<int>();
+
+            for (var i = 0; i < _dataAccess.Instruments.Count; ++i)
+                prices.Add(_dataAccess.GetPrice(i));
 
             var players = _dataAccess.GetAllPlayers();
 
             foreach (var player in players)
-            {
-                player.CalculatePnl(price1, price2);
-            }
+                player.CalculatePnl(prices);
 
             var sortedPlayers = players.OrderByDescending(t => t.Pnl).ToList();
 

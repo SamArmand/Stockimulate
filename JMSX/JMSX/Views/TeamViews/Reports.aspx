@@ -58,7 +58,7 @@
 
     <br />
 
-    <div id="TeamTable" runat="server" style="display: none;">
+    <div id="TeamTable" runat="server">
     <h3 id ="TeamNameHeader" runat="server"></h3>
     <table class="pure-table pure-table-bordered">
     <thead>

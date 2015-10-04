@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Web.UI.HtmlControls;
 
 namespace Stockimulate.Views.TeamViews
 {
@@ -18,10 +20,6 @@ namespace Stockimulate.Views.TeamViews
 
             ErrorDiv.Style.Value = "display: none;";
             TeamTable.Style.Value = "display: none;";
-            Player1Table.Style.Value = "display: none;";
-            Player2Table.Style.Value = "display: none;";
-            Player3Table.Style.Value = "display: none;";
-            Player4Table.Style.Value = "display: none;";
 
             if (!_dataAccess.IsReportsEnabled())
             {
@@ -44,18 +42,28 @@ namespace Stockimulate.Views.TeamViews
                 return;
             }
 
-            var teamPositionIndex1 = 0;
-            var teamPositionIndex2 = 0;
+            var teamPositions = new List<int>();
 
-            var index1Price = _dataAccess.GetPrice(0);
-            var index2Price = _dataAccess.GetPrice(1);
+            for (var i = 0; i < _dataAccess.Instruments.Count; ++i)
+                teamPositions.Add(0);
+
+            var prices = new List<int>();
+
+            for (var i = 0; i < _dataAccess.Instruments.Count; ++i)
+            {
+                prices.Add(_dataAccess.GetPrice(i));
+            }
 
             var teamValueClosed = 0;
 
             foreach (var player in team.Players)
             {
-                teamPositionIndex1 += player.PositionIndex1;
-                teamPositionIndex2 += player.PositionIndex2;
+
+                for(var i=0; i < teamPositions.Count; ++i)
+                {
+                    teamPositions[i] += player.Positions[i];
+                }
+
                 teamValueClosed += player.Funds;
             }
 
@@ -64,8 +72,12 @@ namespace Stockimulate.Views.TeamViews
 
             var teamValueTotal = teamValuePositionIndex1 + teamValuePositionIndex2 + teamValueClosed;
 
-            TeamNameHeader.InnerHtml = team.Name + " - " + team.Id;
+            TeamTable.Controls.Add(new HtmlGenericControl("h3") { InnerHtml = team.Name + " - " + team.Id });
+
+            var teamTable = new HtmlTable();
+            teamTable.Controls.Add(new HtmlGenericControl(""));
             
+
             TeamPosition1Data.InnerHtml = "" + teamPositionIndex1;
             TeamIndex1PriceData.InnerHtml = "" + index1Price;
             TeamIndex1ValueData.InnerHtml = "" + teamValuePositionIndex1;

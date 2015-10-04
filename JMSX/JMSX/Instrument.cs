@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-namespace Stockimulate
+﻿namespace Stockimulate
 {
     internal class Instrument
     {
