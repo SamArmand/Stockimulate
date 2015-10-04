@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -13,15 +14,15 @@ namespace Stockimulate.Views.AdminViews
         {
             _dataAccess = DataAccess.SessionInstance;
 
-            var price1 = _dataAccess.GetPrice(0);
-            var price2 = _dataAccess.GetPrice(1);
+            var prices = new List<int>();
+
+            for (var i=0; i < _dataAccess.Instruments.Count; ++i)
+                prices.Add(_dataAccess.GetPrice(i));
 
             var teams = _dataAccess.GetAllTeams();
 
             foreach (var team in teams)
-            {
-                team.CalculateAveragePnl(price1, price2);
-            }
+                team.CalculateAveragePnl(prices);
 
             var sortedTeams = teams.OrderByDescending(t => t.AveragePnl).ToList();
 

@@ -28,9 +28,7 @@ namespace Stockimulate
         private Status _status;
         private Mode _mode;
 
-        private readonly List<Instrument> _instruments; 
-
-        private DayInfo _dayInfo;
+        private readonly List<Instrument> _instruments;
 
         private string _table;
 
@@ -67,9 +65,6 @@ namespace Stockimulate
             _mode = Mode.Practice;
             _dayNumber = 0;
 
-            _instruments[0].Price = 0;
-            _instruments[1].Price = 0;
-
             _table = "PracticeEvents";
 
             Update();
@@ -77,29 +72,28 @@ namespace Stockimulate
 
         private void Update()
         {
-            _dayInfo = _dataAccess.GetDayInfo(_table, _dayNumber);
+             var dayInfo = _dataAccess.GetDayInfo(_table, _dayNumber);
 
-            _instruments[0].Price += _dayInfo.EffectPrice1;
-            _instruments[1].Price += _dayInfo.EffectPrice2;
+            for (var i = 0; i < _instruments.Count; ++i)
+            {
+                _instruments[i].Price += dayInfo.Effects[i];
+                _dataAccess.Update(_instruments[i]);
+            }
 
-            foreach (var instrument in _instruments)
-                _dataAccess.Update(instrument);
-
-            Index1.Update(_dayInfo);
-            Index2.Update(_dayInfo);
+            Index1.Update(dayInfo);
+            Index2.Update(dayInfo);
 
             var context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
-            context.Clients.All.sendMessage(_instruments[0].Price, _instruments[1].Price, _dayNumber, _dayInfo.EffectPrice1,
-                _dayInfo.EffectPrice2, _dayInfo.NewsItem);
+
+            //Hardcoded context update
+            context.Clients.All.sendMessage(_instruments[0].Price, _instruments[1].Price, _dayNumber, dayInfo.Effects[0],
+                dayInfo.Effects[1], dayInfo.Effects[2], dayInfo.NewsItem);
         }
 
         public void SetCompetitionMode()
         {
             _mode = Mode.Competition;
             _dayNumber = 0;
-
-            _instruments[0].Price = 0;
-            _instruments[1].Price = 0;
 
             _table = "Events";
 

@@ -19,19 +19,14 @@ namespace Stockimulate
             Players = new List<Player>();
         }
 
-        internal void AddPlayer(int id, string name, int positionIndex1, int postitionIndex2, int funds)
-        {
-            Players.Add(new Player(id, name, id, positionIndex1, postitionIndex2, funds));
-        }
-
-        internal void CalculateAveragePnl(int price1, int price2)
+        internal void CalculateAveragePnl(List<int> prices)
         {
             var totalPnl = 0;
             var playerCount = 0;
             
-            foreach (Player player in Players)
+            foreach (var player in Players)
             {
-                player.CalculatePnl(price1, price2);
+                player.CalculatePnl(prices);
                 totalPnl += player.Pnl;
                 playerCount++;
             }

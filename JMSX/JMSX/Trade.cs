@@ -13,7 +13,7 @@ namespace Stockimulate
         internal int MarketPrice { get; }
         internal bool Flagged { get; }
 
-        internal Trade(int buyerId, int sellerId, string symbol, int price, int quantity)
+        internal Trade(int buyerId, int sellerId, int security, int price, int quantity)
         {
 
             if (buyerId < 0 || sellerId < 0)
@@ -38,34 +38,21 @@ namespace Stockimulate
             if (Buyer.TeamId == Seller.TeamId)
                 throw new TradeCreationException("Buyer and Seller must be on different teams.");
 
-            if (symbol == "IND1" && ((Buyer.PositionIndex1 + quantity) > 100 && Buyer.TeamId != 0) 
-                || symbol == "IND2" && ((Buyer.PositionIndex2 + quantity) > 100 && Buyer.TeamId != 0))
-                throw new TradeCreationException("This trade puts the buyer's position at over 100.");
+            for (var i = 0; i < Buyer.Positions.Count; ++i)
+            {
+                if (security == i && Buyer.Positions[i] + quantity > 100 && Buyer.TeamId != 0)
+                    throw new TradeCreationException("This trade puts the buyer's position at over 100.");
+                if (security == i && Seller.Positions[i] - quantity < -100 && Seller.TeamId != 0)
+                    throw new TradeCreationException("This trade puts the seller's position at below -100.");
+            }
 
-            if (symbol == "IND1" && ((Seller.PositionIndex1 - quantity) < -100 && Seller.TeamId != 0)
-                || symbol == "IND2" && ((Seller.PositionIndex2 - quantity) < -100 && Seller.TeamId != 0))
-                throw new TradeCreationException("This trade puts the seller's position at below -100.");
-
-            Symbol = symbol;
+            Symbol = dataAccess.Instruments[security].Name;
             Price = price;
             Quantity = quantity;
 
-            switch (symbol)
-            {
-                case "OIL":
-                    Buyer.PositionIndex1 += Quantity;
-                    Seller.PositionIndex1 -= Quantity;
-                    MarketPrice = dataAccess.GetPrice(0);
-                    break;
-                case "IND":
-                    Buyer.PositionIndex2 += Quantity;
-                    Seller.PositionIndex2 -= Quantity;
-                    MarketPrice = dataAccess.GetPrice(1);
-                    break;
-                default:
-                    MarketPrice = 0;
-                    break;
-            }
+            Buyer.Positions[security] += Quantity;
+            Seller.Positions[security] -= Quantity;
+            MarketPrice = dataAccess.GetPrice(security);
 
             Buyer.Funds -= Quantity*Price;
             Seller.Funds += Quantity*Price;

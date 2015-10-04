@@ -1,4 +1,6 @@
-﻿namespace Stockimulate
+﻿using System.Collections.Generic;
+
+namespace Stockimulate
 {
     internal class Player
     {
@@ -8,26 +10,26 @@
 
         internal int TeamId { get; }
 
-        internal int PositionIndex1 { get; set; }
-
-        internal int PositionIndex2 { get; set; }
+        internal List<int> Positions { get; set; }
 
         internal int Funds { get; set; }
 
         internal int Pnl { get; private set; }
 
-        internal Player(int id, string name, int teamId, int positionIndex1, int positionIndex2, int funds) {
+        internal Player(int id, string name, int teamId, List<int> positions, int funds) {
             Id = id;
             Name = name;
             TeamId = teamId;
-            PositionIndex1 = positionIndex1;
-            PositionIndex2 = positionIndex2;
+            Positions = positions;
             Funds = funds;
         }
 
-        internal void CalculatePnl(int price1, int price2)
+        internal void CalculatePnl(List<int> prices)
         {
-            Pnl = ((PositionIndex1 * price1) + (PositionIndex2 * price2) + Funds) - 1000000;
+
+            for (var i = 0; i < prices.Count; ++i)
+                Pnl += Positions[i]*prices[i];
+            Pnl += Funds - 1000000;
         }
 
 

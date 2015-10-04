@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.22823.1
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockimulate", "JMSX\Stockimulate.csproj", "{D37EE335-297F-4E0B-A83B-948CB806A72F}"
 EndProject
@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configura
 		PublishScripts\Configurations\JMSX-WAWS-dev.json = PublishScripts\Configurations\JMSX-WAWS-dev.json
 	EndProjectSection
 EndProject
+Project("{F5034706-568F-408A-B7B3-4D38C6DB8A32}") = "StockimulateScripts", "StockimulateScripts\StockimulateScripts.pssproj", "{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{D37EE335-297F-4E0B-A83B-948CB806A72F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D37EE335-297F-4E0B-A83B-948CB806A72F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D37EE335-297F-4E0B-A83B-948CB806A72F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -34,12 +40,15 @@ Global
 		{F77641D5-0B07-49B7-9489-A4D543AD06ED} = {5999AF51-3B31-4152-9507-7F8C1C3276EF}
 	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 2
+		SccNumberOfProjects = 3
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://samarmand.visualstudio.com/defaultcollection
 		SccLocalPath0 = .
 		SccProjectUniqueName1 = JMSX\\Stockimulate.csproj
 		SccProjectName1 = JMSX
 		SccLocalPath1 = JMSX
+		SccProjectUniqueName2 = StockimulateScripts\\StockimulateScripts.pssproj
+		SccProjectName2 = StockimulateScripts
+		SccLocalPath2 = StockimulateScripts
 	EndGlobalSection
 EndGlobal
