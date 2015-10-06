@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 namespace Stockimulate.Views.TeamViews
 {
@@ -9,7 +9,7 @@ namespace Stockimulate.Views.TeamViews
     {
 
         private DataAccess _dataAccess;
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             _dataAccess = DataAccess.SessionInstance;
@@ -42,208 +42,182 @@ namespace Stockimulate.Views.TeamViews
                 return;
             }
 
-            var teamPositions = new List<int>();
-
-            for (var i = 0; i < _dataAccess.Instruments.Count; ++i)
-                teamPositions.Add(0);
-
             var prices = new List<int>();
 
             for (var i = 0; i < _dataAccess.Instruments.Count; ++i)
-            {
                 prices.Add(_dataAccess.GetPrice(i));
+
+            TeamTable.Controls.Add(new HtmlGenericControl("h3") {InnerHtml = team.Name + " - " + team.Id});
+
+            var teamTable = new Table();
+            var teamTableHeaderRow = new TableHeaderRow();
+
+            var teamTableSecurityHeaderCell = new TableHeaderCell {Text = "Security"};
+            var teamTablePositionHeaderCell = new TableHeaderCell {Text = "Position"};
+            var teamTableCurrentPriceHeaderCell = new TableHeaderCell() {Text = "CurrentPrice"};
+            var teamTableValueHeaderCell = new TableHeaderCell() {Text = "Value"};
+
+            teamTableHeaderRow.Cells.Add(teamTableSecurityHeaderCell);
+            teamTableHeaderRow.Cells.Add(teamTablePositionHeaderCell);
+            teamTableHeaderRow.Cells.Add(teamTableCurrentPriceHeaderCell);
+            teamTableHeaderRow.Cells.Add(teamTableValueHeaderCell);
+
+            teamTable.Rows.Add(teamTableHeaderRow);
+
+            var teamPositions = team.Positions();
+            var teamPositionValues = team.PositionValues(prices);
+
+            for (var i = 0; i < prices.Count; ++i)
+            {
+                var row = new TableRow();
+
+                var securityCell = new TableCell {Text = _dataAccess.Instruments[i].Name};
+                var positionCell = new TableCell {Text = teamPositions[i].ToString()};
+                var currentPriceCell = new TableCell {Text = prices[i].ToString()};
+                var tableValueCell = new TableCell {Text = teamPositionValues[i].ToString()};
+
+                row.Cells.Add(securityCell);
+                row.Cells.Add(positionCell);
+                row.Cells.Add(currentPriceCell);
+                row.Cells.Add(tableValueCell);
+
+                teamTable.Rows.Add(row);
+
             }
 
-            var teamValueClosed = 0;
+            var teamFundsRow = new TableRow();
+
+            var teamFundsCell = new TableCell {Text = "Funds"};
+            var teamFundsTotalCell = new TableCell {Text = team.Funds().ToString()};
+
+            teamFundsRow.Cells.Add(teamFundsCell);
+            teamFundsRow.Cells.Add(teamFundsTotalCell);
+
+            teamTable.Rows.Add(teamFundsRow);
+
+            var teamTableTotalFooterRow = new TableFooterRow();
+
+            var teamTotalCell = new TableCell {Text = "Total"};
+            var teamTotalValueCell = new TableCell {Text = team.TotalValue(prices).ToString()};
+
+            teamTableTotalFooterRow.Cells.Add(teamTotalCell);
+            teamTableTotalFooterRow.Cells.Add(new TableCell());
+            teamTableTotalFooterRow.Cells.Add(new TableCell());
+            teamTableTotalFooterRow.Cells.Add(teamTotalValueCell);
+
+            teamTable.Rows.Add(teamTableTotalFooterRow);
+
+            var teamTablePnLFooterRow = new TableFooterRow();
+
+            var teamPnLCell = new TableCell {Text = "P&L"};
+            var teamPnLValueCell = new TableCell {Text = team.PnL(prices).ToString()};
+
+            teamTablePnLFooterRow.Cells.Add(teamPnLCell);
+            teamTablePnLFooterRow.Cells.Add(new TableCell());
+            teamTablePnLFooterRow.Cells.Add(new TableCell());
+            teamTablePnLFooterRow.Cells.Add(teamPnLValueCell);
+
+            teamTable.Rows.Add(teamTablePnLFooterRow);
+
+            var teamTableAveragePnLFooterRow = new TableFooterRow();
+
+            var teamAveragePnLCell = new TableCell {Text = "Average P&L"};
+            var teamAveragePnLValueCell = new TableCell {Text = team.AveragePnL(prices).ToString()};
+
+            teamTableAveragePnLFooterRow.Cells.Add(teamAveragePnLCell);
+            teamTableAveragePnLFooterRow.Cells.Add(new TableCell());
+            teamTableAveragePnLFooterRow.Cells.Add(new TableCell());
+            teamTableAveragePnLFooterRow.Cells.Add(teamAveragePnLValueCell);
+
+            teamTable.Rows.Add(teamTableAveragePnLFooterRow);
+
+
+            TeamTable.Controls.Add(teamTable);
+
 
             foreach (var player in team.Players)
             {
 
-                for(var i=0; i < teamPositions.Count; ++i)
+                var positionValues = player.PositionValues(prices);
+
+                PlayerTables.Controls.Add(new HtmlGenericControl("h3") {InnerHtml = player.Name + " - " + player.Id});
+
+                var playerTable = new Table();
+
+                var playerTableHeaderRow = new TableHeaderRow();
+
+                var playerTableSecurityHeaderCell = new TableHeaderCell {Text = "Security"};
+                var playerTablePositionHeaderCell = new TableHeaderCell {Text = "Position"};
+                var playerTableCurrentPriceHeaderCell = new TableHeaderCell() {Text = "CurrentPrice"};
+                var playerTableValueHeaderCell = new TableHeaderCell() {Text = "Value"};
+
+                playerTableHeaderRow.Cells.Add(playerTableSecurityHeaderCell);
+                playerTableHeaderRow.Cells.Add(playerTablePositionHeaderCell);
+                playerTableHeaderRow.Cells.Add(playerTableCurrentPriceHeaderCell);
+                playerTableHeaderRow.Cells.Add(playerTableValueHeaderCell);
+
+                playerTable.Rows.Add(playerTableHeaderRow);
+
+                for (var i = 0; i < prices.Count; ++i)
                 {
-                    teamPositions[i] += player.Positions[i];
+                    var row = new TableRow();
+
+                    var securityCell = new TableCell {Text = _dataAccess.Instruments[i].Name};
+                    var positionCell = new TableCell {Text = player.Positions[i].ToString()};
+                    var currentPriceCell = new TableCell {Text = prices[i].ToString()};
+                    var tableValueCell = new TableCell {Text = positionValues[i].ToString()};
+
+                    row.Cells.Add(securityCell);
+                    row.Cells.Add(positionCell);
+                    row.Cells.Add(currentPriceCell);
+                    row.Cells.Add(tableValueCell);
+
+                    playerTable.Rows.Add(row);
+
                 }
 
-                teamValueClosed += player.Funds;
-            }
+                var playerTableFundsRow = new TableRow();
 
-            var teamValuePositionIndex1 = teamPositionIndex1 * index1Price;
-            var teamValuePositionIndex2 = teamPositionIndex2 * index2Price;
+                var playerFundsCell = new TableCell { Text = "Funds" };
+                var playerFundsValueCell = new TableCell { Text = player.Funds.ToString() };
 
-            var teamValueTotal = teamValuePositionIndex1 + teamValuePositionIndex2 + teamValueClosed;
+                playerTableFundsRow.Cells.Add(playerFundsCell);
+                playerTableFundsRow.Cells.Add(new TableCell());
+                playerTableFundsRow.Cells.Add(new TableCell());
+                playerTableFundsRow.Cells.Add(playerFundsValueCell);
 
-            TeamTable.Controls.Add(new HtmlGenericControl("h3") { InnerHtml = team.Name + " - " + team.Id });
+                playerTable.Rows.Add(playerTableFundsRow);
 
-            var teamTable = new HtmlTable();
-            teamTable.Controls.Add(new HtmlGenericControl(""));
-            
+                var playerTableTotalFooterRow = new TableFooterRow();
 
-            TeamPosition1Data.InnerHtml = "" + teamPositionIndex1;
-            TeamIndex1PriceData.InnerHtml = "" + index1Price;
-            TeamIndex1ValueData.InnerHtml = "" + teamValuePositionIndex1;
+                var playerTotalCell = new TableCell { Text = "Total" };
+                var playerTotalValueCell = new TableCell { Text = player.TotalValue(prices).ToString() };
 
-            TeamPosition2Data.InnerHtml = "" + teamPositionIndex2;
-            TeamIndex2PriceData.InnerHtml = "" + index2Price;
-            TeamIndex2ValueData.InnerHtml = "" + teamValuePositionIndex2;
+                playerTableTotalFooterRow.Cells.Add(playerTotalCell);
+                playerTableTotalFooterRow.Cells.Add(new TableCell());
+                playerTableTotalFooterRow.Cells.Add(new TableCell());
+                playerTableTotalFooterRow.Cells.Add(playerTotalValueCell);
 
-            TeamFundsData.InnerHtml = "" + teamValueClosed;
+                teamTable.Rows.Add(playerTableTotalFooterRow);
 
-            TeamTotalValueData.InnerHtml = "<strong>" + teamValueTotal + "</strong>";
+                var playerTablePnLFooterRow = new TableFooterRow();
 
-            TeamTable.Style.Value = "display: inline;";
+                var playerPnLCell = new TableCell { Text = "P&L" };
+                var playerPnLValueCell = new TableCell { Text = player.PnL(prices).ToString() };
 
-            int playerPositionIndex1;
-            int playerPositionIndex2;
-            int playerValueClosed;
-            int playerValuePositionIndex1;
-            int playerValuePositionIndex2;
-            int playerValuePositionsTotal;
-            int playerValueTotal;
-            int playerPnL;
+                playerTablePnLFooterRow.Cells.Add(playerPnLCell);
+                playerTablePnLFooterRow.Cells.Add(new TableCell());
+                playerTablePnLFooterRow.Cells.Add(new TableCell());
+                playerTablePnLFooterRow.Cells.Add(playerPnLValueCell);
 
-            if (team.Players.Count >= 1)
-            {
+                playerTable.Rows.Add(playerTablePnLFooterRow);
 
-                playerPositionIndex1 = team.Players.ElementAt(0).PositionIndex1;
-                playerPositionIndex2 = team.Players.ElementAt(0).PositionIndex2;
-
-                playerValueClosed = team.Players.ElementAt(0).Funds;
-
-                playerValuePositionIndex1 = team.Players.ElementAt(0).PositionIndex1 * index1Price;
-                playerValuePositionIndex2 = team.Players.ElementAt(0).PositionIndex2 * index2Price;
-
-                playerValuePositionsTotal = playerValuePositionIndex1 + playerValuePositionIndex2;
-
-                playerValueTotal = team.Players.ElementAt(0).Funds + playerValuePositionsTotal;
-
-                playerPnL = playerValueTotal - 1000000;
-
-                Player1NameHeader.InnerHtml = team.Players.ElementAt(0).Name + " - " + team.Players.ElementAt(0).Id;
-
-                Player1Position1Data.InnerHtml = "" + playerPositionIndex1;
-                Player1Index1PriceData.InnerHtml = "" + index1Price;
-                Player1Index1ValueData.InnerHtml = "" + playerValuePositionIndex1;
-
-                Player1Position2Data.InnerHtml = "" + playerPositionIndex2;
-                Player1Index2PriceData.InnerHtml = "" + index2Price;
-                Player1Index2ValueData.InnerHtml = "" + playerValuePositionIndex2;
-
-                Player1FundsData.InnerHtml = "" + playerValueClosed;
-
-                Player1TotalValueData.InnerHtml = "" + playerValueTotal + "";
-
-                Player1PnLData.InnerHtml = "<strong>" + playerPnL + "</strong>";
-
-                Player1Table.Style.Value = "display: inline;";
+                PlayerTables.Controls.Add(playerTable);
+                PlayerTables.Controls.Add(new HtmlGenericControl("br"));
 
             }
 
-            if (team.Players.Count >= 2)
-            {
-
-                playerPositionIndex1 = team.Players.ElementAt(1).PositionIndex1;
-                playerPositionIndex2 = team.Players.ElementAt(1).PositionIndex2;
-
-                playerValueClosed = team.Players.ElementAt(1).Funds;
-
-                playerValuePositionIndex1 = team.Players.ElementAt(1).PositionIndex1 * index1Price;
-                playerValuePositionIndex2 = team.Players.ElementAt(1).PositionIndex2 * index2Price;
-
-                playerValuePositionsTotal = playerValuePositionIndex1 + playerValuePositionIndex2;
-
-                playerValueTotal = team.Players.ElementAt(1).Funds + playerValuePositionsTotal;
-
-                playerPnL = playerValueTotal - 1000000;
-
-                Player2NameHeader.InnerHtml = team.Players.ElementAt(1).Name + " - " + team.Players.ElementAt(1).Id;
-
-                Player2Position1Data.InnerHtml = "" + playerPositionIndex1;
-                Player2Index1PriceData.InnerHtml = "" + index1Price;
-                Player2Index1ValueData.InnerHtml = "" + playerValuePositionIndex1;
-
-                Player2Position2Data.InnerHtml = "" + playerPositionIndex2;
-                Player2Index2PriceData.InnerHtml = "" + index2Price;
-                Player2Index2ValueData.InnerHtml = "" + playerValuePositionIndex2;
-
-                Player2FundsData.InnerHtml = "" + playerValueClosed;
-
-                Player2TotalValueData.InnerHtml = "" + playerValueTotal + "";
-
-                Player2PnLData.InnerHtml = "<strong>" + playerPnL + "</strong>";
-
-                Player2Table.Style.Value = "display: inline;";
-
-            }
-
-            if (team.Players.Count >= 3)
-            {
-
-                playerPositionIndex1 = team.Players.ElementAt(2).PositionIndex1;
-                playerPositionIndex2 = team.Players.ElementAt(2).PositionIndex2;
-
-                playerValueClosed = team.Players.ElementAt(2).Funds;
-
-                playerValuePositionIndex1 = team.Players.ElementAt(2).PositionIndex1 * index1Price;
-                playerValuePositionIndex2 = team.Players.ElementAt(2).PositionIndex2 * index2Price;
-
-                playerValuePositionsTotal = playerValuePositionIndex1 + playerValuePositionIndex2;
-
-                playerValueTotal = team.Players.ElementAt(2).Funds + playerValuePositionsTotal;
-
-                playerPnL = playerValueTotal - 1000000;
-
-                Player3NameHeader.InnerHtml = team.Players.ElementAt(2).Name + " - " + team.Players.ElementAt(2).Id;
-
-                Player3Position1Data.InnerHtml = "" + playerPositionIndex1;
-                Player3Index1PriceData.InnerHtml = "" + index1Price;
-                Player3Index1ValueData.InnerHtml = "" + playerValuePositionIndex1;
-
-                Player3Position2Data.InnerHtml = "" + playerPositionIndex2;
-                Player3Index2PriceData.InnerHtml = "" + index2Price;
-                Player3Index2ValueData.InnerHtml = "" + playerValuePositionIndex2;
-
-                Player3FundsData.InnerHtml = "" + playerValueClosed;
-
-                Player3TotalValueData.InnerHtml = "" + playerValueTotal + "";
-
-                Player3PnLData.InnerHtml = "<strong>" + playerPnL + "</strong>";
-
-                Player3Table.Style.Value = "display: inline;";
-
-            }
-
-            if (team.Players.Count != 4) return;
-            playerPositionIndex1 = team.Players.ElementAt(3).PositionIndex1;
-            playerPositionIndex2 = team.Players.ElementAt(3).PositionIndex2;
-
-            playerValueClosed = team.Players.ElementAt(3).Funds;
-
-            playerValuePositionIndex1 = team.Players.ElementAt(3).PositionIndex1 * index1Price;
-            playerValuePositionIndex2 = team.Players.ElementAt(3).PositionIndex2 * index2Price;
-
-            playerValuePositionsTotal = playerValuePositionIndex1 + playerValuePositionIndex2;
-
-            playerValueTotal = team.Players.ElementAt(3).Funds + playerValuePositionsTotal;
-
-            playerPnL = playerValueTotal - 1000000;
-
-            Player4NameHeader.InnerHtml = team.Players.ElementAt(3).Name + " - " + team.Players.ElementAt(3).Id;
-
-            Player4Position1Data.InnerHtml = "" + playerPositionIndex1;
-            Player4Index1PriceData.InnerHtml = "" + index1Price;
-            Player4Index1ValueData.InnerHtml = "" + playerValuePositionIndex1;
-
-            Player4Position2Data.InnerHtml = "" + playerPositionIndex2;
-            Player4Index2PriceData.InnerHtml = "" + index2Price;
-            Player4Index2ValueData.InnerHtml = "" + playerValuePositionIndex2;
-
-            Player4FundsData.InnerHtml = "" + playerValueClosed;
-
-            Player4TotalValueData.InnerHtml = "" + playerValueTotal + "";
-
-            Player4PnLData.InnerHtml = "<strong>" + playerPnL + "</strong>";
-
-            Player4Table.Style.Value = "display: inline;";
         }
+
     }
 }

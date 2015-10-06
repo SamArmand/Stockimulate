@@ -3,13 +3,13 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     
-            <legend><h1>Fraud Prevention</h1></legend>
+            <legend><h1>Fraud Prevention - Under Construction!!!</h1></legend>
 
             <div id="tableDiv" runat="server">
                 
                 
 
             </div>
-    <asp:ListView ID="ListView1" runat="server" DataSourceID="SqlDataSource"></asp:ListView>
+   
 
 </asp:Content>

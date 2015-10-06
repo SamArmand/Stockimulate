@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Stockimulate
 {
@@ -14,7 +15,6 @@ namespace Stockimulate
 
         internal int Funds { get; set; }
 
-        internal int Pnl { get; private set; }
 
         internal Player(int id, string name, int teamId, List<int> positions, int funds) {
             Id = id;
@@ -24,12 +24,18 @@ namespace Stockimulate
             Funds = funds;
         }
 
-        internal void CalculatePnl(List<int> prices)
+        internal int TotalValue(List<int> prices) => Funds + PositionValues(prices).Sum();
+
+        internal List<int> PositionValues(List<int> prices) => prices.Select((t, i) => Positions[i]*t).ToList();
+
+        internal int PnL(List<int> prices)
         {
 
-            for (var i = 0; i < prices.Count; ++i)
-                Pnl += Positions[i]*prices[i];
-            Pnl += Funds - 1000000;
+            var pnL = prices.Select((t, i) => Positions[i]*t).Sum();
+
+            pnL += Funds - 1000000;
+
+            return pnL;
         }
 
 

@@ -30,8 +30,9 @@
                     <li><a href="Override.aspx">Override Panel</a></li>
                     <li><a href="TeamStandings.aspx">Team Standings</a></li>
                     <li><a href="IndividualStandings.aspx">Individual Standings</a></li>
-                    <li><a href="../Index1.aspx">OIL</a>             </li>
-                    <li><a href="../Index2.aspx">IND</a>             </li>
+                    <li><a href="FraudPrevention.aspx">Fraud Prevention</a></li>
+                    <li><a href="../Index1.aspx" id="ind1Link" runat="server"></a>             </li>
+                    <li><a href="../Index2.aspx" id="ind2Link" runat="server"></a>             </li>
                 </ul>
             </nav>
         </div>

@@ -21,10 +21,7 @@ namespace Stockimulate.Views.AdminViews
 
             var teams = _dataAccess.GetAllTeams();
 
-            foreach (var team in teams)
-                team.CalculateAveragePnl(prices);
-
-            var sortedTeams = teams.OrderByDescending(t => t.AveragePnl).ToList();
+            var sortedTeams = teams.OrderByDescending(t => t.AveragePnL(prices)).ToList();
 
             var sb = new StringBuilder("");
 
@@ -47,15 +44,15 @@ namespace Stockimulate.Views.AdminViews
 
                 string rankString;
 
-                if (i > 0 && sortedTeams.ElementAt(i).AveragePnl == sortedTeams.ElementAt(i - 1).AveragePnl)
+                if (i > 0 && sortedTeams[i].AveragePnL(prices) == sortedTeams[i-1].AveragePnL(prices))
                     rankString = "-";
                 else
                     rankString = "" + rank;
 
                 sb.Append("<tr>");
                 sb.Append("<td>" + rankString + "</td>");
-                sb.Append("<td>" + sortedTeams.ElementAt(i).Name + " - " + sortedTeams.ElementAt(i).Id + "</td>");
-                sb.Append("<td>" + "$" + sortedTeams.ElementAt(i).AveragePnl + "</td>");
+                sb.Append("<td>" + sortedTeams[i].Name + " - " + sortedTeams[i].Id + "</td>");
+                sb.Append("<td>" + "$" + sortedTeams[i].AveragePnL(prices) + "</td>");
                 sb.Append("</tr>");
             }
 
