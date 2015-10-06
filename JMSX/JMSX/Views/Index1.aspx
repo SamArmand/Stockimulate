@@ -19,7 +19,7 @@
             $('#GraphDiv').highcharts({
 
                 title: {
-                    text: "IND"
+                    text: "OIL"
                 },
 
                 legend: {

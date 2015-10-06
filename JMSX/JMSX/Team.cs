@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Stockimulate
 {
     internal class Team
     {
         internal int Id { get; }
-
-        internal int AveragePnl { get; private set; }
 
         internal string Name { get; }
 
@@ -19,21 +18,40 @@ namespace Stockimulate
             Players = new List<Player>();
         }
 
-        internal void CalculateAveragePnl(List<int> prices)
+        internal List<int> Positions()
         {
-            var totalPnl = 0;
-            var playerCount = 0;
-            
+            var positions = new List<int>();
+
+            for (var i = 0; i < Players.Count; ++i)
+                positions.Add(0);
+
             foreach (var player in Players)
             {
-                player.CalculatePnl(prices);
-                totalPnl += player.Pnl;
-                playerCount++;
+                for (var i = 0; i < player.Positions.Count; ++i)
+                    positions[i] += player.Positions[i];
             }
 
-            AveragePnl = totalPnl / playerCount;
+            return positions;
 
         }
 
+        internal int Funds() => Players.Sum(player => player.Funds);
+
+        internal List<int> PositionValues(List<int> prices)
+        {
+            var positions = Positions();
+
+            for (var i = 0; i < prices.Count; ++i)
+                positions[i] *= prices[i];
+
+            return positions;
+
+        }
+
+        internal int TotalValue(List<int> prices) => Funds() + PositionValues(prices).Sum();
+
+        internal int PnL(List<int> prices) => Players.Sum(player => player.PnL(prices));
+
+        internal int AveragePnL(List<int> prices) => PnL(prices) / Players.Count;
     }
 }

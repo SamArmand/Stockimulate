@@ -11,6 +11,10 @@ namespace Stockimulate.Views.AdminViews
             {
                 Response.Redirect("../Login.aspx");
             }
+
+            ind1Link.InnerHtml = DataAccess.SessionInstance.Instruments[0].Name;
+            ind2Link.InnerHtml = DataAccess.SessionInstance.Instruments[1].Name;
+
         }
     }
 }

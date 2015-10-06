@@ -68,7 +68,7 @@ namespace Stockimulate.Views
         internal static void Update(DayInfo dayInfo)
         {
 
-            IndexChange = dayInfo.EffectPrice1;
+            IndexChange = dayInfo.Effects[1];
             IndexPrice += IndexChange;
 
             _prices.Add(IndexPrice);

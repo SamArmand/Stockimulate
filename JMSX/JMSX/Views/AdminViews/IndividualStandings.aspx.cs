@@ -20,10 +20,7 @@ namespace Stockimulate.Views.AdminViews
 
             var players = _dataAccess.GetAllPlayers();
 
-            foreach (var player in players)
-                player.CalculatePnl(prices);
-
-            var sortedPlayers = players.OrderByDescending(t => t.Pnl).ToList();
+            var sortedPlayers = players.OrderByDescending(t => t.PnL(prices)).ToList();
 
             var sb = new StringBuilder("");
 
@@ -46,7 +43,7 @@ namespace Stockimulate.Views.AdminViews
 
                 string rankString;
 
-                if (i > 0 && sortedPlayers.ElementAt(i).Pnl == sortedPlayers.ElementAt(i - 1).Pnl)
+                if (i > 0 && sortedPlayers.ElementAt(i).PnL(prices) == sortedPlayers.ElementAt(i - 1).PnL(prices))
                     rankString = "-";
                 else
                     rankString = "" + rank;
@@ -54,7 +51,7 @@ namespace Stockimulate.Views.AdminViews
                 sb.Append("<tr>");
                 sb.Append("<td>" + rankString + "</td>");
                 sb.Append("<td>" + sortedPlayers.ElementAt(i).Name + " - " + sortedPlayers.ElementAt(i).Id + "</td>");
-                sb.Append("<td>" + "$" + sortedPlayers.ElementAt(i).Pnl + "</td>");
+                sb.Append("<td>" + "$" + sortedPlayers.ElementAt(i).PnL(prices) + "</td>");
                 sb.Append("</tr>");
             }
 
