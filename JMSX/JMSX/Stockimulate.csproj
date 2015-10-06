@@ -112,9 +112,8 @@
     </Content>
     <Content Include="Views\BrokerViews\MasterBroker.Master" />
     <Content Include="Views\AdminViews\MasterAdmin.Master" />
-    <None Include="Properties\PublishProfiles\JMSX %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\JMSX.pubxml" />
     <Content Include="Views\TeamViews\MasterTeam.Master" />
+    <None Include="Properties\PublishProfiles\JMSX.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
