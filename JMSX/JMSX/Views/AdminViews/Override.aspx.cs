@@ -38,7 +38,7 @@ namespace Stockimulate.Views.AdminViews
             if (Price2Input.Value != "" && int.Parse(Price2Input.Value) >= 0)
             {
                 var instrument = _dataAccess.GetInstruments()[1];
-                instrument.Price = int.Parse(Price1Input.Value);
+                instrument.Price = int.Parse(Price2Input.Value);
                 _dataAccess.Update(instrument);
             }
 

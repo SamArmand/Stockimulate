@@ -108,7 +108,7 @@ namespace Stockimulate
             var query = "SELECT Name, TeamID, ";
 
             for (var i = 0; i < Instruments.Count; ++i)
-                query += " PositionsIndex" + (i + 1) + ",";
+                query += " PositionIndex" + (i + 1) + ",";
 
             query += "Funds FROM Players WHERE ID=@ID; ";
 
@@ -373,7 +373,7 @@ namespace Stockimulate
             for (var i = 0; i < Instruments.Count; ++i)
                 query += " EffectIndex" + (i + 1) + ",";
 
-            query += "FROM " + table + " WHERE TradingDay=@TradingDay;";
+            query += " FROM " + table + " WHERE TradingDay=@TradingDay;";
 
             var command = new SqlCommand(query) {CommandType = CommandType.Text};
 
