@@ -86,7 +86,7 @@
                     $('.IndexChangeNone').show();
                 }
 
-                if (news !== "null") {
+                if (news !== "") {
                     $(".NewsDiv").html("<h2>" + news + "</h2>");
                 }
 

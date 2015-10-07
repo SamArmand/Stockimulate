@@ -63,56 +63,8 @@
 
         </div>
 
-        <div id="PlayerTables" runat="server" style="display: none;">
-    <h3 id ="Player1NameHeader" runat="server"></h3>
-    <table class="pure-table pure-table-bordered">
-    <thead>
-        <tr>
-            <th>Security</th>
-            <th>Position</th>
-            <th>Current Price</th>
-            <th>Value</th>
-        </tr>
-    </thead>
+        <div id="PlayerTables" runat="server">
 
-    <tbody>
-        <tr>
-            <td>OIL</td>
-            <td id="Player1Position1Data" runat="server"></td>
-            <td id="Player1Index1PriceData" runat="server"></td>
-            <td id="Player1Index1ValueData" runat="server"></td>
-        </tr>
-
-       <tr>
-            <td>IND</td>
-            <td id="Player1Position2Data" runat="server"></td>
-            <td id="Player1Index2PriceData" runat="server"></td>
-            <td id="Player1Index2ValueData" runat="server"></td>
-        </tr>
-
-       <tr>
-            <td>Funds</td>
-            <td></td>
-            <td></td>
-            <td id="Player1FundsData" runat="server"></td>
-        </tr>
-
-        <tr>
-            <td><strong>Total</strong></td>
-            <td></td>
-            <td></td>
-            <td id="Player1TotalValueData" runat="server"></td>
-        </tr>
-
-        <tr>
-            <td><strong>PnL</strong></td>
-            <td></td>
-            <td></td>
-            <td id="Player1PnLData" runat="server"></td>
-        </tr>
-
-    </tbody>
-</table>
         </div>
 
  

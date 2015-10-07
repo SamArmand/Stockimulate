@@ -13,7 +13,7 @@ namespace Stockimulate
         internal int MarketPrice { get; }
         internal bool Flagged { get; }
 
-        internal Trade(int buyerId, int sellerId, int security, int price, int quantity)
+        internal Trade(int buyerId, int sellerId, int security, int quantity, int price)
         {
 
             if (buyerId < 0 || sellerId < 0)
@@ -61,7 +61,7 @@ namespace Stockimulate
 
         }
 
-        internal Trade(int id, int buyerId, int sellerId, string symbol, int price, int quantity, int marketPrice,
+        internal Trade(int id, int buyerId, int sellerId, string symbol, int quantity, int price, int marketPrice,
             bool flagged)
         {
             Id = id;

@@ -19,7 +19,6 @@ namespace Stockimulate.Views.TeamViews
         {
 
             ErrorDiv.Style.Value = "display: none;";
-            TeamTable.Style.Value = "display: none;";
 
             if (!_dataAccess.IsReportsEnabled())
             {
@@ -71,7 +70,7 @@ namespace Stockimulate.Views.TeamViews
             {
                 var row = new TableRow();
 
-                var securityCell = new TableCell {Text = _dataAccess.Instruments[i].Name};
+                var securityCell = new TableCell {Text = _dataAccess.Instruments[i].Symbol};
                 var positionCell = new TableCell {Text = teamPositions[i].ToString()};
                 var currentPriceCell = new TableCell {Text = prices[i].ToString()};
                 var tableValueCell = new TableCell {Text = teamPositionValues[i].ToString()};
@@ -91,6 +90,8 @@ namespace Stockimulate.Views.TeamViews
             var teamFundsTotalCell = new TableCell {Text = team.Funds().ToString()};
 
             teamFundsRow.Cells.Add(teamFundsCell);
+            teamFundsRow.Cells.Add(new TableCell());
+            teamFundsRow.Cells.Add(new TableCell());
             teamFundsRow.Cells.Add(teamFundsTotalCell);
 
             teamTable.Rows.Add(teamFundsRow);
@@ -131,9 +132,9 @@ namespace Stockimulate.Views.TeamViews
 
             teamTable.Rows.Add(teamTableAveragePnLFooterRow);
 
+            teamTable.CssClass = "pure-table pure-table-bordered";
 
             TeamTable.Controls.Add(teamTable);
-
 
             foreach (var player in team.Players)
             {
@@ -162,7 +163,7 @@ namespace Stockimulate.Views.TeamViews
                 {
                     var row = new TableRow();
 
-                    var securityCell = new TableCell {Text = _dataAccess.Instruments[i].Name};
+                    var securityCell = new TableCell {Text = _dataAccess.Instruments[i].Symbol};
                     var positionCell = new TableCell {Text = player.Positions[i].ToString()};
                     var currentPriceCell = new TableCell {Text = prices[i].ToString()};
                     var tableValueCell = new TableCell {Text = positionValues[i].ToString()};
@@ -198,7 +199,7 @@ namespace Stockimulate.Views.TeamViews
                 playerTableTotalFooterRow.Cells.Add(new TableCell());
                 playerTableTotalFooterRow.Cells.Add(playerTotalValueCell);
 
-                teamTable.Rows.Add(playerTableTotalFooterRow);
+                playerTable.Rows.Add(playerTableTotalFooterRow);
 
                 var playerTablePnLFooterRow = new TableFooterRow();
 
@@ -211,6 +212,8 @@ namespace Stockimulate.Views.TeamViews
                 playerTablePnLFooterRow.Cells.Add(playerPnLValueCell);
 
                 playerTable.Rows.Add(playerTablePnLFooterRow);
+
+                playerTable.CssClass = "pure-table pure-table-bordered";
 
                 PlayerTables.Controls.Add(playerTable);
                 PlayerTables.Controls.Add(new HtmlGenericControl("br"));
