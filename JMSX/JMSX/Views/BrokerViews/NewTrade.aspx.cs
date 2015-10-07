@@ -35,9 +35,9 @@ namespace Stockimulate.Views.BrokerViews
             try
             {
 
-                var trade = new Trade(Convert.ToInt32(BuyerID.Value), Convert.ToInt32(SellerID.Value), Convert.ToInt32(security.SelectedValue),
+                var trade = new Trade(Convert.ToInt32(BuyerID.Value), Convert.ToInt32(SellerID.Value), security.SelectedIndex,
                     Convert.ToInt32(Quantity.Value), price);
-                _dataAccess.InsertTrade(trade);
+                _dataAccess.Insert(trade);
             }
 
             catch (TradeCreationException tradeCreationException)

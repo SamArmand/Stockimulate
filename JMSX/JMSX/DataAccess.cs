@@ -34,7 +34,7 @@ namespace Stockimulate
 
         internal static DataAccess Instance => _instance ?? (_instance = new DataAccess());
 
-        internal void InsertTrade(Trade trade)
+        internal void Insert(Trade trade)
         {
             var connection = new SqlConnection(ConnectionString);
 
@@ -105,12 +105,12 @@ namespace Stockimulate
 
             var connection = new SqlConnection(ConnectionString);
 
-            var query = "SELECT Name, TeamID, ";
+            var query = "SELECT Name, TeamID";
 
             for (var i = 0; i < Instruments.Count; ++i)
-                query += " PositionIndex" + (i + 1) + ",";
+                query += ", PositionIndex" + (i + 1);
 
-            query += "Funds FROM Players WHERE ID=@ID; ";
+            query += ", Funds FROM Players WHERE ID=@ID; ";
 
             var command = new SqlCommand(query) {CommandType = CommandType.Text};
 
@@ -124,7 +124,6 @@ namespace Stockimulate
 
             if (reader.Read())
             {
-
                 var name = reader.GetString(reader.GetOrdinal("Name"));
                 var teamId = reader.GetInt32(reader.GetOrdinal("TeamID"));
 
@@ -136,13 +135,10 @@ namespace Stockimulate
                 var funds = reader.GetInt32(reader.GetOrdinal("Funds"));
 
                 player = new Player(id, name, teamId, positions, funds);
-
             }
 
             else
-            {
                 player = new Player(-1, "", -1, new List<int>(), -1);
-            }
 
             reader.Dispose();
             command.Dispose();
@@ -153,11 +149,8 @@ namespace Stockimulate
 
         internal Team GetTeam(int id, string code="", bool needCode=false)
         {
-
             if (id < 0)
-            {
                 return null;
-            }
 
             var connection = new SqlConnection(ConnectionString);
 
@@ -196,12 +189,12 @@ namespace Stockimulate
 
             connection = new SqlConnection(ConnectionString);
 
-            query = "SELECT ID, Name, TeamID,";
+            query = "SELECT ID, Name, TeamID";
 
             for (var i = 0; i < Instruments.Count; ++i)
-                query += " PositionIndex" + (i + 1) + ",";
+                query += ", PositionIndex" + (i + 1);
 
-            query += " Funds FROM Players WHERE TeamID=@TeamID;";
+            query += ", Funds FROM Players WHERE TeamID=@TeamID;";
 
             command = new SqlCommand(query) {CommandType = CommandType.Text};
 
@@ -351,8 +344,8 @@ namespace Stockimulate
                     reader.GetInt32(reader.GetOrdinal("BuyerID")),
                     reader.GetInt32(reader.GetOrdinal("SellerID")),
                     reader.GetString(reader.GetOrdinal("Symbol")),
-                    reader.GetInt32(reader.GetOrdinal("Price")),
                     reader.GetInt32(reader.GetOrdinal("Quantity")),
+                    reader.GetInt32(reader.GetOrdinal("Price")),
                     reader.GetInt32(reader.GetOrdinal("MarketPrice")),
                     reader.GetBoolean(reader.GetOrdinal("Flagged"))));
 
@@ -367,11 +360,11 @@ namespace Stockimulate
         {
             var connection = new SqlConnection(ConnectionString);
 
-            var query = "SELECT News,";
+            var query = "SELECT News";
  
 
             for (var i = 0; i < Instruments.Count; ++i)
-                query += " EffectIndex" + (i + 1) + ",";
+                query += ", EffectIndex" + (i + 1);
 
             query += " FROM " + table + " WHERE TradingDay=@TradingDay;";
 

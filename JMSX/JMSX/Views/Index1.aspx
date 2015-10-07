@@ -4,6 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <%-- ReSharper disable EmptyTitleTag --%>
     <title id="title" runat="server"></title>
 
     <script src="../scripts/jquery-1.9.0.min.js"></script>    
@@ -12,6 +13,7 @@
     <script src="../scripts/Highcharts-4.0.1/js/highcharts.js"></script>
     <script src="../signalr/hubs"></script>
 
+    <%-- ReSharper disable PossiblyUnassignedProperty --%>
     <script>
         $(function () {
             var text = $('#data').text();
@@ -88,7 +90,7 @@
                     $('.IndexChangeNone').show();
                 }
 
-                if (news !== "null") {
+                if (news !== "") {
                     $('.NewsDiv').html("<h2>" + news + "</h2>");
                 }
 
@@ -102,6 +104,7 @@
         });
 
     </script>
+    <%-- ReSharper restore PossiblyUnassignedProperty --%>
 
     <link href="../Content/bootstrap.min.css" rel="stylesheet" />
     <link href="../Content/bootstrap-theme.css" rel="stylesheet" />

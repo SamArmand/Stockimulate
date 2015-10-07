@@ -8,10 +8,9 @@ namespace Stockimulate.Views
 {
     public partial class Index2 : Page
     {
-
-        public static int IndexPrice;
-        public static int IndexChange;
-        public static string News = "";
+        private static int _indexPrice;
+        private static int _indexChange;
+        private static string _news = "";
 
         private static List<string> _days = new List<string>();
         private static List<int> _prices = new List<int>();
@@ -28,27 +27,27 @@ namespace Stockimulate.Views
             IndexChangeNegative.Style.Value = "display: none;";
             IndexChangeNone.Style.Value = "display: none;";
 
-            IndexPriceDiv.InnerHtml = "<h1>$" + IndexPrice + "</h1>";
+            IndexPriceDiv.InnerHtml = "<h1>$" + _indexPrice + "</h1>";
 
-            if (IndexChange > 0)
+            if (_indexChange > 0)
             {
-                IndexChangePositiveSpan.InnerHtml = "" + IndexChange;
+                IndexChangePositiveSpan.InnerHtml = "" + _indexChange;
                 IndexChangePositive.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; text-align:center;";
             }
-            else if (IndexChange < 0)
+            else if (_indexChange < 0)
             {
-                IndexChangeNegativeSpan.InnerHtml = "" + IndexChange * -1;
+                IndexChangeNegativeSpan.InnerHtml = "" + _indexChange * -1;
                 IndexChangeNegative.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; text-align:center";
             }
-            else if (IndexChange == 0)
+            else if (_indexChange == 0)
             {
-                IndexChangeNoneSpan.InnerHtml = "" + IndexChange;
+                IndexChangeNoneSpan.InnerHtml = "" + _indexChange;
                 IndexChangeNone.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; text-align:center;";
             }
 
-            if (News != "null")
+            if (_news != "null")
             {
-                NewsDiv.InnerHtml = "<h2>" + News + "</h2>";
+                NewsDiv.InnerHtml = "<h2>" + _news + "</h2>";
             }
 
             var javascriptArray = "[";
@@ -71,13 +70,14 @@ namespace Stockimulate.Views
         internal static void Update(DayInfo dayInfo)
         {
 
-            IndexChange = dayInfo.Effects[2];
-            IndexPrice += IndexChange;
+            _indexChange = dayInfo.Effects[1];
+            _indexPrice += _indexChange;
 
-            _prices.Add(IndexPrice);
+            _prices.Add(_indexPrice);
             _days.Add(Convert.ToString(dayInfo.TradingDay));
 
-            News = dayInfo.NewsItem;
+            if (dayInfo.NewsItem != "")
+                _news = dayInfo.NewsItem;
         }
 
         public static void Reset()

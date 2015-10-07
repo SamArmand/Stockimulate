@@ -67,6 +67,12 @@ namespace Stockimulate
 
             _table = "PracticeEvents";
 
+            foreach (var t in _instruments)
+            {
+                t.Price = 0;
+                _dataAccess.Update(t);
+            }
+
             Update();
         }
 
@@ -87,7 +93,7 @@ namespace Stockimulate
 
             //Hardcoded context update
             context.Clients.All.sendMessage(_instruments[0].Price, _instruments[1].Price, _dayNumber, dayInfo.Effects[0],
-                dayInfo.Effects[1], dayInfo.Effects[2], dayInfo.NewsItem);
+                dayInfo.Effects[1], dayInfo.NewsItem);
         }
 
         public void SetCompetitionMode()
@@ -96,6 +102,13 @@ namespace Stockimulate
             _dayNumber = 0;
 
             _table = "Events";
+
+            foreach (var t in _instruments)
+            {
+                t.Price = 0;
+                _dataAccess.Update(t);
+            }
+
 
             Update();
         }
