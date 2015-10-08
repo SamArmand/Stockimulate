@@ -16,12 +16,12 @@
           <div class="form-group">
             <label class="col-sm-1 control-label">Team Number</label>
             <div class="col-sm-2">
-              <input id="TeamNumber" type="number" placeholder="Team Number" class="form-control" runat="server" required/>
+              <input id="TeamNumber" type="number" placeholder="Team Number" class="form-control" runat="server" required="required"/>
             </div>
 
             <label class="col-sm-1 col-sm-offset-1 control-label">Team Code</label>
             <div class="col-sm-2">
-              <input id="TeamCode" type="text" placeholder="Team Code" class="form-control" runat="server" required/>
+              <input id="TeamCode" type="text" placeholder="Team Code" class="form-control" runat="server" required="required"/>
             </div>
           </div>
 
@@ -66,7 +66,5 @@
         <div id="PlayerTables" runat="server">
 
         </div>
-
- 
 
 </asp:Content>

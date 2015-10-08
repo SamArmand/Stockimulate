@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace Stockimulate
@@ -38,9 +39,7 @@ namespace Stockimulate
         {
             var connection = new SqlConnection(ConnectionString);
 
-            const string query = "INSERT INTO Trades (BuyerID, SellerID, Symbol, Quantity, Price, MarketPrice, Flagged) VALUES (@BuyerID, @SellerID, @Symbol, @Quantity, @Price, @MarketPrice, @Flagged);";
-
-            var command = new SqlCommand(query) {CommandType = CommandType.Text};
+            var command = new SqlCommand("INSERT INTO Trades (BuyerID, SellerID, Symbol, Quantity, Price, MarketPrice, Flagged) VALUES (@BuyerID, @SellerID, @Symbol, @Quantity, @Price, @MarketPrice, @Flagged);") {CommandType = CommandType.Text};
 
             command.Parameters.AddWithValue("@BuyerID", trade.Buyer.Id);
             command.Parameters.AddWithValue("@SellerID", trade.Seller.Id);
@@ -73,14 +72,16 @@ namespace Stockimulate
         {
             var connection = new SqlConnection(ConnectionString);
 
-            var query = "UPDATE Players SET";
+            var queryStringBuilder = new StringBuilder();
+
+            queryStringBuilder.Append("UPDATE Players SET");
 
             for (var i = 0; i < Instruments.Count; ++i)
-                query += " PositionIndex" + (i + 1) + "=@PositionIndex" + (i + 1) + ",";
+                queryStringBuilder.Append(" PositionIndex" + (i + 1) + "=@PositionIndex" + (i + 1) + ",");
 
-            query += " Funds=@Funds WHERE ID=@ID;";
+            queryStringBuilder.Append(" Funds=@Funds WHERE ID=@ID;");
 
-            var command = new SqlCommand(query) {CommandType = CommandType.Text};
+            var command = new SqlCommand(queryStringBuilder.ToString()) {CommandType = CommandType.Text};
 
             for (var i = 0; i < Instruments.Count; ++i)
                 command.Parameters.AddWithValue("@PositionIndex" + (i + 1), player.Positions[i]);
@@ -105,14 +106,16 @@ namespace Stockimulate
 
             var connection = new SqlConnection(ConnectionString);
 
-            var query = "SELECT Name, TeamID";
+            var queryStringBuilder = new StringBuilder();
+
+            queryStringBuilder.Append("SELECT Name, TeamID");
 
             for (var i = 0; i < Instruments.Count; ++i)
-                query += ", PositionIndex" + (i + 1);
+                queryStringBuilder.Append(", PositionIndex" + (i + 1));
 
-            query += ", Funds FROM Players WHERE ID=@ID; ";
+            queryStringBuilder.Append(", Funds FROM Players WHERE ID=@ID; ");
 
-            var command = new SqlCommand(query) {CommandType = CommandType.Text};
+            var command = new SqlCommand(queryStringBuilder.ToString()) {CommandType = CommandType.Text};
 
             command.Parameters.AddWithValue("@ID", id);
 
@@ -154,9 +157,7 @@ namespace Stockimulate
 
             var connection = new SqlConnection(ConnectionString);
 
-            var query = needCode ? "SELECT ID, Name FROM Teams WHERE ID=@ID AND Code=@Code;" : "SELECT ID, Name FROM Teams WHERE ID=@ID;";
-
-            var command = new SqlCommand(query) {CommandType = CommandType.Text};
+            var command = new SqlCommand(needCode ? "SELECT ID, Name FROM Teams WHERE ID=@ID AND Code=@Code;" : "SELECT ID, Name FROM Teams WHERE ID=@ID;") {CommandType = CommandType.Text};
 
             command.Parameters.AddWithValue("@ID", id);
 
@@ -189,14 +190,16 @@ namespace Stockimulate
 
             connection = new SqlConnection(ConnectionString);
 
-            query = "SELECT ID, Name, TeamID";
+            var queryStringBuilder = new StringBuilder();
+
+            queryStringBuilder.Append("SELECT ID, Name, TeamID");
 
             for (var i = 0; i < Instruments.Count; ++i)
-                query += ", PositionIndex" + (i + 1);
+                queryStringBuilder.Append(", PositionIndex" + (i + 1));
 
-            query += ", Funds FROM Players WHERE TeamID=@TeamID;";
+            queryStringBuilder.Append(", Funds FROM Players WHERE TeamID=@TeamID;");
 
-            command = new SqlCommand(query) {CommandType = CommandType.Text};
+            command = new SqlCommand(queryStringBuilder.ToString()) {CommandType = CommandType.Text};
 
             command.Parameters.AddWithValue("@TeamID", team.Id);
 
@@ -234,9 +237,7 @@ namespace Stockimulate
         {
             var connection = new SqlConnection(ConnectionString);
 
-            const string query = "SELECT ID FROM Teams WHERE NOT ID=0;";
-
-            var command = new SqlCommand(query) {CommandType = CommandType.Text};
+            var command = new SqlCommand("SELECT ID FROM Teams WHERE NOT ID=0;") {CommandType = CommandType.Text};
 
             connection.Open();
 
@@ -264,9 +265,7 @@ namespace Stockimulate
         {
             var connection = new SqlConnection(ConnectionString);
 
-            const string query = "SELECT ID FROM Players WHERE NOT TeamID=0;";
-
-            var command = new SqlCommand(query) {CommandType = CommandType.Text};
+            var command = new SqlCommand("SELECT ID FROM Players WHERE NOT TeamID=0;") {CommandType = CommandType.Text};
 
             connection.Open();
 
@@ -295,7 +294,9 @@ namespace Stockimulate
 
             var connection = new SqlConnection(ConnectionString);
 
-            var query = "SELECT ID, SellerID, BuyerID, Symbol, Quantity, Price, MarketPrice, Flagged FROM Trades";
+            var queryStringBuilder = new StringBuilder();
+
+            queryStringBuilder.Append("SELECT ID, SellerID, BuyerID, Symbol, Quantity, Price, MarketPrice, Flagged FROM Trades");
 
             var criteriaSet = 0;
 
@@ -303,33 +304,33 @@ namespace Stockimulate
             {
                 if (criteria[i] == "") continue;
                 if (criteriaSet == 0)
-                    query += " AND ";
+                    queryStringBuilder.Append(" AND ");
 
                 ++criteriaSet;
 
                 switch (i)
                 {
                     case 0:
-                        query += " SellerID=@SellerID";
+                        queryStringBuilder.Append(" SellerID=@SellerID");
                         break;
                     case 1:
-                        query += " BuyerID=@BuyerID";
+                        queryStringBuilder.Append(" BuyerID=@BuyerID");
                         break;
                     case 2:
-                        query += " Symbol=@Symbol";
+                        queryStringBuilder.Append(" Symbol=@Symbol");
                         break;
                     case 3:
-                        query += " Flagged=@Flagged";
+                        queryStringBuilder.Append(" Flagged=@Flagged");
                         break;
                     default:
-                        query += "";
+                        queryStringBuilder.Append("");
                         break;
                 }
 
-                query += ";";
+                queryStringBuilder.Append(";");
             }
 
-            var command = new SqlCommand(query) { CommandType = CommandType.Text };
+            var command = new SqlCommand(queryStringBuilder.ToString()) { CommandType = CommandType.Text };
 
             connection.Open();
 
@@ -360,15 +361,16 @@ namespace Stockimulate
         {
             var connection = new SqlConnection(ConnectionString);
 
-            var query = "SELECT News";
- 
+            var queryStringBuilder = new StringBuilder();
+
+            queryStringBuilder.Append("SELECT News");
 
             for (var i = 0; i < Instruments.Count; ++i)
-                query += ", EffectIndex" + (i + 1);
+                queryStringBuilder.Append(", EffectIndex" + (i + 1));
 
-            query += " FROM " + table + " WHERE TradingDay=@TradingDay;";
+            queryStringBuilder.Append(" FROM " + table + " WHERE TradingDay=@TradingDay;");
 
-            var command = new SqlCommand(query) {CommandType = CommandType.Text};
+            var command = new SqlCommand(queryStringBuilder.ToString()) {CommandType = CommandType.Text};
 
             command.Parameters.AddWithValue("@TradingDay", tradingDay);
 
@@ -388,9 +390,7 @@ namespace Stockimulate
             var effects = new List<int>();
 
             for (var i = 0; i < Instruments.Count; ++i)
-            {
-                effects.Add(reader.GetInt32(reader.GetOrdinal("EffectIndex"+(i+1))));
-            }
+                effects.Add(reader.GetInt32(reader.GetOrdinal("EffectIndex" + (i + 1))));
 
             var dayInfo = new DayInfo(tradingDay, effects, newsItem);
 
@@ -406,14 +406,16 @@ namespace Stockimulate
         {
             var connection = new SqlConnection(ConnectionString);
 
-            var query = "UPDATE Players SET";
+            var queryStringBuilder = new StringBuilder();
+
+            queryStringBuilder.Append("UPDATE Players SET");
 
             for (var i = 0; i < Instruments.Count; ++i)
-                query += " PositionIndex" + (i + 1) + "='0',";
+                queryStringBuilder.Append(" PositionIndex" + (i + 1) + "='0',");
 
-            query += " Funds='1000000'";
+            queryStringBuilder.Append(" Funds='1000000'");
 
-            var command = new SqlCommand(query) {CommandType = CommandType.Text};
+            var command = new SqlCommand(queryStringBuilder.ToString()) {CommandType = CommandType.Text};
 
             connection.Open();
 
@@ -426,9 +428,7 @@ namespace Stockimulate
 
             connection = new SqlConnection(ConnectionString);
 
-            query = "DELETE FROM Trades;";
-
-            command = new SqlCommand(query) {CommandType = CommandType.Text};
+            command = new SqlCommand("DELETE FROM Trades;") {CommandType = CommandType.Text};
 
             connection.Open();
 
@@ -445,9 +445,7 @@ namespace Stockimulate
         {
             var connection = new SqlConnection(ConnectionString);
 
-            const string query = "SELECT ReportsEnabled FROM AppSettings WHERE ID=0;";
-
-            var command = new SqlCommand(query) {CommandType = CommandType.Text};
+            var command = new SqlCommand("SELECT ReportsEnabled FROM AppSettings WHERE ID=0;") {CommandType = CommandType.Text};
 
             connection.Open();
 
@@ -470,9 +468,7 @@ namespace Stockimulate
         {
             var connection = new SqlConnection(ConnectionString);
 
-            const string query = "SELECT Price FROM Instruments WHERE ID=@ID;";
-
-            var command = new SqlCommand(query) {CommandType = CommandType.Text};
+            var command = new SqlCommand("SELECT Price FROM Instruments WHERE ID=@ID;") {CommandType = CommandType.Text};
 
             command.Parameters.AddWithValue("@ID", id);
 
@@ -498,9 +494,7 @@ namespace Stockimulate
             
             var connection = new SqlConnection(ConnectionString);
 
-            const string query = "UPDATE Instruments SET Price=@Price WHERE Id=@Id;";
-
-            var command = new SqlCommand(query) {CommandType = CommandType.Text};
+            var command = new SqlCommand("UPDATE Instruments SET Price=@Price WHERE Id=@Id;") {CommandType = CommandType.Text};
 
             command.Parameters.AddWithValue("@Price", instrument.Price);
             command.Parameters.AddWithValue("@Id", instrument.Id);
@@ -520,9 +514,7 @@ namespace Stockimulate
         {
             var connection = new SqlConnection(ConnectionString);
 
-            const string query = "UPDATE AppSettings SET ReportsEnabled=@ReportsEnabled;";
-
-            var command = new SqlCommand(query) {CommandType = CommandType.Text};
+            var command = new SqlCommand("UPDATE AppSettings SET ReportsEnabled=@ReportsEnabled;") {CommandType = CommandType.Text};
 
             command.Parameters.AddWithValue("@ReportsEnabled", p);
 
@@ -540,9 +532,7 @@ namespace Stockimulate
         {
             var connection = new SqlConnection(ConnectionString);
 
-            const string query = "SELECT Id, Symbol, Price, Name, Type FROM Instruments;";
-
-            var command = new SqlCommand(query) { CommandType = CommandType.Text };
+            var command = new SqlCommand("SELECT Id, Symbol, Price, Name, Type FROM Instruments;") { CommandType = CommandType.Text };
 
             connection.Open();
 
