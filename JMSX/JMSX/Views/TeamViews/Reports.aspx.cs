@@ -41,7 +41,7 @@ namespace Stockimulate.Views.TeamViews
                 return;
             }
 
-            var prices = new List<int>();
+            var prices = new List<int>(_dataAccess.Instruments.Count);
 
             for (var i = 0; i < _dataAccess.Instruments.Count; ++i)
                 prices.Add(_dataAccess.GetPrice(i));
