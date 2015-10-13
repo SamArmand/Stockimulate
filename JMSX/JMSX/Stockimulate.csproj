@@ -95,6 +95,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\Index3.aspx" />
     <Content Include="Views\AdminViews\Admin.aspx" />
     <Content Include="Content\signin.css" />
     <Content Include="Content\tables.css" />
@@ -182,6 +183,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DayInfo.cs" />
+    <Compile Include="Views\Index3.aspx.cs">
+      <DependentUpon>Index3.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Index3.aspx.designer.cs">
+      <DependentUpon>Index3.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Instrument.cs" />
     <Compile Include="Trade.cs" />
     <Compile Include="TradeCreationException.cs" />

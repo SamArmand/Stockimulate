@@ -88,12 +88,13 @@ namespace Stockimulate
 
             Index1.Update(dayInfo);
             Index2.Update(dayInfo);
+            Index3.Update(dayInfo);
 
             var context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
 
             //Hardcoded context update
-            context.Clients.All.sendMessage(_instruments[0].Price, _instruments[1].Price, _dayNumber, dayInfo.Effects[0],
-                dayInfo.Effects[1], dayInfo.NewsItem);
+            context.Clients.All.sendMessage(_instruments[0].Price, _instruments[1].Price, _instruments[2].Price, 
+                _dayNumber, dayInfo.Effects[0], dayInfo.Effects[1], dayInfo.Effects[2], dayInfo.NewsItem);
         }
 
         public void SetCompetitionMode()
@@ -181,7 +182,7 @@ namespace Stockimulate
             }
 
             var context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
-            context.Clients.All.sendMessage(0, 0, 0, 0, 0, "");
+            context.Clients.All.sendMessage(0, 0, 0, 0, 0, 0, 0, "");
         }
     }
 }

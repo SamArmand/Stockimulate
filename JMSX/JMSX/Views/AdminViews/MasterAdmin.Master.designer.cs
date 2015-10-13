@@ -40,6 +40,15 @@ namespace Stockimulate.Views.AdminViews {
         protected global::System.Web.UI.HtmlControls.HtmlAnchor ind2Link;
         
         /// <summary>
+        /// ind3Link control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor ind3Link;
+        
+        /// <summary>
         /// ContentPlaceHolder1 control.
         /// </summary>
         /// <remarks>

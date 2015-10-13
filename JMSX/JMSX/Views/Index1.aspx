@@ -4,8 +4,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <%-- ReSharper disable EmptyTitleTag --%>
-    <title id="title" runat="server"></title>
+
+    <title id="title" runat="server">&nbsp;</title>
 
     <script src="../scripts/jquery-1.9.0.min.js"></script>    
     <script src="../scripts/jquery.signalR-2.1.2.min.js"></script>
@@ -21,7 +21,7 @@
             $('#GraphDiv').highcharts({
 
                 title: {
-                    text: "OIL"
+                    text: "CHIN"
                 },
 
                 legend: {
@@ -66,7 +66,7 @@
 
             // Declare a function on the chat hub so the server can invoke it          
 
-            sim.client.sendMessage = function (price1, price2, day, change1, change2, news) {
+            sim.client.sendMessage = function (price1, price2, price3, day, change1, change2, change3, news) {
                 $('#GraphDiv').highcharts().series[0].addPoint([day, price1]);
                 
                 $(".IndexPriceDiv").html("<h2>$" + price1 + "</h2>");
@@ -115,9 +115,9 @@
     
             
                     <div class="col-sm-12">
-    <img style="max-height: 100px;" src="../img/JMSX.png"/>
+                        <img style="max-height: 100px;" src="../img/JMSX.png" alt="JMSX.png"/>
 
-</div>
+                    </div>
         
         <div class="col-sm-10" id="GraphDiv">
     
