@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.SignalR;
 using System.Collections.Generic;
 using System.Timers;
+using Stockimulate.Models;
 using Stockimulate.Views;
 
 namespace Stockimulate

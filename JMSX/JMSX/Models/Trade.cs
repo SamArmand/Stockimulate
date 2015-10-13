@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Stockimulate
+namespace Stockimulate.Models
 {
     internal class Trade
     {
