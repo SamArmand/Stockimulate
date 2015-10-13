@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Index2.aspx.cs" Inherits="Stockimulate.Views.Index2" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Index3.aspx.cs" Inherits="Stockimulate.Views.Index3" %>
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -18,7 +18,7 @@
             $('#GraphDiv').highcharts({
 
                 title: {
-                    text: "NUGT"
+                    text: "BMO"
                 },
 
                 legend: {
@@ -64,7 +64,7 @@
             // Declare a function on the chat hub so the server can invoke it          
 
             sim.client.sendMessage = function (price1, price2, price3, day, change1, change2, change3, news) {
-                $('#GraphDiv').highcharts().series[0].addPoint([day, price2]);
+                $('#GraphDiv').highcharts().series[0].addPoint([day, price3]);
                 
                 $(".IndexPriceDiv").html("<h2>$" + price2 + "</h2>");
 
@@ -72,17 +72,17 @@
                 $('.IndexChangeNegative').hide();
                 $('.IndexChangeNone').hide();
 
-                if (change2 > 0) {
+                if (change3 > 0) {
                     $('.IndexChangePositiveSpan').html(change2);
                     $('.IndexChangePositive').show();
                 }
 
-                else if (change2 < 0) {
+                else if (change3 < 0) {
                     $('.IndexChangeNegativeSpan').html(change2*-1);
                     $('.IndexChangeNegative').show();
                 }
 
-                else if (change2 === 0) {
+                else if (change3 === 0) {
                     $('.IndexChangeNoneSpan').html(change2);
                     $('.IndexChangeNone').show();
                 }

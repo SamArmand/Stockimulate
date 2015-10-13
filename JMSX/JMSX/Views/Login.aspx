@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>Login</title>
 
     <script src="../scripts/jquery-1.9.0.min.js"></script>    
     <script src="../scripts/bootstrap.min.js"></script>
@@ -20,9 +20,9 @@
     
             
                     <div class="col-lg-12">
-    <img style="max-height: 100px;" src="../img/JMSX.png"/>
+                        <img style="max-height: 100px;" src="../img/JMSX.png" alt="JMSX.png"/>
 
-</div>
+                    </div>
         
 
       <form class="form-signin" role="form" runat="server">
