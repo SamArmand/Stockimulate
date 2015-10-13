@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Stockimulate
+namespace Stockimulate.Models
 {
     internal class DayInfo
     {

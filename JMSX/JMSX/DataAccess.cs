@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Web;
+using Stockimulate.Models;
 
 namespace Stockimulate
 {

@@ -1,4 +1,4 @@
-﻿namespace Stockimulate
+﻿namespace Stockimulate.Models
 {
     internal class Instrument
     {
