@@ -18,7 +18,7 @@
             $('#GraphDiv').highcharts({
 
                 title: {
-                    text: "NUGT"
+                    text: "Gold (NUGT)"
                 },
 
                 legend: {

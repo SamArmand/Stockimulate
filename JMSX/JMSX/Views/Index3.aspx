@@ -18,7 +18,7 @@
             $('#GraphDiv').highcharts({
 
                 title: {
-                    text: "BMO"
+                    text: "Medici Bank of Quebec (MBQ)"
                 },
 
                 legend: {
