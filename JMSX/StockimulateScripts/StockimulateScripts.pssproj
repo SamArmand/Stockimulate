@@ -30,11 +30,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Compile Include="events.csv" />
     <Compile Include="uploadevents.ps1" />
     <Compile Include="uploadpracticeevents.ps1" />
     <Compile Include="uploadteamsplayers.ps1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="practiceevents.csv" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="Build" />
