@@ -6,7 +6,7 @@
 <head runat="server">
     <title>Login</title>
 
-    <script src="../scripts/jquery-1.9.0.min.js"></script>    
+    <script src="../scripts/jquery-2.1.4.min.js"></script>    
     <script src="../scripts/bootstrap.min.js"></script>
 
 
