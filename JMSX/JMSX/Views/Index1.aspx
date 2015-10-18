@@ -21,7 +21,7 @@
             $('#GraphDiv').highcharts({
 
                 title: {
-                    text: "CHIN"
+                    text: "Emerging Market (CHIN)"
                 },
 
                 legend: {

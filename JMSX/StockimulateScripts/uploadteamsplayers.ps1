@@ -4,8 +4,6 @@ $connectionString = "Data Source=h98ohmld2f.database.windows.net;Initial Catalog
 
 $teamID = "";
 
-$entities = Import-Csv "teamsplayers.csv"
-
 $connection = New-Object -TypeName System.Data.SqlClient.SqlConnection
 $connection.ConnectionString = $connectionString
 $command = $connection.CreateCommand()
@@ -49,6 +47,8 @@ Function GET-Temppassword() {
     return $TempPassword
 
 }
+
+$entities = Import-Csv "teamsplayers.csv"
 
 foreach ($entity in $entities) {
 
