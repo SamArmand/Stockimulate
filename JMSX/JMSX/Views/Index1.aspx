@@ -7,8 +7,8 @@
 
     <title id="title" runat="server">&nbsp;</title>
 
-    <script src="../scripts/jquery-1.9.0.min.js"></script>    
-    <script src="../scripts/jquery.signalR-2.1.2.min.js"></script>
+    <script src="../scripts/jquery-2.1.4.min.js"></script>    
+    <script src="../scripts/jquery.signalR-2.2.0.min.js"></script>
     <script src="../scripts/bootstrap.min.js"></script>
     <script src="../scripts/Highcharts-4.0.1/js/highcharts.js"></script>
     <script src="../signalr/hubs"></script>

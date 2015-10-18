@@ -5,10 +5,10 @@
 <head runat="server">
     <title id="title" runat="server">&nbsp;</title>
 
-    <script src="../scripts/jquery-1.9.0.min.js"></script>
+    <script src="../scripts/jquery-2.1.4.min.js"></script>
     <script src="../scripts/bootstrap.min.js"></script>
     <script src="../scripts/Highcharts-4.0.1/js/highcharts.js"></script>
-    <script src="../scripts/jquery.signalR-2.1.2.min.js"></script>
+    <script src="../scripts/jquery.signalR-2.2.0.min.js"></script>
     <script src="../signalr/hubs"></script>
 
     <%-- ReSharper disable PossiblyUnassignedProperty --%>
@@ -66,24 +66,24 @@
             sim.client.sendMessage = function (price1, price2, price3, day, change1, change2, change3, news) {
                 $('#GraphDiv').highcharts().series[0].addPoint([day, price3]);
                 
-                $(".IndexPriceDiv").html("<h2>$" + price2 + "</h2>");
+                $(".IndexPriceDiv").html("<h2>$" + price3 + "</h2>");
 
                 $('.IndexChangePositive').hide();
                 $('.IndexChangeNegative').hide();
                 $('.IndexChangeNone').hide();
 
                 if (change3 > 0) {
-                    $('.IndexChangePositiveSpan').html(change2);
+                    $('.IndexChangePositiveSpan').html(change3);
                     $('.IndexChangePositive').show();
                 }
 
                 else if (change3 < 0) {
-                    $('.IndexChangeNegativeSpan').html(change2*-1);
+                    $('.IndexChangeNegativeSpan').html(change3*-1);
                     $('.IndexChangeNegative').show();
                 }
 
                 else if (change3 === 0) {
-                    $('.IndexChangeNoneSpan').html(change2);
+                    $('.IndexChangeNoneSpan').html(change3);
                     $('.IndexChangeNone').show();
                 }
 
