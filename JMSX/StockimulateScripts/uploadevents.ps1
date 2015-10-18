@@ -1,4 +1,4 @@
-﻿$connectionString = "Data Source=h98ohmld2f.database.windows.net;Initial Catalog=JMSX;Integrated Security=False;User ID=JMSXTech;Password=jmsx!2014;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;"
+﻿$connectionString = "Data Source=h98ohmld2f.database.windows.net;Initial Catalog=Stockimulate;Integrated Security=False;User ID=JMSXTech;Password=jmsx!2014;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;"
 
 $events = Import-Csv "events.csv"
 
@@ -27,7 +27,7 @@ foreach ($event in $events) {
     $connection.ConnectionString = $connectionString
     $command = $connection.CreateCommand()
 
-    $query = "INSERT INTO Events (TradingDay, News, EffectIndex1, EffectIndex2) VALUES (@TradingDay, @News, @EffectIndex1, @EffectIndex2);"
+    $query = "INSERT INTO Events (TradingDay, News, EffectIndex1, EffectIndex2, EffectIndex3) VALUES (@TradingDay, @News, @EffectIndex1, @EffectIndex2, @EffectIndex3);"
 
     $command.CommandText = $query
 
