@@ -11,6 +11,34 @@
 
     <script src="scripts/jquery-2.1.4.min.js"></script>
     <script src="scripts/bootstrap.js"></script>
+    
+    
+    <%-- ReSharper disable PossiblyUnassignedProperty --%>
+        <script>
+        $(function () {
+
+            var sim = $.connection.simulator;
+
+            // Declare a function on the hub so the server can invoke it          
+
+            sim.client.sendBrokerMessage = function (price1, price2, price3) {
+
+                $(".index1PriceH2").html("$" + price1);
+                $(".index2PriceH2").html("$" + price2);
+                $(".index3PriceH2").html("$" + price3);
+
+            };
+
+            $.connection.hub.start().done(function () {
+
+            });
+
+
+        });
+
+    </script>
+    <%-- ReSharper restore PossiblyUnassignedProperty --%>
+    
 
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
@@ -35,6 +63,17 @@
     </div> 
 
     <div class="container">
+        
+        <div class="col-sm-12">
+
+            <div class="col-sm-2"><h2 id="index1SymbolH2" runat="server"></h2></div>
+            <div class="col-sm-2"><h2 id="index1PriceH2" runat="server"></h2></div>
+            <div class="col-sm-2"><h2 id="index2SymbolH2" runat="server"></h2></div>
+            <div class="col-sm-2"><h2 id="index2PriceH2" runat="server"></h2></div>
+            <div class="col-sm-2"><h2 id="index3SymbolH2" runat="server"></h2></div>
+            <div class="col-sm-2"><h2 id="index3PriceH2" runat="server"></h2></div>
+
+        </div>
 
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         

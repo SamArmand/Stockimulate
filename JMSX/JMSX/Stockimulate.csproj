@@ -96,6 +96,10 @@
       <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -140,6 +144,7 @@
     <Content Include="scripts\jquery-2.1.4.min.js" />
     <Content Include="scripts\jquery.signalR-2.2.0.js" />
     <Content Include="scripts\jquery.signalR-2.2.0.min.js" />
+    <Content Include="Views\BrokerViews\NewSpotTrade.aspx" />
     <Content Include="Views\Index3.aspx" />
     <Content Include="Views\AdminViews\Admin.aspx" />
     <Content Include="Content\signin.css" />
@@ -210,6 +215,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\DayInfo.cs" />
+    <Compile Include="Views\BrokerViews\NewSpotTrade.aspx.cs">
+      <DependentUpon>NewSpotTrade.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\BrokerViews\NewSpotTrade.aspx.designer.cs">
+      <DependentUpon>NewSpotTrade.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Index3.aspx.cs">
       <DependentUpon>Index3.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

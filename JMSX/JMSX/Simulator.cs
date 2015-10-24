@@ -33,6 +33,8 @@ namespace Stockimulate
 
         private string _table;
 
+        private readonly IHubContext _context;
+
         public void Play()
         {
             _status = Status.Playing;
@@ -89,13 +91,15 @@ namespace Stockimulate
 
             Index1.Update(dayInfo);
             Index2.Update(dayInfo);
-            Index3.Update(dayInfo);
-
-            var context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
+            Index3.Update(dayInfo);          
 
             //Hardcoded context update
-            context.Clients.All.sendMessage(_instruments[0].Price, _instruments[1].Price, _instruments[2].Price, 
+
+            _context.Clients.All.sendMessage(_instruments[0].Price, _instruments[1].Price, _instruments[2].Price, 
                 _dayNumber, dayInfo.Effects[0], dayInfo.Effects[1], dayInfo.Effects[2], dayInfo.NewsItem);
+            _context.Clients.All.sendBrokerMessage(_instruments[0].Price, _instruments[1].Price, _instruments[2].Price);
+
+
         }
 
         public void SetCompetitionMode()
@@ -125,6 +129,8 @@ namespace Stockimulate
 
             _timer.Elapsed += NextDay;
             _timer.Enabled = false;
+
+            _context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
 
             _status = Status.Ready;
 
@@ -171,10 +177,11 @@ namespace Stockimulate
         public void Reset()
         {
             Stop();
-            _status = Status.Ready;
             Index1.Reset();
             Index2.Reset();
+            Index3.Reset();
             _dataAccess.Reset();
+
 
             foreach (var instrument in _instruments)
             {
@@ -182,8 +189,10 @@ namespace Stockimulate
                 _dataAccess.Update(instrument);
             }
 
-            var context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
-            context.Clients.All.sendMessage(0, 0, 0, 0, 0, 0, 0, "");
+            _context.Clients.All.sendMessage(0, 0, 0, 0, 0, 0, 0, "");
+            _context.Clients.All.sendBrokerMessage(0, 0, 0);
+
+            _status = Status.Ready;
         }
     }
 }

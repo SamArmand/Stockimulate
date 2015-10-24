@@ -5,9 +5,8 @@ using Stockimulate.Models;
 
 namespace Stockimulate.Views.BrokerViews
 {
-    public partial class NewTrade : Page
+    public partial class NewSpotTrade : Page
     {
-
         private DataAccess _dataAccess;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -31,13 +30,22 @@ namespace Stockimulate.Views.BrokerViews
             SuccessDiv.Style.Value = "display: none";
             WarningDiv.Style.Value = "display: none";
 
-            var price = Convert.ToInt32(Price.Value);
+            var buyerId = 0;
+            var sellerId = 0;
+
+            if (transactionType.SelectedValue != "Buy")
+            {
+                if (transactionType.SelectedValue == "Sell")
+                    sellerId = Convert.ToInt32(TraderID.Value);
+            }
+            else
+                buyerId = Convert.ToInt32(TraderID.Value);
 
             try
             {
 
-                var trade = new Trade(Convert.ToInt32(BuyerID.Value), Convert.ToInt32(SellerID.Value), security.SelectedIndex,
-                    Convert.ToInt32(Quantity.Value), price);
+                var trade = new Trade(buyerId, sellerId, security.SelectedIndex,
+                    Convert.ToInt32(Quantity.Value), _dataAccess.GetInstruments()[security.SelectedIndex].Price);
                 _dataAccess.Insert(trade);
             }
 
@@ -68,10 +76,8 @@ namespace Stockimulate.Views.BrokerViews
 
         protected void ClearForm()
         {
-            BuyerID.Value = string.Empty;
-            SellerID.Value = string.Empty;
+            TraderID.Value = string.Empty;
             Quantity.Value = string.Empty;
-            Price.Value = string.Empty;
 
             Verify.Checked = false;
         }

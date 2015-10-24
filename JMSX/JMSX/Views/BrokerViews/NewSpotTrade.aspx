@@ -1,30 +1,34 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/BrokerViews/MasterBroker.Master" AutoEventWireup="true" CodeBehind="NewTrade.aspx.cs" Inherits="Stockimulate.Views.BrokerViews.NewTrade" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/BrokerViews/MasterBroker.Master" AutoEventWireup="true" CodeBehind="NewSpotTrade.aspx.cs" Inherits="Stockimulate.Views.BrokerViews.NewSpotTrade" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
     
-  <div class="row">
+      <div class="row">
     <div class="col-md-12">
       <form class="form-horizontal" role="form" runat="server" id="myform">
         <fieldset>
 
           <!-- Form Name -->
-          <legend><h1>New Trade</h1></legend>
+          <legend><h1>New Spot Trade</h1></legend>
+           
+            <div class="form-group">
             
+            <asp:RadioButtonList ID="transactionType" runat="server" 
+                RepeatDirection="Horizontal" RepeatLayout="Table" CssClass="form-control">
+                <asp:ListItem Text="Buy" Value="Buy"></asp:ListItem>
+                <asp:ListItem Text="Sell" Value="Sell"></asp:ListItem>
+            </asp:RadioButtonList> 
+
+            </div>
+             
           <!-- Text input-->
           <div class="form-group">
-            <label class="col-sm-1 control-label">Buyer ID</label>
+            <label class="col-sm-1 control-label">Trader ID</label>
             <div class="col-sm-2">
-              <input id="BuyerID" type="number" placeholder="Buyer ID" class="form-control" runat="server"/>        
-                <asp:RequiredFieldValidator runat="server" id="buyerIdValidation" controltovalidate="BuyerID" errormessage="This field is required" />
+              <input id="TraderID" type="number" placeholder="Trader ID" class="form-control" runat="server"/>        
+                <asp:RequiredFieldValidator runat="server" id="buyerIdValidation" controltovalidate="TraderID" errormessage="This field is required" />
             </div>
 
-            <label class="col-sm-1 col-sm-offset-1 control-label">Seller ID</label>
-            <div class="col-sm-2">
-              <input id="SellerID" type="number" placeholder="Seller ID" class="form-control" runat="server"/>
-                <asp:RequiredFieldValidator runat="server" id="sellerIdValidation" controltovalidate="SellerID" errormessage="This field is required" />
-            </div>
           </div>
 
             <!-- Text input-->
@@ -40,14 +44,6 @@
             <div class="col-sm-2">
               <input id="Quantity" type="number" placeholder="Quantity" class="form-control" runat="server"/>
                 <asp:RequiredFieldValidator runat="server" id="quantityValidation" controltovalidate="Quantity" errormessage="This field is required" />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="col-sm-1 control-label ">Price</label>
-            <div class="col-sm-2 ">
-              <input id="Price" type="number" placeholder="Price" class="form-control" runat="server"/>
-                <asp:RequiredFieldValidator runat="server" id="priceValidation" controltovalidate="Price" errormessage="This field is required" />
             </div>
           </div>
 
