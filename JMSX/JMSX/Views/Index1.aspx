@@ -21,7 +21,7 @@
             $('#GraphDiv').highcharts({
 
                 title: {
-                    text: "Emerging Market (CHIN)"
+                    text: "Emerging Markets (CHIN)"
                 },
 
                 legend: {
@@ -114,15 +114,15 @@
     <div class="container-fluid">
     
             
-                    <div class="col-sm-12">
-                        <img style="max-height: 100px;" src="../img/JMSX.png" alt="JMSX.png"/>
+        <div class="col-sm-12">
+            <img style="max-height: 100px;" src="../img/JMSX.png" alt="JMSX.png"/>
 
-                    </div>
+            </div>
         
-        <div class="col-sm-10" id="GraphDiv">
+            <div class="col-sm-10" id="GraphDiv">
     
                 
-</div>
+            </div>
 
             
             <div class="col-sm-2">
