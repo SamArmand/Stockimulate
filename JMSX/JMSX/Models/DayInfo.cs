@@ -4,9 +4,9 @@ namespace Stockimulate.Models
 {
     internal class DayInfo
     {
+        internal int TradingDay { get; }
         internal List<int> Effects { get; }
         internal string NewsItem { get; }
-        internal int TradingDay { get; }
 
         internal DayInfo(int tradingDay, List<int> effects, string newsItem)
         {

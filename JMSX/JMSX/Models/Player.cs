@@ -15,8 +15,8 @@ namespace Stockimulate.Models
 
         internal int Funds { get; set; }
 
-
-        internal Player(int id, string name, int teamId, List<int> positions, int funds) {
+        internal Player(int id, string name, int teamId, List<int> positions, int funds)
+        {
             Id = id;
             Name = name;
             TeamId = teamId;
@@ -30,7 +30,6 @@ namespace Stockimulate.Models
 
         internal int PnL(List<int> prices)
         {
-
             var pnL = prices.Select((t, i) => Positions[i]*t).Sum();
 
             pnL += Funds - 1000000;
