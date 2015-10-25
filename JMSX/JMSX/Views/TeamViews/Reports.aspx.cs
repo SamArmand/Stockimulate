@@ -27,13 +27,13 @@ namespace Stockimulate.Views.TeamViews
             }
 
 
-            if (Convert.ToInt32(TeamNumber.Value) < 1)
+            if (Convert.ToInt32(TeamNumberInput.Value) < 1)
             {
                 ErrorDiv.Style.Value = "display: inline;";
                 return;
             }
 
-            var team = _dataAccess.GetTeam(Convert.ToInt32(TeamNumber.Value), TeamCode.Value, true);
+            var team = _dataAccess.GetTeam(Convert.ToInt32(TeamNumberInput.Value), TeamCodeInput.Value, true);
 
             if (team == null)
             {

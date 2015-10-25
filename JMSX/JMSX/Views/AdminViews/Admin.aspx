@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/AdminViews/MasterAdmin.Master" AutoEventWireup="true" CodeBehind="Admin.aspx.cs" Inherits="Stockimulate.Views.AdminViews.Admin" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <form runat="server">
@@ -10,19 +10,19 @@
 
         <div class="row">
 
-            <asp:Button id="PlayPractice" class="btn btn-primary" runat="server" Text="Play Practice" OnClick="PlayPractice_Click" />
-            <asp:Button id="PlayCompetition" class="btn btn-primary" runat="server" Text="Play Competition" OnClick="PlayCompetition_Click" />
-            <asp:Button id="Continue" class="btn btn-primary" runat="server" Text="Continue" OnClick="Continue_Click" />
+            <asp:Button ID="PlayPracticeButton" CssClass="btn btn-primary" runat="server" Text="Play Practice" OnClick="PlayPractice_Click" />
+            <asp:Button ID="PlayCompetitionButton" CssClass="btn btn-primary" runat="server" Text="Play Competition" OnClick="PlayCompetition_Click" />
+            <asp:Button ID="ContinueButton" CssClass="btn btn-primary" runat="server" Text="Continue" OnClick="Continue_Click" />
 
             <br />
             <br />
 
-            <asp:Button id="ResetTrades" class="btn btn-primary" runat="server" Text="Reset Trades" OnClick="ResetTrades_Click" />
+            <asp:Button ID="ResetTradesButton" CssClass="btn btn-primary" runat="server" Text="Reset Trades" OnClick="ResetTrades_Click" />
             
 
             <br />
 
-            <input id="Verify" type="checkbox" runat="server" /> I am aware of what I am doing and that any wrong selection may completely break the competition.
+            <input id="VerifyInput" type="checkbox" runat="server" /> I am aware of what I am doing and that any wrong selection may completely break the competition.
 
           </div>
         </fieldset>

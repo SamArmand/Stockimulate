@@ -13,15 +13,6 @@ namespace Stockimulate.Views {
     public partial class Index1 {
         
         /// <summary>
-        /// title control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTitle title;
-        
-        /// <summary>
         /// IndexPriceDiv control.
         /// </summary>
         /// <remarks>
@@ -31,58 +22,58 @@ namespace Stockimulate.Views {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexPriceDiv;
         
         /// <summary>
-        /// IndexChangePositive control.
+        /// IndexChangePositiveDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangePositive;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangePositiveDiv;
         
         /// <summary>
-        /// IndexChangePositiveSpan control.
+        /// IndexChangePositiveH1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangePositiveSpan;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangePositiveH1;
         
         /// <summary>
-        /// IndexChangeNegative control.
+        /// IndexChangeNegativeDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangeNegative;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangeNegativeDiv;
         
         /// <summary>
-        /// IndexChangeNegativeSpan control.
+        /// IndexChangeNegativeH1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangeNegativeSpan;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangeNegativeH1;
         
         /// <summary>
-        /// IndexChangeNone control.
+        /// IndexChangeNoneDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangeNone;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangeNoneDiv;
         
         /// <summary>
-        /// IndexChangeNoneSpan control.
+        /// IndexChangeNoneH1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangeNoneSpan;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangeNoneH1;
         
         /// <summary>
         /// NewsDiv control.
@@ -94,12 +85,12 @@ namespace Stockimulate.Views {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl NewsDiv;
         
         /// <summary>
-        /// data control.
+        /// DataDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl data;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DataDiv;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web.UI.WebControls;
 
 namespace Stockimulate.Views.AdminViews
 {
@@ -9,36 +10,24 @@ namespace Stockimulate.Views.AdminViews
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Page.IsPostBack) return;
+
             _dataAccess = DataAccess.SessionInstance;
 
-            ReportsEnabled.InnerHtml = "Reports Page Enabled: " + _dataAccess.IsReportsEnabled().ToString();
+            ReportsEnabledSpan.InnerHtml = "Reports Page Enabled: " + _dataAccess.IsReportsEnabled();
 
-            Price1Current.InnerHtml = "OIL Price: " + _dataAccess.GetPrice(0);
+            var instruments = _dataAccess.Instruments;
 
-            Price2Current.InnerHtml = "IND Price: " + _dataAccess.GetPrice(1);
-
+            for (var i = 0; i < instruments.Count; ++i)
+                SecurityDropDownList.Items.Add(new ListItem(instruments[i].Symbol, i.ToString()));
         }
 
-        protected void UpdatePrice1_Click(object sender, EventArgs e)
+        protected void UpdatePrice_Click(object sender, EventArgs e)
         {
-            if (Price1Input.Value != "" && int.Parse(Price1Input.Value) >= 0)
+            if (PriceInput.Value != string.Empty && int.Parse(PriceInput.Value) >= 0)
             {
-
-                var instrument = _dataAccess.GetInstruments()[0];
-                instrument.Price = int.Parse(Price1Input.Value);
-                _dataAccess.Update(instrument);
-            }
-
-            Response.Redirect("Override.aspx");
-
-        }
-
-        protected void UpdatePrice2_Click(object sender, EventArgs e)
-        {
-            if (Price2Input.Value != "" && int.Parse(Price2Input.Value) >= 0)
-            {
-                var instrument = _dataAccess.GetInstruments()[1];
-                instrument.Price = int.Parse(Price2Input.Value);
+                var instrument = _dataAccess.GetInstruments()[SecurityDropDownList.SelectedIndex];
+                instrument.Price = int.Parse(PriceInput.Value);
                 _dataAccess.Update(instrument);
             }
 

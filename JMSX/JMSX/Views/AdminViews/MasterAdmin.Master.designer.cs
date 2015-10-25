@@ -13,40 +13,40 @@ namespace Stockimulate.Views.AdminViews {
     public partial class MasterAdmin {
         
         /// <summary>
-        /// head control.
+        /// Head control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder Head;
         
         /// <summary>
-        /// ind1Link control.
+        /// Index1A control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor ind1Link;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor Index1A;
         
         /// <summary>
-        /// ind2Link control.
+        /// Index2A control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor ind2Link;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor Index2A;
         
         /// <summary>
-        /// ind3Link control.
+        /// Index3A control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor ind3Link;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor Index3A;
         
         /// <summary>
         /// ContentPlaceHolder1 control.

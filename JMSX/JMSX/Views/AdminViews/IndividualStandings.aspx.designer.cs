@@ -13,12 +13,12 @@ namespace Stockimulate.Views.AdminViews {
     public partial class IndividualStandings {
         
         /// <summary>
-        /// tableDiv control.
+        /// TableDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tableDiv;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TableDiv;
     }
 }

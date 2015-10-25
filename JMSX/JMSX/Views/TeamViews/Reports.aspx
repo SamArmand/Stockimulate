@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/TeamViews/MasterTeam.Master" AutoEventWireup="true" CodeBehind="Reports.aspx.cs" Inherits="Stockimulate.Views.TeamViews.Reports" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
     <link href="../../Content/tables.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -16,12 +16,12 @@
           <div class="form-group">
             <label class="col-sm-1 control-label">Team Number</label>
             <div class="col-sm-2">
-              <input id="TeamNumber" type="number" placeholder="Team Number" class="form-control" runat="server" required="required"/>
+              <input id="TeamNumberInput" type="number" placeholder="Team Number" class="form-control" runat="server" required="required"/>
             </div>
 
             <label class="col-sm-1 col-sm-offset-1 control-label">Team Code</label>
             <div class="col-sm-2">
-              <input id="TeamCode" type="text" placeholder="Team Code" class="form-control" runat="server" required="required"/>
+              <input id="TeamCodeInput" type="text" placeholder="Team Code" class="form-control" runat="server" required="required"/>
             </div>
           </div>
 
@@ -30,8 +30,8 @@
           <div class="row">
               <div class="btn-group col-sm-12"> 
 
-                <asp:Button id="Cancel" class="btn btn-default" runat="server" Text="Cancel" OnClick="Page_Load" />
-                <asp:Button id="Submit" class="btn btn-primary" runat="server" Text="Submit" OnClick="Submit_Click" />
+                <asp:Button id="CancelButton" class="btn btn-default" runat="server" Text="Cancel" OnClick="Page_Load" />
+                <asp:Button id="SubmitButton" class="btn btn-primary" runat="server" Text="Submit" OnClick="Submit_Click" />
 
             </div>              
           </div>

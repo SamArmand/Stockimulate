@@ -12,7 +12,7 @@
     <script src="scripts/bootstrap.js"></script>
     
     <title>Stockimulate</title>
-    <asp:ContentPlaceHolder ID="head" runat="server">
+    <asp:ContentPlaceHolder ID="Head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>

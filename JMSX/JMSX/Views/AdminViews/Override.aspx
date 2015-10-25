@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/AdminViews/MasterAdmin.Master" AutoEventWireup="true" CodeBehind="Override.aspx.cs" Inherits="Stockimulate.Views.AdminViews.Override" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -10,26 +10,28 @@
           <legend><h1>Override Panel</h1></legend>
 
         <div class="form-group">
+            
+            <label class="col-sm-1 control-label">Security</label>
+            <div class="col-sm-2">
+                
+                <asp:DropDownList ID="SecurityDropDownList" runat="server" CssClass="form-control"></asp:DropDownList>
 
-            <input id="Price1Input" type="number" class="form-control" runat="server"/>
-            <asp:Button id="UpdatePrice1" class="btn btn-primary" runat="server" Text="Update" OnClick="UpdatePrice1_Click" />
-            <input id="Price2Input" type="number" class="form-control" runat="server"/>
-            <asp:Button id="UpdatePrice2" class="btn btn-primary" runat="server" Text="Update" OnClick="UpdatePrice2_Click" />
-            <asp:Button id="ToggleReportsEnabled" class="btn btn-primary" runat="server" Text="Toggle Reports" OnClick="ToggleReportsEnabled_Click" />
+            </div>
+
+            <label class="col-sm-1 col-sm-offset-1 control-label">Quantity</label>
+            <div class="col-sm-2">
+              <input id="PriceInput" type="number" placeholder="Price" class="form-control" runat="server"/>
+            </div>
+
+            <asp:Button ID="UpdatePrice" CssClass="btn btn-primary" runat="server" Text="Update" OnClick="UpdatePrice_Click" />
+            <asp:Button ID="ToggleReportsEnabled" CssClass="btn btn-primary" runat="server" Text="Toggle Reports" OnClick="ToggleReportsEnabled_Click" />
             
             <br />
             
-            <span id="ReportsEnabled" runat="server"></span>
+            <span id="ReportsEnabledSpan" runat="server"></span>
 
             <br />
 
-            <span id="Price1Current" runat="server"></span>
-
-            <br />
-
-            <span id="Price2Current" runat="server"></span>
-
-            <br />
             <br />
 
           </div>

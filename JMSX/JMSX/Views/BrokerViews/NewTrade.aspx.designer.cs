@@ -13,147 +13,147 @@ namespace Stockimulate.Views.BrokerViews {
     public partial class NewTrade {
         
         /// <summary>
-        /// myform control.
+        /// TradeInputForm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm myform;
+        protected global::System.Web.UI.HtmlControls.HtmlForm TradeInputForm;
         
         /// <summary>
-        /// BuyerID control.
+        /// BuyerIdInput control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl BuyerID;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl BuyerIdInput;
         
         /// <summary>
-        /// buyerIdValidation control.
+        /// BuyerIdInputValidation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator buyerIdValidation;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator BuyerIdInputValidation;
         
         /// <summary>
-        /// SellerID control.
+        /// SellerIdInput control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl SellerID;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl SellerIdInput;
         
         /// <summary>
-        /// sellerIdValidation control.
+        /// SellerIdInputValidation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator sellerIdValidation;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator SellerIdInputValidation;
         
         /// <summary>
-        /// security control.
+        /// SecurityDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList security;
+        protected global::System.Web.UI.WebControls.DropDownList SecurityDropDownList;
         
         /// <summary>
-        /// Quantity control.
+        /// QuantityInput control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl Quantity;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl QuantityInput;
         
         /// <summary>
-        /// quantityValidation control.
+        /// QuantityInputValidation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator quantityValidation;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator QuantityInputValidation;
         
         /// <summary>
-        /// Price control.
+        /// PriceInput control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl Price;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl PriceInput;
         
         /// <summary>
-        /// priceValidation control.
+        /// PriceInputValidation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator priceValidation;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator PriceInputValidation;
         
         /// <summary>
-        /// Verify control.
+        /// VerifyInput control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox Verify;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox VerifyInput;
         
         /// <summary>
-        /// Cancel control.
+        /// CancelButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Cancel;
+        protected global::System.Web.UI.WebControls.Button CancelButton;
         
         /// <summary>
-        /// Submit control.
+        /// SubmitButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Submit;
+        protected global::System.Web.UI.WebControls.Button SubmitButton;
         
         /// <summary>
-        /// ErrorDiv control.
+        /// errorDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ErrorDiv;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl errorDiv;
         
         /// <summary>
-        /// SuccessDiv control.
+        /// successDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl SuccessDiv;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl successDiv;
         
         /// <summary>
-        /// WarningDiv control.
+        /// warningDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl WarningDiv;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl warningDiv;
     }
 }

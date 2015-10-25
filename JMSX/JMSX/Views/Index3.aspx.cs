@@ -11,7 +11,7 @@ namespace Stockimulate.Views
     {
         private static int _indexPrice;
         private static int _indexChange;
-        private static string _news = "";
+        private static string _news = string.Empty;
 
         private static List<string> _days = new List<string>();
         private static List<int> _prices = new List<int>();
@@ -24,27 +24,27 @@ namespace Stockimulate.Views
                 Response.Redirect("Login.aspx");
             }
 
-            IndexChangePositive.Style.Value = "display: none;";
-            IndexChangeNegative.Style.Value = "display: none;";
-            IndexChangeNone.Style.Value = "display: none;";
+            Title = DataAccess.SessionInstance.GetInstruments()[2].Symbol;
+
+            IndexChangePositiveDiv.Style.Value = "display: none;";
+            IndexChangeNegativeDiv.Style.Value = "display: none;";
+            IndexChangeNoneDiv.Style.Value = "display: none;";
 
             IndexPriceDiv.InnerHtml = "<h1>$" + _indexPrice + "</h1>";
 
             if (_indexChange > 0)
             {
-                IndexChangePositiveSpan.InnerHtml = "" + _indexChange;
-                IndexChangePositive.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; text-align:center;";
+                IndexChangePositiveH1.InnerHtml = _indexChange.ToString();
+                IndexChangePositiveDiv.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; text-align:center;";
             }
             else if (_indexChange < 0)
             {
-                IndexChangeNegativeSpan.InnerHtml = "" + _indexChange * -1;
-                IndexChangeNegative.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; text-align:center";
+                IndexChangeNegativeH1.InnerHtml = (_indexChange * -1).ToString();
+                IndexChangeNegativeDiv.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; text-align:center";
             }
-            else if (_indexChange == 0)
-            {
-                IndexChangeNoneSpan.InnerHtml = "" + _indexChange;
-                IndexChangeNone.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; text-align:center;";
-            }
+            else
+                IndexChangeNoneDiv.Style.Value =
+                    "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; text-align:center;";
 
             if (_news != "null")
             {
@@ -64,7 +64,7 @@ namespace Stockimulate.Views
 
             javascriptArray += "]";
 
-            data.InnerHtml = javascriptArray;
+            DataDiv.InnerHtml = javascriptArray;
 
         }
 
@@ -77,7 +77,7 @@ namespace Stockimulate.Views
             _prices.Add(_indexPrice);
             _days.Add(Convert.ToString(dayInfo.TradingDay));
 
-            if (dayInfo.NewsItem != "")
+            if (dayInfo.NewsItem != string.Empty)
                 _news = dayInfo.NewsItem;
         }
 

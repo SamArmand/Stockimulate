@@ -1,11 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/BrokerViews/MasterBroker.Master" AutoEventWireup="true" CodeBehind="NewSpotTrade.aspx.cs" Inherits="Stockimulate.Views.BrokerViews.NewSpotTrade" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     
       <div class="row">
     <div class="col-md-12">
-      <form class="form-horizontal" role="form" runat="server" id="myform">
+      <form class="form-horizontal" role="form" runat="server" id="TradeInputForm">
         <fieldset>
 
           <!-- Form Name -->
@@ -13,11 +13,12 @@
            
             <div class="form-group">
             
-            <asp:RadioButtonList ID="transactionType" runat="server" 
+            <asp:RadioButtonList ID="TransactionTypeRadioButtonList" runat="server" 
                 RepeatDirection="Horizontal" RepeatLayout="Table" CssClass="form-control">
                 <asp:ListItem Text="Buy" Value="Buy"></asp:ListItem>
                 <asp:ListItem Text="Sell" Value="Sell"></asp:ListItem>
             </asp:RadioButtonList> 
+            <asp:RequiredFieldValidator runat="server" ID="TransactionTypeRadioButtonListValidation" controltovalidate="TransactionTypeRadioButtonList" errormessage="This field is required" />
 
             </div>
              
@@ -25,8 +26,8 @@
           <div class="form-group">
             <label class="col-sm-1 control-label">Trader ID</label>
             <div class="col-sm-2">
-              <input id="TraderID" type="number" placeholder="Trader ID" class="form-control" runat="server"/>        
-                <asp:RequiredFieldValidator runat="server" id="buyerIdValidation" controltovalidate="TraderID" errormessage="This field is required" />
+              <input id="TraderIdInput" type="number" placeholder="Trader ID" class="form-control" runat="server"/>        
+                <asp:RequiredFieldValidator runat="server" ID="TraderIdInputValidation" controltovalidate="TraderIDInput" errormessage="This field is required" />
             </div>
 
           </div>
@@ -36,29 +37,29 @@
             <label class="col-sm-1 control-label">Security</label>
             <div class="col-sm-2">
                 
-                <asp:DropDownList ID="security" runat="server" CssClass="form-control"></asp:DropDownList>
+                <asp:DropDownList ID="SecurityDropDownList" runat="server" CssClass="form-control"></asp:DropDownList>
 
             </div>
 
             <label class="col-sm-1 col-sm-offset-1 control-label">Quantity</label>
             <div class="col-sm-2">
-              <input id="Quantity" type="number" placeholder="Quantity" class="form-control" runat="server"/>
-                <asp:RequiredFieldValidator runat="server" id="quantityValidation" controltovalidate="Quantity" errormessage="This field is required" />
+              <input id="QuantityInput" type="number" placeholder="Quantity" class="form-control" runat="server"/>
+                <asp:RequiredFieldValidator runat="server" ID="QuantityInputValidation" controltovalidate="QuantityInput" errormessage="This field is required" />
             </div>
           </div>
 
       <br/>
 
             <div class="row">
-                <input id="Verify" type="checkbox" runat="server" /> I have verified that all fields are correct and wish to submit this trade.
+                <input id="VerifyInput" type="checkbox" runat="server" /> I have verified that all fields are correct and wish to submit this trade.
              
           </div>
 
           <div class="row">
               <div class="btn-group col-sm-12"> 
 
-                <asp:Button id="Cancel" class="btn btn-default" runat="server" Text="Cancel" OnClick="Page_Load" />
-                <asp:Button id="Submit" class="btn btn-primary" runat="server" Text="Submit" OnClick="Submit_Click" />
+                <asp:Button ID="CancelButton" class="btn btn-default" runat="server" Text="Cancel" OnClick="Page_Load" />
+                <asp:Button ID="SubmitButton" class="btn btn-primary" runat="server" Text="Submit" OnClick="Submit_Click" />
 
             </div>              
           </div>

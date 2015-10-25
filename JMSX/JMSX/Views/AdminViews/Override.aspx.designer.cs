@@ -13,40 +13,31 @@ namespace Stockimulate.Views.AdminViews {
     public partial class Override {
         
         /// <summary>
-        /// Price1Input control.
+        /// SecurityDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl Price1Input;
+        protected global::System.Web.UI.WebControls.DropDownList SecurityDropDownList;
         
         /// <summary>
-        /// UpdatePrice1 control.
+        /// PriceInput control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button UpdatePrice1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl PriceInput;
         
         /// <summary>
-        /// Price2Input control.
+        /// UpdatePrice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl Price2Input;
-        
-        /// <summary>
-        /// UpdatePrice2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button UpdatePrice2;
+        protected global::System.Web.UI.WebControls.Button UpdatePrice;
         
         /// <summary>
         /// ToggleReportsEnabled control.
@@ -58,30 +49,12 @@ namespace Stockimulate.Views.AdminViews {
         protected global::System.Web.UI.WebControls.Button ToggleReportsEnabled;
         
         /// <summary>
-        /// ReportsEnabled control.
+        /// ReportsEnabledSpan control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ReportsEnabled;
-        
-        /// <summary>
-        /// Price1Current control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Price1Current;
-        
-        /// <summary>
-        /// Price2Current control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Price2Current;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ReportsEnabledSpan;
     }
 }
