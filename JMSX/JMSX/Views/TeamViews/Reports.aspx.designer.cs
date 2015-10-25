@@ -13,40 +13,40 @@ namespace Stockimulate.Views.TeamViews {
     public partial class Reports {
         
         /// <summary>
-        /// TeamNumber control.
+        /// TeamNumberInput control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl TeamNumber;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl TeamNumberInput;
         
         /// <summary>
-        /// TeamCode control.
+        /// TeamCodeInput control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText TeamCode;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText TeamCodeInput;
         
         /// <summary>
-        /// Cancel control.
+        /// CancelButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Cancel;
+        protected global::System.Web.UI.WebControls.Button CancelButton;
         
         /// <summary>
-        /// Submit control.
+        /// SubmitButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Submit;
+        protected global::System.Web.UI.WebControls.Button SubmitButton;
         
         /// <summary>
         /// ErrorDiv control.

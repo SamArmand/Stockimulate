@@ -13,67 +13,67 @@ namespace Stockimulate.Views.BrokerViews {
     public partial class MasterBroker {
         
         /// <summary>
-        /// head control.
+        /// Head control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder Head;
         
         /// <summary>
-        /// index1SymbolH2 control.
+        /// Index1SymbolH2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl index1SymbolH2;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Index1SymbolH2;
         
         /// <summary>
-        /// index1PriceH2 control.
+        /// Index1PriceH2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl index1PriceH2;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Index1PriceH2;
         
         /// <summary>
-        /// index2SymbolH2 control.
+        /// Index2SymbolH2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl index2SymbolH2;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Index2SymbolH2;
         
         /// <summary>
-        /// index2PriceH2 control.
+        /// Index2PriceH2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl index2PriceH2;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Index2PriceH2;
         
         /// <summary>
-        /// index3SymbolH2 control.
+        /// Index3SymbolH2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl index3SymbolH2;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Index3SymbolH2;
         
         /// <summary>
-        /// index3PriceH2 control.
+        /// Index3PriceH2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl index3PriceH2;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Index3PriceH2;
         
         /// <summary>
         /// ContentPlaceHolder1 control.

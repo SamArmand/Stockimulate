@@ -16,51 +16,50 @@ namespace Stockimulate.Views.BrokerViews
 
             _dataAccess = DataAccess.SessionInstance;
 
-            var indexNames = _dataAccess.Instruments;
+            var instruments = _dataAccess.Instruments;
 
-            for (var i = 0; i < indexNames.Count; ++i)
+            for (var i = 0; i < instruments.Count; ++i)
             {
-                security.Items.Add(new ListItem(indexNames[i].Symbol, i.ToString()));
+                SecurityDropDownList.Items.Add(new ListItem(instruments[i].Symbol, i.ToString()));
             }
         }
 
         protected void Submit_Click(object sender, EventArgs e)
         {
 
-            ErrorDiv.Style.Value = "display: none";
-            SuccessDiv.Style.Value = "display: none";
-            WarningDiv.Style.Value = "display: none";
+            errorDiv.Style.Value = "display: none";
+            successDiv.Style.Value = "display: none";
+            warningDiv.Style.Value = "display: none";
 
-            var price = Convert.ToInt32(Price.Value);
+            var price = Convert.ToInt32(PriceInput.Value);
 
             try
             {
-
-                var trade = new Trade(Convert.ToInt32(BuyerID.Value), Convert.ToInt32(SellerID.Value), security.SelectedIndex,
-                    Convert.ToInt32(Quantity.Value), price);
+                var trade = new Trade(Convert.ToInt32(BuyerIdInput.Value), Convert.ToInt32(SellerIdInput.Value), SecurityDropDownList.SelectedIndex,
+                    Convert.ToInt32(QuantityInput.Value), price);
                 _dataAccess.Insert(trade);
             }
 
             catch (TradeCreationException tradeCreationException)
             {
-                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> " + tradeCreationException.Message;
-                ErrorDiv.Style.Value = "display: inline";
-                SuccessDiv.Style.Value = "display: none";
-                WarningDiv.Style.Value = "display: none";
+                errorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> " + tradeCreationException.Message;
+                errorDiv.Style.Value = "display: inline";
+                successDiv.Style.Value = "display: none";
+                warningDiv.Style.Value = "display: none";
                 return;
             }
 
-            if (!Verify.Checked)
+            if (!VerifyInput.Checked)
             {
-                ErrorDiv.Style.Value = "display: none";
-                SuccessDiv.Style.Value = "display: none";
-                WarningDiv.Style.Value = "display: inline";
+                errorDiv.Style.Value = "display: none";
+                successDiv.Style.Value = "display: none";
+                warningDiv.Style.Value = "display: inline";
                 return;
             }
 
-            ErrorDiv.Style.Value = "display: none";
-            SuccessDiv.Style.Value = "display: inline";
-            WarningDiv.Style.Value = "display: none";
+            errorDiv.Style.Value = "display: none";
+            successDiv.Style.Value = "display: inline";
+            warningDiv.Style.Value = "display: none";
 
             ClearForm();
 
@@ -68,12 +67,12 @@ namespace Stockimulate.Views.BrokerViews
 
         protected void ClearForm()
         {
-            BuyerID.Value = string.Empty;
-            SellerID.Value = string.Empty;
-            Quantity.Value = string.Empty;
-            Price.Value = string.Empty;
+            BuyerIdInput.Value = string.Empty;
+            SellerIdInput.Value = string.Empty;
+            QuantityInput.Value = string.Empty;
+            PriceInput.Value = string.Empty;
 
-            Verify.Checked = false;
+            VerifyInput.Checked = false;
         }
     }
 }

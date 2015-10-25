@@ -27,9 +27,9 @@
 
       <form class="form-signin" role="form" runat="server">
         <h2 class="form-signin-heading">Please sign in</h2>
-          <input id="user" type="text" class="form-control" placeholder="Username" runat="server" required autofocus/>
-          <input id="password" type="password" class="form-control" placeholder="Password" runat="server" required />
-        <asp:Button ID="signIn" OnClick="signIn_Click" class="btn btn-lg btn-primary btn-block" type="submit" runat="server" Text="Sign In"></asp:Button>
+          <input id="UsernameInput" type="text" class="form-control" placeholder="Username" runat="server" required="required" autofocus="autofocus"/>
+          <input id="PasswordInput" type="password" class="form-control" placeholder="Password" runat="server" required="required" />
+        <asp:Button ID="SignInButton" OnClick="SignIn_Click" class="btn btn-lg btn-primary btn-block" type="submit" runat="server" Text="Sign In"></asp:Button>
       </form>
             
 

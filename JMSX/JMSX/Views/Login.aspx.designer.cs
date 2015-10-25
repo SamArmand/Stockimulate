@@ -13,30 +13,30 @@ namespace Stockimulate.Views {
     public partial class Login {
         
         /// <summary>
-        /// user control.
+        /// UsernameInput control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText user;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText UsernameInput;
         
         /// <summary>
-        /// password control.
+        /// PasswordInput control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputPassword password;
+        protected global::System.Web.UI.HtmlControls.HtmlInputPassword PasswordInput;
         
         /// <summary>
-        /// signIn control.
+        /// SignInButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button signIn;
+        protected global::System.Web.UI.WebControls.Button SignInButton;
     }
 }

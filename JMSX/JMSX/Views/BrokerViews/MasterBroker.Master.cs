@@ -18,12 +18,12 @@ namespace Stockimulate.Views.BrokerViews
 
             var instruments = DataAccess.SessionInstance.GetInstruments();
 
-            index1SymbolH2.InnerHtml = instruments[0].Symbol;
-            index1PriceH2.InnerHtml = instruments[0].Price.ToString();
-            index2SymbolH2.InnerHtml = instruments[1].Symbol;
-            index2PriceH2.InnerHtml = instruments[1].Price.ToString();
-            index3SymbolH2.InnerHtml = instruments[2].Symbol;
-            index3PriceH2.InnerHtml = instruments[2].Price.ToString();
+            Index1SymbolH2.InnerHtml = instruments[0].Symbol;
+            Index1PriceH2.InnerHtml = instruments[0].Price.ToString();
+            Index2SymbolH2.InnerHtml = instruments[1].Symbol;
+            Index2PriceH2.InnerHtml = instruments[1].Price.ToString();
+            Index3SymbolH2.InnerHtml = instruments[2].Symbol;
+            Index3PriceH2.InnerHtml = instruments[2].Price.ToString();
 
         }
     }

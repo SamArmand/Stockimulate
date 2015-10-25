@@ -189,7 +189,7 @@ namespace Stockimulate
                 _dataAccess.Update(instrument);
             }
 
-            _context.Clients.All.sendMessage(0, 0, 0, 0, 0, 0, 0, "");
+            _context.Clients.All.sendMessage(0, 0, 0, 0, 0, 0, 0, string.Empty);
             _context.Clients.All.sendBrokerMessage(0, 0, 0);
 
             _status = Status.Ready;

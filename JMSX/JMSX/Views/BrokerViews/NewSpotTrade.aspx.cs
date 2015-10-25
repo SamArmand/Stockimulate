@@ -15,11 +15,11 @@ namespace Stockimulate.Views.BrokerViews
 
             _dataAccess = DataAccess.SessionInstance;
 
-            var indexNames = _dataAccess.Instruments;
+            var instruments = _dataAccess.Instruments;
 
-            for (var i = 0; i < indexNames.Count; ++i)
+            for (var i = 0; i < instruments.Count; ++i)
             {
-                security.Items.Add(new ListItem(indexNames[i].Symbol, i.ToString()));
+                SecurityDropDownList.Items.Add(new ListItem(instruments[i].Symbol, i.ToString()));
             }
         }
 
@@ -33,19 +33,19 @@ namespace Stockimulate.Views.BrokerViews
             var buyerId = 0;
             var sellerId = 0;
 
-            if (transactionType.SelectedValue != "Buy")
+            if (TransactionTypeRadioButtonList.SelectedValue != "Buy")
             {
-                if (transactionType.SelectedValue == "Sell")
-                    sellerId = Convert.ToInt32(TraderID.Value);
+                if (TransactionTypeRadioButtonList.SelectedValue == "Sell")
+                    sellerId = Convert.ToInt32(TraderIdInput.Value);
             }
             else
-                buyerId = Convert.ToInt32(TraderID.Value);
+                buyerId = Convert.ToInt32(TraderIdInput.Value);
 
             try
             {
 
-                var trade = new Trade(buyerId, sellerId, security.SelectedIndex,
-                    Convert.ToInt32(Quantity.Value), _dataAccess.GetInstruments()[security.SelectedIndex].Price);
+                var trade = new Trade(buyerId, sellerId, SecurityDropDownList.SelectedIndex,
+                    Convert.ToInt32(QuantityInput.Value), _dataAccess.GetInstruments()[SecurityDropDownList.SelectedIndex].Price);
                 _dataAccess.Insert(trade);
             }
 
@@ -58,7 +58,7 @@ namespace Stockimulate.Views.BrokerViews
                 return;
             }
 
-            if (!Verify.Checked)
+            if (!VerifyInput.Checked)
             {
                 ErrorDiv.Style.Value = "display: none";
                 SuccessDiv.Style.Value = "display: none";
@@ -76,10 +76,10 @@ namespace Stockimulate.Views.BrokerViews
 
         protected void ClearForm()
         {
-            TraderID.Value = string.Empty;
-            Quantity.Value = string.Empty;
+            TraderIdInput.Value = string.Empty;
+            QuantityInput.Value = string.Empty;
 
-            Verify.Checked = false;
+            VerifyInput.Checked = false;
         }
     }
 }

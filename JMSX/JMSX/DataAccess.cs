@@ -142,7 +142,7 @@ namespace Stockimulate
             }
 
             else
-                player = new Player(-1, "", -1, new List<int>(), -1);
+                player = new Player(-1, string.Empty, -1, new List<int>(), -1);
 
             reader.Dispose();
             command.Dispose();
@@ -303,7 +303,7 @@ namespace Stockimulate
 
             for (var i = 0; i < criteria.Length; ++i)
             {
-                if (criteria[i] == "") continue;
+                if (criteria[i] == string.Empty) continue;
                 if (criteriaSet == 0)
                     queryStringBuilder.Append(" AND ");
 
@@ -324,7 +324,7 @@ namespace Stockimulate
                         queryStringBuilder.Append(" Flagged=@Flagged");
                         break;
                     default:
-                        queryStringBuilder.Append("");
+                        queryStringBuilder.Append(string.Empty);
                         break;
                 }
 
@@ -386,7 +386,7 @@ namespace Stockimulate
             var newsItem = reader.GetString(reader.GetOrdinal("News"));
 
             if (newsItem == "null")
-                newsItem = "";
+                newsItem = string.Empty;
 
             var effects = new List<int>();
 

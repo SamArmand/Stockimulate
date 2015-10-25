@@ -17,7 +17,7 @@ namespace Stockimulate.Views.AdminViews
             ErrorDiv.Style.Value = "display: none;";
             WarningDiv.Style.Value = "display: none;";
                         
-            if (!Verify.Checked)
+            if (!VerifyInput.Checked)
             {
                 WarningDiv.Style.Value = "display: inline;";
                 return;
@@ -49,7 +49,7 @@ namespace Stockimulate.Views.AdminViews
             ErrorDiv.Style.Value = "display: none;";
             WarningDiv.Style.Value = "display: none;";
 
-            if (!Verify.Checked)
+            if (!VerifyInput.Checked)
             {
                 WarningDiv.Style.Value = "display: inline;";
                 return;
@@ -81,7 +81,7 @@ namespace Stockimulate.Views.AdminViews
             ErrorDiv.Style.Value = "display: none;";
             WarningDiv.Style.Value = "display: none;";
             
-            if (!Verify.Checked)
+            if (!VerifyInput.Checked)
             {
                 WarningDiv.Style.Value = "display: inline;";
                 return;
@@ -99,7 +99,7 @@ namespace Stockimulate.Views.AdminViews
             ErrorDiv.Style.Value = "display: none;";
             WarningDiv.Style.Value = "display: none;";
 
-            if (!Verify.Checked)
+            if (!VerifyInput.Checked)
             {
                 WarningDiv.Style.Value = "display: inline;";
                 return;
@@ -121,7 +121,7 @@ namespace Stockimulate.Views.AdminViews
         protected void ClearForm()
         {
             
-            Verify.Checked = false;
+            VerifyInput.Checked = false;
             //Clear other form fields
         }
 

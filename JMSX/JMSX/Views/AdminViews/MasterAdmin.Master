@@ -12,7 +12,7 @@
     <script src="scripts/jquery-2.1.4.min.js"></script>
     <script src="scripts/bootstrap.js"></script>
 
-    <asp:ContentPlaceHolder ID="head" runat="server">
+    <asp:ContentPlaceHolder ID="Head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
@@ -31,9 +31,9 @@
                     <li><a href="TeamStandings.aspx">Team Standings</a></li>
                     <li><a href="IndividualStandings.aspx">Individual Standings</a></li>
                     <li><a href="FraudPrevention.aspx">Fraud Prevention</a></li>
-                    <li><a href="../Index1.aspx" id="ind1Link" runat="server"></a>             </li>
-                    <li><a href="../Index2.aspx" id="ind2Link" runat="server"></a>             </li>
-                    <li><a href="../Index3.aspx" id="ind3Link" runat="server"></a>             </li>
+                    <li><a href="../Index1.aspx" id="Index1A" runat="server"></a>             </li>
+                    <li><a href="../Index2.aspx" id="Index2A" runat="server"></a>             </li>
+                    <li><a href="../Index3.aspx" id="Index3A" runat="server"></a>             </li>
                 </ul>
             </nav>
         </div>

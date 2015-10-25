@@ -13,49 +13,49 @@ namespace Stockimulate.Views.AdminViews {
     public partial class Admin {
         
         /// <summary>
-        /// PlayPractice control.
+        /// PlayPracticeButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button PlayPractice;
+        protected global::System.Web.UI.WebControls.Button PlayPracticeButton;
         
         /// <summary>
-        /// PlayCompetition control.
+        /// PlayCompetitionButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button PlayCompetition;
+        protected global::System.Web.UI.WebControls.Button PlayCompetitionButton;
         
         /// <summary>
-        /// Continue control.
+        /// ContinueButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Continue;
+        protected global::System.Web.UI.WebControls.Button ContinueButton;
         
         /// <summary>
-        /// ResetTrades control.
+        /// ResetTradesButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ResetTrades;
+        protected global::System.Web.UI.WebControls.Button ResetTradesButton;
         
         /// <summary>
-        /// Verify control.
+        /// VerifyInput control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox Verify;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox VerifyInput;
         
         /// <summary>
         /// ErrorDiv control.

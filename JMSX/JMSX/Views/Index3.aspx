@@ -3,7 +3,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title id="title" runat="server">&nbsp;</title>
+    
+    <title>&nbsp;</title>
 
     <script src="../scripts/jquery-2.1.4.min.js"></script>
     <script src="../scripts/bootstrap.min.js"></script>
@@ -128,40 +129,39 @@
 
                 </div>
 
-                <div class="col-sm-12 bg-success IndexChangePositive" id="IndexChangePositive" style="display:none;text-align:center" runat="server">
+                <div class="col-sm-12 bg-success IndexChangePositive" id="IndexChangePositiveDiv" style="display:none;text-align:center" runat="server">
     
                     <h1 style="display:inline-block"><span class="glyphicon glyphicon-arrow-up"></span></h1>
 
-                    <h1 style="display:inline-block" class="IndexChangePositiveSpan" id="IndexChangePositiveSpan" runat="server"></h1>
+                    <h1 style="display:inline-block" class="IndexChangePositiveSpan" id="IndexChangePositiveH1" runat="server"></h1>
 
                 </div>
 
-                <div class="col-sm-12 bg-danger IndexChangeNegative" id="IndexChangeNegative" style="display:none;text-align:center" runat="server">
+                <div class="col-sm-12 bg-danger IndexChangeNegative" id="IndexChangeNegativeDiv" style="display:none;text-align:center" runat="server">
     
                     <h1 style="display:inline-block"><span class="glyphicon glyphicon-arrow-down"></span></h1>
 
-                    <h1 style="display:inline-block" class="IndexChangeNegativeSpan" id="IndexChangeNegativeSpan" runat="server"></h1>
+                    <h1 style="display:inline-block" class="IndexChangeNegativeSpan" id="IndexChangeNegativeH1" runat="server"></h1>
 
                 </div>
 
-                <div class="col-sm-12 bg-warning IndexChangeNone" id="IndexChangeNone" style="display:none;text-align:center" runat="server">
+                <div class="col-sm-12 bg-warning IndexChangeNone" id="IndexChangeNoneDiv" style="display:none;text-align:center" runat="server">
     
                     <h1 style="display:inline-block"><span class="glyphicon glyphicon-resize-horizontal"></span></h1>
 
-                    <h1 style="display:inline-block" class="IndexChangeNoneSpan" id="IndexChangeNoneSpan" runat="server"></h1>
+                    <h1 style="display:inline-block" class="IndexChangeNoneSpan" id="IndexChangeNoneH1" runat="server">0</h1>
 
                 </div>
 
            </div>
 
                             <div class="col-sm-12 NewsDiv" id="NewsDiv" runat="server">
-    <h2>News Item Here</h2>
 
 </div>
 
 </div>
 
-    <div id="data" style="display:none;" runat="server"></div>
+    <div id="DataDiv" style="display:none;" runat="server"></div>
 
 
 </body>

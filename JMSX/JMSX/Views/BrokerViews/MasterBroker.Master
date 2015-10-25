@@ -23,9 +23,9 @@
 
             sim.client.sendBrokerMessage = function (price1, price2, price3) {
 
-                $(".index1PriceH2").html("$" + price1);
-                $(".index2PriceH2").html("$" + price2);
-                $(".index3PriceH2").html("$" + price3);
+                $(".index1-price-h2").html("$" + price1);
+                $(".index2-price-h2").html("$" + price2);
+                $(".index3-price-h2").html("$" + price3);
 
             };
 
@@ -40,7 +40,7 @@
     <%-- ReSharper restore PossiblyUnassignedProperty --%>
     
 
-    <asp:ContentPlaceHolder ID="head" runat="server">
+    <asp:ContentPlaceHolder ID="Head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
@@ -66,12 +66,12 @@
         
         <div class="col-sm-12">
 
-            <div class="col-sm-2"><h2 id="index1SymbolH2" runat="server"></h2></div>
-            <div class="col-sm-2"><h2 id="index1PriceH2" runat="server"></h2></div>
-            <div class="col-sm-2"><h2 id="index2SymbolH2" runat="server"></h2></div>
-            <div class="col-sm-2"><h2 id="index2PriceH2" runat="server"></h2></div>
-            <div class="col-sm-2"><h2 id="index3SymbolH2" runat="server"></h2></div>
-            <div class="col-sm-2"><h2 id="index3PriceH2" runat="server"></h2></div>
+            <div class="col-sm-2"><h2 id="Index1SymbolH2" runat="server"></h2></div>
+            <div class="col-sm-2 index1-price-h2"><h2 id="Index1PriceH2" runat="server"></h2></div>
+            <div class="col-sm-2"><h2 id="Index2SymbolH2" runat="server"></h2></div>
+            <div class="col-sm-2 index2-price-h2"><h2 id="Index2PriceH2" runat="server"></h2></div>
+            <div class="col-sm-2"><h2 id="Index3SymbolH2" runat="server"></h2></div>
+            <div class="col-sm-2 index3-price-h2"><h2 id="Index3PriceH2" runat="server"></h2></div>
 
         </div>
 
