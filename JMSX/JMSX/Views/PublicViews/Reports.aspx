@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/TeamViews/MasterTeam.Master" AutoEventWireup="true" CodeBehind="Reports.aspx.cs" Inherits="Stockimulate.Views.TeamViews.Reports" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/PublicViews/MasterPublic.Master" AutoEventWireup="true" CodeBehind="Reports.aspx.cs" Inherits="Stockimulate.Views.TeamViews.Reports" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
     <link href="../../Content/tables.css" rel="stylesheet" />
 </asp:Content>

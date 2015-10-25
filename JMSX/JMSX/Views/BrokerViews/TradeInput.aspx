@@ -1,35 +1,30 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/BrokerViews/MasterBroker.Master" AutoEventWireup="true" CodeBehind="NewSpotTrade.aspx.cs" Inherits="Stockimulate.Views.BrokerViews.NewSpotTrade" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/BrokerViews/MasterBroker.Master" AutoEventWireup="true" CodeBehind="TradeInput.aspx.cs" Inherits="Stockimulate.Views.BrokerViews.TradeInput" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
     
-      <div class="row">
+  <div class="row">
     <div class="col-md-12">
       <form class="form-horizontal" role="form" runat="server" id="TradeInputForm">
         <fieldset>
 
           <!-- Form Name -->
-          <legend><h1>New Spot Trade</h1></legend>
-           
-            <div class="form-group">
+          <legend><h1>Trade</h1></legend>
             
-            <asp:RadioButtonList ID="TransactionTypeRadioButtonList" runat="server" 
-                RepeatDirection="Horizontal" RepeatLayout="Table" CssClass="form-control">
-                <asp:ListItem Text="Buy" Value="Buy"></asp:ListItem>
-                <asp:ListItem Text="Sell" Value="Sell"></asp:ListItem>
-            </asp:RadioButtonList> 
-            <asp:RequiredFieldValidator runat="server" ID="TransactionTypeRadioButtonListValidation" controltovalidate="TransactionTypeRadioButtonList" errormessage="This field is required" />
-
-            </div>
-             
           <!-- Text input-->
           <div class="form-group">
-            <label class="col-sm-1 control-label">Trader ID</label>
+            <label class="col-sm-1 control-label">Buyer ID</label>
             <div class="col-sm-2">
-              <input id="TraderIdInput" type="number" placeholder="Trader ID" class="form-control" runat="server"/>        
-                <asp:RequiredFieldValidator runat="server" ID="TraderIdInputValidation" controltovalidate="TraderIDInput" errormessage="This field is required" />
+              <input id="BuyerIdInput" type="number" placeholder="Buyer ID" class="form-control" runat="server"/>        
+                <asp:RequiredFieldValidator runat="server" ID="BuyerIdInputValidation" controltovalidate="BuyerIdInput" ErrorMessage="This field is required" />
             </div>
 
+            <label class="col-sm-1 col-sm-offset-1 control-label">Seller ID</label>
+            <div class="col-sm-2">
+              <input id="SellerIdInput" type="number" placeholder="Seller ID" class="form-control" runat="server"/>
+                <asp:RequiredFieldValidator runat="server" ID="SellerIdInputValidation" ControlToValidate="SellerIdInput" ErrorMessage="This field is required" />
+            </div>
           </div>
 
             <!-- Text input-->
@@ -44,7 +39,15 @@
             <label class="col-sm-1 col-sm-offset-1 control-label">Quantity</label>
             <div class="col-sm-2">
               <input id="QuantityInput" type="number" placeholder="Quantity" class="form-control" runat="server"/>
-                <asp:RequiredFieldValidator runat="server" ID="QuantityInputValidation" controltovalidate="QuantityInput" errormessage="This field is required" />
+                <asp:RequiredFieldValidator runat="server" ID="QuantityInputValidation" ControlToValidate="QuantityInput" ErrorMessage="This field is required" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-1 control-label ">Price</label>
+            <div class="col-sm-2 ">
+              <input id="PriceInput" type="number" placeholder="Price" class="form-control" runat="server"/>
+                <asp:RequiredFieldValidator runat="server" ID="PriceInputValidation" ControlToValidate="PriceInput" ErrorMessage="This field is required" />
             </div>
           </div>
 
@@ -74,16 +77,16 @@
 
     <br />
 
-        <div id="ErrorDiv" runat="server" class="alert alert-danger alert-error bg-danger col-lg-5" style="display: none;">
+        <div id="errorDiv" runat="server" class="alert alert-danger alert-error bg-danger col-lg-5" style="display: none;">
 
     </div>
 
-            <div id="SuccessDiv" runat="server" class="alert alert-success bg-success col-lg-5" style="display: none;">
+            <div id="successDiv" runat="server" class="alert alert-success bg-success col-lg-5" style="display: none;">
         <a href="#" class="close" data-dismiss="alert">&times;</a>
         <strong>Success!</strong> Trade is complete.
     </div>
 
-        <div id="WarningDiv" runat="server" class="alert alert-warning bg-warning col-lg-5" style="display: none;">
+        <div id="warningDiv" runat="server" class="alert alert-warning bg-warning col-lg-5" style="display: none;">
         <a href="#" class="close" data-dismiss="alert">&times;</a>
         <strong>Info!</strong> Verify all the fields in the form and check the checkbox before submitting.
     </div>

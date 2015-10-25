@@ -10,7 +10,7 @@
 namespace Stockimulate.Views.BrokerViews {
     
     
-    public partial class NewTrade {
+    public partial class TradeInput {
         
         /// <summary>
         /// TradeInputForm control.

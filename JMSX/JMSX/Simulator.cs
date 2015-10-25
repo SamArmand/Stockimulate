@@ -182,13 +182,6 @@ namespace Stockimulate
             Index3.Reset();
             _dataAccess.Reset();
 
-
-            foreach (var instrument in _instruments)
-            {
-                instrument.Price = 0;
-                _dataAccess.Update(instrument);
-            }
-
             _context.Clients.All.sendMessage(0, 0, 0, 0, 0, 0, 0, string.Empty);
             _context.Clients.All.sendBrokerMessage(0, 0, 0);
 

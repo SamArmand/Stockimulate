@@ -5,7 +5,7 @@ using Stockimulate.Models;
 
 namespace Stockimulate.Views.BrokerViews
 {
-    public partial class NewTrade : Page
+    public partial class TradeInput : Page
     {
 
         private DataAccess _dataAccess;

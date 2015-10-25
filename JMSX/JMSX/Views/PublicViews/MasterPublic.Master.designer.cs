@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Stockimulate.Views.TeamViews {
+namespace Stockimulate.Views.PublicViews {
     
     
-    public partial class MasterTeam {
+    public partial class MasterPublic {
         
         /// <summary>
         /// Head control.
