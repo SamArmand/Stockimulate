@@ -144,6 +144,7 @@
     <Content Include="scripts\jquery-2.1.4.min.js" />
     <Content Include="scripts\jquery.signalR-2.2.0.js" />
     <Content Include="scripts\jquery.signalR-2.2.0.min.js" />
+    <Content Include="Views\AdminViews\AdminReports.aspx" />
     <Content Include="Views\BrokerViews\SpotTradeInput.aspx" />
     <Content Include="Views\Index3.aspx" />
     <Content Include="Views\AdminViews\Admin.aspx" />
@@ -216,6 +217,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\DayInfo.cs" />
+    <Compile Include="Views\AdminViews\AdminReports.aspx.cs">
+      <DependentUpon>AdminReports.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\AdminViews\AdminReports.aspx.designer.cs">
+      <DependentUpon>AdminReports.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\BrokerViews\SpotTradeInput.aspx.cs">
       <DependentUpon>SpotTradeInput.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

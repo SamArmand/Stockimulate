@@ -59,11 +59,11 @@ namespace Stockimulate
             command.Dispose();
             connection.Dispose();
 
-            //Fetch + Update Buyer Info
+            //Update Buyer Info
 
             Update(trade.Buyer);
             
-            //Fetch + Update Seller Info
+            //Update Seller Info
 
             Update(trade.Seller);
 
@@ -103,7 +103,7 @@ namespace Stockimulate
 
         internal Player GetPlayer(int id) {
 
-            Player player;
+            Player player = null;
 
             var connection = new SqlConnection(ConnectionString);
 
@@ -140,9 +140,6 @@ namespace Stockimulate
 
                 player = new Player(id, name, teamId, positions, funds);
             }
-
-            else
-                player = new Player(-1, string.Empty, -1, new List<int>(), -1);
 
             reader.Dispose();
             command.Dispose();

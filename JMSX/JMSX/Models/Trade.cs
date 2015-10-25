@@ -30,9 +30,9 @@ namespace Stockimulate.Models
             Buyer = dataAccess.GetPlayer(buyerId);
             Seller = dataAccess.GetPlayer(sellerId);
 
-            if (Buyer.Id == -1)
+            if (Buyer == null)
                 throw new TradeCreationException("Buyer does not exist.");
-            if (Seller.Id == -1)
+            if (Seller == null)
                 throw new TradeCreationException("Seller does not exist.");
 
             if (Buyer.TeamId == Seller.TeamId)
