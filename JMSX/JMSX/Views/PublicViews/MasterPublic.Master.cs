@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Stockimulate.Views.TeamViews
+namespace Stockimulate.Views.PublicViews
 {
-    public partial class MasterTeam : System.Web.UI.MasterPage
+    public partial class MasterPublic : System.Web.UI.MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

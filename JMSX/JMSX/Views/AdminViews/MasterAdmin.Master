@@ -5,12 +5,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Stockimulate</title>
-
+    <script src="../../scripts/jquery-2.1.4.min.js"></script>
+    <script src="../../scripts/bootstrap.js"></script>
     <link rel="stylesheet" type="text/css" href="../../Content/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="../../Content/bootstrap-theme.min.css" />
-
-    <script src="scripts/jquery-2.1.4.min.js"></script>
-    <script src="scripts/bootstrap.js"></script>
 
     <asp:ContentPlaceHolder ID="Head" runat="server">
     </asp:ContentPlaceHolder>
@@ -24,17 +22,38 @@
 
         </div>
         <div class="row">
-            <nav class="navbar navbar-inverse" role="navigation">
+            <nav class="navbar navbar-inverse">
+            <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><strong>stock</strong>imulate</a>
+          </div>
+            <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="Admin.aspx">Admin Panel</a></li>
                     <li><a href="Override.aspx">Override Panel</a></li>
+                    <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Standings <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
                     <li><a href="TeamStandings.aspx">Team Standings</a></li>
                     <li><a href="IndividualStandings.aspx">Individual Standings</a></li>
+                    </ul>
+                  </li>
                     <li><a href="FraudPrevention.aspx">Fraud Prevention</a></li>
-                    <li><a href="../Index1.aspx" id="Index1A" runat="server"></a>             </li>
+                   <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Index Pages <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                     <li><a href="../Index1.aspx" id="Index1A" runat="server"></a>             </li>
                     <li><a href="../Index2.aspx" id="Index2A" runat="server"></a>             </li>
                     <li><a href="../Index3.aspx" id="Index3A" runat="server"></a>             </li>
-                </ul>
+                    </ul>
+                  </li>
+                     </ul>
+    </div>
             </nav>
         </div>
 

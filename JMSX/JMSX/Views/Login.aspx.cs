@@ -11,7 +11,7 @@ namespace Stockimulate.Views
         }
 
         //LOL!!!
-        protected void signIn_Click(object sender, EventArgs e)
+        protected void SignIn_Click(object sender, EventArgs e)
         {
             if (UsernameInput.Value == "admin" && PasswordInput.Value == "charlesisadmin")
             {
@@ -22,7 +22,7 @@ namespace Stockimulate.Views
             else if (UsernameInput.Value == "broker" && PasswordInput.Value == "brokershavepower")
             {
                 HttpContext.Current.Session["Login"] = "Broker";
-                Response.Redirect("BrokerViews/NewTrade.aspx");
+                Response.Redirect("BrokerViews/TradeInput.aspx");
             }
 
         }

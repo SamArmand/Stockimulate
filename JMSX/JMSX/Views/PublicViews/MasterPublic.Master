@@ -1,15 +1,14 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterTeam.Master.cs" Inherits="Stockimulate.Views.TeamViews.MasterTeam" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPublic.Master.cs" Inherits="Stockimulate.Views.PublicViews.MasterPublic" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     
+    <script src="../../scripts/jquery-2.1.4.min.js"></script>
+    <script src="../../scripts/bootstrap.js"></script>
     <link rel="stylesheet" type="text/css" href="../../Content/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="../../Content/bootstrap-theme.min.css" />
-
-    <script src="scripts/jquery-2.1.4.min.js"></script>
-    <script src="scripts/bootstrap.js"></script>
     
     <title>Stockimulate</title>
     <asp:ContentPlaceHolder ID="Head" runat="server">
@@ -25,10 +24,22 @@
 
         </div>
         <div class="row">
-            <nav class="navbar navbar-inverse" role="navigation">
+            <nav class="navbar navbar-inverse">
+            <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><strong>stock</strong>imulate</a>
+          </div>
+            <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                   <li><a href="Home.aspx">Home</a></li>
                     <li><a href="Reports.aspx">Reports</a></li>
                 </ul>
+    </div>
             </nav>
         </div>
 

@@ -414,7 +414,7 @@ namespace Stockimulate
             for (var i = 0; i < Instruments.Count; ++i)
                 queryStringBuilder.Append(" PositionIndex" + (i + 1) + "='0',");
 
-            queryStringBuilder.Append(" Funds='1000000'");
+            queryStringBuilder.Append(" Funds='1000000';");
 
             var command = new SqlCommand(queryStringBuilder.ToString()) {CommandType = CommandType.Text};
 
@@ -439,7 +439,20 @@ namespace Stockimulate
 
             command.Dispose();
             connection.Dispose();
-        
+
+            connection = new SqlConnection(ConnectionString);
+
+            command = new SqlCommand("UPDATE Instruments SET Price='0';");
+
+            connection.Open();
+
+            command.Connection = connection;
+
+            command.ExecuteNonQuery();
+
+            command.Dispose();
+            connection.Dispose();
+
         }
 
         internal bool IsReportsEnabled()

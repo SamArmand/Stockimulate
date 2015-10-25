@@ -15,7 +15,7 @@
     <%-- ReSharper disable PossiblyUnassignedProperty --%>
     <script>
         $(function () {
-            var text = $('#data').text();
+            var text = $('#DataDiv').text();
             $('#GraphDiv').highcharts({
 
                 title: {
