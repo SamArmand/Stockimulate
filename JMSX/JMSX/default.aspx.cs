@@ -7,7 +7,7 @@ namespace Stockimulate
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Response.Redirect("~/Views/PublicViews/Reports.aspx");
+            Response.Redirect("~/Views/PublicViews/Home.aspx");
         }
     }
 }

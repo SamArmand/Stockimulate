@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Stockimulate.Views.TeamViews {
+namespace Stockimulate.Views.PublicViews {
     
     
     public partial class Reports {

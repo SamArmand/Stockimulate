@@ -5,11 +5,11 @@ namespace Stockimulate.Models
     internal class Trade
     {
         internal int Id { get; }
-        internal Player Seller { get; }
         internal Player Buyer { get; }
+        internal Player Seller { get; }
         internal string Symbol { get; }
-        internal int Price { get; }
         internal int Quantity { get; }
+        internal int Price { get; }
         internal int MarketPrice { get; }
         internal bool Flagged { get; }
 
