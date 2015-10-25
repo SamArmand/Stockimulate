@@ -26,8 +26,8 @@
           <div class="row">
               <div class="btn-group col-sm-12"> 
 
-                <asp:Button id="CancelButton" class="btn btn-default" runat="server" Text="Cancel" OnClick="Page_Load" />
-                <asp:Button id="SubmitButton" class="btn btn-primary" runat="server" Text="Submit" OnClick="Submit_Click" />
+                <asp:Button ID="CancelButton" CssClass="btn btn-default" runat="server" Text="Cancel" OnClick="Page_Load" />
+                <asp:Button ID="SubmitButton" CssClass="btn btn-primary" runat="server" Text="Submit" OnClick="Submit_Click" />
 
             </div>              
           </div>
