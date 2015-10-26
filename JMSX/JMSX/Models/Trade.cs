@@ -46,7 +46,7 @@ namespace Stockimulate.Models
                     throw new Exception("This trade puts the seller's position at below -100.");
             }
 
-            Symbol = dataAccess.Instruments[security].Name;
+            Symbol = dataAccess.Instruments[security].Symbol;
             Price = price;
             Quantity = quantity;
 
