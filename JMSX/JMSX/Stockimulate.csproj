@@ -240,7 +240,6 @@
     </Compile>
     <Compile Include="Models\Instrument.cs" />
     <Compile Include="Models\Trade.cs" />
-    <Compile Include="TradeCreationException.cs" />
     <Compile Include="Views\AdminViews\Admin.aspx.cs">
       <DependentUpon>Admin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -59,7 +59,7 @@ namespace Stockimulate.Views.AdminViews
                 sb.Append("    </tbody>");
             sb.Append("</table>");
 
-            tableDiv.InnerHtml = sb.ToString();
+            TableDiv.InnerHtml = sb.ToString();
 
         }
     }

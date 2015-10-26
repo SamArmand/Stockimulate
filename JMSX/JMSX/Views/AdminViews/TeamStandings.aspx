@@ -7,7 +7,7 @@
 
           <legend><h1>Team Standings</h1></legend>
 
-            <div id="tableDiv" runat="server">
+            <div id="TableDiv" runat="server">
 
 
             </div>

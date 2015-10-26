@@ -27,39 +27,40 @@ namespace Stockimulate.Views.BrokerViews
         protected void Submit_Click(object sender, EventArgs e)
         {
 
-            errorDiv.Style.Value = "display: none";
-            successDiv.Style.Value = "display: none";
-            warningDiv.Style.Value = "display: none";
+            ErrorDiv.Style.Value = "display: none";
+            SuccessDiv.Style.Value = "display: none";
+            WarningDiv.Style.Value = "display: none";
 
             var price = Convert.ToInt32(PriceInput.Value);
 
             try
             {
-                var trade = new Trade(Convert.ToInt32(BuyerIdInput.Value), Convert.ToInt32(SellerIdInput.Value), SecurityDropDownList.SelectedIndex,
+                var trade = new Trade(Convert.ToInt32(BuyerIdInput.Value), Convert.ToInt32(SellerIdInput.Value),
+                    SecurityDropDownList.SelectedIndex,
                     Convert.ToInt32(QuantityInput.Value), price);
                 _dataAccess.Insert(trade);
             }
 
-            catch (TradeCreationException tradeCreationException)
+            catch (Exception exception)
             {
-                errorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> " + tradeCreationException.Message;
-                errorDiv.Style.Value = "display: inline";
-                successDiv.Style.Value = "display: none";
-                warningDiv.Style.Value = "display: none";
+                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> " + exception.Message;
+                ErrorDiv.Style.Value = "display: inline";
+                SuccessDiv.Style.Value = "display: none";
+                WarningDiv.Style.Value = "display: none";
                 return;
             }
 
             if (!VerifyInput.Checked)
             {
-                errorDiv.Style.Value = "display: none";
-                successDiv.Style.Value = "display: none";
-                warningDiv.Style.Value = "display: inline";
+                ErrorDiv.Style.Value = "display: none";
+                SuccessDiv.Style.Value = "display: none";
+                WarningDiv.Style.Value = "display: inline";
                 return;
             }
 
-            errorDiv.Style.Value = "display: none";
-            successDiv.Style.Value = "display: inline";
-            warningDiv.Style.Value = "display: none";
+            ErrorDiv.Style.Value = "display: none";
+            SuccessDiv.Style.Value = "display: inline";
+            WarningDiv.Style.Value = "display: none";
 
             ClearForm();
 
