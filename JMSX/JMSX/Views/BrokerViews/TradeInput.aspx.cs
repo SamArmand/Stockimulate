@@ -13,6 +13,8 @@ namespace Stockimulate.Views.BrokerViews
         protected void Page_Load(object sender, EventArgs e)
         {
 
+            _dataAccess = DataAccess.SessionInstance;
+
             var instruments = _dataAccess.Instruments;
 
             for (var i = 0; i < instruments.Count; ++i)
