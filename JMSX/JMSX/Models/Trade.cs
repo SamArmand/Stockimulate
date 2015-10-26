@@ -17,13 +17,13 @@ namespace Stockimulate.Models
         {
 
             if (buyerId < 0 || sellerId < 0)
-                throw new TradeCreationException("IDs cannot be negative.");
+                throw new Exception("IDs cannot be negative.");
             if (buyerId == sellerId)
-                throw new TradeCreationException("Buyer ID and Seller ID must be different.");
+                throw new Exception("Buyer ID and Seller ID must be different.");
             if (quantity < 1)
-                throw new TradeCreationException("Quantity must be at least 1.");
+                throw new Exception("Quantity must be at least 1.");
             if (price < 1)
-                throw new TradeCreationException("Price must be at least 1.");
+                throw new Exception("Price must be at least 1.");
 
             var dataAccess = DataAccess.SessionInstance;
 
@@ -31,19 +31,19 @@ namespace Stockimulate.Models
             Seller = dataAccess.GetPlayer(sellerId);
 
             if (Buyer == null)
-                throw new TradeCreationException("Buyer does not exist.");
+                throw new Exception("Buyer does not exist.");
             if (Seller == null)
-                throw new TradeCreationException("Seller does not exist.");
+                throw new Exception("Seller does not exist.");
 
             if (Buyer.TeamId == Seller.TeamId)
-                throw new TradeCreationException("Buyer and Seller must be on different teams.");
+                throw new Exception("Buyer and Seller must be on different teams.");
 
             for (var i = 0; i < Buyer.Positions.Count; ++i)
             {
                 if (security == i && Buyer.Positions[i] + quantity > 100 && Buyer.TeamId != 0)
-                    throw new TradeCreationException("This trade puts the buyer's position at over 100.");
+                    throw new Exception("This trade puts the buyer's position at over 100.");
                 if (security == i && Seller.Positions[i] - quantity < -100 && Seller.TeamId != 0)
-                    throw new TradeCreationException("This trade puts the seller's position at below -100.");
+                    throw new Exception("This trade puts the seller's position at below -100.");
             }
 
             Symbol = dataAccess.Instruments[security].Name;

@@ -33,25 +33,25 @@ namespace Stockimulate.Views.BrokerViews
             var buyerId = 0;
             var sellerId = 0;
 
-            if (TransactionTypeRadioButtonList.SelectedValue != "Buy")
-            {
-                if (TransactionTypeRadioButtonList.SelectedValue == "Sell")
-                    sellerId = Convert.ToInt32(TraderIdInput.Value);
-            }
-            else
-                buyerId = Convert.ToInt32(TraderIdInput.Value);
-
             try
             {
+
+                if (TransactionTypeRadioButtonList.SelectedValue != "Buy")
+                {
+                    if (TransactionTypeRadioButtonList.SelectedValue == "Sell")
+                        sellerId = Convert.ToInt32(TraderIdInput.Value);
+                }
+                else
+                    buyerId = Convert.ToInt32(TraderIdInput.Value);
 
                 var trade = new Trade(buyerId, sellerId, SecurityDropDownList.SelectedIndex,
                     Convert.ToInt32(QuantityInput.Value), _dataAccess.GetInstruments()[SecurityDropDownList.SelectedIndex].Price);
                 _dataAccess.Insert(trade);
             }
 
-            catch (TradeCreationException tradeCreationException)
+            catch (Exception exception)
             {
-                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> " + tradeCreationException.Message;
+                ErrorDiv.InnerHtml = "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> " + exception.Message;
                 ErrorDiv.Style.Value = "display: inline";
                 SuccessDiv.Style.Value = "display: none";
                 WarningDiv.Style.Value = "display: none";

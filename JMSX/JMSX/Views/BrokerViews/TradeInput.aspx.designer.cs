@@ -130,30 +130,30 @@ namespace Stockimulate.Views.BrokerViews {
         protected global::System.Web.UI.WebControls.Button SubmitButton;
         
         /// <summary>
-        /// errorDiv control.
+        /// ErrorDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl errorDiv;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ErrorDiv;
         
         /// <summary>
-        /// successDiv control.
+        /// SuccessDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl successDiv;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl SuccessDiv;
         
         /// <summary>
-        /// warningDiv control.
+        /// WarningDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl warningDiv;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl WarningDiv;
     }
 }

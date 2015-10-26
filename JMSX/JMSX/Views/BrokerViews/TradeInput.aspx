@@ -77,16 +77,16 @@
 
     <br />
 
-        <div id="errorDiv" runat="server" class="alert alert-danger alert-error bg-danger col-lg-5" style="display: none;">
+        <div id="ErrorDiv" runat="server" class="alert alert-danger alert-error bg-danger col-lg-5" style="display: none;">
 
     </div>
 
-            <div id="successDiv" runat="server" class="alert alert-success bg-success col-lg-5" style="display: none;">
+            <div id="SuccessDiv" runat="server" class="alert alert-success bg-success col-lg-5" style="display: none;">
         <a href="#" class="close" data-dismiss="alert">&times;</a>
         <strong>Success!</strong> Trade is complete.
     </div>
 
-        <div id="warningDiv" runat="server" class="alert alert-warning bg-warning col-lg-5" style="display: none;">
+        <div id="WarningDiv" runat="server" class="alert alert-warning bg-warning col-lg-5" style="display: none;">
         <a href="#" class="close" data-dismiss="alert">&times;</a>
         <strong>Info!</strong> Verify all the fields in the form and check the checkbox before submitting.
     </div>

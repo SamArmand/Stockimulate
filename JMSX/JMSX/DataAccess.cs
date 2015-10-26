@@ -287,48 +287,91 @@ namespace Stockimulate
 
         }
 
-        internal List<Trade> GetTrades(string[] criteria)
+        internal List<Trade> GetTrades(List<string> criteria)
         {
 
             var connection = new SqlConnection(ConnectionString);
 
             var queryStringBuilder = new StringBuilder();
 
-            queryStringBuilder.Append("SELECT ID, SellerID, BuyerID, Symbol, Quantity, Price, MarketPrice, Flagged FROM Trades");
+            queryStringBuilder.Append("SELECT Trades.ID, Buyers.ID, Buyers.TeamID, Sellers.ID, Sellers.TeamID, Trades.Symbol, Trades.Quantity, Trades.Price, Trades.MarketPrice, Trades.Flagged FROM Trades JOIN Players ON Trades.BuyerID=Players.ID Buyers, Trades.SellerID=Players.ID Sellers");
 
-            var criteriaSet = 0;
+            var someCriteriaSet = false;
 
-            for (var i = 0; i < criteria.Length; ++i)
+            for (var i = 0; i < criteria.Count; ++i)
             {
                 if (criteria[i] == string.Empty) continue;
-                if (criteriaSet == 0)
+                if (!someCriteriaSet)
+                {
+                    queryStringBuilder.Append(" WHERE ");
+                    someCriteriaSet = true;
+                }
+                else
                     queryStringBuilder.Append(" AND ");
-
-                ++criteriaSet;
 
                 switch (i)
                 {
                     case 0:
-                        queryStringBuilder.Append(" SellerID=@SellerID");
+                        queryStringBuilder.Append("Buyers.ID=@SellerID");
                         break;
                     case 1:
-                        queryStringBuilder.Append(" BuyerID=@BuyerID");
+                        queryStringBuilder.Append("Sellers.ID=@BuyerID");
                         break;
                     case 2:
-                        queryStringBuilder.Append(" Symbol=@Symbol");
+                        queryStringBuilder.Append("Trades.Symbol=@Symbol");
                         break;
                     case 3:
-                        queryStringBuilder.Append(" Flagged=@Flagged");
+                        queryStringBuilder.Append("Trades.Flagged=@Flagged");
+                        break;
+                    case 4:
+                        queryStringBuilder.Append("Buyers.TeamID=@BuyerTeamID");
+                        break;
+                    case 5:
+                        queryStringBuilder.Append("Sellers.TeamID=@SellerTeamID");
                         break;
                     default:
                         queryStringBuilder.Append(string.Empty);
                         break;
+
                 }
 
                 queryStringBuilder.Append(";");
             }
 
             var command = new SqlCommand(queryStringBuilder.ToString()) { CommandType = CommandType.Text };
+
+            for (var i = 0; i < criteria.Count; ++i)
+            {
+                if (criteria[i] == string.Empty) continue;
+
+                switch (i)
+                {
+                    case 0:
+                        command.Parameters.AddWithValue("@Buyer", criteria[i]);
+                        break;
+                    case 1:
+                        command.Parameters.AddWithValue("@SellerID", criteria[i]);
+                        break;
+                    case 2:
+                        command.Parameters.AddWithValue("@Symbol", criteria[i]);
+                        break;
+                    case 3:
+                        command.Parameters.AddWithValue("@Flagged", criteria[i]);
+                        break;
+                    case 4:
+                        command.Parameters.AddWithValue("@BuyerTeamID", criteria[i]);
+                        break;
+                    case 5:
+                        command.Parameters.AddWithValue("@SellerTeamID", criteria[i]);
+                        break;
+                    default:
+                        command.Parameters.AddWithValue(string.Empty, string.Empty);
+                        break;
+
+                }
+
+                queryStringBuilder.Append(";");
+            }
 
             connection.Open();
 
@@ -339,14 +382,14 @@ namespace Stockimulate
             var trades = new List<Trade>();
 
             while (reader.Read())
-                trades.Add(new Trade(reader.GetInt32(reader.GetOrdinal("ID")), 
-                    reader.GetInt32(reader.GetOrdinal("BuyerID")),
-                    reader.GetInt32(reader.GetOrdinal("SellerID")),
-                    reader.GetString(reader.GetOrdinal("Symbol")),
-                    reader.GetInt32(reader.GetOrdinal("Quantity")),
-                    reader.GetInt32(reader.GetOrdinal("Price")),
-                    reader.GetInt32(reader.GetOrdinal("MarketPrice")),
-                    reader.GetBoolean(reader.GetOrdinal("Flagged"))));
+                trades.Add(new Trade(reader.GetInt32(reader.GetOrdinal("Trades.ID")), 
+                    reader.GetInt32(reader.GetOrdinal("Buyers.ID")),
+                    reader.GetInt32(reader.GetOrdinal("Sellers.ID")),
+                    reader.GetString(reader.GetOrdinal("Trades.Symbol")),
+                    reader.GetInt32(reader.GetOrdinal("Trades.Quantity")),
+                    reader.GetInt32(reader.GetOrdinal("Trades.Price")),
+                    reader.GetInt32(reader.GetOrdinal("Trades.MarketPrice")),
+                    bool.Parse(reader.GetString(reader.GetOrdinal("Trades.Flagged")))));
 
             reader.Dispose();
             command.Dispose();
@@ -566,5 +609,7 @@ namespace Stockimulate
 
             return instruments;
         }
+
+
     }
 }
