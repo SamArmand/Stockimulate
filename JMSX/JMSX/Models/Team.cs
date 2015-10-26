@@ -22,7 +22,7 @@ namespace Stockimulate.Models
         {
             var positions = new List<int>();
 
-            for (var i = 0; i < Players.Count; ++i)
+            for (var i = 0; i < Players[0].Positions.Count; ++i)
                 positions.Add(0);
 
             foreach (var player in Players)
