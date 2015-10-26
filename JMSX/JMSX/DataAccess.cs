@@ -255,7 +255,7 @@ namespace Stockimulate
             command.Dispose();
             connection.Dispose();
 
-            return ids.Select(id => GetTeam(id, "0")).ToList();
+            return ids.Select(id => GetTeam(id)).ToList();
 
         }
 
