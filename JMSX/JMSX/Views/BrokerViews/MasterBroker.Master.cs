@@ -13,9 +13,6 @@ namespace Stockimulate.Views.BrokerViews
                 Response.Redirect("../Login.aspx");
             }
 
-
-            if (Page.IsPostBack) return;
-
             var instruments = DataAccess.SessionInstance.GetInstruments();
 
             Index1SymbolH2.InnerHtml = instruments[0].Symbol;
