@@ -21,6 +21,8 @@ namespace Stockimulate
             Instruments = GetInstruments();
         }
 
+        internal static DataAccess Instance => _instance ?? (_instance = new DataAccess());
+
         internal static DataAccess SessionInstance
         {
 
@@ -34,8 +36,7 @@ namespace Stockimulate
 
         }
 
-        internal static DataAccess Instance => _instance ?? (_instance = new DataAccess());
-
+        //Trade methods
         internal void Insert(Trade trade)
         {
             var connection = new SqlConnection(ConnectionString);
@@ -69,6 +70,60 @@ namespace Stockimulate
 
         }
 
+        internal List<Trade> GetTrades(string buyerId, string buyerTeamId, string sellerId, string sellerTeamId, string symbol, string flagged)
+        {
+
+            var connection = new SqlConnection(ConnectionString);
+
+            var command = new SqlCommand("SELECT Trades.ID AS TradeID, Buyers.ID AS BuyerID, Buyers.TeamID AS BuyerTeamID, Sellers.ID AS SellerID, Sellers.TeamID AS SellerTeamID, Trades.Symbol AS TradeSymbol, Trades.Quantity AS TradeQuantity, Trades.Price AS TradePrice, Trades.MarketPrice AS TradeMarketPrice, Trades.Flagged AS TradeFlagged " +
+                                            "FROM Trades JOIN Players Buyers ON Trades.BuyerID=Buyers.ID JOIN Players Sellers ON Trades.SellerID=Sellers.ID " +
+                                            "WHERE Buyers.ID" + (buyerId == string.Empty ? ">-1" : "=@BuyerID") + 
+                                            " AND Sellers.ID" + (sellerId == string.Empty ? ">-1" : "=@SellerID") + 
+                                            " AND Buyers.TeamID" + (buyerTeamId == string.Empty ? ">-1" : "=@BuyerTeamID") + 
+                                            " AND Sellers.TeamID" + (sellerTeamId == string.Empty ? ">-1" : "=@SellerTeamID") + 
+                                            " AND Trades.Symbol" + (symbol == string.Empty ? " LIKE '%%'" : "=@Symbol") + 
+                                            " AND Trades.Flagged" + (flagged == string.Empty ? " LIKE '%%'" : "=@Flagged") + 
+                                            ";") { CommandType = CommandType.Text };
+
+            if (buyerId != string.Empty)
+                command.Parameters.AddWithValue("@BuyerID", buyerId);
+            if (buyerTeamId != string.Empty)
+                command.Parameters.AddWithValue("@BuyerTeamID", buyerTeamId);
+            if (sellerId != string.Empty)
+                command.Parameters.AddWithValue("@SellerID", sellerId);
+            if (sellerTeamId != string.Empty)
+                command.Parameters.AddWithValue("@SellerTeamID", sellerTeamId);
+            if (symbol != string.Empty)
+                command.Parameters.AddWithValue("@Symbol", symbol);
+            if (flagged != string.Empty)
+            command.Parameters.AddWithValue("Flagged", flagged);
+
+            connection.Open();
+
+            command.Connection = connection;
+
+            var reader = command.ExecuteReader();
+
+            var trades = new List<Trade>();
+
+            while (reader.Read())
+                trades.Add(new Trade(reader.GetInt32(reader.GetOrdinal("TradeID")),
+                    reader.GetInt32(reader.GetOrdinal("BuyerID")),
+                    reader.GetInt32(reader.GetOrdinal("SellerID")),
+                    reader.GetString(reader.GetOrdinal("TradeSymbol")),
+                    reader.GetInt32(reader.GetOrdinal("TradeQuantity")),
+                    reader.GetInt32(reader.GetOrdinal("TradePrice")),
+                    reader.GetInt32(reader.GetOrdinal("TradeMarketPrice")),
+                    bool.Parse(reader.GetString(reader.GetOrdinal("TradeFlagged")))));
+
+            reader.Dispose();
+            command.Dispose();
+            connection.Dispose();
+
+            return trades;
+        }
+
+        //Player methods
         private void Update(Player player)
         {
             var connection = new SqlConnection(ConnectionString);
@@ -148,6 +203,35 @@ namespace Stockimulate
             return player;
         }
 
+        internal List<Player> GetAllPlayers()
+        {
+            var connection = new SqlConnection(ConnectionString);
+
+            var command = new SqlCommand("SELECT ID FROM Players WHERE NOT TeamID=0;") { CommandType = CommandType.Text };
+
+            connection.Open();
+
+            command.Connection = connection;
+
+            var reader = command.ExecuteReader();
+
+            var ids = new List<int>();
+
+            while (reader.Read())
+            {
+                var id = reader.GetInt32(reader.GetOrdinal("ID"));
+                ids.Add(id);
+            }
+
+            reader.Dispose();
+            command.Dispose();
+            connection.Dispose();
+
+            return ids.Select(GetPlayer).ToList();
+
+        }
+
+        //Team methods
         internal Team GetTeam(int id, string code="", bool needCode=false)
         {
             if (id < 0)
@@ -180,8 +264,6 @@ namespace Stockimulate
 
             var name = reader.GetString(reader.GetOrdinal("Name"));
 
-            var team = new Team(id, name);
-
             reader.Dispose();
             command.Dispose();
             connection.Dispose();
@@ -199,13 +281,15 @@ namespace Stockimulate
 
             command = new SqlCommand(queryStringBuilder.ToString()) {CommandType = CommandType.Text};
 
-            command.Parameters.AddWithValue("@TeamID", team.Id);
+            command.Parameters.AddWithValue("@TeamID", id);
 
             connection.Open();
 
             command.Connection = connection;
 
             reader = command.ExecuteReader();
+
+            var players = new List<Player>();
 
             while (reader.Read())
             {
@@ -220,7 +304,7 @@ namespace Stockimulate
 
                 var funds = reader.GetInt32(reader.GetOrdinal("Funds"));
 
-                team.Players.Add(new Player(playerId, playerName, teamId, positions, funds));
+                players.Add(new Player(playerId, playerName, teamId, positions, funds));
 
             }
 
@@ -228,7 +312,7 @@ namespace Stockimulate
             command.Dispose();
             connection.Dispose();
 
-            return team;
+            return new Team(id, name, players);
         }
 
         internal List<Team> GetAllTeams()
@@ -259,145 +343,7 @@ namespace Stockimulate
 
         }
 
-        internal List<Player> GetAllPlayers()
-        {
-            var connection = new SqlConnection(ConnectionString);
-
-            var command = new SqlCommand("SELECT ID FROM Players WHERE NOT TeamID=0;") {CommandType = CommandType.Text};
-
-            connection.Open();
-
-            command.Connection = connection;
-
-            var reader = command.ExecuteReader();
-
-            var ids = new List<int>();
-
-            while (reader.Read())
-            {
-                var id = reader.GetInt32(reader.GetOrdinal("ID"));
-                ids.Add(id);
-            }
-
-            reader.Dispose();
-            command.Dispose();
-            connection.Dispose();
-
-            return ids.Select(GetPlayer).ToList();
-
-        }
-
-        internal List<Trade> GetTrades(List<string> criteria)
-        {
-
-            var connection = new SqlConnection(ConnectionString);
-
-            var queryStringBuilder = new StringBuilder();
-
-            queryStringBuilder.Append("SELECT Trades.ID, Buyers.ID, Buyers.TeamID, Sellers.ID, Sellers.TeamID, Trades.Symbol, Trades.Quantity, Trades.Price, Trades.MarketPrice, Trades.Flagged FROM Trades JOIN Players ON Trades.BuyerID=Players.ID Buyers, Trades.SellerID=Players.ID Sellers");
-
-            var someCriteriaSet = false;
-
-            for (var i = 0; i < criteria.Count; ++i)
-            {
-                if (criteria[i] == string.Empty) continue;
-                if (!someCriteriaSet)
-                {
-                    queryStringBuilder.Append(" WHERE ");
-                    someCriteriaSet = true;
-                }
-                else
-                    queryStringBuilder.Append(" AND ");
-
-                switch (i)
-                {
-                    case 0:
-                        queryStringBuilder.Append("Buyers.ID=@SellerID");
-                        break;
-                    case 1:
-                        queryStringBuilder.Append("Sellers.ID=@BuyerID");
-                        break;
-                    case 2:
-                        queryStringBuilder.Append("Trades.Symbol=@Symbol");
-                        break;
-                    case 3:
-                        queryStringBuilder.Append("Trades.Flagged=@Flagged");
-                        break;
-                    case 4:
-                        queryStringBuilder.Append("Buyers.TeamID=@BuyerTeamID");
-                        break;
-                    case 5:
-                        queryStringBuilder.Append("Sellers.TeamID=@SellerTeamID");
-                        break;
-                    default:
-                        queryStringBuilder.Append(string.Empty);
-                        break;
-
-                }
-
-                queryStringBuilder.Append(";");
-            }
-
-            var command = new SqlCommand(queryStringBuilder.ToString()) { CommandType = CommandType.Text };
-
-            for (var i = 0; i < criteria.Count; ++i)
-            {
-                if (criteria[i] == string.Empty) continue;
-
-                switch (i)
-                {
-                    case 0:
-                        command.Parameters.AddWithValue("@Buyer", criteria[i]);
-                        break;
-                    case 1:
-                        command.Parameters.AddWithValue("@SellerID", criteria[i]);
-                        break;
-                    case 2:
-                        command.Parameters.AddWithValue("@Symbol", criteria[i]);
-                        break;
-                    case 3:
-                        command.Parameters.AddWithValue("@Flagged", criteria[i]);
-                        break;
-                    case 4:
-                        command.Parameters.AddWithValue("@BuyerTeamID", criteria[i]);
-                        break;
-                    case 5:
-                        command.Parameters.AddWithValue("@SellerTeamID", criteria[i]);
-                        break;
-                    default:
-                        command.Parameters.AddWithValue(string.Empty, string.Empty);
-                        break;
-
-                }
-
-                queryStringBuilder.Append(";");
-            }
-
-            connection.Open();
-
-            command.Connection = connection;
-
-            var reader = command.ExecuteReader();
-
-            var trades = new List<Trade>();
-
-            while (reader.Read())
-                trades.Add(new Trade(reader.GetInt32(reader.GetOrdinal("Trades.ID")), 
-                    reader.GetInt32(reader.GetOrdinal("Buyers.ID")),
-                    reader.GetInt32(reader.GetOrdinal("Sellers.ID")),
-                    reader.GetString(reader.GetOrdinal("Trades.Symbol")),
-                    reader.GetInt32(reader.GetOrdinal("Trades.Quantity")),
-                    reader.GetInt32(reader.GetOrdinal("Trades.Price")),
-                    reader.GetInt32(reader.GetOrdinal("Trades.MarketPrice")),
-                    bool.Parse(reader.GetString(reader.GetOrdinal("Trades.Flagged")))));
-
-            reader.Dispose();
-            command.Dispose();
-            connection.Dispose();
-
-            return trades;
-        }
-
+        //DayInfo methods
         internal DayInfo GetDayInfo(string table, int tradingDay)
         {
             var connection = new SqlConnection(ConnectionString);
@@ -443,6 +389,82 @@ namespace Stockimulate
 
         }
 
+        //Instrument methods
+        internal void Update(Instrument instrument)
+        {
+
+            var connection = new SqlConnection(ConnectionString);
+
+            var command = new SqlCommand("UPDATE Instruments SET Price=@Price WHERE Id=@Id;") { CommandType = CommandType.Text };
+
+            command.Parameters.AddWithValue("@Price", instrument.Price);
+            command.Parameters.AddWithValue("@Id", instrument.Id);
+
+            connection.Open();
+
+            command.Connection = connection;
+
+            command.ExecuteNonQuery();
+
+            command.Dispose();
+            connection.Dispose();
+
+        }
+
+        internal List<Instrument> GetInstruments()
+        {
+            var connection = new SqlConnection(ConnectionString);
+
+            var command = new SqlCommand("SELECT Id, Symbol, Price, Name, Type FROM Instruments;") { CommandType = CommandType.Text };
+
+            connection.Open();
+
+            command.Connection = connection;
+
+            var reader = command.ExecuteReader();
+
+            var instruments = new List<Instrument>();
+
+            while (reader.Read())
+                instruments.Add(new Instrument(reader.GetInt32(reader.GetOrdinal("ID")),
+                    reader.GetString(reader.GetOrdinal("Symbol")),
+                    reader.GetInt32(reader.GetOrdinal("Price")),
+                    reader.GetString(reader.GetOrdinal("Name")),
+                    reader.GetString(reader.GetOrdinal("Type"))));
+
+            reader.Dispose();
+            command.Dispose();
+            connection.Dispose();
+
+            return instruments;
+        }
+
+        internal int GetPrice(int id)
+        {
+            var connection = new SqlConnection(ConnectionString);
+
+            var command = new SqlCommand("SELECT Price FROM Instruments WHERE ID=@ID;") { CommandType = CommandType.Text };
+
+            command.Parameters.AddWithValue("@ID", id);
+
+            connection.Open();
+
+            command.Connection = connection;
+
+            var reader = command.ExecuteReader();
+
+            reader.Read();
+
+            var result = reader.GetInt32(reader.GetOrdinal("Price"));
+
+            reader.Dispose();
+            command.Dispose();
+            connection.Dispose();
+
+            return result;
+        }
+
+        //Miscellaneous methods
         internal void Reset()
         {
             var connection = new SqlConnection(ConnectionString);
@@ -518,52 +540,6 @@ namespace Stockimulate
             return (result == "True");
         }
 
-        internal int GetPrice(int id)
-        {
-            var connection = new SqlConnection(ConnectionString);
-
-            var command = new SqlCommand("SELECT Price FROM Instruments WHERE ID=@ID;") {CommandType = CommandType.Text};
-
-            command.Parameters.AddWithValue("@ID", id);
-
-            connection.Open();
-
-            command.Connection = connection;
-
-            var reader = command.ExecuteReader();
-
-            reader.Read();
-
-            var result = reader.GetInt32(reader.GetOrdinal("Price"));
-
-            reader.Dispose();
-            command.Dispose();
-            connection.Dispose();
-
-            return result;
-        }
-
-        internal void Update(Instrument instrument)
-        {
-            
-            var connection = new SqlConnection(ConnectionString);
-
-            var command = new SqlCommand("UPDATE Instruments SET Price=@Price WHERE Id=@Id;") {CommandType = CommandType.Text};
-
-            command.Parameters.AddWithValue("@Price", instrument.Price);
-            command.Parameters.AddWithValue("@Id", instrument.Id);
-
-            connection.Open();
-
-            command.Connection = connection;
-
-            command.ExecuteNonQuery();
-
-            command.Dispose();
-            connection.Dispose();
-            
-        }
-
         internal void UpdateReportsEnabled(string p)
         {
             var connection = new SqlConnection(ConnectionString);
@@ -580,34 +556,6 @@ namespace Stockimulate
 
             command.Dispose();
             connection.Dispose();
-        }
-
-        internal List<Instrument> GetInstruments()
-        {
-            var connection = new SqlConnection(ConnectionString);
-
-            var command = new SqlCommand("SELECT Id, Symbol, Price, Name, Type FROM Instruments;") { CommandType = CommandType.Text };
-
-            connection.Open();
-
-            command.Connection = connection;
-
-            var reader = command.ExecuteReader();
-
-            var instruments = new List<Instrument>();
-
-            while (reader.Read())
-                instruments.Add(new Instrument(reader.GetInt32(reader.GetOrdinal("ID")), 
-                    reader.GetString(reader.GetOrdinal("Symbol")),
-                    reader.GetInt32(reader.GetOrdinal("Price")),
-                    reader.GetString(reader.GetOrdinal("Name")),
-                    reader.GetString(reader.GetOrdinal("Type"))));
-
-            reader.Dispose();
-            command.Dispose();
-            connection.Dispose();
-
-            return instruments;
         }
 
 

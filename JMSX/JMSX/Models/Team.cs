@@ -5,17 +5,18 @@ namespace Stockimulate.Models
 {
     internal class Team
     {
+
         internal int Id { get; }
 
         internal string Name { get; }
 
         internal List<Player> Players { get; }
 
-        internal Team(int id, string name)
+        internal Team(int id, string name, List<Player> players)
         {
             Id = id;
             Name = name;
-            Players = new List<Player>();
+            Players = players;
         }
 
         internal List<int> Positions()
