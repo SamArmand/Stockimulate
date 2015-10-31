@@ -1,11 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/AdminViews/MasterAdmin.Master" AutoEventWireup="true" CodeBehind="FraudPrevention.aspx.cs" Inherits="Stockimulate.Views.AdminViews.FraudPrevention" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
+    <link href="../../Content/tables.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
         <form runat="server">
         <fieldset>
             <legend><h1>Fraud Prevention - Under Construction!!!</h1></legend>
-    
     
               <div class="form-group">
             <label class="col-sm-1 control-label">Buyer ID</label>
@@ -30,14 +30,15 @@
               <input id="SellerTeamIdInput" type="number" placeholder="Seller Team ID" class="form-control" runat="server"/>
             </div>
           </div>
-    
 
             <!-- Text input-->
           <div class="form-group">
             <label class="col-sm-1 control-label">Security</label>
             <div class="col-sm-2">
                 
-                <asp:DropDownList ID="SecurityDropDownList" runat="server" CssClass="form-control"></asp:DropDownList>
+                <asp:DropDownList ID="SecurityDropDownList" runat="server" CssClass="form-control">
+                    <asp:ListItem Text="--" Value="" Selected="True"></asp:ListItem>
+                </asp:DropDownList>
 
             </div>
 
@@ -59,16 +60,12 @@
 
             </div>              
           </div>
-    
 
             <div id="TableDiv" runat="server">
-                
-                
 
             </div>
             
             </fieldset>
             </form>
-   
 
 </asp:Content>

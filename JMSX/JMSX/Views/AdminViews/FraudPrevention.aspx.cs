@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Stockimulate.Models;
 
 namespace Stockimulate.Views.AdminViews
 {
@@ -27,26 +28,26 @@ namespace Stockimulate.Views.AdminViews
         protected void Submit_Click(object sender, EventArgs e)
         {
 
-            List<string> criteria;
+            List<Trade> trades;
 
             try
             {
-                criteria = new List<string>
-                {
-                    int.Parse(BuyerIdInput.Value).ToString(),
-                    int.Parse(SellerIdInput.Value).ToString(),
-                    SecurityDropDownList.SelectedValue,
-                    FlaggedDropDownList.SelectedValue,
-                    int.Parse(BuyerTeamIdInput.Value).ToString(),
-                    int.Parse(SellerTeamIdInput.Value).ToString()
-                };
+
+
+                    trades = _dataAccess.GetTrades(BuyerIdInput.Value,
+                                                    BuyerTeamIdInput.Value,
+                                                    SellerIdInput.Value,
+                                                    SellerTeamIdInput.Value,
+                                                    SecurityDropDownList.SelectedValue,
+                                                    FlaggedDropDownList.SelectedValue);
+
             }
             catch (Exception)
             {
                 return;
             }
 
-            var trades = _dataAccess.GetTrades(criteria);
+            
 
             var sb = new StringBuilder("");
 

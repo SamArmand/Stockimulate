@@ -25,7 +25,6 @@ namespace Stockimulate.Views.BrokerViews
 
         protected void Submit_Click(object sender, EventArgs e)
         {
-
             ErrorDiv.Style.Value = "display: none";
             SuccessDiv.Style.Value = "display: none";
             WarningDiv.Style.Value = "display: none";
