@@ -209,7 +209,6 @@ namespace Stockimulate.Views.AdminViews
                 playerTable.CssClass = "pure-table pure-table-bordered";
 
                 PlayerTables.Controls.Add(playerTable);
-                PlayerTables.Controls.Add(new HtmlGenericControl("br"));
 
             }
 

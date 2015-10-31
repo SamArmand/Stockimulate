@@ -19,19 +19,22 @@
             </div>
           </div>
     
+            <br />
+
                   <div class="form-group">
-            <label class="col-sm-1 control-label">Buyer ID</label>
+            <label class="col-sm-1 control-label">Buyer Team ID</label>
             <div class="col-sm-2">
               <input id="BuyerTeamIdInput" type="number" placeholder="Buyer Team ID" class="form-control" runat="server"/>        
             </div>
 
-            <label class="col-sm-1 col-sm-offset-1 control-label">Seller ID</label>
+            <label class="col-sm-1 col-sm-offset-1 control-label">Seller Team ID</label>
             <div class="col-sm-2">
               <input id="SellerTeamIdInput" type="number" placeholder="Seller Team ID" class="form-control" runat="server"/>
             </div>
           </div>
 
-            <!-- Text input-->
+            <br/>
+
           <div class="form-group">
             <label class="col-sm-1 control-label">Security</label>
             <div class="col-sm-2">
@@ -51,6 +54,8 @@
               </asp:DropDownList>
             </div>
           </div>
+            
+            <br/>
 
           <div class="row">
               <div class="btn-group col-sm-12"> 
