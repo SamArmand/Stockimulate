@@ -13,7 +13,7 @@
     
     <blockquote><strong>Trumped:</strong> Charlie, let me tell you, we’ve got the BEST man to handle this job. My man Carl HeCahn (US Secretary of the Treasury) did deals for years; he totally has this under control.</blockquote>
     
-    <blockquote class="blockquote-reverse"><strong>Charlie:</strong> Mr HeCahn is a great businessman – we both know that. But right now, to fix the world economy, don’t you think we need an experienced economist instead?</blockquote>
+    <blockquote class="blockquote-reverse"><strong>Charlie:</strong> Mr. HeCahn is a great businessman – we both know that. But right now, to fix the world economy, don’t you think we need an experienced economist instead?</blockquote>
     
     <blockquote><strong>Trumped:</strong> Listen Charlie, before I became President, I made deals for a living. I was great at it. I even wrote a book on making deals. Everywhere you go it’s all about deals, deals, deals and more deals. I think that to solve this problem, we need to make a deal with China.</blockquote>
     
