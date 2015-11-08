@@ -7,7 +7,7 @@
         <fieldset>
             <legend><h1>Fraud Prevention - Under Construction!!!</h1></legend>
     
-              <div class="form-group">
+              <div class="form-group row">
             <label class="col-sm-1 control-label">Buyer ID</label>
             <div class="col-sm-2">
               <input id="BuyerIdInput" type="number" placeholder="Buyer ID" class="form-control" runat="server"/>        
@@ -21,7 +21,7 @@
     
             <br />
 
-                  <div class="form-group">
+                  <div class="form-group row">
             <label class="col-sm-1 control-label">Buyer Team ID</label>
             <div class="col-sm-2">
               <input id="BuyerTeamIdInput" type="number" placeholder="Buyer Team ID" class="form-control" runat="server"/>        
@@ -35,7 +35,7 @@
 
             <br/>
 
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-1 control-label">Security</label>
             <div class="col-sm-2">
                 
@@ -65,6 +65,9 @@
 
             </div>              
           </div>
+            
+            <br/>
+            
 
             <div id="TableDiv" runat="server">
 
@@ -72,5 +75,7 @@
             
             </fieldset>
             </form>
+    
+    <br/>
 
 </asp:Content>
