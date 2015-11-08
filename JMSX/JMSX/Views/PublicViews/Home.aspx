@@ -63,7 +63,7 @@
     
     <h3>News</h3>
     
-    <p class="lead">News items are released sporadically throughout each quarter. They consist of general news reports, industry and company specific news. It might have a direct impact with two different markets; the trader should use judgment to correctly interpret important news. <strong>Be careful as not all news items are relevent</strong>.</p>
+    <p class="lead">News items are released sporadically throughout each quarter. They consist of general news reports, industry and company specific news. It might have a direct impact with two different markets; the trader should use judgment to correctly interpret important news. <strong>Be careful as not all news items are relevant</strong>.</p>
     
     <h3>Margin Restrictions and Trading Costs</h3>
     
