@@ -40,15 +40,6 @@ namespace Stockimulate.Views.AdminViews {
         protected global::System.Web.UI.WebControls.Button UpdatePrice;
         
         /// <summary>
-        /// ToggleReportsEnabled control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ToggleReportsEnabled;
-        
-        /// <summary>
         /// ReportsEnabledSpan control.
         /// </summary>
         /// <remarks>
@@ -56,5 +47,14 @@ namespace Stockimulate.Views.AdminViews {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl ReportsEnabledSpan;
+        
+        /// <summary>
+        /// ToggleReportsEnabled control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ToggleReportsEnabled;
     }
 }
