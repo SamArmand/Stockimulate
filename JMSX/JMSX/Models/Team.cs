@@ -36,8 +36,6 @@ namespace Stockimulate.Models
 
         }
 
-        internal int Funds() => Players.Sum(player => player.Funds);
-
         internal List<int> PositionValues(List<int> prices)
         {
             var positions = Positions();
@@ -48,6 +46,8 @@ namespace Stockimulate.Models
             return positions;
 
         }
+
+        internal int Funds() => Players.Sum(player => player.Funds);
 
         internal int TotalValue(List<int> prices) => Funds() + PositionValues(prices).Sum();
 

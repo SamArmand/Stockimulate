@@ -11,7 +11,7 @@ namespace Stockimulate.Models
 
         internal int TeamId { get; }
 
-        internal List<int> Positions { get; set; }
+        internal List<int> Positions { get; }
 
         internal int Funds { get; set; }
 

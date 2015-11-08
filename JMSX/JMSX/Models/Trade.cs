@@ -38,13 +38,13 @@ namespace Stockimulate.Models
             if (Buyer.TeamId == Seller.TeamId)
                 throw new Exception("Buyer and Seller must be on different teams.");
 
-            for (var i = 0; i < Buyer.Positions.Count; ++i)
-            {
-                if (security == i && Buyer.Positions[i] + quantity > 100 && Buyer.TeamId != 0)
-                    throw new Exception("This trade puts the buyer's position at over 100.");
-                if (security == i && Seller.Positions[i] - quantity < -100 && Seller.TeamId != 0)
-                    throw new Exception("This trade puts the seller's position at below -100.");
-            }
+            if (Buyer.Funds - (price*quantity) < 0)
+                throw new Exception("Buyer has insufficient funds.");
+
+            if (Buyer.Positions[security] + quantity > 100 && Buyer.TeamId != 0)
+                throw new Exception("This trade puts the buyer's position at over 100.");
+            if (Seller.Positions[security] - quantity < -100 && Seller.TeamId != 0)
+                throw new Exception("This trade puts the seller's position at below -100.");
 
             Symbol = dataAccess.Instruments[security].Symbol;
             Price = price;

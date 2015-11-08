@@ -205,6 +205,7 @@ namespace Stockimulate
 
         internal List<Player> GetAllPlayers()
         {
+            //SUCH A DUMB METHOD - REWRITE
             var connection = new SqlConnection(ConnectionString);
 
             var command = new SqlCommand("SELECT ID FROM Players WHERE NOT TeamID=0;") { CommandType = CommandType.Text };
@@ -317,6 +318,7 @@ namespace Stockimulate
 
         internal List<Team> GetAllTeams()
         {
+            //SUCH A DUMB METHOD - REWRITE!!!
             var connection = new SqlConnection(ConnectionString);
 
             var command = new SqlCommand("SELECT ID FROM Teams WHERE NOT ID=0;") {CommandType = CommandType.Text};
