@@ -21,7 +21,7 @@
             $('#GraphDiv').highcharts({
 
                 title: {
-                    text: "Emerging Markets (CHIN)"
+                    text: $('#IndexNameSymbolDiv').text()
                 },
 
                 legend: {
@@ -164,7 +164,7 @@
 </div>
 
     <div id="DataDiv" style="display:none;" runat="server"></div>
-
+    <div id="IndexNameSymbolDiv" style="display:none;" runat="server"></div>
 
     
 

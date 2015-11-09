@@ -23,7 +23,9 @@ namespace Stockimulate.Views
                 Response.Redirect("Login.aspx");
             }
 
-            Title = DataAccess.SessionInstance.Instruments[0].Symbol;
+            var instrument = DataAccess.SessionInstance.Instruments[0];
+
+            Title = instrument.Symbol;
 
             IndexChangePositiveDiv.Style.Value = "display: none;";
             IndexChangeNegativeDiv.Style.Value = "display: none;";
@@ -62,6 +64,8 @@ namespace Stockimulate.Views
             javascriptArray += "]";
 
             DataDiv.InnerHtml = javascriptArray;
+
+            IndexNameSymbolDiv.InnerHtml = instrument.Name + " (" + instrument.Symbol + ")";
         }
 
         internal static void Update(DayInfo dayInfo)
