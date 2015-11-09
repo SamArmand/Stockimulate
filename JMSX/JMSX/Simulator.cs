@@ -10,7 +10,7 @@ namespace Stockimulate
     public class Simulator : Hub
     {
         
-        private const int Quarter1Day = 61;
+        private const int Quarter1Day = 64;
         private const int Quarter2Day = 124;
         private const int Quarter3Day = 188;
         private const int Quarter4Day = 252;

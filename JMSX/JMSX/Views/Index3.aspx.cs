@@ -24,7 +24,9 @@ namespace Stockimulate.Views
                 Response.Redirect("Login.aspx");
             }
 
-            Title = DataAccess.SessionInstance.GetInstruments()[2].Symbol;
+            var instrument = DataAccess.SessionInstance.Instruments[2];
+
+            Title = instrument.Symbol;
 
             IndexChangePositiveDiv.Style.Value = "display: none;";
             IndexChangeNegativeDiv.Style.Value = "display: none;";
@@ -65,6 +67,8 @@ namespace Stockimulate.Views
             javascriptArray += "]";
 
             DataDiv.InnerHtml = javascriptArray;
+
+            IndexNameSymbolDiv.InnerHtml = instrument.Name + " (" + instrument.Symbol + ")";
 
         }
 

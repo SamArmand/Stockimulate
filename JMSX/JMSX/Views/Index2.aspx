@@ -19,7 +19,7 @@
             $('#GraphDiv').highcharts({
 
                 title: {
-                    text: "Gold (NUGT)"
+                    text: $('#IndexNameSymbolDiv').text()
                 },
 
                 legend: {
@@ -162,6 +162,7 @@
 </div>
 
     <div id="DataDiv" style="display:none;" runat="server"></div>
+    <div id="IndexNameSymbolDiv" style="display:none;" runat="server"></div>
 
 
 </body>
