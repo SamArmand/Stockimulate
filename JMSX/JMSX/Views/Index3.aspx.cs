@@ -18,11 +18,8 @@ namespace Stockimulate.Views
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            if ((string)HttpContext.Current.Session["Login"] != "Admin")
-            {
+            if ((string) HttpContext.Current.Session["Login"] != "Admin")
                 Response.Redirect("Login.aspx");
-            }
 
             var instrument = DataAccess.SessionInstance.Instruments[2];
 

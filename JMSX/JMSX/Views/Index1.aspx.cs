@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.UI;
 using Stockimulate.Models;
 
 namespace Stockimulate.Views
 {
-    public partial class Index1 : System.Web.UI.Page
+    public partial class Index1 : Page
     {
         private static int _indexPrice;
         private static int _indexChange;
@@ -17,11 +18,8 @@ namespace Stockimulate.Views
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if (HttpContext.Current.Session["Login"] as string != "Admin")
-            {
                 Response.Redirect("Login.aspx");
-            }
 
             var instrument = DataAccess.SessionInstance.Instruments[0];
 
@@ -35,8 +33,8 @@ namespace Stockimulate.Views
 
             if (_indexChange > 0)
             {
-                IndexChangePositiveDiv.InnerHtml = _indexChange.ToString();
-                IndexChangePositiveH1.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;text-align:center;";
+                IndexChangePositiveH1.InnerHtml = _indexChange.ToString();
+                IndexChangePositiveDiv.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;text-align:center;";
             }
             else if (_indexChange < 0)
             {
