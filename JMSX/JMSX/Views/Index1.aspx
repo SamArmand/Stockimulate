@@ -76,17 +76,17 @@
                 $('.IndexChangeNone').hide();
 
                 if (change1 > 0) {
-                    $('.IndexChangePositiveSpan').html(change1);
+                    $('.IndexChangePositiveH1').html(change1);
                     $('.IndexChangePositive').show();
                 }
 
                 else if (change1 < 0) {
-                    $('.IndexChangeNegativeSpan').html(change1*-1);
+                    $('.IndexChangeNegativeH1').html(change1*-1);
                     $('.IndexChangeNegative').show();
                 }
 
                 else if (change1 === 0) {
-                    $('.IndexChangeNoneSpan').html(change1);
+                    $('.IndexChangeNoneH1').html(change1);
                     $('.IndexChangeNone').show();
                 }
 
@@ -135,7 +135,7 @@
     
                     <h1 style="display:inline-block"><span class="glyphicon glyphicon-arrow-up"></span></h1>
 
-                    <h1 style="display:inline-block" class="IndexChangePositiveSpan" id="IndexChangePositiveH1" runat="server"></h1>
+                    <h1 style="display:inline-block" class="IndexChangePositiveH1" id="IndexChangePositiveH1" runat="server"></h1>
 
                 </div>
 
@@ -143,7 +143,7 @@
     
                     <h1 style="display:inline-block"><span class="glyphicon glyphicon-arrow-down"></span></h1>
 
-                    <h1 style="display:inline-block" class="IndexChangeNegativeSpan" id="IndexChangeNegativeH1" runat="server"></h1>
+                    <h1 style="display:inline-block" class="IndexChangeNegativeH1" id="IndexChangeNegativeH1" runat="server"></h1>
 
                 </div>
 
@@ -151,7 +151,7 @@
     
                     <h1 style="display:inline-block"><span class="glyphicon glyphicon-resize-horizontal"></span></h1>
 
-                    <h1 style="display:inline-block" class="IndexChangeNoneSpan" id="IndexChangeNoneH1" runat="server">0</h1>
+                    <h1 style="display:inline-block" class="IndexChangeNoneH1" id="IndexChangeNoneH1" runat="server">0</h1>
 
                 </div>
 
