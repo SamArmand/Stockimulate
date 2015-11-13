@@ -90,14 +90,13 @@ namespace Stockimulate
             }
 
             Index1.Update(dayInfo);
-            Index2.Update(dayInfo);
-            Index3.Update(dayInfo);          
+            Index2.Update(dayInfo);        
 
             //Hardcoded context update
 
             _context.Clients.All.sendMessage(_instruments[0].Price, _instruments[1].Price, _instruments[2].Price, 
-                _dayNumber, dayInfo.Effects[0], dayInfo.Effects[1], dayInfo.Effects[2], dayInfo.NewsItem);
-            _context.Clients.All.sendBrokerMessage(_instruments[0].Price, _instruments[1].Price, _instruments[2].Price);
+                _dayNumber, dayInfo.Effects[0], dayInfo.Effects[1], dayInfo.NewsItem);
+            _context.Clients.All.sendBrokerMessage(_instruments[0].Price, _instruments[1].Price);
 
 
         }
@@ -179,11 +178,10 @@ namespace Stockimulate
             Stop();
             Index1.Reset();
             Index2.Reset();
-            Index3.Reset();
             _dataAccess.Reset();
 
-            _context.Clients.All.sendMessage(0, 0, 0, 0, 0, 0, 0, string.Empty);
-            _context.Clients.All.sendBrokerMessage(0, 0, 0);
+            _context.Clients.All.sendMessage(0, 0, 0, 0, 0, string.Empty);
+            _context.Clients.All.sendBrokerMessage(0, 0);
 
             _status = Status.Ready;
         }

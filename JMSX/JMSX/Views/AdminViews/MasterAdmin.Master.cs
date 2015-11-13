@@ -14,7 +14,6 @@ namespace Stockimulate.Views.AdminViews
 
             Index1A.InnerHtml = DataAccess.SessionInstance.Instruments[0].Symbol;
             Index2A.InnerHtml = DataAccess.SessionInstance.Instruments[1].Symbol;
-            Index3A.InnerHtml = DataAccess.SessionInstance.Instruments[2].Symbol;
 
         }
     }
