@@ -66,7 +66,7 @@
 
             // Declare a function on the chat hub so the server can invoke it          
 
-            sim.client.sendMessage = function (price1, price2, price3, day, change1, change2, change3, news) {
+            sim.client.sendMessage = function (price1, price2, day, change1, change2, news) {
                 $('#GraphDiv').highcharts().series[0].addPoint([day, price1]);
                 
                 $(".IndexPriceDiv").html("<h2>$" + price1 + "</h2>");

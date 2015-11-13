@@ -146,7 +146,6 @@
     <Content Include="scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="Views\AdminViews\AdminReports.aspx" />
     <Content Include="Views\BrokerViews\SpotTradeInput.aspx" />
-    <Content Include="Views\Index3.aspx" />
     <Content Include="Views\AdminViews\Admin.aspx" />
     <Content Include="Content\signin.css" />
     <Content Include="Content\tables.css" />
@@ -230,13 +229,6 @@
     </Compile>
     <Compile Include="Views\BrokerViews\SpotTradeInput.aspx.designer.cs">
       <DependentUpon>SpotTradeInput.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Index3.aspx.cs">
-      <DependentUpon>Index3.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Views\Index3.aspx.designer.cs">
-      <DependentUpon>Index3.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\Instrument.cs" />
     <Compile Include="Models\Trade.cs" />

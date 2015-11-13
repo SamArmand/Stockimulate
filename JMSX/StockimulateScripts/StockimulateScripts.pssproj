@@ -31,12 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="events.csv" />
     <Compile Include="uploadevents.ps1" />
     <Compile Include="uploadpracticeevents.ps1" />
     <Compile Include="uploadteamsplayers.ps1" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="events.csv" />
     <Content Include="practiceevents.csv" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
