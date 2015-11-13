@@ -18,9 +18,7 @@ namespace Stockimulate.Views.BrokerViews
             var instruments = _dataAccess.Instruments;
 
             for (var i = 0; i < instruments.Count; ++i)
-            {
                 SecurityDropDownList.Items.Add(new ListItem(instruments[i].Symbol, i.ToString()));
-            }
         }
 
         protected void Submit_Click(object sender, EventArgs e)
