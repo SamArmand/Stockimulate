@@ -20,11 +20,10 @@
 
             // Declare a function on the hub so the server can invoke it          
 
-            sim.client.sendBrokerMessage = function (price1, price2, price3) {
+            sim.client.sendBrokerMessage = function (price1, price2) {
 
                 $(".index1-price-h2").html("$" + price1);
                 $(".index2-price-h2").html("$" + price2);
-                $(".index3-price-h2").html("$" + price3);
 
             };
 
@@ -83,8 +82,6 @@
             <div class="col-sm-2 index1-price-h2"><h2 id="Index1PriceH2" runat="server"></h2></div>
             <div class="col-sm-2"><h2 id="Index2SymbolH2" runat="server"></h2></div>
             <div class="col-sm-2 index2-price-h2"><h2 id="Index2PriceH2" runat="server"></h2></div>
-            <div class="col-sm-2"><h2 id="Index3SymbolH2" runat="server"></h2></div>
-            <div class="col-sm-2 index3-price-h2"><h2 id="Index3PriceH2" runat="server"></h2></div>
 
         </div>
 

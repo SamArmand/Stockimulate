@@ -19,8 +19,6 @@ namespace Stockimulate.Views.BrokerViews
             Index1PriceH2.InnerHtml = instruments[0].Price.ToString();
             Index2SymbolH2.InnerHtml = instruments[1].Symbol;
             Index2PriceH2.InnerHtml = instruments[1].Price.ToString();
-            Index3SymbolH2.InnerHtml = instruments[2].Symbol;
-            Index3PriceH2.InnerHtml = instruments[2].Price.ToString();
 
         }
     }
