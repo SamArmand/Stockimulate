@@ -94,7 +94,7 @@ namespace Stockimulate
 
             //Hardcoded context update
 
-            _context.Clients.All.sendMessage(_instruments[0].Price, _instruments[1].Price, _instruments[2].Price, 
+            _context.Clients.All.sendMessage(_instruments[0].Price, _instruments[1].Price, 
                 _dayNumber, dayInfo.Effects[0], dayInfo.Effects[1], dayInfo.NewsItem);
             _context.Clients.All.sendBrokerMessage(_instruments[0].Price, _instruments[1].Price);
 
