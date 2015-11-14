@@ -37,7 +37,7 @@
     
     <br/>
 
-    <p class="lead">Participants will be able to trade on the <strong>John Molson Commodities Exchange</strong> for the futures of <strong>John Molson Emerging Markets Index (CHIN)</strong> and the <strong>John Molson Miners Index (NUGT)</strong>. In addition, participants will have the option to trade <strong>Medici Bank of Quebec (MBQ)</strong>. The price is influenced by announcements of major news that appear periodically on screen as well as the release of monthly and quarterly economic indicators. Reactions to news or numbers may lag or be instantaneous. Participants are expected to trade based on how they interpret the news and their anticipation of the market reaction.</p>
+    <p class="lead">Participants will be able to trade on the <strong>John Molson Commodities Exchange</strong> for the futures of <strong>John Molson Emerging Markets Index (CHIN)</strong> and the <strong>John Molson Miners Index (NUGT)</strong>. The price is influenced by announcements of major news that appear periodically on screen as well as the release of monthly and quarterly economic indicators. Reactions to news or numbers may lag or be instantaneous. Participants are expected to trade based on how they interpret the news and their anticipation of the market reaction.</p>
     
     <br/>
 
