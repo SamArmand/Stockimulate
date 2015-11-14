@@ -38,6 +38,7 @@
   <ItemGroup>
     <Content Include="events.csv" />
     <Content Include="practiceevents.csv" />
+    <Content Include="teamsplayers.csv" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="Build" />
