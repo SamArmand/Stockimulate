@@ -58,7 +58,7 @@ foreach ($entity in $entities) {
     $connection.ConnectionString = $connectionString
     $command = $connection.CreateCommand()
 
-    if ($entity.Team -eq "1") {
+    if ($entity.IsTeam -eq "1") {
 
         $teamID = $entity.ID
 
@@ -68,13 +68,13 @@ foreach ($entity in $entities) {
 
         $command.Parameters.AddWithValue("@ID", $entity.ID)
         $command.Parameters.AddWithValue("@Name", $entity.Name)
-        $command.Parameters.AddWithValue("@Code", (GET-Temppassword 8 $alphabet))
+        $command.Parameters.AddWithValue("@Code", (GET-Temppassword 4 $alphabet))
 
     }
 
     else {
 
-        $query = "INSERT INTO Players (ID, Name, TeamID, PositionIndex1, PositionIndex2, PositionIndex3, Funds) VALUES (@ID, @Name, @TeamID, '0', '0', '0', '1000000')"
+        $query = "INSERT INTO Players (ID, Name, TeamID, PositionIndex1, PositionIndex2, PositionIndex3, Funds) VALUES (@ID, @Name, @TeamID, '0', '0', '0', '1000000');"
         $command.CommandText = $query
 
         $command.Parameters.AddWithValue("@ID", $entity.ID)

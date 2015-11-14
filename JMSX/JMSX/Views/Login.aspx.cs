@@ -13,13 +13,13 @@ namespace Stockimulate.Views
         //LOL!!!
         protected void SignIn_Click(object sender, EventArgs e)
         {
-            if (UsernameInput.Value == "admin" && PasswordInput.Value == "charlesisadmin")
+            if (UsernameInput.Value == "admin" && PasswordInput.Value == "samisadmin")
             {
                 HttpContext.Current.Session["Login"] = "Admin";
                 Response.Redirect("AdminViews/Admin.aspx");
             }
 
-            else if (UsernameInput.Value == "broker" && PasswordInput.Value == "brokershavepower")
+            else if (UsernameInput.Value == "broker" && PasswordInput.Value == "cheaterssuck")
             {
                 HttpContext.Current.Session["Login"] = "Broker";
                 Response.Redirect("BrokerViews/TradeInput.aspx");
