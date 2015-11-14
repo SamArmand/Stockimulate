@@ -29,7 +29,7 @@
 
     <br/>
 
-    <p class="lead">As soon as the words GOLD was muttered, global markets received mixed reactions. </p>
+    <p class="lead">As soon as the word GOLD was muttered, global markets received mixed reactions. </p>
     
     <br/>
 
