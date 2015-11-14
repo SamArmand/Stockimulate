@@ -38,7 +38,7 @@ namespace Stockimulate.Models
             if (Buyer.TeamId == Seller.TeamId)
                 throw new Exception("Buyer and Seller must be on different teams.");
 
-            if (Buyer.Funds - (price*quantity) < 0)
+            if (Buyer.Funds - (price*quantity) < 0 && Buyer.TeamId !=0 )
                 throw new Exception("Buyer has insufficient funds.");
 
             if (Buyer.Positions[security] + quantity > 100 && Buyer.TeamId != 0)
