@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
         <form runat="server">
         <fieldset>
-            <legend><h1>Fraud Prevention - Under Construction!!!</h1></legend>
+            <legend><h1>Fraud Prevention - Beta</h1></legend>
     
               <div class="form-group row">
             <label class="col-sm-1 control-label">Buyer ID</label>
