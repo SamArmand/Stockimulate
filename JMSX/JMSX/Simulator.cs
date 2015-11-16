@@ -81,7 +81,7 @@ namespace Stockimulate
 
         private void Update()
         {
-             var dayInfo = _dataAccess.GetDayInfo(_table, _dayNumber);
+            var dayInfo = _dataAccess.GetDayInfo(_table, _dayNumber);
 
             for (var i = 0; i < _instruments.Count; ++i)
             {
@@ -93,6 +93,7 @@ namespace Stockimulate
             Index2.Update(dayInfo);        
 
             //Hardcoded context update
+            //TODO Should send array instead
 
             _context.Clients.All.sendMessage(_instruments[0].Price, _instruments[1].Price, 
                 _dayNumber, dayInfo.Effects[0], dayInfo.Effects[1], dayInfo.NewsItem);
