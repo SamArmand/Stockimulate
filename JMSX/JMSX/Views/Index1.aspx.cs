@@ -81,6 +81,11 @@ namespace Stockimulate.Views
 
         public static void Reset()
         {
+            _indexPrice = 0;
+            _indexChange = 0;
+
+            _news = string.Empty;
+
             _prices = new List<int>();
             _days = new List<string>();
 

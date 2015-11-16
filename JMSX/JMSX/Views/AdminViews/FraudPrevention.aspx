@@ -1,8 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/AdminViews/MasterAdmin.Master" AutoEventWireup="true" CodeBehind="FraudPrevention.aspx.cs" Inherits="Stockimulate.Views.AdminViews.FraudPrevention" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
-    <link href="../../Content/tables.css" rel="stylesheet" />
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/AdminViews/AdminMaster.master" AutoEventWireup="true" CodeBehind="FraudPrevention.aspx.cs" Inherits="Stockimulate.Views.AdminViews.FraudPrevention" %>
+<asp:Content ID="FraudPreventionContent" ContentPlaceHolderID="AdminMasterContentPlaceHolder" runat="server">
         <form runat="server">
         <fieldset>
             <legend><h1>Fraud Prevention - Beta</h1></legend>

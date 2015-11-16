@@ -1,7 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/AdminViews/MasterAdmin.Master" AutoEventWireup="true" CodeBehind="Admin.aspx.cs" Inherits="Stockimulate.Views.AdminViews.Admin" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/AdminViews/AdminMaster.master" AutoEventWireup="true" CodeBehind="Admin.aspx.cs" Inherits="Stockimulate.Views.AdminViews.Admin" %>
+<asp:Content ID="AdminContent" ContentPlaceHolderID="AdminMasterContentPlaceHolder" runat="server">
     <form runat="server">
         <fieldset>
 

@@ -19,7 +19,7 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl BuyerIdInput;
+        protected System.Web.UI.HtmlControls.HtmlInputGenericControl BuyerIdInput;
         
         /// <summary>
         /// SellerIdInput control.
@@ -28,7 +28,7 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl SellerIdInput;
+        protected System.Web.UI.HtmlControls.HtmlInputGenericControl SellerIdInput;
         
         /// <summary>
         /// BuyerTeamIdInput control.
@@ -37,7 +37,7 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl BuyerTeamIdInput;
+        protected System.Web.UI.HtmlControls.HtmlInputGenericControl BuyerTeamIdInput;
         
         /// <summary>
         /// SellerTeamIdInput control.
@@ -46,7 +46,7 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl SellerTeamIdInput;
+        protected System.Web.UI.HtmlControls.HtmlInputGenericControl SellerTeamIdInput;
         
         /// <summary>
         /// SecurityDropDownList control.
@@ -55,7 +55,7 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList SecurityDropDownList;
+        protected System.Web.UI.WebControls.DropDownList SecurityDropDownList;
         
         /// <summary>
         /// FlaggedDropDownList control.
@@ -64,7 +64,7 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList FlaggedDropDownList;
+        protected System.Web.UI.WebControls.DropDownList FlaggedDropDownList;
         
         /// <summary>
         /// CancelButton control.
@@ -73,7 +73,7 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CancelButton;
+        protected System.Web.UI.WebControls.Button CancelButton;
         
         /// <summary>
         /// SubmitButton control.
@@ -82,7 +82,7 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SubmitButton;
+        protected System.Web.UI.WebControls.Button SubmitButton;
         
         /// <summary>
         /// TableDiv control.
@@ -91,6 +91,6 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TableDiv;
+        protected System.Web.UI.HtmlControls.HtmlGenericControl TableDiv;
     }
 }

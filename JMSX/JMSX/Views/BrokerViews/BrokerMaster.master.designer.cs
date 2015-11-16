@@ -10,16 +10,7 @@
 namespace Stockimulate.Views.BrokerViews {
     
     
-    public partial class MasterBroker {
-        
-        /// <summary>
-        /// Head control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder Head;
+    public partial class BrokerMaster {
         
         /// <summary>
         /// Index1SymbolH2 control.
@@ -58,12 +49,12 @@ namespace Stockimulate.Views.BrokerViews {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Index2PriceH2;
         
         /// <summary>
-        /// ContentPlaceHolder1 control.
+        /// BrokerMasterContentPlaceHolder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder1;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder BrokerMasterContentPlaceHolder;
     }
 }

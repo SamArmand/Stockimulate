@@ -1,23 +1,28 @@
-﻿<%@ Master AutoEventWireup="true" CodeBehind="MasterAdmin.Master.cs" Inherits="Stockimulate.Views.AdminViews.MasterAdmin" Language="C#" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MainMaster.master.cs" Inherits="Stockimulate.Views.MainMaster" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    
+    
+    <script src="../scripts/jquery-2.1.4.min.js"></script>
+    <script src="../scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="../scripts/bootstrap.js"></script>
+    <link rel="stylesheet" type="text/css" href="../Content/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../Content/bootstrap-theme.min.css" />
+    
     <title>Stockimulate</title>
-    <script src="../../scripts/jquery-2.1.4.min.js"></script>
-    <script src="../../scripts/bootstrap.js"></script>
-    <link rel="stylesheet" type="text/css" href="../../Content/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="../../Content/bootstrap-theme.min.css" />
-
-    <asp:ContentPlaceHolder ID="Head" runat="server">
-    </asp:ContentPlaceHolder>
+    <asp:ContentPlaceHolder ID="MainMasterHeadPlaceHolder" runat="server"/>
+    
 </head>
 <body>
-    <div class="container">
+
+        
+        <div class="container">
         <div class="row" style="margin-top: 10px;">
             <div class="col-md-6">
-                <img style="max-height: 100px;" src="/img/JMSX.png" alt="Banner"/>
+                <img style="max-height: 100px;" src="/img/JMSX.png" alt="JMSX.png"/>
             </div>
 
         </div>
@@ -33,7 +38,10 @@
             <a class="navbar-brand" href="#"><strong>stock</strong>imulate</a>
           </div>
             <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav" id="NavBarOptions" runat="server">
+                   <li><a href="Home.aspx">Home</a></li>
+                    <li><a href="Reports.aspx">Reports</a></li>
+                    
                     <li><a href="Admin.aspx">Admin Panel</a></li>
                     <li><a href="Override.aspx">Override Panel</a></li>
                     <li class="dropdown">
@@ -53,23 +61,28 @@
                    <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Index Pages<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                     <li><a href="../Index1.aspx" id="Index1A" runat="server"></a>             </li>
-                    <li><a href="../Index2.aspx" id="Index2A" runat="server"></a>             </li>
+                     <li><a href="../Index1.aspx" runat="server"></a>             </li>
+                    <li><a href="../Index2.aspx" runat="server"></a>             </li>
                     </ul>
                   </li>
-                     </ul>
+                    <li><a href="TradeInput.aspx">Trade</a></li>
+                    <li><a href="SpotTradeInput.aspx">Spot Trade</a></li>
+
+                </ul>
     </div>
             </nav>
         </div>
 
-    </div> 
-
+    </div>         
+        
     <div class="container">
 
-        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        <asp:ContentPlaceHolder ID="MainMasterContentPlaceHolder" runat="server"/>
         
-        </asp:ContentPlaceHolder>
+        
 
     </div>
+
+
 </body>
 </html>
