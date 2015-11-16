@@ -19,7 +19,7 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button PlayPracticeButton;
+        protected System.Web.UI.WebControls.Button PlayPracticeButton;
         
         /// <summary>
         /// PlayCompetitionButton control.
@@ -28,7 +28,7 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button PlayCompetitionButton;
+        protected System.Web.UI.WebControls.Button PlayCompetitionButton;
         
         /// <summary>
         /// ContinueButton control.
@@ -37,7 +37,7 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ContinueButton;
+        protected System.Web.UI.WebControls.Button ContinueButton;
         
         /// <summary>
         /// ResetTradesButton control.
@@ -46,7 +46,7 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ResetTradesButton;
+        protected System.Web.UI.WebControls.Button ResetTradesButton;
         
         /// <summary>
         /// VerifyInput control.
@@ -55,7 +55,7 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox VerifyInput;
+        protected System.Web.UI.HtmlControls.HtmlInputCheckBox VerifyInput;
         
         /// <summary>
         /// ErrorDiv control.
@@ -64,7 +64,7 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ErrorDiv;
+        protected System.Web.UI.HtmlControls.HtmlGenericControl ErrorDiv;
         
         /// <summary>
         /// WarningDiv control.
@@ -73,6 +73,6 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl WarningDiv;
+        protected System.Web.UI.HtmlControls.HtmlGenericControl WarningDiv;
     }
 }

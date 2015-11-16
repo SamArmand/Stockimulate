@@ -19,7 +19,7 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList SecurityDropDownList;
+        protected System.Web.UI.WebControls.DropDownList SecurityDropDownList;
         
         /// <summary>
         /// PriceInput control.
@@ -28,7 +28,7 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl PriceInput;
+        protected System.Web.UI.HtmlControls.HtmlInputGenericControl PriceInput;
         
         /// <summary>
         /// UpdatePrice control.
@@ -37,7 +37,7 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button UpdatePrice;
+        protected System.Web.UI.WebControls.Button UpdatePrice;
         
         /// <summary>
         /// ReportsEnabledSpan control.
@@ -46,7 +46,7 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ReportsEnabledSpan;
+        protected System.Web.UI.HtmlControls.HtmlGenericControl ReportsEnabledSpan;
         
         /// <summary>
         /// ToggleReportsEnabled control.
@@ -55,6 +55,6 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ToggleReportsEnabled;
+        protected System.Web.UI.WebControls.Button ToggleReportsEnabled;
     }
 }

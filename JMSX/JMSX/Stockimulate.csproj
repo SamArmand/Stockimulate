@@ -161,12 +161,13 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Views\BrokerViews\MasterBroker.Master" />
-    <Content Include="Views\AdminViews\MasterAdmin.Master" />
     <Content Include="Views\PublicViews\Home.aspx" />
-    <Content Include="Views\PublicViews\MasterPublic.Master" />
     <None Include="Properties\PublishProfiles\JMSX.pubxml" />
     <Content Include="scripts\jquery-2.1.4.min.map" />
+    <Content Include="Views\MainMaster.Master" />
+    <Content Include="Views\AdminViews\AdminMaster.master" />
+    <Content Include="Views\BrokerViews\BrokerMaster.master" />
+    <Content Include="Views\PublicViews\PublicMaster.master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -216,12 +217,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\DayInfo.cs" />
+    <Compile Include="Views\AdminViews\AdminMaster.master.cs">
+      <DependentUpon>AdminMaster.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\AdminViews\AdminMaster.master.designer.cs">
+      <DependentUpon>AdminMaster.master</DependentUpon>
+    </Compile>
     <Compile Include="Views\AdminViews\AdminReports.aspx.cs">
       <DependentUpon>AdminReports.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Views\AdminViews\AdminReports.aspx.designer.cs">
       <DependentUpon>AdminReports.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BrokerViews\BrokerMaster.master.cs">
+      <DependentUpon>BrokerMaster.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\BrokerViews\BrokerMaster.master.designer.cs">
+      <DependentUpon>BrokerMaster.master</DependentUpon>
     </Compile>
     <Compile Include="Views\BrokerViews\SpotTradeInput.aspx.cs">
       <DependentUpon>SpotTradeInput.aspx</DependentUpon>
@@ -275,13 +290,6 @@
     <Compile Include="Views\AdminViews\IndividualStandings.aspx.designer.cs">
       <DependentUpon>IndividualStandings.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Views\AdminViews\MasterAdmin.Master.cs">
-      <DependentUpon>MasterAdmin.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Views\AdminViews\MasterAdmin.Master.designer.cs">
-      <DependentUpon>MasterAdmin.Master</DependentUpon>
-    </Compile>
     <Compile Include="Views\Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -299,13 +307,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Views\BrokerViews\MasterBroker.Master.cs">
-      <DependentUpon>MasterBroker.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Views\BrokerViews\MasterBroker.Master.designer.cs">
-      <DependentUpon>MasterBroker.Master</DependentUpon>
-    </Compile>
     <Compile Include="Views\AdminViews\Override.aspx.cs">
       <DependentUpon>Override.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -315,6 +316,13 @@
     </Compile>
     <Compile Include="Models\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\MainMaster.Master.cs">
+      <DependentUpon>MainMaster.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\MainMaster.Master.designer.cs">
+      <DependentUpon>MainMaster.Master</DependentUpon>
+    </Compile>
     <Compile Include="Views\PublicViews\Home.aspx.cs">
       <DependentUpon>Home.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -322,12 +330,12 @@
     <Compile Include="Views\PublicViews\Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Views\PublicViews\MasterPublic.Master.cs">
-      <DependentUpon>MasterPublic.Master</DependentUpon>
+    <Compile Include="Views\PublicViews\PublicMaster.master.cs">
+      <DependentUpon>PublicMaster.master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Views\PublicViews\MasterPublic.Master.designer.cs">
-      <DependentUpon>MasterPublic.Master</DependentUpon>
+    <Compile Include="Views\PublicViews\PublicMaster.master.designer.cs">
+      <DependentUpon>PublicMaster.master</DependentUpon>
     </Compile>
     <Compile Include="Views\PublicViews\Reports.aspx.cs">
       <DependentUpon>Reports.aspx</DependentUpon>

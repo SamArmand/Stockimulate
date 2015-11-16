@@ -1,8 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/PublicViews/MasterPublic.Master" AutoEventWireup="true" CodeBehind="Reports.aspx.cs" Inherits="Stockimulate.Views.PublicViews.Reports" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
-    <link href="../../Content/tables.css" rel="stylesheet" />
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/PublicViews/PublicMaster.Master" AutoEventWireup="true" CodeBehind="Reports.aspx.cs" Inherits="Stockimulate.Views.PublicViews.Reports" %>
+<asp:Content ID="ReportsContent" ContentPlaceHolderID="PublicMasterContentPlaceHolder" runat="server">
 
       <div class="row">
     <div class="col-md-12">

@@ -1,7 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/BrokerViews/MasterBroker.Master" AutoEventWireup="true" CodeBehind="TradeInput.aspx.cs" Inherits="Stockimulate.Views.BrokerViews.TradeInput" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/BrokerViews/BrokerMaster.master" AutoEventWireup="true" CodeBehind="TradeInput.aspx.cs" Inherits="Stockimulate.Views.BrokerViews.TradeInput" %>
+<asp:Content ID="TradeInputContent" ContentPlaceHolderID="BrokerMasterContentPlaceHolder" runat="server">
 
     
   <div class="row">
