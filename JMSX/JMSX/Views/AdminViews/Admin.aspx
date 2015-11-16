@@ -19,16 +19,11 @@
             
 
             <br />
+            <br />
 
             <input id="VerifyInput" type="checkbox" runat="server" /> I am aware of what I am doing and that any wrong selection may completely break the competition.
-
-          </div>
-        </fieldset>
- 
-
-    </form>
-
-    <br />
+            
+                <br />
     <br />
 
     <div id="ErrorDiv" runat="server" class="alert alert-danger bg-danger col-lg-5" style="display: none;">
@@ -38,5 +33,53 @@
         <a href="#" class="close" data-dismiss="alert">&times;</a>
         <strong>Info!</strong> Please read the above statement and check the checkbox before clicking any button.
     </div>
+            
+
+          </div>
+        </fieldset>
+ 
+        
+        <br/>
+        <br/>
+        
+    <fieldset>
+
+        <div class="form-group row">
+            
+            <label class="col-sm-1 control-label">Security</label>
+            <div class="col-sm-2">
+                
+                <asp:DropDownList ID="SecurityDropDownList" runat="server" CssClass="form-control"></asp:DropDownList>
+
+            </div>
+
+            <label class="col-sm-1 col-sm-offset-1 control-label">Price</label>
+            <div class="col-sm-2">
+              <input id="PriceInput" type="number" placeholder="Price" class="form-control" runat="server"/>
+            </div>
+
+            <asp:Button ID="UpdatePrice" CssClass="btn btn-primary" runat="server" Text="Update" OnClick="UpdatePrice_Click" />
+            
+            </div>
+
+            <div class="form-group row">
+            
+            <label id="ReportsEnabledSpan" runat="server"></label>
+
+            <asp:Button ID="ToggleReportsEnabled" CssClass="btn btn-primary" runat="server" Text="Toggle Reports" OnClick="ToggleReportsEnabled_Click" />
+            
+
+
+            <br />
+
+            <br />
+
+          </div>
+        </fieldset>
+
+
+    </form>
+
+
 
 </asp:Content>

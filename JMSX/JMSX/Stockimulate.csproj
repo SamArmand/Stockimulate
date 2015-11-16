@@ -156,7 +156,6 @@
     <Content Include="Views\Index2.aspx" />
     <Content Include="Views\AdminViews\IndividualStandings.aspx" />
     <Content Include="Views\Login.aspx" />
-    <Content Include="Views\AdminViews\Override.aspx" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -306,13 +305,6 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Views\AdminViews\Override.aspx.cs">
-      <DependentUpon>Override.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Views\AdminViews\Override.aspx.designer.cs">
-      <DependentUpon>Override.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
