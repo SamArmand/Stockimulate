@@ -7,99 +7,117 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Stockimulate.Views {
+namespace Stockimulate.Views.AdministratorViews {
     
     
-    public partial class Index1 {
+    public partial class AdminPanel {
         
         /// <summary>
-        /// IndexPriceDiv control.
+        /// PlayPracticeButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexPriceDiv;
+        protected global::System.Web.UI.WebControls.Button PlayPracticeButton;
         
         /// <summary>
-        /// IndexChangePositiveDiv control.
+        /// PlayCompetitionButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangePositiveDiv;
+        protected global::System.Web.UI.WebControls.Button PlayCompetitionButton;
         
         /// <summary>
-        /// IndexChangePositiveH1 control.
+        /// ContinueButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangePositiveH1;
+        protected global::System.Web.UI.WebControls.Button ContinueButton;
         
         /// <summary>
-        /// IndexChangeNegativeDiv control.
+        /// ResetTradesButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangeNegativeDiv;
+        protected global::System.Web.UI.WebControls.Button ResetTradesButton;
         
         /// <summary>
-        /// IndexChangeNegativeH1 control.
+        /// VerifyInput control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangeNegativeH1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox VerifyInput;
         
         /// <summary>
-        /// IndexChangeNoneDiv control.
+        /// ErrorDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangeNoneDiv;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ErrorDiv;
         
         /// <summary>
-        /// IndexChangeNoneH1 control.
+        /// WarningDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangeNoneH1;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl WarningDiv;
         
         /// <summary>
-        /// NewsDiv control.
+        /// SecurityDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NewsDiv;
+        protected global::System.Web.UI.WebControls.DropDownList SecurityDropDownList;
         
         /// <summary>
-        /// DataDiv control.
+        /// PriceInput control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DataDiv;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl PriceInput;
         
         /// <summary>
-        /// IndexNameSymbolDiv control.
+        /// UpdatePrice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexNameSymbolDiv;
+        protected global::System.Web.UI.WebControls.Button UpdatePrice;
+        
+        /// <summary>
+        /// ReportsEnabledSpan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ReportsEnabledSpan;
+        
+        /// <summary>
+        /// ToggleReportsEnabled control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ToggleReportsEnabled;
     }
 }

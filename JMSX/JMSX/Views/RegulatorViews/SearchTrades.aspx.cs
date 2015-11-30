@@ -5,9 +5,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Stockimulate.Models;
 
-namespace Stockimulate.Views.AdminViews
+namespace Stockimulate.Views.RegulatorViews
 {
-    public partial class FraudPrevention : Page
+    public partial class SearchTrades : Page
     {
         private DataAccess _dataAccess;
 
@@ -18,10 +18,7 @@ namespace Stockimulate.Views.AdminViews
             var instruments = _dataAccess.Instruments;
 
             for (var i = 0; i < instruments.Count; ++i)
-            {
                 SecurityDropDownList.Items.Add(new ListItem(instruments[i].Symbol, i.ToString()));
-            }
-
         }
 
 
@@ -32,7 +29,6 @@ namespace Stockimulate.Views.AdminViews
 
             try
             {
-
 
                     trades = _dataAccess.GetTrades(BuyerIdInput.Value,
                                                     BuyerTeamIdInput.Value,
@@ -45,9 +41,7 @@ namespace Stockimulate.Views.AdminViews
             catch (Exception)
             {
                 return;
-            }
-
-            
+            }   
 
             var sb = new StringBuilder("");
 

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Stockimulate.Views.AdminViews {
+namespace Stockimulate.Views.RegulatorViews {
     
     
     public partial class AdminReports {
@@ -19,7 +19,7 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected System.Web.UI.HtmlControls.HtmlInputGenericControl TeamNumberInput;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl TeamNumberInput;
         
         /// <summary>
         /// CancelButton control.
@@ -28,7 +28,7 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected System.Web.UI.WebControls.Button CancelButton;
+        protected global::System.Web.UI.WebControls.Button CancelButton;
         
         /// <summary>
         /// SubmitButton control.
@@ -37,7 +37,7 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected System.Web.UI.WebControls.Button SubmitButton;
+        protected global::System.Web.UI.WebControls.Button SubmitButton;
         
         /// <summary>
         /// ErrorDiv control.
@@ -46,7 +46,7 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected System.Web.UI.HtmlControls.HtmlGenericControl ErrorDiv;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ErrorDiv;
         
         /// <summary>
         /// TeamTable control.
@@ -55,7 +55,7 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected System.Web.UI.HtmlControls.HtmlGenericControl TeamTable;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TeamTable;
         
         /// <summary>
         /// PlayerTables control.
@@ -64,6 +64,6 @@ namespace Stockimulate.Views.AdminViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected System.Web.UI.HtmlControls.HtmlGenericControl PlayerTables;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl PlayerTables;
     }
 }

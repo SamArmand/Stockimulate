@@ -1,0 +1,9 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/Views/MainMaster.Master" AutoEventWireup="true" CodeBehind="RegulatorMaster.master.cs" Inherits="Stockimulate.Views.RegulatorViews.RegulatorMaster" %>
+<asp:Content ID="Content" ContentPlaceHolderID="MainMasterContentPlaceHolder" runat="server">
+
+    <asp:ContentPlaceHolder ID="RegulatorMasterContentPlaceHolder" runat="server"/>
+        
+
+    
+
+</asp:Content>

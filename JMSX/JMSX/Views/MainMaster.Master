@@ -39,35 +39,16 @@
           </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav" id="NavBarOptions" runat="server">
-                   <li><a href="Home.aspx">Home</a></li>
-                    <li><a href="Reports.aspx">Reports</a></li>
                     
-                    <li><a href="Admin.aspx">Admin Panel</a></li>
-                    <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Standings<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                    <li><a href="TeamStandings.aspx">Team Standings</a></li>
-                    <li><a href="IndividualStandings.aspx">Individual Standings</a></li>
-                    </ul>
-                  </li>
-                    <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Search<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="FraudPrevention.aspx">Fraud Prevention</a></li>
-                        <li><a href="AdminReports.aspx">Team Reports</a></li>
-                    </ul>
-                  </li>
-                   <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Index Pages<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                     <li><a href="../Index1.aspx" runat="server"></a>             </li>
-                    <li><a href="../Index2.aspx" runat="server"></a>             </li>
-                    </ul>
-                  </li>
-                    <li><a href="TradeInput.aspx">Trade</a></li>
-                    <li><a href="SpotTradeInput.aspx">Spot Trade</a></li>
 
                 </ul>
+                
+                <p class="navbar-text navbar-right">
+                    <span id="SignedInAsSpan" runat="server"></span>
+                    <span id="SignInSpan" runat="server"></span>
+                </p>
+                
+                
     </div>
             </nav>
         </div>

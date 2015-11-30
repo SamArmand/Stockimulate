@@ -1,10 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/AdminViews/AdminMaster.master" AutoEventWireup="true" CodeBehind="Admin.aspx.cs" Inherits="Stockimulate.Views.AdminViews.Admin" %>
-<asp:Content ID="AdminContent" ContentPlaceHolderID="AdminMasterContentPlaceHolder" runat="server">
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/AdministratorViews/AdministratorMaster.master" AutoEventWireup="true" CodeBehind="AdminPanel.aspx.cs" Inherits="Stockimulate.Views.AdministratorViews.AdminPanel" %>
+<asp:Content ID="AdminContent" ContentPlaceHolderID="AdministratorMasterContentPlaceHolder" runat="server">
     <form runat="server">
         <fieldset>
 
         <!-- Form Name -->
-          <legend><h1>Admin Panel</h1></legend>
+          <legend><h1>AdminPanel Panel</h1></legend>
 
         <div class="row">
 

@@ -144,16 +144,15 @@
     <Content Include="scripts\jquery-2.1.4.min.js" />
     <Content Include="scripts\jquery.signalR-2.2.0.js" />
     <Content Include="scripts\jquery.signalR-2.2.0.min.js" />
-    <Content Include="Views\AdminViews\AdminReports.aspx" />
+    <Content Include="Views\AccessDenied.aspx" />
+    <Content Include="Views\RegulatorViews\SearchReports.aspx" />
     <Content Include="Views\BrokerViews\SpotTradeInput.aspx" />
-    <Content Include="Views\AdminViews\Admin.aspx" />
+    <Content Include="Views\AdministratorViews\AdminPanel.aspx" />
     <Content Include="default.aspx" />
     <Content Include="img\JMSX.png" />
-    <Content Include="Views\AdminViews\FraudPrevention.aspx" />
-    <Content Include="Views\Index1.aspx" />
-    <Content Include="Views\Index2.aspx" />
-    <Content Include="Views\AdminViews\IndividualStandings.aspx" />
-    <Content Include="Views\Login.aspx" />
+    <Content Include="Views\RegulatorViews\SearchTrades.aspx" />
+    <Content Include="Views\Index.aspx" />
+    <Content Include="Views\AdministratorViews\Standings.aspx" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -162,9 +161,10 @@
     <None Include="Properties\PublishProfiles\JMSX.pubxml" />
     <Content Include="scripts\jquery-2.1.4.min.map" />
     <Content Include="Views\MainMaster.Master" />
-    <Content Include="Views\AdminViews\AdminMaster.master" />
+    <Content Include="Views\AdministratorViews\AdministratorMaster.master" />
     <Content Include="Views\BrokerViews\BrokerMaster.master" />
     <Content Include="Views\PublicViews\PublicMaster.master" />
+    <Content Include="Views\RegulatorViews\RegulatorMaster.master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -209,24 +209,31 @@
     <Content Include="scripts\Highcharts-4.0.1\js\themes\grid.js" />
     <Content Include="scripts\Highcharts-4.0.1\js\themes\sand-signika.js" />
     <Content Include="scripts\Highcharts-4.0.1\js\themes\skies.js" />
-    <Content Include="Views\AdminViews\TeamStandings.aspx" />
+    <Content Include="Views\AdministratorViews\TeamStandings.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\DayInfo.cs" />
-    <Compile Include="Views\AdminViews\AdminMaster.master.cs">
-      <DependentUpon>AdminMaster.master</DependentUpon>
+    <Compile Include="Views\AccessDenied.aspx.cs">
+      <DependentUpon>AccessDenied.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Views\AdminViews\AdminMaster.master.designer.cs">
-      <DependentUpon>AdminMaster.master</DependentUpon>
+    <Compile Include="Views\AccessDenied.aspx.designer.cs">
+      <DependentUpon>AccessDenied.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Views\AdminViews\AdminReports.aspx.cs">
-      <DependentUpon>AdminReports.aspx</DependentUpon>
+    <Compile Include="Views\AdministratorViews\AdministratorMaster.master.cs">
+      <DependentUpon>AdministratorMaster.master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Views\AdminViews\AdminReports.aspx.designer.cs">
-      <DependentUpon>AdminReports.aspx</DependentUpon>
+    <Compile Include="Views\AdministratorViews\AdministratorMaster.master.designer.cs">
+      <DependentUpon>AdministratorMaster.master</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RegulatorViews\SearchReports.aspx.cs">
+      <DependentUpon>SearchReports.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\RegulatorViews\SearchReports.aspx.designer.cs">
+      <DependentUpon>SearchReports.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\BrokerViews\BrokerMaster.master.cs">
       <DependentUpon>BrokerMaster.master</DependentUpon>
@@ -244,12 +251,12 @@
     </Compile>
     <Compile Include="Models\Instrument.cs" />
     <Compile Include="Models\Trade.cs" />
-    <Compile Include="Views\AdminViews\Admin.aspx.cs">
-      <DependentUpon>Admin.aspx</DependentUpon>
+    <Compile Include="Views\AdministratorViews\AdminPanel.aspx.cs">
+      <DependentUpon>AdminPanel.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Views\AdminViews\Admin.aspx.designer.cs">
-      <DependentUpon>Admin.aspx</DependentUpon>
+    <Compile Include="Views\AdministratorViews\AdminPanel.aspx.designer.cs">
+      <DependentUpon>AdminPanel.aspx</DependentUpon>
     </Compile>
     <Compile Include="DataAccess.cs" />
     <Compile Include="default.aspx.cs">
@@ -259,40 +266,26 @@
     <Compile Include="default.aspx.designer.cs">
       <DependentUpon>default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Views\AdminViews\FraudPrevention.aspx.cs">
-      <DependentUpon>FraudPrevention.aspx</DependentUpon>
+    <Compile Include="Views\RegulatorViews\SearchTrades.aspx.cs">
+      <DependentUpon>SearchTrades.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Views\AdminViews\FraudPrevention.aspx.designer.cs">
-      <DependentUpon>FraudPrevention.aspx</DependentUpon>
+    <Compile Include="Views\RegulatorViews\SearchTrades.aspx.designer.cs">
+      <DependentUpon>SearchTrades.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Views\Index1.aspx.cs">
-      <DependentUpon>Index1.aspx</DependentUpon>
+    <Compile Include="Views\Index.aspx.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Views\Index1.aspx.designer.cs">
-      <DependentUpon>Index1.aspx</DependentUpon>
+    <Compile Include="Views\Index.aspx.designer.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Views\Index2.aspx.cs">
-      <DependentUpon>Index2.aspx</DependentUpon>
+    <Compile Include="Views\AdministratorViews\Standings.aspx.cs">
+      <DependentUpon>Standings.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Views\Index2.aspx.designer.cs">
-      <DependentUpon>Index2.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Views\AdminViews\IndividualStandings.aspx.cs">
-      <DependentUpon>IndividualStandings.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Views\AdminViews\IndividualStandings.aspx.designer.cs">
-      <DependentUpon>IndividualStandings.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Login.aspx.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Views\Login.aspx.designer.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
+    <Compile Include="Views\AdministratorViews\Standings.aspx.designer.cs">
+      <DependentUpon>Standings.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\BrokerViews\TradeInput.aspx.cs">
       <DependentUpon>TradeInput.aspx</DependentUpon>
@@ -337,14 +330,22 @@
     <Compile Include="Simulator.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Models\Team.cs" />
-    <Compile Include="Views\AdminViews\TeamStandings.aspx.cs">
+    <Compile Include="Views\AdministratorViews\TeamStandings.aspx.cs">
       <DependentUpon>TeamStandings.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Views\AdminViews\TeamStandings.aspx.designer.cs">
+    <Compile Include="Views\AdministratorViews\TeamStandings.aspx.designer.cs">
       <DependentUpon>TeamStandings.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\RegulatorViews\RegulatorMaster.master.cs">
+      <DependentUpon>RegulatorMaster.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\RegulatorViews\RegulatorMaster.master.designer.cs">
+      <DependentUpon>RegulatorMaster.master</DependentUpon>
+    </Compile>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

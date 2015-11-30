@@ -7,18 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Stockimulate.Views.AdminViews {
+namespace Stockimulate.Views.AdministratorViews {
     
     
-    public partial class AdminMaster {
+    public partial class IndividualStandings {
         
         /// <summary>
-        /// AdminMasterContentPlaceHolder control.
+        /// TableDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder AdminMasterContentPlaceHolder;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TableDiv;
     }
 }

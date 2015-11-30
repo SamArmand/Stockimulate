@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
-namespace Stockimulate.Views.AdminViews
+namespace Stockimulate.Views.RegulatorViews
 {
     public partial class AdminReports : System.Web.UI.Page
     {

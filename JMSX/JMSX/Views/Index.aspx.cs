@@ -7,7 +7,7 @@ using Stockimulate.Models;
 
 namespace Stockimulate.Views
 {
-    public partial class Index2 : Page
+    public partial class Index : Page
     {
         private static int _indexPrice;
         private static int _indexChange;
@@ -18,13 +18,10 @@ namespace Stockimulate.Views
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (HttpContext.Current.Session["Login"] as string != "Administrator")
+                Response.Redirect("AccessDenied.aspx");
 
-            if ((string)HttpContext.Current.Session["Login"] != "Admin")
-            {
-                Response.Redirect("Login.aspx");
-            }
-
-            var instrument = DataAccess.SessionInstance.Instruments[1];
+            var instrument = DataAccess.SessionInstance.Instruments[0];
 
             Title = instrument.Symbol;
 
@@ -37,27 +34,25 @@ namespace Stockimulate.Views
             if (_indexChange > 0)
             {
                 IndexChangePositiveH1.InnerHtml = _indexChange.ToString();
-                IndexChangePositiveDiv.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; text-align:center;";
+                IndexChangePositiveDiv.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;text-align:center;";
             }
             else if (_indexChange < 0)
             {
-                IndexChangeNegativeH1.InnerHtml = (_indexChange * -1).ToString();
-                IndexChangeNegativeDiv.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; text-align:center";
+                IndexChangeNegativeH1.InnerHtml = (_indexChange*-1).ToString();
+                IndexChangeNegativeDiv.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;text-align:center;";
             }
             else
                 IndexChangeNoneDiv.Style.Value =
-                    "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; text-align:center;";
+                    "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;text-align:center;";
 
             if (_news != "null")
-            {
                 NewsDiv.InnerHtml = "<h2>" + _news + "</h2>";
-            }
 
             var javascriptArray = "[";
 
-            for (var i = 0; i < _days.Count; i++)
+            for(var i=0; i<_days.Count; i++)
             {
-                javascriptArray += "[" + _days.ElementAt(i) + "," + _prices.ElementAt(i) + "]";
+                javascriptArray += "[" + _days.ElementAt(i) +"," + _prices.ElementAt(i) +"]";
 
                 if (i + 1 != _days.Count)
                     javascriptArray += ", ";
@@ -69,13 +64,12 @@ namespace Stockimulate.Views
             DataDiv.InnerHtml = javascriptArray;
 
             IndexNameSymbolDiv.InnerHtml = instrument.Name + " (" + instrument.Symbol + ")";
-
         }
 
         internal static void Update(DayInfo dayInfo)
         {
 
-            _indexChange = dayInfo.Effects[1];
+            _indexChange = dayInfo.Effects[0];
             _indexPrice += _indexChange;
 
             _prices.Add(_indexPrice);
@@ -87,7 +81,6 @@ namespace Stockimulate.Views
 
         public static void Reset()
         {
-
             _indexPrice = 0;
             _indexChange = 0;
 
@@ -95,7 +88,8 @@ namespace Stockimulate.Views
 
             _prices = new List<int>();
             _days = new List<string>();
-        }
 
+        }
+       
     }
 }

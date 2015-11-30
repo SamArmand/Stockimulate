@@ -1,5 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/AdminViews/AdminMaster.master" AutoEventWireup="true" CodeBehind="AdminReports.aspx.cs" Inherits="Stockimulate.Views.AdminViews.AdminReports" %>
-<asp:Content ID="AdminReportsContent" ContentPlaceHolderID="AdminMasterContentPlaceHolder" runat="server">
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/RegulatorViews/RegulatorMaster.master" AutoEventWireup="true" CodeBehind="SearchReports.aspx.cs" Inherits="Stockimulate.Views.RegulatorViews.AdminReports" %>
+<asp:Content ID="RegulatorReportsContent" ContentPlaceHolderID="RegulatorMasterContentPlaceHolder" runat="server">
 
       <div class="row">
     <div class="col-md-12">
@@ -7,7 +7,7 @@
         <fieldset>
 
           <!-- Form Name -->
-          <legend><h1>View Reports</h1></legend>
+          <legend><h1>Search Reports</h1></legend>
             
           <!-- Text input-->
           <div class="form-group">
