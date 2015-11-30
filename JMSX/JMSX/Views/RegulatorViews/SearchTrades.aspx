@@ -1,8 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/AdminViews/AdminMaster.master" AutoEventWireup="true" CodeBehind="FraudPrevention.aspx.cs" Inherits="Stockimulate.Views.AdminViews.FraudPrevention" %>
-<asp:Content ID="FraudPreventionContent" ContentPlaceHolderID="AdminMasterContentPlaceHolder" runat="server">
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/RegulatorViews/RegulatorMaster.master" AutoEventWireup="true" CodeBehind="SearchTrades.aspx.cs" Inherits="Stockimulate.Views.RegulatorViews.SearchTrades" %>
+<asp:Content ID="FraudPreventionContent" ContentPlaceHolderID="RegulatorMasterContentPlaceHolder" runat="server">
         <form runat="server">
         <fieldset>
-            <legend><h1>Fraud Prevention - Beta</h1></legend>
+            <legend><h1>Search Trades</h1></legend>
     
               <div class="form-group row">
             <label class="col-sm-1 control-label">Buyer ID</label>

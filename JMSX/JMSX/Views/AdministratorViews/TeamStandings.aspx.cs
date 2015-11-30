@@ -3,24 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Stockimulate.Views.AdminViews
+namespace Stockimulate.Views.AdministratorViews
 {
-    public partial class IndividualStandings : System.Web.UI.Page
+    public partial class TeamStandings : System.Web.UI.Page
     {
-        private DataAccess _dataAccess;
 
+        private DataAccess _dataAccess;
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             _dataAccess = DataAccess.SessionInstance;
 
             var prices = new List<int>(_dataAccess.Instruments.Count);
 
-            for (var i = 0; i < _dataAccess.Instruments.Count; ++i)
+            for (var i=0; i < _dataAccess.Instruments.Count; ++i)
                 prices.Add(_dataAccess.GetPrice(i));
 
-            var players = _dataAccess.GetAllPlayers();
+            var teams = _dataAccess.GetAllTeams();
 
-            var sortedPlayers = players.OrderByDescending(t => t.PnL(prices)).ToList();
+            var sortedTeams = teams.OrderByDescending(t => t.AveragePnL(prices)).ToList();
 
             var sb = new StringBuilder("");
 
@@ -28,34 +29,34 @@ namespace Stockimulate.Views.AdminViews
             sb.Append("    <thead>");
             sb.Append("        <tr>");
             sb.Append("            <th>Rank</th>");
-            sb.Append("            <th>Name/ID</th>");
-            sb.Append("            <th>P&L</th>");
+            sb.Append("            <th>Team Name/ID</th>");
+            sb.Append("            <th>Average P&L</th>");
             sb.Append("        </tr>");
             sb.Append("    <thead>");
             sb.Append("    <tbody>");
 
             var rank = 0;
 
-            for (var i = 0; i < sortedPlayers.Count; i++)
+            for (var i = 0; i < sortedTeams.Count; i++)
             {
-
+                
                 rank++;
 
                 string rankString;
 
-                if (i > 0 && sortedPlayers.ElementAt(i).PnL(prices) == sortedPlayers.ElementAt(i - 1).PnL(prices))
+                if (i > 0 && sortedTeams[i].AveragePnL(prices) == sortedTeams[i-1].AveragePnL(prices))
                     rankString = "-";
                 else
                     rankString = "" + rank;
 
                 sb.Append("<tr>");
                 sb.Append("<td>" + rankString + "</td>");
-                sb.Append("<td>" + sortedPlayers.ElementAt(i).Name + " - " + sortedPlayers.ElementAt(i).Id + "</td>");
-                sb.Append("<td>" + "$" + sortedPlayers.ElementAt(i).PnL(prices) + "</td>");
+                sb.Append("<td>" + sortedTeams[i].Name + " - " + sortedTeams[i].Id + "</td>");
+                sb.Append("<td>" + "$" + sortedTeams[i].AveragePnL(prices) + "</td>");
                 sb.Append("</tr>");
             }
 
-            sb.Append("    </tbody>");
+                sb.Append("    </tbody>");
             sb.Append("</table>");
 
             TableDiv.InnerHtml = sb.ToString();

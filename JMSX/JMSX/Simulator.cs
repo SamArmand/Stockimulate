@@ -89,8 +89,7 @@ namespace Stockimulate
                 _dataAccess.Update(_instruments[i]);
             }
 
-            Index1.Update(dayInfo);
-            Index2.Update(dayInfo);        
+            Index.Update(dayInfo);      
 
             //Hardcoded context update
             //TODO Should send array instead
@@ -177,8 +176,7 @@ namespace Stockimulate
         public void Reset()
         {
             Stop();
-            Index1.Reset();
-            Index2.Reset();
+            Index.Reset();
             _dataAccess.Reset();
 
             _context.Clients.All.sendMessage(0, 0, 0, 0, 0, string.Empty);

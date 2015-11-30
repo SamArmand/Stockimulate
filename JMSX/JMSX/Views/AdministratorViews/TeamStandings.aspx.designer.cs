@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Stockimulate.Views.AdminViews {
+namespace Stockimulate.Views.AdministratorViews {
     
     
-    public partial class IndividualStandings {
+    public partial class TeamStandings {
         
         /// <summary>
         /// TableDiv control.

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Web.UI.WebControls;
 
-namespace Stockimulate.Views.AdminViews
+namespace Stockimulate.Views.AdministratorViews
 {
-    public partial class Admin : System.Web.UI.Page
+    public partial class AdminPanel : System.Web.UI.Page
     {
         private Simulator _simulator;
         private DataAccess _dataAccess;
