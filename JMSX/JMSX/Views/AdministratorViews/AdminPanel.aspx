@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/AdministratorViews/AdministratorMaster.master" AutoEventWireup="true" CodeBehind="AdminPanel.aspx.cs" Inherits="Stockimulate.Views.AdministratorViews.AdminPanel" %>
 <asp:Content ID="AdminContent" ContentPlaceHolderID="AdministratorMasterContentPlaceHolder" runat="server">
-    <form runat="server">
+
         <fieldset>
 
         <!-- Form Name -->
@@ -76,9 +76,6 @@
 
           </div>
         </fieldset>
-
-
-    </form>
 
 
 

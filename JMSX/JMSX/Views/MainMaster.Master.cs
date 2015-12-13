@@ -2,95 +2,117 @@
 using System.Text;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace Stockimulate.Views
 {
     public partial class MainMaster : MasterPage
     {
+
+        private HtmlInputText _usernameTextBox;
+        private HtmlInputPassword _passwordTextBox;
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            NavBarOptions.InnerHtml = string.Empty;
 
-            SignedInAsSpan.InnerText = string.Empty;
-            SignInSpan.Controls.Clear();         
+            var role = HttpContext.Current.Session["Role"] as string;
+
+            NavBarOptions.InnerHtml = string.Empty;    
 
             var stringBuilder = new StringBuilder();
 
-            if (HttpContext.Current.Session["Role"] as string == "Administrator")
+            if (role == "Administrator")
                 stringBuilder.Append("<li><a href='AdminPanel.aspx'>Admin Panel</a></li>"
-                                     + "<li><a href = 'AdministratorViews/Standings.aspx'> Team Standings</a></li>");
+                                     + "<li><a href = '../AdministratorViews/Standings.aspx'>Standings</a></li>");
 
-            if (HttpContext.Current.Session["Role"] as string == "Administrator" ||
-                HttpContext.Current.Session["Role"] as string == "Regulator")
+            if (role == "Administrator" || role == "Regulator")
                 stringBuilder.Append("<li class='dropdown'>"
                                      +
                                      "<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>Anti Fraud<span class='caret'></span></a>"
                                      + "<ul class='dropdown-menu'>"
-                                     + "<li><a href='RegulatorViews/SearchTrades.aspx'>Search Trades</a></li>"
-                                     + "<li><a href='RegulatorViews/SearchReports.aspx'>Search Reports</a></li>"
+                                     + "<li><a href='../RegulatorViews/SearchTrades.aspx'>Search Trades</a></li>"
+                                     + "<li><a href='../RegulatorViews/SearchReports.aspx'>Search Reports</a></li>"
                                      + "</ul>"
                                      + "</li>");
 
-            if (HttpContext.Current.Session["Role"] as string == "Administrator" ||
-                HttpContext.Current.Session["Role"] as string == "Broker")
-                stringBuilder.Append("<li><a href='BrokerViews/TradeInput.aspx'>Trade</a></li>"
-                                     + "<li><a href='BrokerViews/SpotTradeInput.aspx'>Spot Trade</a></li>");
+            if (role == "Administrator" || role == "Broker")
+                stringBuilder.Append("<li><a href='../BrokerViews/TradeInput.aspx'>Trade</a></li>"
+                                     + "<li><a href='../BrokerViews/SpotTradeInput.aspx'>Spot Trade</a></li>");
 
-            if (HttpContext.Current.Session["Role"] as string != "Administrator"
-                && HttpContext.Current.Session["Role"] as string != "Regulator"
-                && HttpContext.Current.Session["Role"] as string != "Broker")
-                stringBuilder.Append(" <li><a href='PublicViews/Home.aspx'>Home</a></li>"
-                     + "<li><a href='PublicViews/Reports.aspx'>Reports</a></li>");
-
-            if (!(HttpContext.Current.Session["Role"] is string) ||
-                (string) HttpContext.Current.Session["Role"] == string.Empty)
+            if (string.IsNullOrEmpty(role))
             {
-                var usernameTextBox = new TextBox {CssClass = ""};
-                var passwordTextBox = new TextBox
-                {
-                    CssClass = "",
-                    TextMode = TextBoxMode.Password
-                };
-                var signInButton = new Button
-                {
-                    Text = "Sign In",
-                    CssClass = ""
-                };
-                signInButton.Click += SignInButton_Click;
 
-                SignInSpan.Controls.Add(usernameTextBox);
-                SignInSpan.Controls.Add(passwordTextBox);
+                stringBuilder.Append(" <li><a href='../PublicViews/Home.aspx'>Home</a></li>"
+                        + "<li><a href='../PublicViews/Reports.aspx'>Reports</a></li>");
 
-                SignedInAsSpan.InnerText = string.Empty;
+                _usernameTextBox = new HtmlInputText();
+                _usernameTextBox.Attributes.Add("class", "form-control");
+                _usernameTextBox.Attributes.Add("placeholder", "Username");
+                _passwordTextBox = new HtmlInputPassword();
+                _passwordTextBox.Attributes.Add("class", "form-control");
+                _passwordTextBox.Attributes.Add("placeholder", "Password");
+
+                UsernameDiv.Controls.Add(_usernameTextBox);
+                PasswordDiv.Controls.Add(_passwordTextBox);
+
+                SignedInAsDiv.InnerText = string.Empty;
+
+                LoginButton.InnerText = "Sign in";
             }
 
             else
             {
-                
-                SignedInAsSpan.InnerText = "Signed in as " + HttpContext.Current.Session["Name"] + " (" + HttpContext.Current.Session["Role"] + ")";
+                SignedInAsDiv.InnerText = string.Empty;
+                UsernameDiv.Controls.Clear();
+                PasswordDiv.Controls.Clear();
+                LoginButton.InnerText = "Sign out";
 
-                var signOutButton = new Button
-                {
-                    Text = "Sign Out",
-                    CssClass = ""
-                };
-                signOutButton.Click += SignOutButton_Click;
-                SignInSpan.Controls.Add(signOutButton);
+                SignedInAsDiv.InnerText = HttpContext.Current.Session["Name"] + " (" + role + ")";
 
             }
 
+            NavBarOptions.InnerHtml = stringBuilder.ToString();
+
 
         }
 
-        private static void SignOutButton_Click(object sender, EventArgs e)
+        private void SignOut()
         {
-            throw new NotImplementedException();
+            HttpContext.Current.Session["Name"] = null;
+            HttpContext.Current.Session["Role"] = null;
+
+            Response.Redirect("../PublicViews/Home.aspx");
+
         }
 
-        private static void SignInButton_Click(object sender, EventArgs e)
+        private void SignIn()
         {
-            throw new NotImplementedException();
+            if (_usernameTextBox.Value == "admin" && _passwordTextBox.Value == "samisadmin")
+            {
+                HttpContext.Current.Session["Name"] = "Sam Assaf";
+                HttpContext.Current.Session["Role"] = "Administrator";
+                Response.Redirect("../AdministratorViews/AdminPanel.aspx");
+            }
+            else if (_usernameTextBox.Value == "broker" && _passwordTextBox.Value == "samisbroker")
+            {
+                HttpContext.Current.Session["Name"] = "Sam Assaf";
+                HttpContext.Current.Session["Role"] = "Broker";
+            }
+            else if (_usernameTextBox.Value == "regulator" && _passwordTextBox.Value == "samisregulator")
+            {
+                HttpContext.Current.Session["Name"] = "Sam Assaf";
+                HttpContext.Current.Session["Role"] = "Regulator";
+            }
+
+        }
+
+        protected void LoginButton_OnServerClick(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(HttpContext.Current.Session["Role"] as string))
+                SignIn();
+            else
+                SignOut();
         }
     }
 }

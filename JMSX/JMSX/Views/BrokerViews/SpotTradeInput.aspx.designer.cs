@@ -13,15 +13,6 @@ namespace Stockimulate.Views.BrokerViews {
     public partial class SpotTradeInput {
         
         /// <summary>
-        /// TradeInputForm control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm TradeInputForm;
-        
-        /// <summary>
         /// TransactionTypeRadioButtonList control.
         /// </summary>
         /// <remarks>

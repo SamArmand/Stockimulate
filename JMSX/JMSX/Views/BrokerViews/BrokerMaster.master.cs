@@ -8,8 +8,8 @@ namespace Stockimulate.Views.BrokerViews
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if ((string) HttpContext.Current.Session["Login"] != "AdminPanel" &&
-                (string) HttpContext.Current.Session["Login"] != "Broker")
+            if ((string) HttpContext.Current.Session["Role"] != "Administrator" &&
+                (string) HttpContext.Current.Session["Role"] != "Broker")
                 Response.Redirect("../AccessDenied.aspx");
 
             var instruments = DataAccess.SessionInstance.GetInstruments();

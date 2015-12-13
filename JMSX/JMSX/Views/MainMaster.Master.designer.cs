@@ -31,22 +31,40 @@ namespace Stockimulate.Views {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl NavBarOptions;
         
         /// <summary>
-        /// SignedInAsSpan control.
+        /// SignedInAsDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl SignedInAsSpan;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl SignedInAsDiv;
         
         /// <summary>
-        /// SignInSpan control.
+        /// UsernameDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl SignInSpan;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl UsernameDiv;
+        
+        /// <summary>
+        /// PasswordDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl PasswordDiv;
+        
+        /// <summary>
+        /// LoginButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton LoginButton;
         
         /// <summary>
         /// MainMasterContentPlaceHolder control.
