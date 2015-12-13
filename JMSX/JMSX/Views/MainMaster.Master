@@ -17,7 +17,8 @@
     
 </head>
 <body>
-
+    
+    <form runat="server">
         
         <div class="container">
         <div class="row" style="margin-top: 10px;">
@@ -42,12 +43,13 @@
                     
 
                 </ul>
-                
-                <p class="navbar-text navbar-right">
-                    <span id="SignedInAsSpan" runat="server"></span>
-                    <span id="SignInSpan" runat="server"></span>
-                </p>
-                
+                <div class="navbar-form navbar-right" role="search">
+                    
+                    <div id="SignedInAsDiv" class="form-group" runat="server"></div>
+                    <div id="UsernameDiv" class="form-group" runat="server"></div>
+                    <div id="PasswordDiv" class="form-group" runat="server"></div>
+                    <button runat="server" class="btn btn-primary" id="LoginButton" OnServerClick="LoginButton_OnServerClick"></button>
+                </div>
                 
     </div>
             </nav>
@@ -62,7 +64,8 @@
         
 
     </div>
-
+    
+        </form>
 
 </body>
 </html>

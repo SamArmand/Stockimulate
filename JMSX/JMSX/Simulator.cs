@@ -92,7 +92,7 @@ namespace Stockimulate
             Index.Update(dayInfo);      
 
             //Hardcoded context update
-            //TODO Should send array instead
+            //TODO Should send array of numbers with string instead
 
             _context.Clients.All.sendMessage(_instruments[0].Price, _instruments[1].Price, 
                 _dayNumber, dayInfo.Effects[0], dayInfo.Effects[1], dayInfo.NewsItem);
@@ -178,6 +178,8 @@ namespace Stockimulate
             Stop();
             Index.Reset();
             _dataAccess.Reset();
+
+            //TODO Should send array of numbers with string instead
 
             _context.Clients.All.sendMessage(0, 0, 0, 0, 0, string.Empty);
             _context.Clients.All.sendBrokerMessage(0, 0);
