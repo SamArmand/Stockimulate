@@ -318,10 +318,9 @@ namespace Stockimulate
 
         internal List<Team> GetAllTeams()
         {
-            //TODO SUCH A DUMB METHOD - REWRITE!!!
             var connection = new SqlConnection(ConnectionString);
 
-            var command = new SqlCommand("SELECT ID FROM Teams WHERE NOT ID=0;") {CommandType = CommandType.Text};
+            var command = new SqlCommand("SELECT * FROM Teams WHERE NOT ID=0;") {CommandType = CommandType.Text};
 
             connection.Open();
 

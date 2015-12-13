@@ -3,7 +3,6 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
 
 namespace Stockimulate.Views
 {
@@ -23,7 +22,7 @@ namespace Stockimulate.Views
             var stringBuilder = new StringBuilder();
 
             if (role == "Administrator")
-                stringBuilder.Append("<li><a href='AdminPanel.aspx'>Admin Panel</a></li>"
+                stringBuilder.Append("<li><a href='../AdminPanel.aspx'>Admin Panel</a></li>"
                                      + "<li><a href = '../AdministratorViews/Standings.aspx'>Standings</a></li>");
 
             if (role == "Administrator" || role == "Regulator")

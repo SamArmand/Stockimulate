@@ -209,7 +209,6 @@
     <Content Include="scripts\Highcharts-4.0.1\js\themes\grid.js" />
     <Content Include="scripts\Highcharts-4.0.1\js\themes\sand-signika.js" />
     <Content Include="scripts\Highcharts-4.0.1\js\themes\skies.js" />
-    <Content Include="Views\AdministratorViews\TeamStandings.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -330,13 +329,6 @@
     <Compile Include="Simulator.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Models\Team.cs" />
-    <Compile Include="Views\AdministratorViews\TeamStandings.aspx.cs">
-      <DependentUpon>TeamStandings.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Views\AdministratorViews\TeamStandings.aspx.designer.cs">
-      <DependentUpon>TeamStandings.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Views\RegulatorViews\RegulatorMaster.master.cs">
       <DependentUpon>RegulatorMaster.master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
