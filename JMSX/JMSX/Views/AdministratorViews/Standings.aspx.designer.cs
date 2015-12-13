@@ -13,12 +13,21 @@ namespace Stockimulate.Views.AdministratorViews {
     public partial class IndividualStandings {
         
         /// <summary>
-        /// TableDiv control.
+        /// PlayersTableDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TableDiv;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl PlayersTableDiv;
+        
+        /// <summary>
+        /// TeamsTableDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TeamsTableDiv;
     }
 }
