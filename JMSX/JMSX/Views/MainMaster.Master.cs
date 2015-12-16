@@ -14,7 +14,7 @@ namespace Stockimulate.Views
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Page.Header.DataBind();
             var role = HttpContext.Current.Session["Role"] as string;
 
             NavBarOptions.InnerHtml = string.Empty;    
@@ -22,7 +22,7 @@ namespace Stockimulate.Views
             var stringBuilder = new StringBuilder();
 
             if (role == "Administrator")
-                stringBuilder.Append("<li><a href='../AdminPanel.aspx'>Admin Panel</a></li>"
+                stringBuilder.Append("<li><a href='../AdministratorViewws/AdminPanel.aspx'>Admin Panel</a></li>"
                                      + "<li><a href = '../AdministratorViews/Standings.aspx'>Standings</a></li>");
 
             if (role == "Administrator" || role == "Regulator")
@@ -97,11 +97,13 @@ namespace Stockimulate.Views
             {
                 HttpContext.Current.Session["Name"] = "Sam Assaf";
                 HttpContext.Current.Session["Role"] = "Broker";
+                Response.Redirect("../BrokerViews/TradeInput.aspx");
             }
             else if (_usernameTextBox.Value == "regulator" && _passwordTextBox.Value == "samisregulator")
             {
                 HttpContext.Current.Session["Name"] = "Sam Assaf";
                 HttpContext.Current.Session["Role"] = "Regulator";
+                Response.Redirect("../RegulatorViews/SearchTrades.aspx");
             }
 
         }

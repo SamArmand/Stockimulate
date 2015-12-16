@@ -5,12 +5,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     
-    
-    <script src="../scripts/jquery-2.1.4.min.js"></script>
-    <script src="../scripts/jquery.signalR-2.2.0.min.js"></script>
-    <script src="../scripts/bootstrap.js"></script>
-    <link rel="stylesheet" type="text/css" href="../Content/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="../Content/bootstrap-theme.min.css" />
+    <script src="<%# Page.ResolveClientUrl("~/Scripts/jquery-2.1.4.min.js")%>"></script>
+    <script src="<%# Page.ResolveClientUrl("~/Scripts/jquery.signalR-2.2.0.min.js")%>"></script>
+    <script src="<%# Page.ResolveClientUrl("~/Scripts/bootstrap.js")%>"></script>
+    <link rel="stylesheet" type="text/css" href="<%# Page.ResolveClientUrl("~/Content/bootstrap.min.css")%>"/>
+    <link rel="stylesheet" type="text/css" href="<%# Page.ResolveClientUrl("~/Content/bootstrap-theme.min.css")%>"/>
     
     <title>Stockimulate</title>
     <asp:ContentPlaceHolder ID="MainMasterHeadPlaceHolder" runat="server"/>
