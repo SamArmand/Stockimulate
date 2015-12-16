@@ -1,0 +1,483 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.AI.ServerTelemetryChannel</name>
+    </assembly>
+    <members>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.IApplicationFolderProvider.GetApplicationFolder">
+            <summary>
+            Returns a per-user/per-application folder.
+            </summary>
+            <returns>
+            An <see cref="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.IPlatformFolder"/> instance, or <c>null</c> if current application does not have access to file system.
+            </returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.ApplicationFolderProvider.CheckAccessPermissions(System.IO.DirectoryInfo)">
+            <summary>
+            Throws <see cref="T:System.UnauthorizedAccessException"/> if the process lacks the required permissions to access the <paramref name="telemetryDirectory"/>.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.ApplicationStoppingEventArgs">
+            <summary>
+            Encapsulates arguments of the <see cref="E:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.IApplicationLifecycle.Stopping"/> event.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.ApplicationStoppingEventArgs.#ctor(System.Func{System.Func{System.Threading.Tasks.Task},System.Threading.Tasks.Task})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.ApplicationStoppingEventArgs"/> class with the specified runner of asynchronous methods.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.ApplicationStoppingEventArgs.Run(System.Func{System.Threading.Tasks.Task})">
+            <summary>
+            Runs the specified asynchronous method while preventing the application from exiting.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.CurrentThreadTaskScheduler">
+            <summary>
+            Runs tasks synchronously, on the current thread. 
+            From <a href="http://code.msdn.microsoft.com/Samples-for-Parallel-b4b76364/view/SourceCode"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.ExceptionHandler.Start(System.Func{System.Threading.Tasks.Task})">
+            <summary>
+            Starts the <paramref name="asyncMethod"/>, catches and logs any exceptions it may throw.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.IApplicationLifecycle">
+            <summary>
+            Encapsulates application lifecycle events.
+            </summary>
+        </member>
+        <member name="E:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.IApplicationLifecycle.Started">
+            <summary>
+            Occurs when a new instance of the application is started or an existing instance is activated.
+            </summary>
+        </member>
+        <member name="E:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.IApplicationLifecycle.Stopping">
+            <summary>
+            Occurs when the application is suspending or closing.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.INetwork">
+            <summary>
+            Encapsulates platform-specific behavior of network information APIs.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.INetwork.AddAddressChangedEventHandler(System.Net.NetworkInformation.NetworkAddressChangedEventHandler)">
+            <summary>
+            Adds <see cref="E:System.Net.NetworkInformation.NetworkChange.NetworkAddressChanged"/> event handler.
+            </summary>
+            <remarks>
+            Defined as a method instead of an event in this interface because C# compiler 
+            changes signature of event in a Windows Runtime component, making it very hard 
+            to implement properly.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation.IRandomNumberBatchGenerator">
+            <summary>
+            Interface for random number generator capable of producing 
+            a batch of unsigned 64 bit random numbers.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.Network">
+            <summary>
+            Encapsulates platform-specific behavior of network information APIs.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation.SamplingScoreGenerator">
+            <summary>
+            Utility class for sampling score generation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation.SamplingScoreGenerator.GetSamplingScore(Microsoft.ApplicationInsights.Channel.ITelemetry)">
+            <summary>
+            Generates telemetry sampling score between 0 and 100.
+            </summary>
+            <param name="telemetry">Telemetry item to score.</param>
+            <returns>Item sampling score.</returns>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.TelemetryBuffer">
+            <summary>
+            Accumulates <see cref="T:Microsoft.ApplicationInsights.Channel.ITelemetry"/> items for efficient transmission.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.ITelemetryProcessor">
+            <summary>
+            Represents an object used to process telemetry as part of sending it to Application Insights.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.ITelemetryProcessor.Process(Microsoft.ApplicationInsights.Channel.ITelemetry)">
+            <summary>
+            Process a collected telemetry item.
+            </summary>
+            <param name="item">A collected Telemetry item.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.TelemetryBuffer.Dispose">
+            <summary>
+            Releases resources used by this <see cref="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.TelemetryBuffer"/> instance.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.TelemetryBuffer.Process(Microsoft.ApplicationInsights.Channel.ITelemetry)">
+            <summary>
+            Processes the specified <paramref name="item"/> item.
+            </summary>
+            <exception cref="T:System.ArgumentNullException">The <paramref name="item"/> is null.</exception>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.TelemetryBuffer.FlushAsync">
+            <summary>
+            Passes all <see cref="T:Microsoft.ApplicationInsights.Channel.ITelemetry"/> items to the <see cref="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.TelemetrySerializer"/> and empties the queue.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.TelemetryBuffer.Capacity">
+            <summary>
+            Gets or sets the maximum number of telemetry items that can be buffered before transmission.
+            </summary>
+            <exception cref="T:System.ArgumentOutOfRangeException">The value is zero or less.</exception>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.TelemetrySerializer.EndpointAddress">
+            <summary>
+            Gets or sets the endpoint address.  
+            </summary>
+            <remarks>
+            If endpoint address is set to null, the default endpoint address will be used. 
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.ThrottlingTransmissionPolicy.PauseDuration">
+            <summary>
+            Gets a value that determines amount of time transmission sending will
+            be paused before attempting to resume transmission after a network error is detected.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.TransmissionBuffer.Capacity">
+            <summary>
+            Gets or sets the maximum amount of memory in bytes for buffering <see cref="T:Microsoft.ApplicationInsights.Channel.Transmission"/> objects.
+            </summary>
+            <remarks>
+            Use this property to limit the amount of memory used to store telemetry in memory of the 
+            application before transmission. Once the maximum amount of memory is
+            reached, <see cref="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.TransmissionBuffer.Enqueue(System.Func{Microsoft.ApplicationInsights.Channel.Transmission})"/> will reject new transmissions.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.TransmissionBuffer.Size">
+            <summary>
+            Gets the combined length of <see cref="P:Microsoft.ApplicationInsights.Channel.Transmission.Content"/> stored in the buffer.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.TransmissionExtensions.Load(System.IO.Stream)">
+            <summary>
+            Loads a new transmission from the specified <paramref name="stream"/>.
+            </summary>
+            <returns>Return transmission loaded from file; throws FormatException is file is corrupted.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.TransmissionExtensions.Save(Microsoft.ApplicationInsights.Channel.Transmission,System.IO.Stream)">
+            <summary>
+            Saves the transmission to the specified <paramref name="stream"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.TransmissionSender.Capacity">
+            <summary>
+            Gets or sets the the maximum number of <see cref="T:Microsoft.ApplicationInsights.Channel.Transmission"/> objects that can be sent simultaneously.
+            </summary>
+            <remarks>
+            Use this property to limit the number of concurrent HTTP connections. Once the maximum number of 
+            transmissions in progress is reached, <see cref="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.TransmissionSender.Enqueue(System.Func{Microsoft.ApplicationInsights.Channel.Transmission})"/> will stop accepting new transmissions
+            until previous transmissions are sent.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.TransmissionStorage.Capacity">
+            <summary>
+            Gets or sets the total amount of disk space, in bytes, allowed for storing transmission files.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.Transmitter">
+            <summary>
+            Implements throttled and persisted transmission of telemetry to Application Insights. 
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.Transmitter.#ctor(Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.TransmissionSender,Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.TransmissionBuffer,Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.TransmissionStorage,System.Collections.Generic.IEnumerable{Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.TransmissionPolicy})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.Transmitter"/> class. Used only for UTs.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation.WeakConcurrentRandom.random">
+            <summary>
+            Generator singleton.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation.WeakConcurrentRandom.index">
+            <summary>
+            Index of the last used random number within pre-generated array.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation.WeakConcurrentRandom.segmentCount">
+            <summary>
+            Count of segments of random numbers.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation.WeakConcurrentRandom.segmentSize">
+            <summary>
+            Number of random numbers per segment.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation.WeakConcurrentRandom.bitsToStoreRandomIndexWithinSegment">
+            <summary>
+            Number of bits used to store index of the random number within segment.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation.WeakConcurrentRandom.segmentIndexMask">
+            <summary>
+            Bit mask to get segment index bits.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation.WeakConcurrentRandom.randomIndexWithinSegmentMask">
+            <summary>
+            Bit mask to get index of the random number within segment.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation.WeakConcurrentRandom.randomArrayIndexMask">
+            <summary>
+            Bit mask to get index of the random number in the pre-generated array.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation.WeakConcurrentRandom.randomGemerators">
+            <summary>
+            Array of random number batch generators (one per each segment).
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation.WeakConcurrentRandom.randomNumbers">
+            <summary>
+            Array of pre-generated random numbers.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation.WeakConcurrentRandom.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation.WeakConcurrentRandom"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation.WeakConcurrentRandom.Initialize">
+            <summary>
+            Initializes generator with a set of random numbers.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation.WeakConcurrentRandom.Initialize(System.Func{System.UInt64,Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation.IRandomNumberBatchGenerator},System.Int32,System.Int32)">
+            <summary>
+            Initializes generator with a set of random numbers.
+            </summary>
+            <param name="randomGeneratorFactory">Factory used to create random number batch generators.</param>
+            <param name="segmentIndexBits">Number of significant bits in segment index, i.e. value of 3 means 8 segments of random numbers - 0..7.</param>
+            <param name="segmentBits">Number of significant bits in random number index within segment, i.e. value of 10 means 1024 random numbers per segment.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation.WeakConcurrentRandom.Next">
+            <summary>
+            Weakly thread safe next (random) operation id generator
+            where 'weakly' indicates that it is unlikely we'll get into 
+            collision state.
+            </summary>
+            <returns>Next operation id.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation.WeakConcurrentRandom.RegenerateSegment(System.Int32)">
+            <summary>
+            Generates random number batch for segment which just exhausted
+            according to value of the new index.
+            </summary>
+            <param name="newIndex">Index in random number array of the random number we're about to return.</param>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.WebApplicationLifecycle">
+            <summary>
+            Implements the <see cref="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.IApplicationLifecycle"/> events for web applications.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.WebApplicationLifecycle.Dispose">
+            <summary>
+            Unregisters the <see cref="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.WebApplicationLifecycle"/> from <see cref="T:System.Web.Hosting.HostingEnvironment"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.WebApplicationLifecycle.Stop(System.Boolean)">
+            <summary>
+            Gets called by <see cref="T:System.Web.Hosting.HostingEnvironment"/> when the web application is stopping.
+            </summary>
+            <param name="immediate">
+            False when the method is invoked first time, allowing async shutdown operations.
+            True when the method is invoked second time, demanding to unregister immediately.
+            </param>
+        </member>
+        <member name="E:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.WebApplicationLifecycle.Started">
+            <summary>
+            The <see cref="E:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.WebApplicationLifecycle.Started"/> event is raised when the <see cref="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.WebApplicationLifecycle"/> instance is first created.
+            This event is not raised for web applications.
+            </summary>
+        </member>
+        <member name="E:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.WebApplicationLifecycle.Stopping">
+            <summary>
+            The <see cref="E:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.WebApplicationLifecycle.Stopping"/> event is raised when <see cref="T:System.Web.Hosting.HostingEnvironment"/> calls the <see cref="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.Implementation.WebApplicationLifecycle.Stop(System.Boolean)"/> method.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation.XorshiftRandomBatchGenerator">
+            <summary>
+            Generates batches of random number using Xorshift algorithm
+            Note: the base code is from http://www.codeproject.com/Articles/9187/A-fast-equivalent-for-System-Random.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation.XorshiftRandomBatchGenerator.#ctor(System.UInt64)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation.XorshiftRandomBatchGenerator"/> class.
+            </summary>
+            <param name="seed">Random generator seed value.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation.XorshiftRandomBatchGenerator.NextBatch(System.UInt64[],System.Int32,System.Int32)">
+            <summary>
+            Generates a batch of random numbers.
+            </summary>
+            <param name="buffer">Buffer to put numbers in.</param>
+            <param name="index">Start index in the buffer.</param>
+            <param name="count">Count of random numbers to generate.</param>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.SamplingTelemetryProcessor">
+            <summary>
+            Represents a telemetry processor for sampling telemetry at a fixed-rate before sending to Application Insights.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.SamplingTelemetryProcessor.#ctor(Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.ITelemetryProcessor)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.SamplingTelemetryProcessor"/> class.
+            <param name="next">Next TelemetryProcessor in call chain.</param>
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.SamplingTelemetryProcessor.Process(Microsoft.ApplicationInsights.Channel.ITelemetry)">
+            <summary>
+            Process a collected telemetry item.
+            </summary>
+            <param name="item">A collected Telemetry item.</param>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.SamplingTelemetryProcessor.SamplingPercentage">
+            <summary>
+            Gets or sets data sampling percentage (between 0 and 100) for all <see cref="T:Microsoft.ApplicationInsights.Channel.ITelemetry"/>
+            objects logged in this <see cref="T:Microsoft.ApplicationInsights.TelemetryClient"/>.
+            </summary>
+            <remarks>
+            All sampling percentage must be in a ratio of 100/N where N is a whole number (2, 3, 4, …). E.g. 50 for 1/2 or 33.33 for 1/3.
+            Failure to follow this pattern can result in unexpected / incorrect computation of values in the portal.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.SamplingTelemetryProcessor.Next">
+            <summary>
+            Gets or sets the next TelemetryProcessor in call chain.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.ServerTelemetryChannel">
+            <summary>
+            Represents a communication channel for sending telemetry to Application Insights via HTTP/S.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.ServerTelemetryChannel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.ServerTelemetryChannel"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.ServerTelemetryChannel.Dispose">
+            <summary>
+            Releases unmanaged and - optionally - managed resources.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.ServerTelemetryChannel.Send(Microsoft.ApplicationInsights.Channel.ITelemetry)">
+            <summary>
+            Sends an instance of ITelemetry through the channel.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.ServerTelemetryChannel.Flush">
+            <summary>
+            Synchronously flushes the telemetry buffer. 
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.ServerTelemetryChannel.Initialize(Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration)">
+            <summary>
+            Initialize method is called after all configuration properties have been loaded from the configuration.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.ServerTelemetryChannel.DeveloperMode">
+            <summary>
+            Gets or sets a value indicating whether developer mode of telemetry transmission is enabled.
+            When developer mode is True, <see cref="N:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel"/> sends telemetry to Application Insights immediately 
+            during the entire lifetime of the application. When developer mode is False, <see cref="N:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel"/>
+            respects production sending policies defined by other properties.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.ServerTelemetryChannel.EndpointAddress">
+            <summary>
+            Gets or sets the HTTP address where the telemetry is sent.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.ServerTelemetryChannel.MaxTelemetryBufferDelay">
+            <summary>
+            Gets or sets the maximum telemetry batching interval. Once the interval expires, <see cref="N:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel"/> 
+            serializes the accumulated telemetry items for transmission.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.ServerTelemetryChannel.MaxTelemetryBufferCapacity">
+            <summary>
+            Gets or sets the maximum number of telemetry items will accumulate in a memory before 
+            the <see cref="N:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel"/> serializing them for transmission to Application Insights.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.ServerTelemetryChannel.MaxTransmissionBufferCapacity">
+            <summary>
+            Gets or sets the maximum amount of memory, in bytes, that <see cref="N:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel"/> will use 
+            to buffer transmissions before sending them to Application Insights.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.ServerTelemetryChannel.MaxTransmissionSenderCapacity">
+            <summary>
+            Gets or sets the maximum number of telemetry transmissions that <see cref="N:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel"/> will 
+            send to Application Insights at the same time.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.ServerTelemetryChannel.MaxTransmissionStorageCapacity">
+            <summary>
+            Gets or sets the maximum amount of disk space, in bytes, that <see cref="N:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel"/> will 
+            use to store unsent telemetry transmissions.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.ServerTelemetryChannel.TelemetryProcessor">
+            <summary>
+            Gets or sets first TelemetryProcessor in processor call chain.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.TelemetryChannelBuilder">
+            <summary>
+            Represents an object used to Build a composite TelemetryChannel.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.TelemetryChannelBuilder.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.TelemetryChannelBuilder"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.TelemetryChannelBuilder.Use(System.Func{Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.ITelemetryProcessor,Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.ITelemetryProcessor})">
+            <summary>
+            Uses given factory to add TelemetryProcessor to the composed TelemetryChannel.
+            </summary>
+            <param name="telemetryProcessorFactory">A delegate that returns a <see cref="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.ITelemetryProcessor"/>
+            , given the next <see cref="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.ITelemetryProcessor"/> in the call chain.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.TelemetryChannelBuilder.Build">
+            <summary>
+            Builds a composite TelemetryChannel.
+            </summary>
+            <returns><see cref="T:Microsoft.ApplicationInsights.Channel.ITelemetryChannel"/> object.</returns>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.TelemetryChannelBuilderExtensions">
+            <summary>
+            Extension methods for <see cref="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.TelemetryChannelBuilder"/>.
+            Adds shorthand for adding well-known processors.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.TelemetryChannelBuilderExtensions.UseSampling(Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.TelemetryChannelBuilder,System.Double)">
+            <summary>
+            Adds <see cref="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.SamplingTelemetryProcessor"/> to the <see cref="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.TelemetryChannelBuilder"/>
+            </summary>
+            <param name="builder">Instance of <see cref="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.TelemetryChannelBuilder"/></param>
+            <param name="samplingPercentage">Sampling Percentage to configure.</param>
+            <return>Instance of <see cref="T:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.TelemetryChannelBuilder"/>.</return>
+        </member>
+    </members>
+</doc>

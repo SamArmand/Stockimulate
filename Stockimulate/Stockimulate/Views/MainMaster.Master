@@ -1,0 +1,70 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MainMaster.master.cs" Inherits="Stockimulate.Views.MainMaster" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    
+    <script src="<%# Page.ResolveClientUrl("~/Scripts/jquery-2.1.4.min.js")%>"></script>
+    <script src="<%# Page.ResolveClientUrl("~/Scripts/jquery.signalR-2.2.0.min.js")%>"></script>
+    <script src="<%# Page.ResolveClientUrl("~/Scripts/bootstrap.js")%>"></script>
+    <link rel="stylesheet" type="text/css" href="<%# Page.ResolveClientUrl("~/Content/bootstrap.min.css")%>"/>
+    <link rel="stylesheet" type="text/css" href="<%# Page.ResolveClientUrl("~/Content/bootstrap-theme.min.css")%>"/>
+    
+    <title>Stockimulate</title>
+    <asp:ContentPlaceHolder ID="MainMasterHeadPlaceHolder" runat="server"/>
+    
+</head>
+<body>
+    
+    <form runat="server">
+        
+        <div class="container">
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-md-6">
+                <img style="max-height: 100px;" src="/img/JMSX.png" alt="JMSX.png"/>
+            </div>
+
+        </div>
+        <div class="row">
+            <nav class="navbar navbar-inverse">
+            <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><strong>stock</strong>imulate</a>
+          </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav" id="NavBarOptions" runat="server">
+                    
+
+                </ul>
+                <div class="navbar-form navbar-right" role="search">
+                    
+                    <div id="SignedInAsDiv" class="form-group" runat="server"></div>
+                    <div id="UsernameDiv" class="form-group" runat="server"></div>
+                    <div id="PasswordDiv" class="form-group" runat="server"></div>
+                    <button runat="server" class="btn btn-primary" id="LoginButton" OnServerClick="LoginButton_OnServerClick"></button>
+                </div>
+                
+    </div>
+            </nav>
+        </div>
+
+    </div>         
+        
+    <div class="container">
+
+        <asp:ContentPlaceHolder ID="MainMasterContentPlaceHolder" runat="server"/>
+        
+        
+
+    </div>
+    
+        </form>
+
+</body>
+</html>
