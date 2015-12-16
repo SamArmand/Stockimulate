@@ -3,7 +3,7 @@
 
       <div class="row">
     <div class="col-md-12">
-      <form class="form-horizontal" role="form" runat="server">
+      <div class="form-horizontal" role="form" runat="server">
         <fieldset>
 
           <!-- Form Name -->
@@ -30,7 +30,7 @@
           </div>
 
         </fieldset>
-      </form>
+      </div>
 
 
 

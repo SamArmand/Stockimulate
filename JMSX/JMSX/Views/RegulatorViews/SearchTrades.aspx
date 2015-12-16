@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/RegulatorViews/RegulatorMaster.master" AutoEventWireup="true" CodeBehind="SearchTrades.aspx.cs" Inherits="Stockimulate.Views.RegulatorViews.SearchTrades" %>
 <asp:Content ID="FraudPreventionContent" ContentPlaceHolderID="RegulatorMasterContentPlaceHolder" runat="server">
-        <form runat="server">
+        <div runat="server">
         <fieldset>
             <legend><h1>Search Trades</h1></legend>
     
@@ -71,7 +71,7 @@
             </div>
             
             </fieldset>
-            </form>
+            </div>
     
     <br/>
 
