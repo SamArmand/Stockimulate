@@ -1,0 +1,9 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/Views/MainMaster.Master" AutoEventWireup="true" CodeBehind="AdministratorMaster.master.cs" Inherits="Stockimulate.Views.AdministratorViews.AdministratorMaster" %>
+<asp:Content ID="Content" ContentPlaceHolderID="MainMasterContentPlaceHolder" runat="server">
+
+    <asp:ContentPlaceHolder ID="AdministratorMasterContentPlaceHolder" runat="server"/>
+        
+
+    
+
+</asp:Content>
