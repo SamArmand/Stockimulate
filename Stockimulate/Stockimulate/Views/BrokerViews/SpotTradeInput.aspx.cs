@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Stockimulate.Models;
+using Stockimulate.Architecture;
 
 namespace Stockimulate.Views.BrokerViews
 {
     public partial class SpotTradeInput : Page
     {
         private DataAccess _dataAccess;
+        private TradeBuilder _tradeBuilder; 
 
         protected void Page_Load(object sender, EventArgs e)
         {
 
             _dataAccess = DataAccess.SessionInstance;
+            _tradeBuilder = new TradeBuilder();
 
             var instruments = _dataAccess.Instruments;
 
@@ -41,7 +43,7 @@ namespace Stockimulate.Views.BrokerViews
                 else
                     buyerId = Convert.ToInt32(TraderIdInput.Value);
 
-                var trade = new Trade(buyerId, sellerId, SecurityDropDownList.SelectedIndex,
+                var trade = _tradeBuilder.BuildTrade(buyerId, sellerId, SecurityDropDownList.SelectedValue,
                     Convert.ToInt32(QuantityInput.Value), _dataAccess.GetInstruments()[SecurityDropDownList.SelectedIndex].Price);
                 _dataAccess.Insert(trade);
             }

@@ -129,7 +129,7 @@ namespace Stockimulate.Views.RegulatorViews
 
             TeamTable.Controls.Add(teamTable);
 
-            foreach (var player in team.Players)
+            foreach (var player in team.Traders)
             {
 
                 var positionValues = player.PositionValues(prices);

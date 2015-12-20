@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Stockimulate.Models;
+using Stockimulate.Architecture;
 
 namespace Stockimulate.Views.BrokerViews
 {
@@ -9,11 +9,13 @@ namespace Stockimulate.Views.BrokerViews
     {
 
         private DataAccess _dataAccess;
+        private TradeBuilder _tradeBuilder;
 
         protected void Page_Load(object sender, EventArgs e)
         {
 
             _dataAccess = DataAccess.SessionInstance;
+            _tradeBuilder = new TradeBuilder();
 
             var instruments = _dataAccess.Instruments;
 
@@ -31,8 +33,8 @@ namespace Stockimulate.Views.BrokerViews
 
             try
             {
-                var trade = new Trade(Convert.ToInt32(BuyerIdInput.Value), Convert.ToInt32(SellerIdInput.Value),
-                    SecurityDropDownList.SelectedIndex,
+                var trade = _tradeBuilder.BuildTrade(Convert.ToInt32(BuyerIdInput.Value), Convert.ToInt32(SellerIdInput.Value),
+                    SecurityDropDownList.SelectedValue,
                     Convert.ToInt32(QuantityInput.Value), price);
                 _dataAccess.Insert(trade);
             }

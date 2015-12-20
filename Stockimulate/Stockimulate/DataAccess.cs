@@ -45,7 +45,7 @@ namespace Stockimulate
 
             command.Parameters.AddWithValue("@BuyerID", trade.Buyer.Id);
             command.Parameters.AddWithValue("@SellerID", trade.Seller.Id);
-            command.Parameters.AddWithValue("@Symbol", trade.Symbol);
+            command.Parameters.AddWithValue("@Symbol", trade.Instrument.Symbol);
             command.Parameters.AddWithValue("@Quantity", trade.Quantity);
             command.Parameters.AddWithValue("@Price", trade.Price);
             command.Parameters.AddWithValue("@MarketPrice", trade.MarketPrice);
@@ -76,7 +76,7 @@ namespace Stockimulate
             var connection = new SqlConnection(ConnectionString);
 
             var command = new SqlCommand("SELECT Trades.ID AS TradeID, Buyers.ID AS BuyerID, Buyers.TeamID AS BuyerTeamID, Sellers.ID AS SellerID, Sellers.TeamID AS SellerTeamID, Trades.Symbol AS TradeSymbol, Trades.Quantity AS TradeQuantity, Trades.Price AS TradePrice, Trades.MarketPrice AS TradeMarketPrice, Trades.Flagged AS TradeFlagged " +
-                                            "FROM Trades JOIN Players Buyers ON Trades.BuyerID=Buyers.ID JOIN Players Sellers ON Trades.SellerID=Sellers.ID " +
+                                            "FROM Trades JOIN Traders Buyers ON Trades.BuyerID=Buyers.ID JOIN Traders Sellers ON Trades.SellerID=Sellers.ID " +
                                             "WHERE Buyers.ID" + (buyerId == string.Empty ? ">-1" : "=@BuyerID") + 
                                             " AND Sellers.ID" + (sellerId == string.Empty ? ">-1" : "=@SellerID") + 
                                             " AND Buyers.TeamID" + (buyerTeamId == string.Empty ? ">-1" : "=@BuyerTeamID") + 
@@ -107,6 +107,9 @@ namespace Stockimulate
             var trades = new List<Trade>();
 
             while (reader.Read())
+            {
+
+
                 trades.Add(new Trade(reader.GetInt32(reader.GetOrdinal("TradeID")),
                     reader.GetInt32(reader.GetOrdinal("BuyerID")),
                     reader.GetInt32(reader.GetOrdinal("SellerID")),
@@ -115,6 +118,7 @@ namespace Stockimulate
                     reader.GetInt32(reader.GetOrdinal("TradePrice")),
                     reader.GetInt32(reader.GetOrdinal("TradeMarketPrice")),
                     bool.Parse(reader.GetString(reader.GetOrdinal("TradeFlagged")))));
+            }
 
             reader.Dispose();
             command.Dispose();
@@ -124,13 +128,13 @@ namespace Stockimulate
         }
 
         //Player methods
-        private void Update(Player player)
+        private void Update(Trader player)
         {
             var connection = new SqlConnection(ConnectionString);
 
             var queryStringBuilder = new StringBuilder();
 
-            queryStringBuilder.Append("UPDATE Players SET");
+            queryStringBuilder.Append("UPDATE Traders SET");
 
             for (var i = 0; i < Instruments.Count; ++i)
                 queryStringBuilder.Append(" PositionIndex" + (i + 1) + "=@PositionIndex" + (i + 1) + ",");
@@ -156,9 +160,9 @@ namespace Stockimulate
 
         }
 
-        internal Player GetPlayer(int id) {
+        internal Trader GetPlayer(int id) {
 
-            Player player = null;
+            Trader player = null;
 
             var connection = new SqlConnection(ConnectionString);
 
@@ -169,7 +173,7 @@ namespace Stockimulate
             for (var i = 0; i < Instruments.Count; ++i)
                 queryStringBuilder.Append(", PositionIndex" + (i + 1));
 
-            queryStringBuilder.Append(", Funds FROM Players WHERE ID=@ID; ");
+            queryStringBuilder.Append(", Funds FROM Traders WHERE ID=@ID; ");
 
             var command = new SqlCommand(queryStringBuilder.ToString()) {CommandType = CommandType.Text};
 
@@ -193,7 +197,7 @@ namespace Stockimulate
 
                 var funds = reader.GetInt32(reader.GetOrdinal("Funds"));
 
-                player = new Player(id, name, teamId, positions, funds);
+                player = new Trader(id, name, teamId, positions, funds);
             }
 
             reader.Dispose();
@@ -203,12 +207,12 @@ namespace Stockimulate
             return player;
         }
 
-        internal List<Player> GetAllPlayers()
+        internal List<Trader> GetAllPlayers()
         {
             //TODO SUCH A DUMB METHOD - REWRITE
             var connection = new SqlConnection(ConnectionString);
 
-            var command = new SqlCommand("SELECT ID FROM Players WHERE NOT TeamID=0;") { CommandType = CommandType.Text };
+            var command = new SqlCommand("SELECT ID FROM Traders WHERE NOT TeamID=0;") { CommandType = CommandType.Text };
 
             connection.Open();
 
@@ -278,7 +282,7 @@ namespace Stockimulate
             for (var i = 0; i < Instruments.Count; ++i)
                 queryStringBuilder.Append(", PositionIndex" + (i + 1));
 
-            queryStringBuilder.Append(", Funds FROM Players WHERE TeamID=@TeamID;");
+            queryStringBuilder.Append(", Funds FROM Traders WHERE TeamID=@TeamID;");
 
             command = new SqlCommand(queryStringBuilder.ToString()) {CommandType = CommandType.Text};
 
@@ -290,7 +294,7 @@ namespace Stockimulate
 
             reader = command.ExecuteReader();
 
-            var players = new List<Player>();
+            var players = new List<Trader>();
 
             while (reader.Read())
             {
@@ -305,7 +309,7 @@ namespace Stockimulate
 
                 var funds = reader.GetInt32(reader.GetOrdinal("Funds"));
 
-                players.Add(new Player(playerId, playerName, teamId, positions, funds));
+                players.Add(new Trader(playerId, playerName, teamId, positions, funds));
 
             }
 
@@ -472,7 +476,7 @@ namespace Stockimulate
 
             var queryStringBuilder = new StringBuilder();
 
-            queryStringBuilder.Append("UPDATE Players SET");
+            queryStringBuilder.Append("UPDATE Traders SET");
 
             for (var i = 0; i < Instruments.Count; ++i)
                 queryStringBuilder.Append(" PositionIndex" + (i + 1) + "='0',");
