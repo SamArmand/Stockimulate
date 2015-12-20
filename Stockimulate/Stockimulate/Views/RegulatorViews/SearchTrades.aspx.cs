@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Stockimulate.Architecture;
 using Stockimulate.Models;
 
 namespace Stockimulate.Views.RegulatorViews
@@ -70,10 +71,10 @@ namespace Stockimulate.Views.RegulatorViews
 
                 sb.Append("<tr" + fontStyle + ">");
                 sb.Append("<td>" + trade.Buyer.Id + "</td>");
-                sb.Append("<td>" + trade.Buyer.TeamId + "</td>");
+                sb.Append("<td>" + trade.Buyer.Team.Id + "</td>");
                 sb.Append("<td>" + trade.Seller.Id + "</td>");
-                sb.Append("<td>" + trade.Seller.TeamId + "</td>");
-                sb.Append("<td>" + trade.Symbol + "</td>");
+                sb.Append("<td>" + trade.Seller.Team.Id + "</td>");
+                sb.Append("<td>" + trade.Instrument.Symbol + "</td>");
                 sb.Append("<td>" + trade.Quantity + "</td>");
                 sb.Append("<td>" + trade.Price + "</td>");
                 sb.Append("<td>" + trade.MarketPrice + "</td>");
