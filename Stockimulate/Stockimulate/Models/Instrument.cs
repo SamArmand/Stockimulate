@@ -10,15 +10,17 @@
 
         public string Symbol { get; }
 
-        public int Id { get; }
-
-        internal Instrument(int id, string symbol, int price, string name, string type)
+        internal Instrument(string symbol, int price, string name, string type)
         {
-            Id = id;
             Symbol = symbol;
             Price = price;
             Name = name;
             Type = type;
+        }
+
+        internal int CurrentPrice()
+        {
+            return DataAccess.SessionInstance.GetPrice(Symbol);
         }
                    
     }

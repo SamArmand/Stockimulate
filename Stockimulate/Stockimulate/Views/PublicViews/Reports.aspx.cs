@@ -136,7 +136,7 @@ namespace Stockimulate.Views.PublicViews
 
             TeamTable.Controls.Add(teamTable);
 
-            foreach (var player in team.Players)
+            foreach (var player in team.Traders)
             {
 
                 var positionValues = player.PositionValues(prices);

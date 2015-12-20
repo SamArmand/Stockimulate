@@ -10,49 +10,47 @@ namespace Stockimulate.Models
 
         internal string Name { get; }
 
-        internal List<Player> Players { get; }
+        //Lazy
+        internal List<Trader> Traders { get; }
 
-        internal Team(int id, string name, List<Player> players)
+        internal Team(int id, string name, List<Trader> traders)
         {
             Id = id;
             Name = name;
-            Players = players;
+            Traders = traders;
         }
 
-        internal List<int> Positions()
+        internal Dictionary<string, int> Positions()
         {
-            var positions = new List<int>();
+            var positions = DataAccess.SessionInstance.Instruments.ToDictionary(instrument => instrument.Symbol, instrument => 0);
 
-            for (var i = 0; i < Players[0].Positions.Count; ++i)
-                positions.Add(0);
-
-            foreach (var player in Players)
+            foreach (var trader in Traders)
             {
-                for (var i = 0; i < player.Positions.Count; ++i)
-                    positions[i] += player.Positions[i];
+                foreach (var account in trader.Accounts)
+                    positions[account.Key] += trader.Accounts[account.Key].Position;
             }
 
             return positions;
 
         }
 
-        internal List<int> PositionValues(List<int> prices)
+        internal Dictionary<string, int> PositionValues(Dictionary<string, int> prices)
         {
             var positions = Positions();
 
-            for (var i = 0; i < prices.Count; ++i)
-                positions[i] *= prices[i];
+            foreach (var price in prices)
+                positions[price.Key] *= price.Value;
 
             return positions;
 
         }
 
-        internal int Funds() => Players.Sum(player => player.Funds);
+        internal int Funds() => Traders.Sum(trader => trader.Funds);
 
-        internal int TotalValue(List<int> prices) => Funds() + PositionValues(prices).Sum();
+        internal int TotalValue(Dictionary<string, int> prices) => Funds() + PositionValues(prices).Values.Sum();
 
-        internal int PnL(List<int> prices) => Players.Sum(player => player.PnL(prices));
+        internal int PnL(Dictionary<string, int> prices) => Traders.Sum(trader => trader.PnL(prices));
 
-        internal int AveragePnL(List<int> prices) => PnL(prices) / Players.Count;
+        internal int AveragePnL(Dictionary<string, int> prices) => PnL(prices) / Traders.Count;
     }
 }
