@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using Stockimulate.Architecture;
 
 namespace Stockimulate.Views.RegulatorViews
 {

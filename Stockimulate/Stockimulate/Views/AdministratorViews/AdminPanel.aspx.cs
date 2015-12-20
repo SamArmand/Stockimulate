@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.UI.WebControls;
+using Stockimulate.Architecture;
 
 namespace Stockimulate.Views.AdministratorViews
 {

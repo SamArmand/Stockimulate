@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNet.SignalR;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Timers;
+using Microsoft.AspNet.SignalR;
 using Stockimulate.Models;
 using Stockimulate.Views;
 
-namespace Stockimulate
+namespace Stockimulate.Architecture
 {
 
     public class Simulator : Hub

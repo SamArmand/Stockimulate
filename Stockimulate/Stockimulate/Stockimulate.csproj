@@ -257,7 +257,7 @@
     <Compile Include="Views\AdministratorViews\AdminPanel.aspx.designer.cs">
       <DependentUpon>AdminPanel.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DataAccess.cs" />
+    <Compile Include="Architecture\DataAccess.cs" />
     <Compile Include="default.aspx.cs">
       <DependentUpon>default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -326,7 +326,7 @@
     <Compile Include="Views\PublicViews\Reports.aspx.designer.cs">
       <DependentUpon>Reports.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Simulator.cs" />
+    <Compile Include="Architecture\Simulator.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Views\RegulatorViews\RegulatorMaster.master.cs">

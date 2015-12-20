@@ -6,7 +6,7 @@ using System.Text;
 using System.Web;
 using Stockimulate.Models;
 
-namespace Stockimulate
+namespace Stockimulate.Architecture
 {
     internal class DataAccess
     {
@@ -143,8 +143,7 @@ namespace Stockimulate
 
             var command = new SqlCommand(queryStringBuilder.ToString()) {CommandType = CommandType.Text};
 
-            for (var i = 0; i < Instruments.Count; ++i)
-                command.Parameters.AddWithValue("@PositionIndex" + (i + 1), player.Positions[i]);
+            //TODO: update accounts
 
             command.Parameters.AddWithValue("@Funds", player.Funds);
             command.Parameters.AddWithValue("@ID", player.Id);
