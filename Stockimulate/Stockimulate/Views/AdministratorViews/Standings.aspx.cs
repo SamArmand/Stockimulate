@@ -19,7 +19,7 @@ namespace Stockimulate.Views.AdministratorViews
             for (var i = 0; i < _dataAccess.Instruments.Count; ++i)
                 prices.Add(_dataAccess.GetPrice(i));
 
-            var players = _dataAccess.GetAllPlayers();
+            var players = _dataAccess.GetAllTraders();
 
             var sortedPlayers = players.OrderByDescending(t => t.PnL(prices)).ToList();
 

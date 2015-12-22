@@ -122,7 +122,7 @@ namespace Stockimulate.Architecture
         {
             _dataAccess = DataAccess.Instance;
 
-            _instruments = _dataAccess.GetInstruments();
+            _instruments = _dataAccess.GetAllInstruments();
 
             _timer = new Timer {Interval = TimeInterval};
 

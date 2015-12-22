@@ -20,8 +20,8 @@ namespace Stockimulate.Architecture
 
             var dataAccess = DataAccess.SessionInstance;
 
-            var buyer = dataAccess.GetPlayer(buyerId);
-            var seller = dataAccess.GetPlayer(sellerId);
+            var buyer = dataAccess.GetTrader(buyerId);
+            var seller = dataAccess.GetTrader(sellerId);
 
             if (buyer == null)
                 throw new Exception("Buyer does not exist.");
