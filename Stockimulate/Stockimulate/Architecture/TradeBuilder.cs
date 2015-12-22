@@ -39,11 +39,11 @@ namespace Stockimulate.Architecture
             if (seller.Accounts[symbol].Position - quantity < -100 && seller.Team.Id != 0)
                 throw new Exception("This trade puts the seller's position at below -100.");
 
-            var instrument = dataAccess.Instruments[symbol];
-
             buyer.Accounts[symbol].Position += quantity;
             seller.Accounts[symbol].Position -= quantity;
-            var marketPrice = instrument.CurrentPrice();
+
+            var instrument = dataAccess.GetInstrument(symbol);
+            var marketPrice = instrument.Price;
 
             buyer.Funds -= quantity * price;
             seller.Funds += quantity * price;

@@ -29,7 +29,7 @@ namespace Stockimulate.Architecture
         private Status _status;
         private Mode _mode;
 
-        private readonly List<Instrument> _instruments;
+        private readonly Dictionary<string, Instrument> _instruments;
 
         private string _table;
 
@@ -70,10 +70,10 @@ namespace Stockimulate.Architecture
 
             _table = "PracticeEvents";
 
-            foreach (var t in _instruments)
+            foreach (var instrument in _instruments)
             {
-                t.Price = 0;
-                _dataAccess.Update(t);
+                instrument.Value.Price = 0;
+                _dataAccess.Update(instrument.Value);
             }
 
             Update();
@@ -83,10 +83,10 @@ namespace Stockimulate.Architecture
         {
             var dayInfo = _dataAccess.GetDayInfo(_table, _dayNumber);
 
-            for (var i = 0; i < _instruments.Count; ++i)
+            foreach (var instrument in _instruments)
             {
-                _instruments[i].Price += dayInfo.Effects[i];
-                _dataAccess.Update(_instruments[i]);
+                instrument.Value.Price += dayInfo.Effects[instrument.Key];
+                _dataAccess.Update(instrument.Value);
             }
 
             Index.Update(dayInfo);      
@@ -108,10 +108,10 @@ namespace Stockimulate.Architecture
 
             _table = "Events";
 
-            foreach (var t in _instruments)
+            foreach (var instrument in _instruments)
             {
-                t.Price = 0;
-                _dataAccess.Update(t);
+                instrument.Value.Price = 0;
+                _dataAccess.Update(instrument.Value);
             }
 
 
