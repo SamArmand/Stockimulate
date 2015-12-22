@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -14,11 +15,11 @@ namespace Stockimulate.Architecture
 
         private const string ConnectionString = "Server=tcp:h98ohmld2f.database.windows.net,1433;Database=Stockimulate;User ID=JMSXTech@h98ohmld2f;Password=jmsx!2014;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
 
-        public List<Instrument> Instruments { get; }
+        public Dictionary<string, Instrument> Instruments { get; }
 
         private DataAccess()
         {
-            Instruments = GetInstruments();
+            Instruments = GetAllInstruments();
         }
 
         internal static DataAccess Instance => _instance ?? (_instance = new DataAccess());
@@ -110,10 +111,11 @@ namespace Stockimulate.Architecture
             {
 
 
+
                 trades.Add(new Trade(reader.GetInt32(reader.GetOrdinal("TradeID")),
-                    reader.GetInt32(reader.GetOrdinal("BuyerID")),
-                    reader.GetInt32(reader.GetOrdinal("SellerID")),
-                    reader.GetString(reader.GetOrdinal("TradeSymbol")),
+                    GetTrader(reader.GetInt32(reader.GetOrdinal("BuyerID"))),
+                    GetTrader(reader.GetInt32(reader.GetOrdinal("SellerID"))),
+                    Instruments[reader.GetString(reader.GetOrdinal("TradeSymbol"))],
                     reader.GetInt32(reader.GetOrdinal("TradeQuantity")),
                     reader.GetInt32(reader.GetOrdinal("TradePrice")),
                     reader.GetInt32(reader.GetOrdinal("TradeMarketPrice")),
@@ -159,7 +161,7 @@ namespace Stockimulate.Architecture
 
         }
 
-        internal Trader GetPlayer(int id) {
+        internal Trader GetTrader(int id) {
 
             Trader player = null;
 
@@ -185,19 +187,9 @@ namespace Stockimulate.Architecture
             var reader = command.ExecuteReader();
 
             if (reader.Read())
-            {
-                var name = reader.GetString(reader.GetOrdinal("Name"));
-                var teamId = reader.GetInt32(reader.GetOrdinal("TeamID"));
-
-                var positions = new List<int>();
-
-                for (var i = 0; i < Instruments.Count; ++i)
-                    positions.Add(reader.GetInt32(reader.GetOrdinal("PositionIndex" + (i + 1))));
-
-                var funds = reader.GetInt32(reader.GetOrdinal("Funds"));
-
-                player = new Trader(id, name, teamId, positions, funds);
-            }
+                player = new Trader(id, reader.GetString(reader.GetOrdinal("Name")),
+                    GetTeam(reader.GetInt32(reader.GetOrdinal("TeamID"))), GetAccounts(id),
+                    reader.GetInt32(reader.GetOrdinal("Funds")));
 
             reader.Dispose();
             command.Dispose();
@@ -206,7 +198,12 @@ namespace Stockimulate.Architecture
             return player;
         }
 
-        internal List<Trader> GetAllPlayers()
+        private Dictionary<string, Account> GetAccounts(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal List<Trader> GetAllTraders()
         {
             //TODO SUCH A DUMB METHOD - REWRITE
             var connection = new SqlConnection(ConnectionString);
@@ -222,22 +219,21 @@ namespace Stockimulate.Architecture
             var ids = new List<int>();
 
             while (reader.Read())
-            {
-                var id = reader.GetInt32(reader.GetOrdinal("ID"));
-                ids.Add(id);
-            }
+                ids.Add(reader.GetInt32(reader.GetOrdinal("ID")));
 
             reader.Dispose();
             command.Dispose();
             connection.Dispose();
 
-            return ids.Select(GetPlayer).ToList();
+            return ids.Select(GetTrader).ToList();
 
         }
 
         //Team methods
         internal Team GetTeam(int id, string code="", bool needCode=false)
         {
+            //TODO: Rewrite
+
             if (id < 0)
                 return null;
 
@@ -266,61 +262,26 @@ namespace Stockimulate.Architecture
 
             reader.Read();
 
-            var name = reader.GetString(reader.GetOrdinal("Name"));
+            var team = new Team(id, reader.GetString(reader.GetOrdinal("Name")), null);
+            team.Traders = GetAllTraders(team);
 
             reader.Dispose();
             command.Dispose();
             connection.Dispose();
 
-            connection = new SqlConnection(ConnectionString);
+            return team;
+        }
 
-            var queryStringBuilder = new StringBuilder();
-
-            queryStringBuilder.Append("SELECT ID, Name, TeamID");
-
-            for (var i = 0; i < Instruments.Count; ++i)
-                queryStringBuilder.Append(", PositionIndex" + (i + 1));
-
-            queryStringBuilder.Append(", Funds FROM Traders WHERE TeamID=@TeamID;");
-
-            command = new SqlCommand(queryStringBuilder.ToString()) {CommandType = CommandType.Text};
-
-            command.Parameters.AddWithValue("@TeamID", id);
-
-            connection.Open();
-
-            command.Connection = connection;
-
-            reader = command.ExecuteReader();
-
-            var players = new List<Trader>();
-
-            while (reader.Read())
-            {
-                var playerId = reader.GetInt32(reader.GetOrdinal("ID"));
-                var playerName = reader.GetString(reader.GetOrdinal("Name"));
-                var teamId = reader.GetInt32(reader.GetOrdinal("TeamID"));
-
-                var positions = new List<int>();
-
-                for (var i = 0; i < Instruments.Count; ++i)
-                    positions.Add(reader.GetInt32(reader.GetOrdinal("PositionIndex"+(i+1))));
-
-                var funds = reader.GetInt32(reader.GetOrdinal("Funds"));
-
-                players.Add(new Trader(playerId, playerName, teamId, positions, funds));
-
-            }
-
-            reader.Dispose();
-            command.Dispose();
-            connection.Dispose();
-
-            return new Team(id, name, players);
+        private List<Trader> GetAllTraders(Team team)
+        {
+            throw new NotImplementedException();
         }
 
         internal List<Team> GetAllTeams()
         {
+
+            //TODO: Rewrite
+
             var connection = new SqlConnection(ConnectionString);
 
             var command = new SqlCommand("SELECT * FROM Teams WHERE NOT ID=0;") {CommandType = CommandType.Text};
@@ -378,10 +339,7 @@ namespace Stockimulate.Architecture
             if (newsItem == "null")
                 newsItem = string.Empty;
 
-            var effects = new List<int>();
-
-            for (var i = 0; i < Instruments.Count; ++i)
-                effects.Add(reader.GetInt32(reader.GetOrdinal("EffectIndex" + (i + 1))));
+            var effects = Instruments.ToDictionary(instrument => instrument.Key, instrument => reader.GetInt32(reader.GetOrdinal(instrument.Key)));
 
             var dayInfo = new DayInfo(tradingDay, effects, newsItem);
 
@@ -399,10 +357,10 @@ namespace Stockimulate.Architecture
 
             var connection = new SqlConnection(ConnectionString);
 
-            var command = new SqlCommand("UPDATE Instruments SET Price=@Price WHERE Id=@Id;") { CommandType = CommandType.Text };
+            var command = new SqlCommand("UPDATE Instruments SET Price=@Price WHERE Symbol=@Symbol;") { CommandType = CommandType.Text };
 
             command.Parameters.AddWithValue("@Price", instrument.Price);
-            command.Parameters.AddWithValue("@Id", instrument.Id);
+            command.Parameters.AddWithValue("@Symbol", instrument.Symbol);
 
             connection.Open();
 
@@ -415,7 +373,7 @@ namespace Stockimulate.Architecture
 
         }
 
-        internal List<Instrument> GetInstruments()
+        internal Dictionary<string, Instrument> GetAllInstruments()
         {
             var connection = new SqlConnection(ConnectionString);
 
@@ -427,15 +385,18 @@ namespace Stockimulate.Architecture
 
             var reader = command.ExecuteReader();
 
-            var instruments = new List<Instrument>();
+            var instruments = new Dictionary<string, Instrument>();
 
             while (reader.Read())
-                instruments.Add(new Instrument(reader.GetInt32(reader.GetOrdinal("ID")),
-                    reader.GetString(reader.GetOrdinal("Symbol")),
+            {
+                var symbol = reader.GetString(reader.GetOrdinal("Symbol"));
+
+                instruments.Add(symbol, new Instrument(
+                    symbol,
                     reader.GetInt32(reader.GetOrdinal("Price")),
                     reader.GetString(reader.GetOrdinal("Name")),
                     reader.GetString(reader.GetOrdinal("Type"))));
-
+            }
             reader.Dispose();
             command.Dispose();
             connection.Dispose();
@@ -561,7 +522,6 @@ namespace Stockimulate.Architecture
             command.Dispose();
             connection.Dispose();
         }
-
 
     }
 }

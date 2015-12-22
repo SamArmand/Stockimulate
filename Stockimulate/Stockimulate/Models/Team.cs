@@ -12,7 +12,7 @@ namespace Stockimulate.Models
         internal string Name { get; }
 
         //Lazy
-        internal List<Trader> Traders { get; }
+        internal List<Trader> Traders { get; set; }
 
         internal Team(int id, string name, List<Trader> traders)
         {

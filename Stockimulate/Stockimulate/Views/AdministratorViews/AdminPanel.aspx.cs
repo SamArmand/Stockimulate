@@ -19,8 +19,10 @@ namespace Stockimulate.Views.AdministratorViews
 
             var instruments = _dataAccess.Instruments;
 
-            for (var i = 0; i < instruments.Count; ++i)
-                SecurityDropDownList.Items.Add(new ListItem(instruments[i].Symbol, i.ToString()));
+            SecurityDropDownList.Items.Clear();
+
+            foreach (var instrument in instruments)
+                SecurityDropDownList.Items.Add(new ListItem(instrument.Key, instrument.Key));
 
         }
 
@@ -142,7 +144,7 @@ namespace Stockimulate.Views.AdministratorViews
         {
             if (PriceInput.Value != string.Empty && int.Parse(PriceInput.Value) >= 0)
             {
-                var instrument = _dataAccess.GetInstruments()[SecurityDropDownList.SelectedIndex];
+                var instrument = _dataAccess.GetAllInstruments()[SecurityDropDownList.SelectedValue];
                 instrument.Price = int.Parse(PriceInput.Value);
                 _dataAccess.Update(instrument);
             }

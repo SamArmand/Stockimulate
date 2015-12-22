@@ -18,8 +18,10 @@ namespace Stockimulate.Views.RegulatorViews
 
             var instruments = _dataAccess.Instruments;
 
-            for (var i = 0; i < instruments.Count; ++i)
-                SecurityDropDownList.Items.Add(new ListItem(instruments[i].Symbol, i.ToString()));
+            SecurityDropDownList.Items.Clear();
+
+            foreach (var instrument in instruments)
+                SecurityDropDownList.Items.Add(new ListItem(instrument.Key, instrument.Key));
         }
 
 

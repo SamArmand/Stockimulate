@@ -17,10 +17,10 @@ namespace Stockimulate.Views.BrokerViews
             _dataAccess = DataAccess.SessionInstance;
             _tradeBuilder = new TradeBuilder();
 
-            var instruments = _dataAccess.Instruments;
+            SecurityDropDownList.Items.Clear();
 
-            for (var i = 0; i < instruments.Count; ++i)
-                SecurityDropDownList.Items.Add(new ListItem(instruments[i].Symbol, i.ToString()));
+            foreach (var instrument in _dataAccess.Instruments)
+                SecurityDropDownList.Items.Add(new ListItem(instrument.Key, instrument.Key));
         }
 
         protected void Submit_Click(object sender, EventArgs e)

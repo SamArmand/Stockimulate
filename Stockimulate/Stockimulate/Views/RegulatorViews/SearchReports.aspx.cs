@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Stockimulate.Architecture;
@@ -35,10 +36,9 @@ namespace Stockimulate.Views.RegulatorViews
                 return;
             }
 
-            var prices = new List<int>(_dataAccess.Instruments.Count);
-
-            for (var i = 0; i < _dataAccess.Instruments.Count; ++i)
-                prices.Add(_dataAccess.GetPrice(i));
+            
+            var instruments = _dataAccess.GetAllInstruments();
+            var prices = instruments.Values.ToDictionary(x => x.Symbol, x => x.Price);
 
             TeamTable.Controls.Add(new HtmlGenericControl("h3") {InnerHtml = team.Name + " - " + team.Id});
 
@@ -60,14 +60,15 @@ namespace Stockimulate.Views.RegulatorViews
             var teamPositions = team.Positions();
             var teamPositionValues = team.PositionValues(prices);
 
-            for (var i = 0; i < prices.Count; ++i)
+            foreach (var teamPosition in teamPositions)
             {
+                var key = teamPosition.Key;
                 var row = new TableRow();
 
-                var securityCell = new TableCell {Text = _dataAccess.Instruments[i].Symbol};
-                var positionCell = new TableCell {Text = teamPositions[i].ToString()};
-                var currentPriceCell = new TableCell {Text = prices[i].ToString()};
-                var tableValueCell = new TableCell {Text = teamPositionValues[i].ToString()};
+                var securityCell = new TableCell {Text = key};
+                var positionCell = new TableCell {Text = teamPositions[key].ToString()};
+                var currentPriceCell = new TableCell {Text = prices[key].ToString()};
+                var tableValueCell = new TableCell {Text = teamPositionValues[key].ToString()};
 
                 row.Cells.Add(securityCell);
                 row.Cells.Add(positionCell);
@@ -153,14 +154,15 @@ namespace Stockimulate.Views.RegulatorViews
 
                 playerTable.Rows.Add(playerTableHeaderRow);
 
-                for (var i = 0; i < prices.Count; ++i)
+                foreach (var account in player.Accounts)
                 {
+                    var key = account.Key;
                     var row = new TableRow();
 
-                    var securityCell = new TableCell {Text = _dataAccess.Instruments[i].Symbol};
-                    var positionCell = new TableCell {Text = player.Positions[i].ToString()};
-                    var currentPriceCell = new TableCell {Text = prices[i].ToString()};
-                    var tableValueCell = new TableCell {Text = positionValues[i].ToString()};
+                    var securityCell = new TableCell {Text = key};
+                    var positionCell = new TableCell {Text = player.Accounts[key].Position.ToString()};
+                    var currentPriceCell = new TableCell {Text = prices[key].ToString()};
+                    var tableValueCell = new TableCell {Text = positionValues[key].ToString()};
 
                     row.Cells.Add(securityCell);
                     row.Cells.Add(positionCell);
