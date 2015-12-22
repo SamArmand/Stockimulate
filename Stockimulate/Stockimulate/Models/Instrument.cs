@@ -1,6 +1,4 @@
-﻿using Stockimulate.Architecture;
-
-namespace Stockimulate.Models
+﻿namespace Stockimulate.Models
 {
     internal class Instrument
     {
@@ -18,11 +16,6 @@ namespace Stockimulate.Models
             Price = price;
             Name = name;
             Type = type;
-        }
-
-        internal int CurrentPrice()
-        {
-            return DataAccess.SessionInstance.GetPrice(Symbol);
         }
                    
     }

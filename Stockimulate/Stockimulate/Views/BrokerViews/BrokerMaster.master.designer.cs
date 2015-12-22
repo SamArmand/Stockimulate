@@ -13,42 +13,6 @@ namespace Stockimulate.Views.BrokerViews {
     public partial class BrokerMaster {
         
         /// <summary>
-        /// Index1SymbolH2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Index1SymbolH2;
-        
-        /// <summary>
-        /// Index1PriceH2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Index1PriceH2;
-        
-        /// <summary>
-        /// Index2SymbolH2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Index2SymbolH2;
-        
-        /// <summary>
-        /// Index2PriceH2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Index2PriceH2;
-        
-        /// <summary>
         /// BrokerMasterContentPlaceHolder control.
         /// </summary>
         /// <remarks>

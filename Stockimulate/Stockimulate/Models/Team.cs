@@ -23,7 +23,9 @@ namespace Stockimulate.Models
 
         internal Dictionary<string, int> Positions()
         {
-            var positions = DataAccess.SessionInstance.Instruments.ToDictionary(instrument => instrument.Symbol, instrument => 0);
+            //TODO: Find way to only have what is owned in Dictionary
+
+            var positions = DataAccess.SessionInstance.Instruments.ToDictionary(instrument => instrument.Key, instrument => 0);
 
             foreach (var trader in Traders)
             {

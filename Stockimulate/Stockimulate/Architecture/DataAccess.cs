@@ -523,5 +523,9 @@ namespace Stockimulate.Architecture
             connection.Dispose();
         }
 
+        public Instrument GetInstrument(string symbol)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

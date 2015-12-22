@@ -27,15 +27,6 @@
 
 </asp:Content>
 <asp:Content ID="BrokerMasterContent" ContentPlaceHolderID="MainMasterContentPlaceHolder" runat="server">
-    
-            <div class="col-sm-12">
-
-            <div class="col-sm-2"><h2 id="Index1SymbolH2" runat="server"></h2></div>
-            <div class="col-sm-2 index1-price-h2"><h2 id="Index1PriceH2" runat="server"></h2></div>
-            <div class="col-sm-2"><h2 id="Index2SymbolH2" runat="server"></h2></div>
-            <div class="col-sm-2 index2-price-h2"><h2 id="Index2PriceH2" runat="server"></h2></div>
-
-        </div>
 
     <asp:ContentPlaceHolder ID="BrokerMasterContentPlaceHolder" runat="server"/>
         
