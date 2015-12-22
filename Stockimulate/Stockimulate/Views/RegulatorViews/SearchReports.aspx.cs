@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -36,9 +35,7 @@ namespace Stockimulate.Views.RegulatorViews
                 return;
             }
 
-            
-            var instruments = _dataAccess.GetAllInstruments();
-            var prices = instruments.Values.ToDictionary(x => x.Symbol, x => x.Price);
+            var prices = _dataAccess.GetAllInstruments().Values.ToDictionary(x => x.Symbol, x => x.Price);
 
             TeamTable.Controls.Add(new HtmlGenericControl("h3") {InnerHtml = team.Name + " - " + team.Id});
 

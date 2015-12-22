@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Stockimulate.Architecture;
+using Stockimulate.Models;
 
 namespace Stockimulate.Views.AdministratorViews
 {
@@ -14,58 +15,15 @@ namespace Stockimulate.Views.AdministratorViews
         {
             _dataAccess = DataAccess.SessionInstance;
 
-            var prices = new List<int>(_dataAccess.Instruments.Count);
-
-            for (var i = 0; i < _dataAccess.Instruments.Count; ++i)
-                prices.Add(_dataAccess.GetPrice(i));
-
-            var players = _dataAccess.GetAllTraders();
-
-            var sortedPlayers = players.OrderByDescending(t => t.PnL(prices)).ToList();
-
-            var sb = new StringBuilder();
-
-            sb.Append("<table class='pure-table pure-table-bordered'>");
-            sb.Append("    <thead>");
-            sb.Append("        <tr>");
-            sb.Append("            <th>Rank</th>");
-            sb.Append("            <th>Name/ID</th>");
-            sb.Append("            <th>P&L</th>");
-            sb.Append("        </tr>");
-            sb.Append("    <thead>");
-            sb.Append("    <tbody>");
-
-            var rank = 0;
-
-            for (var i = 0; i < sortedPlayers.Count; i++)
-            {
-
-                rank++;
-
-                string rankString;
-
-                if (i > 0 && sortedPlayers.ElementAt(i).PnL(prices) == sortedPlayers.ElementAt(i - 1).PnL(prices))
-                    rankString = "-";
-                else
-                    rankString = "" + rank;
-
-                sb.Append("<tr>");
-                sb.Append("<td>" + rankString + "</td>");
-                sb.Append("<td>" + sortedPlayers.ElementAt(i).Name + " - " + sortedPlayers.ElementAt(i).Id + "</td>");
-                sb.Append("<td>" + "$" + sortedPlayers.ElementAt(i).PnL(prices) + "</td>");
-                sb.Append("</tr>");
-            }
-
-            sb.Append("    </tbody>");
-            sb.Append("</table>");
-
-            PlayersTableDiv.InnerHtml = sb.ToString();
+            var prices = _dataAccess.GetAllInstruments().Values.ToDictionary(x => x.Symbol, x => x.Price);
 
             var teams = _dataAccess.GetAllTeams();
 
-            var sortedTeams = teams.OrderByDescending(t => t.AveragePnL(prices)).ToList();
+            var traders = new List<Trader>();
 
-            sb = new StringBuilder();
+            teams = teams.OrderByDescending(t => t.AveragePnL(prices)).ToList();
+
+            var sb = new StringBuilder();
 
             sb.Append("<table class='pure-table pure-table-bordered'>");
             sb.Append("    <thead>");
@@ -77,24 +35,26 @@ namespace Stockimulate.Views.AdministratorViews
             sb.Append("    <thead>");
             sb.Append("    <tbody>");
 
-            rank = 0;
+            var rank = 0;
 
-            for (var i = 0; i < sortedTeams.Count; i++)
+            for (var i = 0; i < teams.Count; i++)
             {
+
+                traders.AddRange(teams[i].Traders);
 
                 rank++;
 
                 string rankString;
 
-                if (i > 0 && sortedTeams[i].AveragePnL(prices) == sortedTeams[i - 1].AveragePnL(prices))
+                if (i > 0 && teams[i].AveragePnL(prices) == teams[i - 1].AveragePnL(prices))
                     rankString = "-";
                 else
                     rankString = "" + rank;
 
                 sb.Append("<tr>");
                 sb.Append("<td>" + rankString + "</td>");
-                sb.Append("<td>" + sortedTeams[i].Name + " - " + sortedTeams[i].Id + "</td>");
-                sb.Append("<td>" + "$" + sortedTeams[i].AveragePnL(prices) + "</td>");
+                sb.Append("<td>" + teams[i].Name + " - " + teams[i].Id + "</td>");
+                sb.Append("<td>" + "$" + teams[i].AveragePnL(prices) + "</td>");
                 sb.Append("</tr>");
             }
 
@@ -102,6 +62,47 @@ namespace Stockimulate.Views.AdministratorViews
             sb.Append("</table>");
 
             TeamsTableDiv.InnerHtml = sb.ToString();
+
+            traders = traders.OrderByDescending(t => t.PnL(prices)).ToList();
+
+            sb = new StringBuilder();
+
+            sb.Append("<table class='pure-table pure-table-bordered'>");
+            sb.Append("    <thead>");
+            sb.Append("        <tr>");
+            sb.Append("            <th>Rank</th>");
+            sb.Append("            <th>Name/ID</th>");
+            sb.Append("            <th>P&L</th>");
+            sb.Append("        </tr>");
+            sb.Append("    <thead>");
+            sb.Append("    <tbody>");
+
+            rank = 0;
+
+            for (var i = 0; i < traders.Count; i++)
+            {
+
+                rank++;
+
+                string rankString;
+
+                if (i > 0 && traders.ElementAt(i).PnL(prices) == traders.ElementAt(i - 1).PnL(prices))
+                    rankString = "-";
+                else
+                    rankString = "" + rank;
+
+                sb.Append("<tr>");
+                sb.Append("<td>" + rankString + "</td>");
+                sb.Append("<td>" + traders.ElementAt(i).Name + " - " + traders.ElementAt(i).Id + "</td>");
+                sb.Append("<td>" + "$" + traders.ElementAt(i).PnL(prices) + "</td>");
+                sb.Append("</tr>");
+            }
+
+            sb.Append("    </tbody>");
+            sb.Append("</table>");
+
+            PlayersTableDiv.InnerHtml = sb.ToString();
+
 
         }
     }
