@@ -7,10 +7,10 @@
 
     <title>&nbsp;</title>
 
-    <script src="../scripts/jquery-2.1.4.min.js"></script>    
-    <script src="../scripts/jquery.signalR-2.2.0.min.js"></script>
-    <script src="../scripts/bootstrap.min.js"></script>
-    <script src="../scripts/Highcharts-4.0.1/js/highcharts.js"></script>
+    <script src="../Scripts/jquery-2.1.4.min.js"></script>    
+    <script src="../Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+    <script src="../Scripts/highcharts/4.2.0/highcharts.js"></script>
     <script src="../signalr/hubs"></script>
 
     <%-- ReSharper disable PossiblyUnassignedProperty --%>
@@ -107,7 +107,6 @@
     <%-- ReSharper restore PossiblyUnassignedProperty --%>
 
     <link href="../Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="../Content/bootstrap-theme.css" rel="stylesheet" />
 </head>
 <body>
 
