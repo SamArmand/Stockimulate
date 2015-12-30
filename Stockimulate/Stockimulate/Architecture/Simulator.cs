@@ -98,7 +98,6 @@ namespace Stockimulate.Architecture
                 _dayNumber, dayInfo.Effects[0], dayInfo.Effects[1], dayInfo.NewsItem);
             _context.Clients.All.sendBrokerMessage(_instruments[0].Price, _instruments[1].Price);
 
-
         }
 
         public void SetCompetitionMode()
@@ -113,7 +112,6 @@ namespace Stockimulate.Architecture
                 instrument.Value.Price = 0;
                 _dataAccess.Update(instrument.Value);
             }
-
 
             Update();
         }

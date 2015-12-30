@@ -9,13 +9,13 @@ namespace Stockimulate.Views.BrokerViews
     {
 
         private DataAccess _dataAccess;
-        private TradeBuilder _tradeBuilder;
+        private TradeManager _tradeManager;
 
         protected void Page_Load(object sender, EventArgs e)
         {
 
             _dataAccess = DataAccess.SessionInstance;
-            _tradeBuilder = new TradeBuilder();
+            _tradeManager = new TradeManager();
 
             SecurityDropDownList.Items.Clear();
 
@@ -33,10 +33,9 @@ namespace Stockimulate.Views.BrokerViews
 
             try
             {
-                var trade = _tradeBuilder.BuildTrade(Convert.ToInt32(BuyerIdInput.Value), Convert.ToInt32(SellerIdInput.Value),
+                _tradeManager.CreateTrade(Convert.ToInt32(BuyerIdInput.Value), Convert.ToInt32(SellerIdInput.Value),
                     SecurityDropDownList.SelectedValue,
                     Convert.ToInt32(QuantityInput.Value), price);
-                _dataAccess.Insert(trade);
             }
 
             catch (Exception exception)

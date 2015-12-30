@@ -9,7 +9,6 @@
     <script src="<%# Page.ResolveClientUrl("~/Scripts/jquery.signalR-2.2.0.min.js")%>"></script>
     <script src="<%# Page.ResolveClientUrl("~/Scripts/bootstrap.js")%>"></script>
     <link rel="stylesheet" type="text/css" href="<%# Page.ResolveClientUrl("~/Content/bootstrap.min.css")%>"/>
-    <link rel="stylesheet" type="text/css" href="<%# Page.ResolveClientUrl("~/Content/bootstrap-theme.min.css")%>"/>
     
     <title>Stockimulate</title>
     <asp:ContentPlaceHolder ID="MainMasterHeadPlaceHolder" runat="server"/>
