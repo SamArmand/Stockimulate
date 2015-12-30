@@ -31,7 +31,7 @@ namespace Stockimulate.Views
                                      "<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>Anti Fraud<span class='caret'></span></a>"
                                      + "<ul class='dropdown-menu'>"
                                      + "<li><a href='../RegulatorViews/SearchTrades.aspx'>Search Trades</a></li>"
-                                     + "<li><a href='../RegulatorViews/SearchReports.aspx'>Search Reports</a></li>"
+                                     + "<li><a href='../PublicViews/Reports.aspx'>Search Reports</a></li>"
                                      + "</ul>"
                                      + "</li>");
 

@@ -12,13 +12,13 @@ namespace Stockimulate.Models
         internal string Name { get; }
 
         //Lazy
-        internal List<Trader> Traders { get; set; }
+        private List<Trader> _traders; 
+        internal List<Trader> Traders => _traders ?? (_traders = DataAccess.SessionInstance.GetTraders(Id));
 
-        internal Team(int id, string name, List<Trader> traders)
+        internal Team(int id, string name)
         {
             Id = id;
             Name = name;
-            Traders = traders;
         }
 
         internal Dictionary<string, int> Positions()

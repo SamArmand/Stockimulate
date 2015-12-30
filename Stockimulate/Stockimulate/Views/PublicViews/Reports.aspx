@@ -16,11 +16,13 @@
               <input id="TeamNumberInput" type="number" placeholder="Team Number" class="form-control" runat="server" required="required"/>
             </div>
 
+            <div id="TeamCodeDiv" runat="server">
             <label class="col-sm-1 col-sm-offset-1 control-label">Team Code</label>
             <div class="col-sm-2">
               <input id="TeamCodeInput" type="text" placeholder="Team Code" class="form-control" runat="server" required="required"/>
             </div>
           </div>
+              </div>
 
       <br/>
 

@@ -8,13 +8,13 @@ namespace Stockimulate.Views.BrokerViews
     public partial class SpotTradeInput : Page
     {
         private DataAccess _dataAccess;
-        private TradeBuilder _tradeBuilder; 
+        private TradeManager _tradeManager; 
 
         protected void Page_Load(object sender, EventArgs e)
         {
 
             _dataAccess = DataAccess.SessionInstance;
-            _tradeBuilder = new TradeBuilder();
+            _tradeManager = new TradeManager();
 
             SecurityDropDownList.Items.Clear();
 
@@ -43,9 +43,8 @@ namespace Stockimulate.Views.BrokerViews
                 else
                     buyerId = Convert.ToInt32(TraderIdInput.Value);
 
-                var trade = _tradeBuilder.BuildTrade(buyerId, sellerId, SecurityDropDownList.SelectedValue,
+                _tradeManager.CreateTrade(buyerId, sellerId, SecurityDropDownList.SelectedValue,
                     Convert.ToInt32(QuantityInput.Value), _dataAccess.GetAllInstruments()[SecurityDropDownList.SelectedValue].Price);
-                _dataAccess.Insert(trade);
             }
 
             catch (Exception exception)
