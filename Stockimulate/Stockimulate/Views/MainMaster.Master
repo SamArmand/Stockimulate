@@ -5,9 +5,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     
-    <script src="<%# Page.ResolveClientUrl("~/Scripts/jquery-2.1.4.min.js")%>"></script>
+    <script src="<%# Page.ResolveClientUrl("~/Scripts/jquery-2.2.3.min.js")%>"></script>
+    <script src="<%# Page.ResolveClientUrl("~/Scripts/tether/tether.min.js")%>"></script>
     <script src="<%# Page.ResolveClientUrl("~/Scripts/jquery.signalR-2.2.0.min.js")%>"></script>
-    <script src="<%# Page.ResolveClientUrl("~/Scripts/bootstrap.js")%>"></script>
+    <script src="<%# Page.ResolveClientUrl("~/Scripts/bootstrap.min.js")%>"></script>
     <link rel="stylesheet" type="text/css" href="<%# Page.ResolveClientUrl("~/Content/bootstrap.min.css")%>"/>
     
     <title>Stockimulate</title>
@@ -26,9 +27,9 @@
 
         </div>
         <div class="row">
-            <nav class="navbar navbar-inverse">
+            <nav class="navbar navbar-dark bg-inverse">
             <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <button type="button" class="navbar-toggler hidden-sm-up" data-toggle="collapse" data-target="#navbar-header" aria-expanded="false" aria-controls="navbar-header">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
@@ -36,12 +37,12 @@
             </button>
             <a class="navbar-brand" href="#"><strong>stock</strong>imulate</a>
           </div>
-            <div id="navbar" class="navbar-collapse collapse">
+            <div class="collapse navbar-toggleable-xs" id="navbar-header">
                 <ul class="nav navbar-nav" id="NavBarOptions" runat="server">
                     
 
                 </ul>
-                <div class="navbar-form navbar-right" role="search">
+                <div class="form-inline pull-xs-right">
                     
                     <div id="SignedInAsDiv" class="form-group" runat="server"></div>
                     <div id="UsernameDiv" class="form-group" runat="server"></div>

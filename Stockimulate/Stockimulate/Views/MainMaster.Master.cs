@@ -22,8 +22,8 @@ namespace Stockimulate.Views
             var stringBuilder = new StringBuilder();
 
             if (role == "Administrator")
-                stringBuilder.Append("<li><a href='../AdministratorViewws/AdminPanel.aspx'>Admin Panel</a></li>"
-                                     + "<li><a href = '../AdministratorViews/Standings.aspx'>Standings</a></li>");
+                stringBuilder.Append("<li class='nav-item'><a class='nav-link' href='../AdministratorViews/AdminPanel.aspx'>Admin Panel</a></li>"
+                                     + "<li class='nav-item'><a class='nav-link' href = '../AdministratorViews/Standings.aspx'>Standings</a></li>");
 
             if (role == "Administrator" || role == "Regulator")
                 stringBuilder.Append("<li class='dropdown'>"
@@ -36,14 +36,15 @@ namespace Stockimulate.Views
                                      + "</li>");
 
             if (role == "Administrator" || role == "Broker")
-                stringBuilder.Append("<li><a href='../BrokerViews/TradeInput.aspx'>Trade</a></li>"
-                                     + "<li><a href='../BrokerViews/SpotTradeInput.aspx'>Spot Trade</a></li>");
+                stringBuilder.Append("<li class='nav-item'><a class='nav-link' href='../BrokerViews/TradeInput.aspx'>Trade</a></li>"
+                                     + "<li class='nav-item'><a class='nav-link' href='../BrokerViews/SpotTradeInput.aspx'>Spot Trade</a></li>");
 
             if (string.IsNullOrEmpty(role))
             {
 
-                stringBuilder.Append(" <li><a href='../PublicViews/Home.aspx'>Home</a></li>"
-                        + "<li><a href='../PublicViews/Reports.aspx'>Reports</a></li>");
+                stringBuilder.Append(" <li class='nav-item'><a class='nav-link' href='../PublicViews/Home.aspx'>Home</a></li>"
+                        + "<li class='nav-item'><a class='nav-link' href='../PublicViews/Reports.aspx'>Reports</a></li>");
+
 
                 _usernameTextBox = new HtmlInputText();
                 _usernameTextBox.Attributes.Add("class", "form-control");

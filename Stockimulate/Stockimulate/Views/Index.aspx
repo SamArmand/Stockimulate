@@ -7,7 +7,7 @@
 
     <title>&nbsp;</title>
 
-    <script src="../Scripts/jquery-2.1.4.min.js"></script>    
+    <script src="../Scripts/jquery-2.2.3.min.js"></script>    
     <script src="../Scripts/jquery.signalR-2.2.0.min.js"></script>
     <script src="../Scripts/bootstrap.min.js"></script>
     <script src="../Scripts/highcharts/4.2.0/highcharts.js"></script>
@@ -64,34 +64,40 @@
 
             var sim = $.connection.simulator;
 
-            // Declare a function on the chat hub so the server can invoke it          
+            // Declare a function on the  hub so the server can invoke it          
 
-            sim.client.sendMessage = function (price1, price2, day, change1, change2, news) {
-                $('#GraphDiv').highcharts().series[0].addPoint([day, price1]);
+            sim.client.sendMessage = function (message) {
+
+                var id = $("#IndexDivId").text();
                 
-                $(".IndexPriceDiv").html("<h2>$" + price1 + "</h2>");
+                var currentPrice = $("#IndexDivId").text();
+                var effect = message[2 + id];
+                currentPrice += effect;
+                
+                $('#GraphDiv').highcharts().series[0].addPoint(message[0], currentPrice);
+                
+                $(".IndexPriceDiv").html("<h2>$" + currentPrice + "</h2>");
 
                 $('.IndexChangePositive').hide();
                 $('.IndexChangeNegative').hide();
                 $('.IndexChangeNone').hide();
 
                 if (change1 > 0) {
-                    $('.IndexChangePositiveH1').html(change1);
+                    $('.IndexChangePositiveH1').html(effect);
                     $('.IndexChangePositive').show();
                 }
 
                 else if (change1 < 0) {
-                    $('.IndexChangeNegativeH1').html(change1*-1);
+                    $('.IndexChangeNegativeH1').html(effect*-1);
                     $('.IndexChangeNegative').show();
                 }
 
                 else if (change1 === 0) {
-                    $('.IndexChangeNoneH1').html(change1);
                     $('.IndexChangeNone').show();
                 }
 
                 if (news !== "") {
-                    $('.NewsDiv').html("<h2>" + news + "</h2>");
+                    $('.NewsDiv').html("<h2>" + message[1] + "</h2>");
                 }
 
             };
@@ -165,7 +171,7 @@
     <div id="DataDiv" style="display:none;" runat="server"></div>
     <div id="IndexNameSymbolDiv" style="display:none;" runat="server"></div>
 
-    
+    <div id="IndexIdDiv" style="display:none;" runat="server"></div>
 
 </body>
 </html>

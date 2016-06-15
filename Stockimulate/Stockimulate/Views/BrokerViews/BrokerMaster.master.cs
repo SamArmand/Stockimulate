@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Web;
 using System.Web.UI;
-using Stockimulate.Architecture;
 
 namespace Stockimulate.Views.BrokerViews
 {
@@ -11,7 +10,7 @@ namespace Stockimulate.Views.BrokerViews
         {
             if ((string) HttpContext.Current.Session["Role"] != "Administrator" &&
                 (string) HttpContext.Current.Session["Role"] != "Broker")
-                Response.Redirect("../AccessDenied.aspx");
+                Response.Redirect("../PublicViews/AccessDenied.aspx");
 
         }
     }
