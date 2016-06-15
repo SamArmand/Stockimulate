@@ -22,9 +22,15 @@ namespace Stockimulate.Views.AdministratorViews
             SecurityDropDownList.Items.Clear();
 
             foreach (var instrument in instruments)
+            {
                 SecurityDropDownList.Items.Add(new ListItem(instrument.Key, instrument.Key));
+                var btn = new Button {UseSubmitBehavior = false};
+                btn.Attributes.Add("href", "../Index.aspx?index='" + instrument.Key + "'");
+                IndexButtonGroup.Controls.Add(btn);
+            }
 
         }
+
 
         protected void PlayPractice_Click(object sender, EventArgs e)
         {

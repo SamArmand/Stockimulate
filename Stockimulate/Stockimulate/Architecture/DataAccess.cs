@@ -68,12 +68,12 @@ namespace Stockimulate.Architecture
 
             var connection = new SqlConnection(ConnectionString);
 
-            var command = new SqlCommand("SELECT Trades.ID AS TradeID, Buyers.ID AS BuyerID, Buyers.TeamID AS BuyerTeamID, Sellers.ID AS SellerID, Sellers.TeamID AS SellerTeamID, Trades.Symbol AS TradeSymbol, Trades.Quantity AS TradeQuantity, Trades.Price AS TradePrice, Trades.MarketPrice AS TradeMarketPrice, Trades.Flagged AS TradeFlagged " +
-                                            "FROM Trades JOIN Traders Buyers ON Trades.BuyerID=Buyers.ID JOIN Traders Sellers ON Trades.SellerID=Sellers.ID " +
-                                            "WHERE Buyers.ID" + (buyerId == string.Empty ? ">-1" : "=@BuyerID") + 
-                                            " AND Sellers.ID" + (sellerId == string.Empty ? ">-1" : "=@SellerID") + 
-                                            " AND Buyers.TeamID" + (buyerTeamId == string.Empty ? ">-1" : "=@BuyerTeamID") + 
-                                            " AND Sellers.TeamID" + (sellerTeamId == string.Empty ? ">-1" : "=@SellerTeamID") + 
+            var command = new SqlCommand("SELECT Trades.Id AS TradeId, Buyers.Id AS BuyerId, Buyers.TeamId AS BuyerTeamId, Sellers.Id AS SellerId, Sellers.TeamId AS SellerTeamId, Trades.Symbol AS TradeSymbol, Trades.Quantity AS TradeQuantity, Trades.Price AS TradePrice, Trades.MarketPrice AS TradeMarketPrice, Trades.Flagged AS TradeFlagged " +
+                                            "FROM Trades JOIN Traders Buyers ON Trades.BuyerId=Buyers.Id JOIN Traders Sellers ON Trades.SellerID=Sellers.ID " +
+                                            "WHERE Buyers.Id" + (buyerId == string.Empty ? ">-1" : "=@BuyerId") + 
+                                            " AND Sellers.Id" + (sellerId == string.Empty ? ">-1" : "=@SellerId") + 
+                                            " AND Buyers.TeamId" + (buyerTeamId == string.Empty ? ">-1" : "=@BuyerTeamId") + 
+                                            " AND Sellers.TeamId" + (sellerTeamId == string.Empty ? ">-1" : "=@SellerTeamId") + 
                                             " AND Trades.Symbol" + (symbol == string.Empty ? " LIKE '%%'" : "=@Symbol") + 
                                             " AND Trades.Flagged" + (flagged == string.Empty ? " LIKE '%%'" : "=@Flagged") + 
                                             ";") { CommandType = CommandType.Text };
@@ -104,9 +104,9 @@ namespace Stockimulate.Architecture
 
 
 
-                trades.Add(new Trade(reader.GetInt32(reader.GetOrdinal("TradeID")),
-                    GetTrader(reader.GetInt32(reader.GetOrdinal("BuyerID"))),
-                    GetTrader(reader.GetInt32(reader.GetOrdinal("SellerID"))),
+                trades.Add(new Trade(reader.GetInt32(reader.GetOrdinal("TradeId")),
+                    GetTrader(reader.GetInt32(reader.GetOrdinal("BuyerId"))),
+                    GetTrader(reader.GetInt32(reader.GetOrdinal("SellerId"))),
                     Instruments[reader.GetString(reader.GetOrdinal("TradeSymbol"))],
                     reader.GetInt32(reader.GetOrdinal("TradeQuantity")),
                     reader.GetInt32(reader.GetOrdinal("TradePrice")),
@@ -126,10 +126,10 @@ namespace Stockimulate.Architecture
         {
             var connection = new SqlConnection(ConnectionString);
 
-            var command = new SqlCommand("UPDATE Traders SET Funds=@Funds WHERE ID=@ID;") {CommandType = CommandType.Text};
+            var command = new SqlCommand("UPDATE Traders SET Funds=@Funds WHERE Id=@Id;") {CommandType = CommandType.Text};
 
             command.Parameters.AddWithValue("@Funds", trader.Funds);
-            command.Parameters.AddWithValue("@ID", trader.Id);
+            command.Parameters.AddWithValue("@Id", trader.Id);
 
             connection.Open();
 
@@ -149,18 +149,9 @@ namespace Stockimulate.Architecture
 
             var connection = new SqlConnection(ConnectionString);
 
-            var queryStringBuilder = new StringBuilder();
+            var command = new SqlCommand("SELECT Name, TeamId, Funds FROM Traders WHERE Id=@Id;") {CommandType = CommandType.Text};
 
-            queryStringBuilder.Append("SELECT Name, TeamID");
-
-            for (var i = 0; i < Instruments.Count; ++i)
-                queryStringBuilder.Append(", PositionIndex" + (i + 1));
-
-            queryStringBuilder.Append(", Funds FROM Traders WHERE ID=@ID; ");
-
-            var command = new SqlCommand(queryStringBuilder.ToString()) {CommandType = CommandType.Text};
-
-            command.Parameters.AddWithValue("@ID", id);
+            command.Parameters.AddWithValue("@Id", id);
 
             connection.Open();
 
@@ -170,7 +161,7 @@ namespace Stockimulate.Architecture
 
             if (reader.Read())
                 player = new Trader(id, reader.GetString(reader.GetOrdinal("Name")),
-                    reader.GetInt32(reader.GetOrdinal("TeamID")),
+                    reader.GetInt32(reader.GetOrdinal("TeamId")),
                     reader.GetInt32(reader.GetOrdinal("Funds")));
 
             reader.Dispose();
@@ -225,9 +216,9 @@ namespace Stockimulate.Architecture
 
             var connection = new SqlConnection(ConnectionString);
 
-            var command = new SqlCommand(needCode ? "SELECT ID, Name FROM Teams WHERE ID=@ID AND Code=@Code;" : "SELECT ID, Name FROM Teams WHERE ID=@ID;") {CommandType = CommandType.Text};
+            var command = new SqlCommand(needCode ? "SELECT Id, Name FROM Teams WHERE Id=@Id AND Code=@Code;" : "SELECT Id, Name FROM Teams WHERE Id=@Id;") {CommandType = CommandType.Text};
 
-            command.Parameters.AddWithValue("@ID", id);
+            command.Parameters.AddWithValue("@Id", id);
 
             if (needCode)
                 command.Parameters.AddWithValue("@Code", code);
@@ -360,7 +351,7 @@ namespace Stockimulate.Architecture
         {
             var connection = new SqlConnection(ConnectionString);
 
-            var command = new SqlCommand("SELECT Id, Symbol, Price, Name, Type FROM Instruments;") { CommandType = CommandType.Text };
+            var command = new SqlCommand("SELECT Symbol, Price, Name, Type FROM Instruments;") { CommandType = CommandType.Text };
 
             connection.Open();
 
@@ -390,44 +381,10 @@ namespace Stockimulate.Architecture
         //Miscellaneous methods
         internal void Reset()
         {
+
             var connection = new SqlConnection(ConnectionString);
 
-            var queryStringBuilder = new StringBuilder();
-
-            queryStringBuilder.Append("UPDATE Traders SET");
-
-            for (var i = 0; i < Instruments.Count; ++i)
-                queryStringBuilder.Append(" PositionIndex" + (i + 1) + "='0',");
-
-            queryStringBuilder.Append(" Funds='1000000';");
-
-            var command = new SqlCommand(queryStringBuilder.ToString()) {CommandType = CommandType.Text};
-
-            connection.Open();
-
-            command.Connection = connection;
-
-            command.ExecuteNonQuery();
-
-            command.Dispose();
-            connection.Dispose();
-
-            connection = new SqlConnection(ConnectionString);
-
-            command = new SqlCommand("DELETE FROM Trades;") {CommandType = CommandType.Text};
-
-            connection.Open();
-
-            command.Connection = connection;
-
-            command.ExecuteNonQuery();
-
-            command.Dispose();
-            connection.Dispose();
-
-            connection = new SqlConnection(ConnectionString);
-
-            command = new SqlCommand("UPDATE Instruments SET Price='0';");
+            var command = new SqlCommand("UPDATE Traders SET Funds='1000000'; DELETE FROM Trades; UPDATE Instruments SET Price='0';") {CommandType = CommandType.Text};
 
             connection.Open();
 

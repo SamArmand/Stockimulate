@@ -28,10 +28,8 @@ namespace Stockimulate.Models
             var positions = DataAccess.SessionInstance.Instruments.ToDictionary(instrument => instrument.Key, instrument => 0);
 
             foreach (var trader in Traders)
-            {
                 foreach (var account in trader.Accounts)
                     positions[account.Key] += trader.Accounts[account.Key].Position;
-            }
 
             return positions;
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Timers;
 using Microsoft.AspNet.SignalR;
 using Stockimulate.Models;
@@ -91,12 +92,13 @@ namespace Stockimulate.Architecture
 
             Index.Update(dayInfo);      
 
-            //Hardcoded context update
-            //TODO Should send array of numbers with string instead
+            //send update to pages
+            var message = new List<string> {_dayNumber.ToString(), dayInfo.NewsItem};
 
-            _context.Clients.All.sendMessage(_instruments[0].Price, _instruments[1].Price, 
-                _dayNumber, dayInfo.Effects[0], dayInfo.Effects[1], dayInfo.NewsItem);
-            _context.Clients.All.sendBrokerMessage(_instruments[0].Price, _instruments[1].Price);
+            message.AddRange(_instruments.Select(instrument => dayInfo.Effects[instrument.Key].ToString()));
+
+            _context.Clients.All.sendMessage(message.ToArray());
+            _context.Clients.All.sendBrokerMessage(message.ToArray());
 
         }
 

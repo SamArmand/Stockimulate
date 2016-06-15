@@ -13,6 +13,15 @@ namespace Stockimulate.Views.AdministratorViews {
     public partial class AdminPanel {
         
         /// <summary>
+        /// IndexButtonGroup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexButtonGroup;
+        
+        /// <summary>
         /// PlayPracticeButton control.
         /// </summary>
         /// <remarks>

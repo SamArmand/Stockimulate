@@ -5,8 +5,19 @@
 
         <!-- Form Name -->
           <legend><h1>AdminPanel Panel</h1></legend>
+            
+            
+            <div class="row">
+                
+                    <div class="btn-group" role="group" ID="IndexButtonGroup" runat="server">
+                        
+                    </div>
+
+            </div>
 
         <div class="row">
+            
+
 
             <asp:Button ID="PlayPracticeButton" CssClass="btn btn-primary" runat="server" Text="Play Practice" OnClick="PlayPractice_Click" />
             <asp:Button ID="PlayCompetitionButton" CssClass="btn btn-primary" runat="server" Text="Play Competition" OnClick="PlayCompetition_Click" />
