@@ -23,13 +23,14 @@ namespace Stockimulate.Models
 
         internal Dictionary<string, int> Positions()
         {
-            //TODO: Find way to only have what is owned in Dictionary
 
-            var positions = DataAccess.SessionInstance.Instruments.ToDictionary(instrument => instrument.Key, instrument => 0);
+            var positions = new Dictionary<string, int>();
 
-            foreach (var trader in Traders)
-                foreach (var account in trader.Accounts)
-                    positions[account.Key] += trader.Accounts[account.Key].Position;
+            foreach (var account in Traders.SelectMany(trader => trader.Accounts))
+                if (positions.ContainsKey(account.Key))
+                    positions[account.Key] += account.Value.Position;
+                else
+                    positions.Add(account.Key, account.Value.Position);
 
             return positions;
 
@@ -39,7 +40,7 @@ namespace Stockimulate.Models
         {
             var positions = Positions();
 
-            foreach (var price in prices)
+            foreach (var price in prices.Where(price => positions.ContainsKey(price.Key)))
                 positions[price.Key] *= price.Value;
 
             return positions;

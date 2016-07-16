@@ -24,7 +24,7 @@ namespace Stockimulate.Views.AdministratorViews
             foreach (var instrument in instruments)
             {
                 SecurityDropDownList.Items.Add(new ListItem(instrument.Key, instrument.Key));
-                var btn = new Button {UseSubmitBehavior = false};
+                var btn = new Button {UseSubmitBehavior = false, CausesValidation = false, OnClientClick = "return false;"};
                 btn.Attributes.Add("href", "../Index.aspx?index='" + instrument.Key + "'");
                 IndexButtonGroup.Controls.Add(btn);
             }
