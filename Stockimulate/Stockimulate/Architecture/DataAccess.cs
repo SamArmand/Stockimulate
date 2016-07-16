@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -42,10 +41,10 @@ namespace Stockimulate.Architecture
         {
             var connection = new SqlConnection(ConnectionString);
 
-            var command = new SqlCommand("INSERT INTO Trades (BuyerID, SellerID, Symbol, Quantity, Price, MarketPrice, Flagged) VALUES (@BuyerID, @SellerID, @Symbol, @Quantity, @Price, @MarketPrice, @Flagged);") {CommandType = CommandType.Text};
+            var command = new SqlCommand("INSERT INTO Trades (BuyerId, SellerId, Symbol, Quantity, Price, MarketPrice, Flagged) VALUES (@BuyerId, @SellerId, @Symbol, @Quantity, @Price, @MarketPrice, @Flagged);") {CommandType = CommandType.Text};
 
-            command.Parameters.AddWithValue("@BuyerID", trade.Buyer.Id);
-            command.Parameters.AddWithValue("@SellerID", trade.Seller.Id);
+            command.Parameters.AddWithValue("@BuyerId", trade.Buyer.Id);
+            command.Parameters.AddWithValue("@SellerId", trade.Seller.Id);
             command.Parameters.AddWithValue("@Symbol", trade.Instrument.Symbol);
             command.Parameters.AddWithValue("@Quantity", trade.Quantity);
             command.Parameters.AddWithValue("@Price", trade.Price);
@@ -79,13 +78,13 @@ namespace Stockimulate.Architecture
                                             ";") { CommandType = CommandType.Text };
 
             if (buyerId != string.Empty)
-                command.Parameters.AddWithValue("@BuyerID", buyerId);
+                command.Parameters.AddWithValue("@BuyerId", buyerId);
             if (buyerTeamId != string.Empty)
-                command.Parameters.AddWithValue("@BuyerTeamID", buyerTeamId);
+                command.Parameters.AddWithValue("@BuyerTeamId", buyerTeamId);
             if (sellerId != string.Empty)
-                command.Parameters.AddWithValue("@SellerID", sellerId);
+                command.Parameters.AddWithValue("@SellerId", sellerId);
             if (sellerTeamId != string.Empty)
-                command.Parameters.AddWithValue("@SellerTeamID", sellerTeamId);
+                command.Parameters.AddWithValue("@SellerTeamId", sellerTeamId);
             if (symbol != string.Empty)
                 command.Parameters.AddWithValue("@Symbol", symbol);
             if (flagged != string.Empty)
@@ -101,8 +100,6 @@ namespace Stockimulate.Architecture
 
             while (reader.Read())
             {
-
-
 
                 trades.Add(new Trade(reader.GetInt32(reader.GetOrdinal("TradeId")),
                     GetTrader(reader.GetInt32(reader.GetOrdinal("BuyerId"))),
@@ -173,13 +170,54 @@ namespace Stockimulate.Architecture
 
         public List<Trader> GetTraders(int teamId)
         {
-            throw new NotImplementedException();
+
+            var traders = new List<Trader>();
+            
+            var connection = new SqlConnection(ConnectionString);
+
+            var command = new SqlCommand("SELECT Id, Name, Funds FROM Traders WHERE TeamId=@TeamId;") { CommandType = CommandType.Text };
+
+            command.Parameters.AddWithValue("@TeamId", teamId);
+
+            connection.Open();
+
+            command.Connection = connection;
+
+            var reader = command.ExecuteReader();
+
+            while (reader.Read())
+                traders.Add(new Trader(reader.GetInt32(reader.GetOrdinal("Id")),
+                    reader.GetString(reader.GetOrdinal("Name")),
+                    teamId,
+                    reader.GetInt32(reader.GetOrdinal("Funds"))));
+
+            reader.Dispose();
+            command.Dispose();
+            connection.Dispose();
+
+            return traders;
+
         }
 
         //Account Methods
         public void Insert(Account account)
         {
-            throw new NotImplementedException();
+            var connection = new SqlConnection(ConnectionString);
+
+            var command = new SqlCommand("INSERT INTO Accounts (TraderId, Position, Symbol) VALUES (@TraderId, @Position, @Symbol);") { CommandType = CommandType.Text };
+
+            command.Parameters.AddWithValue("@TraderId", account.Trader.Id);
+            command.Parameters.AddWithValue("@Position", account.Position);
+            command.Parameters.AddWithValue("@Symbol", account.Instrument.Symbol);
+
+            connection.Open();
+
+            command.Connection = connection;
+
+            command.ExecuteNonQuery();
+
+            command.Dispose();
+            connection.Dispose();
         }
 
         internal void Update(Account account)
@@ -204,7 +242,35 @@ namespace Stockimulate.Architecture
 
         public Dictionary<string, Account> GetAccounts(int traderId)
         {
-            throw new NotImplementedException();
+            var accounts = new Dictionary<string, Account>();
+
+            var connection = new SqlConnection(ConnectionString);
+
+            var command = new SqlCommand("SELECT Position, Symbol FROM Accounts WHERE TraderId=@TraderId;") { CommandType = CommandType.Text };
+
+            command.Parameters.AddWithValue("@TraderId", traderId);
+
+            connection.Open();
+
+            command.Connection = connection;
+
+            var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                var symbol = reader.GetString(reader.GetOrdinal("Symbol"));
+
+                accounts.Add(symbol, new Account(symbol,
+                    traderId,
+                    reader.GetInt32(reader.GetOrdinal("Position"))));
+            }
+
+            reader.Dispose();
+            command.Dispose();
+            connection.Dispose();
+
+            return accounts;
+
         }
 
         //Team methods
@@ -344,7 +410,31 @@ namespace Stockimulate.Architecture
 
         public Instrument GetInstrument(string symbol)
         {
-            throw new NotImplementedException();
+            var connection = new SqlConnection(ConnectionString);
+
+            var command = new SqlCommand("SELECT Symbol, Price, Name, Type FROM Instruments WHERE Symbol=@Symbol;") { CommandType = CommandType.Text };
+
+            command.Parameters.AddWithValue("@Symbol", symbol);
+
+            connection.Open();
+
+            command.Connection = connection;
+
+            var reader = command.ExecuteReader();
+
+            reader.Read();
+
+            var instrument = new Instrument(
+                symbol,
+                reader.GetInt32(reader.GetOrdinal("Price")),
+                reader.GetString(reader.GetOrdinal("Name")),
+                reader.GetString(reader.GetOrdinal("Type")));
+
+            reader.Dispose();
+            command.Dispose();
+            connection.Dispose();
+
+            return instrument;
         }
 
         internal Dictionary<string, Instrument> GetAllInstruments()

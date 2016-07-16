@@ -32,7 +32,7 @@ namespace Stockimulate.Models
 
         internal int TotalValue(Dictionary<string, int> prices) => Funds + PositionValues(prices).Values.Sum();
 
-        internal Dictionary<string, int> PositionValues(Dictionary<string, int> prices) => prices.ToDictionary(price => price.Key, price => Accounts[price.Key].Position);
+        internal Dictionary<string, int> PositionValues(Dictionary<string, int> prices) => prices.Where(price => Accounts.ContainsKey(price.Key)).ToDictionary(price => price.Key, price => _accounts[price.Key].Position*price.Value);
 
         internal int PnL(Dictionary<string, int> prices) => TotalValue(prices) - 1000000;
     }

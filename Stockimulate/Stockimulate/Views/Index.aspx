@@ -7,7 +7,7 @@
 
     <title>&nbsp;</title>
 
-    <script src="../Scripts/jquery-2.2.3.min.js"></script>    
+    <script src="../Scripts/jquery-3.1.0.min.js"></script>    
     <script src="../Scripts/jquery.signalR-2.2.0.min.js"></script>
     <script src="../Scripts/bootstrap.min.js"></script>
     <script src="../Scripts/highcharts/4.2.0/highcharts.js"></script>
@@ -82,21 +82,21 @@
                 $('.IndexChangeNegative').hide();
                 $('.IndexChangeNone').hide();
 
-                if (change1 > 0) {
+                if (effect > 0) {
                     $('.IndexChangePositiveH1').html(effect);
                     $('.IndexChangePositive').show();
                 }
 
-                else if (change1 < 0) {
+                else if (effect < 0) {
                     $('.IndexChangeNegativeH1').html(effect*-1);
                     $('.IndexChangeNegative').show();
                 }
 
-                else if (change1 === 0) {
+                else {
                     $('.IndexChangeNone').show();
                 }
 
-                if (news !== "") {
+                if (message[1] !== "") {
                     $('.NewsDiv').html("<h2>" + message[1] + "</h2>");
                 }
 

@@ -26,9 +26,9 @@ namespace Stockimulate.Views
                                      + "<li class='nav-item'><a class='nav-link' href = '../AdministratorViews/Standings.aspx'>Standings</a></li>");
 
             if (role == "Administrator" || role == "Regulator")
-                stringBuilder.Append("<li class='dropdown'>"
+                stringBuilder.Append("<li class='nav-item dropdown'>"
                                      +
-                                     "<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>Anti Fraud<span class='caret'></span></a>"
+                                     "<a href='#' class='nav-link dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>Anti Fraud<span class='caret'></span></a>"
                                      + "<ul class='dropdown-menu'>"
                                      + "<li><a href='../RegulatorViews/SearchTrades.aspx'>Search Trades</a></li>"
                                      + "<li><a href='../PublicViews/Reports.aspx'>Search Reports</a></li>"
