@@ -19,7 +19,7 @@ namespace Stockimulate.Views
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (HttpContext.Current.Session["Login"] as string != "Administrator")
+            if (HttpContext.Current.Session["Role"] as string != "Administrator")
                 Response.Redirect("AccessDenied.aspx");
 
             var instrument = DataAccess.SessionInstance.Instruments[Request.QueryString["index"]];
@@ -33,21 +33,23 @@ namespace Stockimulate.Views
                     break;
                 }
                     
-
             Title = instrument.Symbol;
 
             IndexChangePositiveDiv.Style.Value = "display: none;";
             IndexChangeNegativeDiv.Style.Value = "display: none;";
             IndexChangeNoneDiv.Style.Value = "display: none;";
 
-            IndexPriceDiv.InnerHtml = "<h1>$" + _indexPrice[Title] + "</h1>";
+            if (_indexChange == null || _indexPrice == null || _prices == null)
+                Reset();
 
-            if (_indexChange[Title] > 0)
+            if (_indexPrice != null) IndexPriceDiv.InnerHtml = "<h1>$" + _indexPrice[Title] + "</h1>";
+
+            if (_indexChange != null && _indexChange[Title] > 0)
             {
                 IndexChangePositiveH1.InnerHtml = _indexChange[Title].ToString();
                 IndexChangePositiveDiv.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;text-align:center;";
             }
-            else if (_indexChange[Title] < 0)
+            else if (_indexChange != null && _indexChange[Title] < 0)
             {
                 IndexChangeNegativeH1.InnerHtml = (_indexChange[Title]*-1).ToString();
                 IndexChangeNegativeDiv.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;text-align:center;";
@@ -63,11 +65,11 @@ namespace Stockimulate.Views
 
             for(var i=0; i<_day; i++)
             {
-                javascriptArray += "[" + i +"," + _prices[Title].ElementAt(i) +"]";
+                if (_prices != null)
+                    javascriptArray += "[" + i +"," + _prices[Title].ElementAt(i) +"]";
 
                 if (i + 1 != _day)
                     javascriptArray += ", ";
-
             }
 
             javascriptArray += "]";
@@ -96,10 +98,10 @@ namespace Stockimulate.Views
 
         public static void Reset()
         {
-
             _indexChange = new Dictionary<string, int>();
             _indexPrice = new Dictionary<string, int>();
             _prices = new Dictionary<string, List<int>>();
+
             _day = 0;
 
             _news = string.Empty;
