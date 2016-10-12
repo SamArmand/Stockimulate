@@ -2,20 +2,23 @@
 {
     internal class Instrument
     {
-        public string Name { get; }
+        internal string Name { get; }
 
-        public string Type { get; }
+        internal string Type { get; }
 
-        public int Price { get; set; }
+        internal int Price { get; set; }
 
-        public string Symbol { get; }
+        internal string Symbol { get; }
 
-        internal Instrument(string symbol, int price, string name, string type)
+        internal int Id { get; }
+
+        internal Instrument(string symbol, int price, string name, string type, int id)
         {
             Symbol = symbol;
             Price = price;
             Name = name;
             Type = type;
+            Id = id;
         }
                    
     }

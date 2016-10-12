@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Stockimulate.Models
+﻿namespace Stockimulate.Models
 {
     internal class Trade
     {
@@ -12,9 +10,11 @@ namespace Stockimulate.Models
         internal int Price { get; }
         internal int MarketPrice { get; }
         internal bool Flagged { get; }
+        internal int BrokerId { get; }
+        internal int Day { get; }
 
         internal Trade(int id, Trader buyer, Trader seller, Instrument instrument, int quantity, int price, int marketPrice,
-            bool flagged)
+            bool flagged, int brokerId)
         {
             Id = id;
             Seller = seller;
@@ -24,6 +24,8 @@ namespace Stockimulate.Models
             Quantity = quantity;
             MarketPrice = marketPrice;
             Flagged = flagged;
+            BrokerId = brokerId;
+            //Day = day;
         }
 
 

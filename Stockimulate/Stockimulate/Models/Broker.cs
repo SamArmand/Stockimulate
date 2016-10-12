@@ -2,5 +2,8 @@
 {
     public class Broker
     {
+
+        public int Id { get; set; }
+
     }
 }

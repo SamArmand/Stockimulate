@@ -11,7 +11,7 @@
           <legend><h1>Trade</h1></legend>
             
           <!-- Text input-->
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-1 control-label">Buyer ID</label>
             <div class="col-sm-2">
               <input id="BuyerIdInput" type="number" placeholder="Buyer ID" class="form-control" runat="server"/>        
@@ -26,7 +26,7 @@
           </div>
 
             <!-- Text input-->
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-1 control-label">Security</label>
             <div class="col-sm-2">
                 
@@ -41,7 +41,7 @@
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-1 control-label ">Price</label>
             <div class="col-sm-2 ">
               <input id="PriceInput" type="number" placeholder="Price" class="form-control" runat="server"/>
@@ -49,9 +49,7 @@
             </div>
           </div>
 
-      <br/>
-
-            <div class="row">
+            <div class="form-group row">
                 <input id="VerifyInput" type="checkbox" runat="server" /> I have verified that all fields are correct and wish to submit this trade.
              
           </div>

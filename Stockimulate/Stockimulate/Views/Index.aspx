@@ -7,8 +7,8 @@
 
     <title>&nbsp;</title>
 
-    <script src="../Scripts/jquery-3.1.0.min.js"></script>    
-    <script src="../Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="../Scripts/jquery-3.1.1.min.js"></script>    
+    <script src="../Scripts/jquery.signalR-2.2.1.min.js"></script>
     <script src="../Scripts/bootstrap.min.js"></script>
     <script src="../Scripts/highcharts/4.2.0/highcharts.js"></script>
     <script src="../signalr/hubs"></script>
@@ -68,15 +68,16 @@
 
             sim.client.sendMessage = function (message) {
 
-                var id = $("#IndexDivId").text();
+                var id = parseInt($("#IndexIdDiv").text());
                 
-                var currentPrice = $("#IndexDivId").text();
-                var effect = message[2 + id];
+                var currentPrice = parseInt($("#IndexPriceDiv").text().substring(1));
+                var effect = parseInt(message[2 + id]);
                 currentPrice += effect;
                 
-                $('#GraphDiv').highcharts().series[0].addPoint(message[0], currentPrice);
+                $('#GraphDiv').highcharts().series[0].addPoint([parseInt(message[0]), currentPrice], true, false);
                 
                 $(".IndexPriceDiv").html("<h2>$" + currentPrice + "</h2>");
+                $("#CurrentPriceDataDiv").html(currentPrice);
 
                 $('.IndexChangePositive').hide();
                 $('.IndexChangeNegative').hide();

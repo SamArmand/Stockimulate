@@ -6,7 +6,7 @@ namespace Stockimulate.Architecture
     class TradeManager
     {
 
-        public void CreateTrade(int buyerId, int sellerId, string symbol, int quantity, int price)
+        public void CreateTrade(int buyerId, int sellerId, string symbol, int quantity, int price, int brokerId)
         {
 
             if (buyerId < 0 || sellerId < 0)
@@ -22,6 +22,8 @@ namespace Stockimulate.Architecture
 
             var buyer = dataAccess.GetTrader(buyerId);
             var seller = dataAccess.GetTrader(sellerId);
+
+            //var broker = dataAccess.GetBroker(brokerId);
 
             if (buyer == null)
                 throw new Exception("Buyer does not exist.");
@@ -78,7 +80,7 @@ namespace Stockimulate.Architecture
 
             var flagged = Math.Abs((float)(price - marketPrice) / marketPrice) > 0.25f;
 
-            dataAccess.Insert(new Trade(0, buyer, seller, instrument, quantity, price, marketPrice, flagged));
+            dataAccess.Insert(new Trade(0, buyer, seller, instrument, quantity, price, marketPrice, flagged, brokerId));
             dataAccess.Update(buyer);
             dataAccess.Update(seller);
             if (createdBuyerAccount)
