@@ -12,7 +12,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/signalr.js/2.2.1/jquery.signalR.min.js"></script>
     <script src="signalr/hubs"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/5.0.0/highcharts.js"></script>
 
     <%-- ReSharper disable PossiblyUnassignedProperty --%>
@@ -115,7 +114,7 @@
     </script>
     <%-- ReSharper restore PossiblyUnassignedProperty --%>
 
-    <link href="../Content/bootstrap.min.css" rel="stylesheet" />
+       <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css"/>
 </head>
 <body>
 
