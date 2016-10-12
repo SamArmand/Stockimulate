@@ -123,69 +123,6 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\tether\tether-theme-arrows-dark.css" />
-    <Content Include="Content\tether\tether-theme-arrows-dark.min.css" />
-    <Content Include="Content\tether\tether-theme-arrows.css" />
-    <Content Include="Content\tether\tether-theme-arrows.min.css" />
-    <Content Include="Content\tether\tether-theme-basic.css" />
-    <Content Include="Content\tether\tether-theme-basic.min.css" />
-    <Content Include="Content\tether\tether.css" />
-    <Content Include="Content\tether\tether.min.css" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\highcharts\4.2.0\adapters\standalone-framework.js" />
-    <Content Include="Scripts\highcharts\4.2.0\adapters\standalone-framework.src.js" />
-    <Content Include="Scripts\highcharts\4.2.0\highcharts-3d.js" />
-    <Content Include="Scripts\highcharts\4.2.0\highcharts-3d.src.js" />
-    <Content Include="Scripts\highcharts\4.2.0\highcharts-more.js" />
-    <Content Include="Scripts\highcharts\4.2.0\highcharts-more.src.js" />
-    <Content Include="Scripts\highcharts\4.2.0\highcharts.js" />
-    <Content Include="Scripts\highcharts\4.2.0\highcharts.src.js" />
-    <Content Include="Scripts\highcharts\4.2.0\modules\boost.js" />
-    <Content Include="Scripts\highcharts\4.2.0\modules\boost.src.js" />
-    <Content Include="Scripts\highcharts\4.2.0\modules\broken-axis.js" />
-    <Content Include="Scripts\highcharts\4.2.0\modules\broken-axis.src.js" />
-    <Content Include="Scripts\highcharts\4.2.0\modules\canvas-tools.js" />
-    <Content Include="Scripts\highcharts\4.2.0\modules\canvas-tools.src.js" />
-    <Content Include="Scripts\highcharts\4.2.0\modules\data.js" />
-    <Content Include="Scripts\highcharts\4.2.0\modules\data.src.js" />
-    <Content Include="Scripts\highcharts\4.2.0\modules\drilldown.js" />
-    <Content Include="Scripts\highcharts\4.2.0\modules\drilldown.src.js" />
-    <Content Include="Scripts\highcharts\4.2.0\modules\exporting.js" />
-    <Content Include="Scripts\highcharts\4.2.0\modules\exporting.src.js" />
-    <Content Include="Scripts\highcharts\4.2.0\modules\funnel.js" />
-    <Content Include="Scripts\highcharts\4.2.0\modules\funnel.src.js" />
-    <Content Include="Scripts\highcharts\4.2.0\modules\heatmap.js" />
-    <Content Include="Scripts\highcharts\4.2.0\modules\heatmap.src.js" />
-    <Content Include="Scripts\highcharts\4.2.0\modules\no-data-to-display.js" />
-    <Content Include="Scripts\highcharts\4.2.0\modules\no-data-to-display.src.js" />
-    <Content Include="Scripts\highcharts\4.2.0\modules\offline-exporting.js" />
-    <Content Include="Scripts\highcharts\4.2.0\modules\offline-exporting.src.js" />
-    <Content Include="Scripts\highcharts\4.2.0\modules\solid-gauge.js" />
-    <Content Include="Scripts\highcharts\4.2.0\modules\solid-gauge.src.js" />
-    <Content Include="Scripts\highcharts\4.2.0\modules\treemap.js" />
-    <Content Include="Scripts\highcharts\4.2.0\modules\treemap.src.js" />
-    <Content Include="Scripts\highcharts\4.2.0\themes\dark-blue.js" />
-    <Content Include="Scripts\highcharts\4.2.0\themes\dark-green.js" />
-    <Content Include="Scripts\highcharts\4.2.0\themes\dark-unica.js" />
-    <Content Include="Scripts\highcharts\4.2.0\themes\gray.js" />
-    <Content Include="Scripts\highcharts\4.2.0\themes\grid-light.js" />
-    <Content Include="Scripts\highcharts\4.2.0\themes\grid.js" />
-    <Content Include="Scripts\highcharts\4.2.0\themes\sand-signika.js" />
-    <Content Include="Scripts\highcharts\4.2.0\themes\skies.js" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.1.1.js" />
-    <Content Include="Scripts\jquery-3.1.1.min.js" />
-    <Content Include="Scripts\jquery-3.1.1.slim.js" />
-    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
-    <Content Include="Scripts\jquery.signalR-2.2.1.js" />
-    <Content Include="Scripts\jquery.signalR-2.2.1.min.js" />
-    <Content Include="Scripts\tether\tether.js" />
-    <Content Include="Scripts\tether\tether.min.js" />
     <Content Include="Views\PublicViews\AccessDenied.aspx" />
     <Content Include="Views\BrokerViews\SpotTradeInput.aspx" />
     <Content Include="Views\AdministratorViews\AdminPanel.aspx" />
@@ -205,8 +142,6 @@
     <Content Include="Views\BrokerViews\BrokerMaster.master" />
     <Content Include="Views\PublicViews\PublicMaster.master" />
     <Content Include="Views\RegulatorViews\RegulatorMaster.master" />
-    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.1.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -342,9 +277,7 @@
       <DependentUpon>RegulatorMaster.master</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="fonts\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
