@@ -98,7 +98,7 @@ namespace Stockimulate.Architecture
             message.AddRange(_instruments.Select(instrument => dayInfo.Effects[instrument.Key].ToString()));
 
             _context.Clients.All.sendMessage(message.ToArray());
-            _context.Clients.All.sendBrokerMessage(message.ToArray());
+            //_context.Clients.All.sendBrokerMessage(message.ToArray());
 
         }
 
@@ -179,10 +179,8 @@ namespace Stockimulate.Architecture
             Index.Reset();
             _dataAccess.Reset();
 
-            //TODO Should send array of numbers with string instead
-
-            _context.Clients.All.sendMessage(0, 0, 0, 0, 0, string.Empty);
-            _context.Clients.All.sendBrokerMessage(0, 0);
+            _context.Clients.All.sendMessage(new List<string> { "0", "", "0", "0" });
+            //_context.Clients.All.sendBrokerMessage(0, 0);
 
             _status = Status.Ready;
         }

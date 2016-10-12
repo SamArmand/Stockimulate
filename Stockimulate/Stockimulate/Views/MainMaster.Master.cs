@@ -27,12 +27,11 @@ namespace Stockimulate.Views
 
             if (role == "Administrator" || role == "Regulator")
                 stringBuilder.Append("<li class='nav-item dropdown'>"
-                                     +
-                                     "<a href='#' class='nav-link dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>Anti Fraud<span class='caret'></span></a>"
-                                     + "<ul class='dropdown-menu'>"
-                                     + "<li><a href='../RegulatorViews/SearchTrades.aspx'>Search Trades</a></li>"
-                                     + "<li><a href='../PublicViews/Reports.aspx'>Search Reports</a></li>"
-                                     + "</ul>"
+                                     + "<a href='#' class='nav-link dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>Anti Fraud</a>"
+                                     + "<div class='dropdown-menu'>"
+                                     + "<a class='dropdown-item' href='../RegulatorViews/SearchTrades.aspx'>Search Trades</a>"
+                                     + "<a class='dropdown-item' href='../PublicViews/Reports.aspx'>Search Reports</a>"
+                                     + "</div>"
                                      + "</li>");
 
             if (role == "Administrator" || role == "Broker")
@@ -90,19 +89,21 @@ namespace Stockimulate.Views
         {
             if (_usernameTextBox.Value == "admin" && _passwordTextBox.Value == "samisadmin")
             {
-                HttpContext.Current.Session["Name"] = "Sam Assaf";
+                HttpContext.Current.Session["Name"] = "Administrator";
                 HttpContext.Current.Session["Role"] = "Administrator";
+                HttpContext.Current.Session["BrokerId"] = "0";
                 Response.Redirect("../AdministratorViews/AdminPanel.aspx");
             }
-            else if (_usernameTextBox.Value == "broker" && _passwordTextBox.Value == "samisbroker")
+            else if (_usernameTextBox.Value.Substring(0,6) == "broker" && _passwordTextBox.Value.Substring(0,11) == "brokersrock" && _usernameTextBox.Value[6] == _passwordTextBox.Value[11])
             {
-                HttpContext.Current.Session["Name"] = "Sam Assaf";
+                HttpContext.Current.Session["Name"] = "Broker";
                 HttpContext.Current.Session["Role"] = "Broker";
+                HttpContext.Current.Session["BrokerId"] = _usernameTextBox.Value[6];
                 Response.Redirect("../BrokerViews/TradeInput.aspx");
             }
             else if (_usernameTextBox.Value == "regulator" && _passwordTextBox.Value == "samisregulator")
             {
-                HttpContext.Current.Session["Name"] = "Sam Assaf";
+                HttpContext.Current.Session["Name"] = "Regulator";
                 HttpContext.Current.Session["Role"] = "Regulator";
                 Response.Redirect("../RegulatorViews/SearchTrades.aspx");
             }

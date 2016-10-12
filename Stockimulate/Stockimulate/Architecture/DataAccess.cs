@@ -108,7 +108,8 @@ namespace Stockimulate.Architecture
                     reader.GetInt32(reader.GetOrdinal("TradeQuantity")),
                     reader.GetInt32(reader.GetOrdinal("TradePrice")),
                     reader.GetInt32(reader.GetOrdinal("TradeMarketPrice")),
-                    bool.Parse(reader.GetString(reader.GetOrdinal("TradeFlagged")))));
+                    bool.Parse(reader.GetString(reader.GetOrdinal("TradeFlagged"))),
+                    reader.GetInt32(reader.GetOrdinal("BrokerId"))));
             }
 
             reader.Dispose();
@@ -116,6 +117,11 @@ namespace Stockimulate.Architecture
             connection.Dispose();
 
             return trades;
+        }
+
+        internal Broker GetBroker(int brokerId)
+        {
+            throw new System.NotImplementedException();
         }
 
         //Trader methods
@@ -136,7 +142,6 @@ namespace Stockimulate.Architecture
 
             command.Dispose();
             connection.Dispose();
-
 
         }
 
@@ -228,7 +233,7 @@ namespace Stockimulate.Architecture
 
             command.Parameters.AddWithValue("@Position", account.Position);
             command.Parameters.AddWithValue("@TraderId", account.Trader.Id);
-            command.Parameters.AddWithValue("@Position", account.Position);
+            command.Parameters.AddWithValue("@Symbol", account.Instrument.Symbol);
 
             connection.Open();
 
@@ -374,7 +379,7 @@ namespace Stockimulate.Architecture
             if (newsItem == "null")
                 newsItem = string.Empty;
 
-            var effects = Instruments.ToDictionary(instrument => instrument.Key, instrument => reader.GetInt32(reader.GetOrdinal(instrument.Key)));
+            var effects = Instruments.ToDictionary(instrument => instrument.Key, instrument => reader.GetInt32(reader.GetOrdinal("EffectIndex" + instrument.Value.Id)));
 
             var dayInfo = new DayInfo(tradingDay, effects, newsItem);
 
@@ -412,7 +417,7 @@ namespace Stockimulate.Architecture
         {
             var connection = new SqlConnection(ConnectionString);
 
-            var command = new SqlCommand("SELECT Symbol, Price, Name, Type FROM Instruments WHERE Symbol=@Symbol;") { CommandType = CommandType.Text };
+            var command = new SqlCommand("SELECT Symbol, Price, Name, Type, Id FROM Instruments WHERE Symbol=@Symbol;") { CommandType = CommandType.Text };
 
             command.Parameters.AddWithValue("@Symbol", symbol);
 
@@ -428,7 +433,8 @@ namespace Stockimulate.Architecture
                 symbol,
                 reader.GetInt32(reader.GetOrdinal("Price")),
                 reader.GetString(reader.GetOrdinal("Name")),
-                reader.GetString(reader.GetOrdinal("Type")));
+                reader.GetString(reader.GetOrdinal("Type")),
+                reader.GetInt32(reader.GetOrdinal("Id")));
 
             reader.Dispose();
             command.Dispose();
@@ -441,7 +447,7 @@ namespace Stockimulate.Architecture
         {
             var connection = new SqlConnection(ConnectionString);
 
-            var command = new SqlCommand("SELECT Symbol, Price, Name, Type FROM Instruments;") { CommandType = CommandType.Text };
+            var command = new SqlCommand("SELECT Symbol, Price, Name, Type, Id FROM Instruments;") { CommandType = CommandType.Text };
 
             connection.Open();
 
@@ -459,7 +465,8 @@ namespace Stockimulate.Architecture
                     symbol,
                     reader.GetInt32(reader.GetOrdinal("Price")),
                     reader.GetString(reader.GetOrdinal("Name")),
-                    reader.GetString(reader.GetOrdinal("Type"))));
+                    reader.GetString(reader.GetOrdinal("Type")),
+                    reader.GetInt32(reader.GetOrdinal("Id"))));
             }
             reader.Dispose();
             command.Dispose();

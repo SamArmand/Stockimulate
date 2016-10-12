@@ -9,7 +9,7 @@
           <!-- Form Name -->
           <legend><h1>Spot Trade</h1></legend>
            
-            <div class="form-group">
+            <div class="form-group row">
             
             <asp:RadioButtonList ID="TransactionTypeRadioButtonList" runat="server" 
                 RepeatDirection="Horizontal" RepeatLayout="Table" CssClass="form-control">
@@ -21,7 +21,7 @@
             </div>
              
           <!-- Text input-->
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-1 control-label">Trader ID</label>
             <div class="col-sm-2">
               <input id="TraderIdInput" type="number" placeholder="Trader ID" class="form-control" runat="server"/>        
@@ -31,7 +31,7 @@
           </div>
 
             <!-- Text input-->
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-1 control-label">Security</label>
             <div class="col-sm-2">
                 
@@ -46,14 +46,12 @@
             </div>
           </div>
 
-      <br/>
-
-            <div class="row">
+            <div class="form-group row">
                 <input id="VerifyInput" type="checkbox" runat="server" /> I have verified that all fields are correct and wish to submit this trade.
              
           </div>
 
-          <div class="row">
+          <div class="form-group row">
               <div class="btn-group col-sm-12"> 
 
                 <asp:Button ID="CancelButton" class="btn btn-default" runat="server" Text="Cancel" OnClick="Page_Load" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Stockimulate.Architecture;
@@ -10,12 +11,16 @@ namespace Stockimulate.Views.BrokerViews
 
         private DataAccess _dataAccess;
         private TradeManager _tradeManager;
+        private int _brokerId;
 
         protected void Page_Load(object sender, EventArgs e)
         {
 
             _dataAccess = DataAccess.SessionInstance;
             _tradeManager = new TradeManager();
+
+            var brokerIdString = HttpContext.Current.Session["BrokerId"] as string;
+            if (brokerIdString != null) _brokerId = int.Parse(brokerIdString);
 
             SecurityDropDownList.Items.Clear();
 
@@ -35,7 +40,7 @@ namespace Stockimulate.Views.BrokerViews
             {
                 _tradeManager.CreateTrade(Convert.ToInt32(BuyerIdInput.Value), Convert.ToInt32(SellerIdInput.Value),
                     SecurityDropDownList.SelectedValue,
-                    Convert.ToInt32(QuantityInput.Value), price);
+                    Convert.ToInt32(QuantityInput.Value), price, _brokerId);
             }
 
             catch (Exception exception)

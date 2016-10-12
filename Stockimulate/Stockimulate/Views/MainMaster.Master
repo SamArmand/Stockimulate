@@ -5,9 +5,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     
-    <script src="<%# Page.ResolveClientUrl("~/Scripts/jquery-3.1.0.min.js")%>"></script>
+    <script src="<%# Page.ResolveClientUrl("~/Scripts/jquery-3.1.1.min.js")%>"></script>
     <script src="<%# Page.ResolveClientUrl("~/Scripts/tether/tether.min.js")%>"></script>
-    <script src="<%# Page.ResolveClientUrl("~/Scripts/jquery.signalR-2.2.0.min.js")%>"></script>
+    <script src="<%# Page.ResolveClientUrl("~/Scripts/jquery.signalR-2.2.1.min.js")%>"></script>
+    <script src="signalr/hubs"></script>
     <script src="<%# Page.ResolveClientUrl("~/Scripts/bootstrap.min.js")%>"></script>
     <link rel="stylesheet" type="text/css" href="<%# Page.ResolveClientUrl("~/Content/bootstrap.min.css")%>"/>
     

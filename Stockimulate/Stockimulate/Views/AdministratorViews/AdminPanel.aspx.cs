@@ -34,6 +34,7 @@ namespace Stockimulate.Views.AdministratorViews
 
         protected void PlayPractice_Click(object sender, EventArgs e)
         {
+            Index.Reset();
 
             ErrorDiv.Style.Value = "display: none;";
             WarningDiv.Style.Value = "display: none;";
@@ -67,6 +68,8 @@ namespace Stockimulate.Views.AdministratorViews
 
         protected void PlayCompetition_Click(object sender, EventArgs e)
         {
+            Index.Reset();
+
             ErrorDiv.Style.Value = "display: none;";
             WarningDiv.Style.Value = "display: none;";
 

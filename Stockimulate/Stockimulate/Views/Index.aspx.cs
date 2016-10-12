@@ -82,7 +82,7 @@ namespace Stockimulate.Views
         internal static void Update(DayInfo dayInfo)
         {
 
-            foreach (var instrument in DataAccess.SessionInstance.Instruments)
+            foreach (var instrument in DataAccess.Instance.Instruments)
             {
                 _indexChange[instrument.Key] = dayInfo.Effects[instrument.Key];
                 _indexPrice[instrument.Key] += _indexChange[instrument.Key];
@@ -106,7 +106,7 @@ namespace Stockimulate.Views
 
             _news = string.Empty;
 
-            foreach (var instrument in DataAccess.SessionInstance.Instruments)
+            foreach (var instrument in DataAccess.Instance.Instruments)
             {
                 _indexChange.Add(instrument.Key, 0);
                 _indexPrice.Add(instrument.Key, 0);
