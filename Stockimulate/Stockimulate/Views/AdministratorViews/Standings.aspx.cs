@@ -25,8 +25,8 @@ namespace Stockimulate.Views.AdministratorViews
 
             var sb = new StringBuilder();
 
-            sb.Append("<table class='pure-table pure-table-bordered'>");
-            sb.Append("    <thead>");
+            sb.Append("<table class='table'>");
+            sb.Append("    <thead class='thead-inverse'>");
             sb.Append("        <tr>");
             sb.Append("            <th>Rank</th>");
             sb.Append("            <th>Team Name/ID</th>");
@@ -52,7 +52,7 @@ namespace Stockimulate.Views.AdministratorViews
                     rankString = "" + rank;
 
                 sb.Append("<tr>");
-                sb.Append("<td>" + rankString + "</td>");
+                sb.Append("<th scope='row'>" + rankString + "</th>");
                 sb.Append("<td>" + teams[i].Name + " - " + teams[i].Id + "</td>");
                 sb.Append("<td>" + "$" + teams[i].AveragePnL(prices) + "</td>");
                 sb.Append("</tr>");
@@ -67,8 +67,8 @@ namespace Stockimulate.Views.AdministratorViews
 
             sb = new StringBuilder();
 
-            sb.Append("<table class='pure-table pure-table-bordered'>");
-            sb.Append("    <thead>");
+            sb.Append("<table class='table'>");
+            sb.Append("    <thead class='thead-inverse'>");
             sb.Append("        <tr>");
             sb.Append("            <th>Rank</th>");
             sb.Append("            <th>Name/ID</th>");
@@ -92,7 +92,7 @@ namespace Stockimulate.Views.AdministratorViews
                     rankString = "" + rank;
 
                 sb.Append("<tr>");
-                sb.Append("<td>" + rankString + "</td>");
+                sb.Append("<th scope='row'>" + rankString + "</th>");
                 sb.Append("<td>" + traders.ElementAt(i).Name + " - " + traders.ElementAt(i).Id + "</td>");
                 sb.Append("<td>" + "$" + traders.ElementAt(i).PnL(prices) + "</td>");
                 sb.Append("</tr>");

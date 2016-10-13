@@ -12,7 +12,7 @@ namespace Stockimulate.Architecture
     {
         private static DataAccess _instance;
 
-        private const string ConnectionString = "Server=tcp:h98ohmld2f.database.windows.net,1433;Database=Stockimulate;User ID=JMSXTech@h98ohmld2f;Password=jmsx!2014;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
+        private const string ConnectionString = "Server=tcp:h98ohmld2f.database.windows.net,1433;Database=Stockimulate;User Id=JMSXTech@h98ohmld2f;Password=jmsx!2014;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
 
         public Dictionary<string, Instrument> Instruments { get; }
 
@@ -67,8 +67,8 @@ namespace Stockimulate.Architecture
 
             var connection = new SqlConnection(ConnectionString);
 
-            var command = new SqlCommand("SELECT Trades.Id AS TradeId, Buyers.Id AS BuyerId, Buyers.TeamId AS BuyerTeamId, Sellers.Id AS SellerId, Sellers.TeamId AS SellerTeamId, Trades.Symbol AS TradeSymbol, Trades.Quantity AS TradeQuantity, Trades.Price AS TradePrice, Trades.MarketPrice AS TradeMarketPrice, Trades.Flagged AS TradeFlagged " +
-                                            "FROM Trades JOIN Traders Buyers ON Trades.BuyerId=Buyers.Id JOIN Traders Sellers ON Trades.SellerID=Sellers.ID " +
+            var command = new SqlCommand("SELECT Trades.Id AS TradeId, Buyers.Id AS BuyerId, Buyers.TeamId AS BuyerTeamId, Sellers.Id AS SellerId, Sellers.TeamId AS SellerTeamId, Trades.Symbol AS TradeSymbol, Trades.Quantity AS TradeQuantity, Trades.Price AS TradePrice, Trades.MarketPrice AS TradeMarketPrice, Trades.Flagged AS TradeFlagged, Trades.BrokerId AS BrokerId " +
+                                            "FROM Trades JOIN Traders Buyers ON Trades.BuyerId=Buyers.Id JOIN Traders Sellers ON Trades.SellerId=Sellers.Id " +
                                             "WHERE Buyers.Id" + (buyerId == string.Empty ? ">-1" : "=@BuyerId") + 
                                             " AND Sellers.Id" + (sellerId == string.Empty ? ">-1" : "=@SellerId") + 
                                             " AND Buyers.TeamId" + (buyerTeamId == string.Empty ? ">-1" : "=@BuyerTeamId") + 
@@ -324,7 +324,7 @@ namespace Stockimulate.Architecture
 
             var connection = new SqlConnection(ConnectionString);
 
-            var command = new SqlCommand("SELECT ID, Name FROM Teams WHERE NOT ID=0;") {CommandType = CommandType.Text};
+            var command = new SqlCommand("SELECT Id, Name FROM Teams WHERE NOT Id=0;") {CommandType = CommandType.Text};
 
             connection.Open();
 
@@ -336,7 +336,7 @@ namespace Stockimulate.Architecture
 
             while (reader.Read())
             {
-                teams.Add(new Team(reader.GetInt32(reader.GetOrdinal("ID")),
+                teams.Add(new Team(reader.GetInt32(reader.GetOrdinal("Id")),
                     reader.GetString(reader.GetOrdinal("Name"))));
             }
 
@@ -498,7 +498,7 @@ namespace Stockimulate.Architecture
         {
             var connection = new SqlConnection(ConnectionString);
 
-            var command = new SqlCommand("SELECT ReportsEnabled FROM AppSettings WHERE ID=0;") {CommandType = CommandType.Text};
+            var command = new SqlCommand("SELECT ReportsEnabled FROM AppSettings WHERE Id=0;") {CommandType = CommandType.Text};
 
             connection.Open();
 

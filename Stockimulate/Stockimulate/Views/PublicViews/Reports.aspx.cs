@@ -58,7 +58,7 @@ namespace Stockimulate.Views.PublicViews
             TeamTable.Controls.Add(new HtmlGenericControl("h3") {InnerHtml = team.Name + " - " + team.Id});
 
             var teamTable = new Table();
-            var teamTableHeaderRow = new TableHeaderRow();
+            var teamTableHeaderRow = new TableHeaderRow() { CssClass = "thead-inverse" };
 
             var teamTableSecurityHeaderCell = new TableHeaderCell {Text = "Security"};
             var teamTablePositionHeaderCell = new TableHeaderCell {Text = "Position"};
@@ -79,13 +79,14 @@ namespace Stockimulate.Views.PublicViews
             {
                 var key = teamPosition.Key;
                 var row = new TableRow();
+                row.Attributes.Add("scope", "row");
 
-                var securityCell = new TableCell { Text = key };
+                var securityHeaderCell = new TableHeaderCell { Text = key };
                 var positionCell = new TableCell { Text = teamPositions[key].ToString() };
                 var currentPriceCell = new TableCell { Text = prices[key].ToString() };
                 var tableValueCell = new TableCell { Text = teamPositionValues[key].ToString() };
 
-                row.Cells.Add(securityCell);
+                row.Cells.Add(securityHeaderCell);
                 row.Cells.Add(positionCell);
                 row.Cells.Add(currentPriceCell);
                 row.Cells.Add(tableValueCell);
@@ -95,11 +96,12 @@ namespace Stockimulate.Views.PublicViews
             }
 
             var teamFundsRow = new TableRow();
+            teamFundsRow.Attributes.Add("scope", "row");
 
-            var teamFundsCell = new TableCell {Text = "Funds"};
+            var teamFundsHeaderCell = new TableHeaderCell() {Text = "Funds"};
             var teamFundsTotalCell = new TableCell {Text = team.Funds().ToString()};
 
-            teamFundsRow.Cells.Add(teamFundsCell);
+            teamFundsRow.Cells.Add(teamFundsHeaderCell);
             teamFundsRow.Cells.Add(new TableCell());
             teamFundsRow.Cells.Add(new TableCell());
             teamFundsRow.Cells.Add(teamFundsTotalCell);
@@ -142,7 +144,7 @@ namespace Stockimulate.Views.PublicViews
 
             teamTable.Rows.Add(teamTableAveragePnLFooterRow);
 
-            teamTable.CssClass = "pure-table pure-table-bordered";
+            teamTable.CssClass = "table";
 
             TeamTable.Controls.Add(teamTable);
 
@@ -155,7 +157,7 @@ namespace Stockimulate.Views.PublicViews
 
                 var playerTable = new Table();
 
-                var playerTableHeaderRow = new TableHeaderRow();
+                var playerTableHeaderRow = new TableHeaderRow() {CssClass = "thead-inverse"};
 
                 var playerTableSecurityHeaderCell = new TableHeaderCell {Text = "Security"};
                 var playerTablePositionHeaderCell = new TableHeaderCell {Text = "Position"};
@@ -173,6 +175,7 @@ namespace Stockimulate.Views.PublicViews
                 {
                     var key = account.Key;
                     var row = new TableRow();
+                    row.Attributes.Add("scope", "row");
 
                     var securityCell = new TableCell { Text = key };
                     var positionCell = new TableCell { Text = player.Accounts[key].Position.ToString() };
@@ -191,6 +194,8 @@ namespace Stockimulate.Views.PublicViews
                 var playerTableFundsRow = new TableRow();
 
                 var playerFundsCell = new TableCell { Text = "Funds" };
+                playerFundsCell.Attributes.Add("scope", "row");
+
                 var playerFundsValueCell = new TableCell { Text = player.Funds.ToString() };
 
                 playerTableFundsRow.Cells.Add(playerFundsCell);
@@ -224,7 +229,7 @@ namespace Stockimulate.Views.PublicViews
 
                 playerTable.Rows.Add(playerTablePnLFooterRow);
 
-                playerTable.CssClass = "pure-table pure-table-bordered";
+                playerTable.CssClass = "table";
 
                 PlayerTables.Controls.Add(playerTable);
                 PlayerTables.Controls.Add(new HtmlGenericControl("br"));

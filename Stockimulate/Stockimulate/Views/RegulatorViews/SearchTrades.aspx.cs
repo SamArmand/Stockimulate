@@ -48,8 +48,8 @@ namespace Stockimulate.Views.RegulatorViews
 
             var sb = new StringBuilder("");
 
-            sb.Append("<table class='pure-table pure-table-bordered'>");
-            sb.Append("    <thead>");
+            sb.Append("<table class='table'>");
+            sb.Append("    <thead class='thead-inverse'>");
             sb.Append("        <tr>");
             sb.Append("            <th>Buyer ID</th>");
             sb.Append("            <th>Buyer Team ID</th>");
@@ -66,12 +66,12 @@ namespace Stockimulate.Views.RegulatorViews
             foreach (var trade in trades)
             {
 
-                var fontStyle = string.Empty;
+                var cssClass = string.Empty;
 
                 if (trade.Flagged)
-                    fontStyle = " style=\"color:red\"";
+                    cssClass = " class='table-danger'";
 
-                sb.Append("<tr" + fontStyle + ">");
+                sb.Append("<tr" + cssClass + ">");
                 sb.Append("<td>" + trade.Buyer.Id + "</td>");
                 sb.Append("<td>" + trade.Buyer.Team.Id + "</td>");
                 sb.Append("<td>" + trade.Seller.Id + "</td>");
@@ -80,6 +80,7 @@ namespace Stockimulate.Views.RegulatorViews
                 sb.Append("<td>" + trade.Quantity + "</td>");
                 sb.Append("<td>" + trade.Price + "</td>");
                 sb.Append("<td>" + trade.MarketPrice + "</td>");
+                sb.Append("<td>" + trade.BrokerId + "</td>");
                 sb.Append("</tr>");
             }
 
