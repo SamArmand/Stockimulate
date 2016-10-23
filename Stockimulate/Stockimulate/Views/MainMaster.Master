@@ -9,9 +9,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/signalr.js/2.2.1/jquery.signalR.min.js"></script>
     <script src="../../signalr/hubs"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css"/>
-    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
     <title>Stockimulate</title>
     <asp:ContentPlaceHolder ID="MainMasterHeadPlaceHolder" runat="server"/>
     
@@ -22,28 +21,19 @@
         
         <div class="container">
         <div class="row" style="margin-top: 10px;">
-            <div class="col-md-6">
-                <img style="max-height: 100px;" src="/img/JMSX.png" alt="JMSX.png"/>
-            </div>
+                <img class="img-fluid" style="max-height: 100px;" src="/img/JMSX.png" alt="JMSX.png"/>
 
         </div>
         <div class="row">
             <nav class="navbar navbar-dark bg-inverse">
-            <div class="navbar-header">
-            <button type="button" class="navbar-toggler hidden-sm-up" data-toggle="collapse" data-target="#navbar-header" aria-expanded="false" aria-controls="navbar-header">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#"><strong>stock</strong>imulate</a>
-          </div>
-            <div class="collapse navbar-toggleable-xs" id="navbar-header">
-                <ul class="nav navbar-nav" id="NavBarOptions" runat="server">
+            <button type="button" class="navbar-toggler hidden-md-up" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"></button>
+             <div class="collapse navbar-toggleable-sm" id="navbarResponsive">
+                <a class="navbar-brand" href="#"><strong>stock</strong>imulate</a>
+                 <ul class="nav navbar-nav" id="NavBarOptions" runat="server">
                     
 
                 </ul>
-                <div class="form-inline pull-xs-right">
+                <div class="form-inline float-md-right">
                     
                     <div id="SignedInAsDiv" class="form-group" runat="server"></div>
                     <div id="UsernameDiv" class="form-group" runat="server"></div>
