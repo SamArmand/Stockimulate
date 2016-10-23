@@ -85,6 +85,7 @@ namespace Stockimulate.Views
 
         }
 
+        //Incredibly lazy TODO: MAKE THIS LEGIT
         private void SignIn()
         {
             if (_usernameTextBox.Value == "admin" && _passwordTextBox.Value == "samisadmin")
@@ -98,7 +99,17 @@ namespace Stockimulate.Views
             {
                 HttpContext.Current.Session["Name"] = "Broker";
                 HttpContext.Current.Session["Role"] = "Broker";
-                HttpContext.Current.Session["BrokerId"] = _usernameTextBox.Value[6];
+                try
+                {
+                    if (int.Parse(_usernameTextBox.Value.Substring(6)) > 16 ||
+                        int.Parse(_usernameTextBox.Value.Substring(6)) < 1)
+                        return;
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+                HttpContext.Current.Session["BrokerId"] = _usernameTextBox.Value.Substring(6);
                 Response.Redirect("../BrokerViews/TradeInput.aspx");
             }
             else if (_usernameTextBox.Value == "regulator" && _passwordTextBox.Value == "samisregulator")

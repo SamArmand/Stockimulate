@@ -35,9 +35,9 @@ namespace Stockimulate.Views
                     
             Title = instrument.Symbol;
 
-            IndexChangePositiveDiv.Style.Value = "display: none;";
-            IndexChangeNegativeDiv.Style.Value = "display: none;";
-            IndexChangeNoneDiv.Style.Value = "display: none;";
+            IndexChangePositiveDiv.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;text-align:center; display: none;";
+            IndexChangeNegativeDiv.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;text-align:center; display: none;";
+            IndexChangeNoneDiv.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;text-align:center; display: none;";
 
             if (_indexChange == null || _indexPrice == null || _prices == null)
                 Reset();
@@ -47,28 +47,27 @@ namespace Stockimulate.Views
             if (_indexChange != null && _indexChange[Title] > 0)
             {
                 IndexChangePositiveH1.InnerHtml = _indexChange[Title].ToString();
-                IndexChangePositiveDiv.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;text-align:center;";
+                IndexChangePositiveDiv.Style["display"] = "block";
             }
             else if (_indexChange != null && _indexChange[Title] < 0)
             {
                 IndexChangeNegativeH1.InnerHtml = (_indexChange[Title]*-1).ToString();
-                IndexChangeNegativeDiv.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;text-align:center;";
+                IndexChangeNegativeDiv.Style["display"] = "block";
             }
             else
-                IndexChangeNoneDiv.Style.Value =
-                    "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;text-align:center;";
+                IndexChangeNoneDiv.Style["display"] = "block";
 
             if (_news != "null")
                 NewsDiv.InnerHtml = "<h2>" + _news + "</h2>";
 
             var javascriptArray = "[";
 
-            for(var i=0; i<_day; i++)
+            for(var i=0; i<=_day; ++i)
             {
                 if (_prices != null)
                     javascriptArray += "[" + i +"," + _prices[Title].ElementAt(i) +"]";
 
-                if (i + 1 != _day)
+                if (i != _day)
                     javascriptArray += ", ";
             }
 

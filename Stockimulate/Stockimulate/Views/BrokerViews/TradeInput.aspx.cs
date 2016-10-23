@@ -24,8 +24,17 @@ namespace Stockimulate.Views.BrokerViews
 
             SecurityDropDownList.Items.Clear();
 
-            foreach (var instrument in _dataAccess.Instruments)
-                SecurityDropDownList.Items.Add(new ListItem(instrument.Key, instrument.Key));
+            if (_brokerId == 0)
+                foreach (var instrument in _dataAccess.Instruments)
+                {
+                    SecurityDropDownList.Items.Add(new ListItem(instrument.Key, instrument.Key));
+                    return;
+                }
+
+            //LAZY TODO: WTF IS THIS
+            SecurityDropDownList.Items.Add(_brokerId%2 == 0
+                ? new ListItem("NUGT", "NUGT")
+                : new ListItem("CHIN", "CHIN"));
         }
 
         protected void Submit_Click(object sender, EventArgs e)

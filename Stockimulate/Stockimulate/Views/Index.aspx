@@ -77,7 +77,7 @@
                 
                 $('#GraphDiv').highcharts().series[0].addPoint([parseInt(message[0]), currentPrice], true, false);
                 
-                $(".IndexPriceDiv").html("<h2>$" + currentPrice + "</h2>");
+                $(".IndexPriceDiv").html("<h1>$" + currentPrice + "</h1>");
                 $("#CurrentPriceDataDiv").html(currentPrice);
 
                 $('.IndexChangePositive').hide();
@@ -114,7 +114,7 @@
     </script>
     <%-- ReSharper restore PossiblyUnassignedProperty --%>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css"/>
-    
+
 </head>
 <body>
 
@@ -140,7 +140,7 @@
 
                 <div class="col-sm-12 bg-success IndexChangePositive" id="IndexChangePositiveDiv" style="display:none;text-align:center" runat="server">
     
-                    <h1 style="display:inline-block"><span class="glyphicon glyphicon-arrow-up"></span></h1>
+                    <h1 style="display:inline-block">+</h1>
 
                     <h1 style="display:inline-block" class="IndexChangePositiveH1" id="IndexChangePositiveH1" runat="server"></h1>
 
@@ -148,7 +148,7 @@
 
                 <div class="col-sm-12 bg-danger IndexChangeNegative" id="IndexChangeNegativeDiv" style="display:none;text-align:center" runat="server">
     
-                    <h1 style="display:inline-block"><span class="glyphicon glyphicon-arrow-down"></span></h1>
+                    <h1 style="display:inline-block">-</h1>
 
                     <h1 style="display:inline-block" class="IndexChangeNegativeH1" id="IndexChangeNegativeH1" runat="server"></h1>
 
@@ -156,7 +156,7 @@
 
                 <div class="col-sm-12 bg-warning IndexChangeNone" id="IndexChangeNoneDiv" style="display:none;text-align:center" runat="server">
     
-                    <h1 style="display:inline-block"><span class="glyphicon glyphicon-resize-horizontal"></span></h1>
+                    <h1 style="display:inline-block">+</h1>
 
                     <h1 style="display:inline-block" class="IndexChangeNoneH1" id="IndexChangeNoneH1" runat="server">0</h1>
 
@@ -164,9 +164,7 @@
 
            </div>
 
-                            <div class="col-sm-12 NewsDiv" id="NewsDiv" runat="server">
-
-</div>
+           <div class="col-sm-12 NewsDiv" id="NewsDiv" runat="server"></div>
 
 </div>
 

@@ -158,7 +158,7 @@ namespace Stockimulate.Views.AdministratorViews
                 _dataAccess.Update(instrument);
             }
 
-            Response.Redirect("Override.aspx");
+            Response.Redirect("AdminPanel.aspx");
 
         }
 
@@ -166,7 +166,7 @@ namespace Stockimulate.Views.AdministratorViews
         {
             _dataAccess.UpdateReportsEnabled(_dataAccess.IsReportsEnabled() ? "False" : "True");
 
-            Response.Redirect("Override.aspx");
+            Response.Redirect("AdminPanel.aspx");
         }
 
 
