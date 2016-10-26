@@ -62,7 +62,6 @@ namespace Stockimulate.Views
 
             else
             {
-                SignedInAsDiv.InnerText = string.Empty;
                 UsernameDiv.Controls.Clear();
                 PasswordDiv.Controls.Clear();
                 LoginButton.InnerText = "Sign out";
@@ -95,7 +94,7 @@ namespace Stockimulate.Views
                 HttpContext.Current.Session["BrokerId"] = "0";
                 Response.Redirect("../AdministratorViews/AdminPanel.aspx");
             }
-            else if (_usernameTextBox.Value.Substring(0,6) == "broker" && _passwordTextBox.Value.Substring(0,11) == "brokersrock" && _usernameTextBox.Value[6] == _passwordTextBox.Value[11])
+            else if (_usernameTextBox.Value != "" && _passwordTextBox.Value != "" && _usernameTextBox.Value.Substring(0,6) == "broker" && _passwordTextBox.Value.Substring(0,11) == "brokersrock" && _usernameTextBox.Value[6] == _passwordTextBox.Value[11])
             {
                 HttpContext.Current.Session["Name"] = "Broker";
                 HttpContext.Current.Session["Role"] = "Broker";
@@ -127,6 +126,7 @@ namespace Stockimulate.Views
                 SignIn();
             else
                 SignOut();
+
         }
     }
 }
