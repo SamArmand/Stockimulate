@@ -69,7 +69,7 @@
               <input id="PriceInput" type="number" placeholder="Price" class="form-control" runat="server"/>
             </div>
 
-            <asp:Button ID="UpdatePrice" CssClass="btn btn-primary" runat="server" Text="Update" OnClick="UpdatePrice_Click" />
+            <asp:Button ID="UpdatePrice" CssClass="btn btn-primary" runat="server" Text="Update" OnClick="UpdatePrice_Click" CausesValidation="False"/>
             
             </div>
 
@@ -77,7 +77,7 @@
             
             <label id="ReportsEnabledSpan" runat="server"></label>
 
-            <asp:Button ID="ToggleReportsEnabled" CssClass="btn btn-primary" runat="server" Text="Toggle Reports" OnClick="ToggleReportsEnabled_Click" />
+            <asp:Button ID="ToggleReportsEnabled" CssClass="btn btn-primary" runat="server" Text="Toggle Reports" OnClick="ToggleReportsEnabled_Click" CausesValidation="False"/>
             
 
 

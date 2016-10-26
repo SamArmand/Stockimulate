@@ -20,7 +20,7 @@ namespace Stockimulate.Views
         protected void Page_Load(object sender, EventArgs e)
         {
             if (HttpContext.Current.Session["Role"] as string != "Administrator")
-                Response.Redirect("AccessDenied.aspx");
+                Response.Redirect("PublicViews/AccessDenied.aspx");
 
             var instrument = DataAccess.SessionInstance.Instruments[Request.QueryString["index"]];
 
@@ -64,7 +64,7 @@ namespace Stockimulate.Views
 
             for(var i=0; i<=_day; ++i)
             {
-                if (_prices != null)
+                if (_prices != null && _prices[Title].Count > 0)
                     javascriptArray += "[" + i +"," + _prices[Title].ElementAt(i) +"]";
 
                 if (i != _day)

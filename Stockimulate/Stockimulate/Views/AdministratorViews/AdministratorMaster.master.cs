@@ -9,7 +9,7 @@ namespace Stockimulate.Views.AdministratorViews
         protected void Page_Load(object sender, EventArgs e)
         {
             if ((string)HttpContext.Current.Session["Role"] != "Administrator")
-                Response.Redirect("../PublicViews/AccessDenied.aspx");
+                Response.Redirect("../../PublicViews/AccessDenied.aspx");
         }
     }
 }

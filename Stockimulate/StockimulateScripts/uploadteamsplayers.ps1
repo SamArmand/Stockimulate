@@ -62,11 +62,11 @@ foreach ($entity in $entities) {
 
         $teamID = $entity.ID
 
-        $query = "INSERT INTO Teams (ID, Name, Code) VALUES (@ID, @Name, @Code);"
+        $query = "INSERT INTO Teams (Id, Name, Code) VALUES (@Id, @Name, @Code);"
         
         $command.CommandText = $query
 
-        $command.Parameters.AddWithValue("@ID", $entity.ID)
+        $command.Parameters.AddWithValue("@Id", $entity.ID)
         $command.Parameters.AddWithValue("@Name", $entity.Name)
         $command.Parameters.AddWithValue("@Code", (GET-Temppassword 4 $alphabet))
 
@@ -74,12 +74,12 @@ foreach ($entity in $entities) {
 
     else {
 
-        $query = "INSERT INTO Players (ID, Name, TeamID, PositionIndex1, PositionIndex2, PositionIndex3, Funds) VALUES (@ID, @Name, @TeamID, '0', '0', '0', '1000000');"
+        $query = "INSERT INTO Players (Id, Name, TeamId, Funds) VALUES (@Id, @Name, @TeamId, '1000000');"
         $command.CommandText = $query
 
-        $command.Parameters.AddWithValue("@ID", $entity.ID)
+        $command.Parameters.AddWithValue("@Id", $entity.ID)
         $command.Parameters.AddWithValue("@Name", $entity.Name)
-        $command.Parameters.AddWithValue("@TeamID", $teamID)
+        $command.Parameters.AddWithValue("@TeamId", $teamID)
 
     }
 

@@ -35,10 +35,10 @@
                 </ul>
                 <div class="form-inline float-md-right">
                     
-                    <div id="SignedInAsDiv" class="form-group" runat="server"></div>
+                    <div id="SignedInAsDiv" class="form-group nav-text text-white" runat="server"></div>
                     <div id="UsernameDiv" class="form-group" runat="server"></div>
                     <div id="PasswordDiv" class="form-group" runat="server"></div>
-                    <button runat="server" class="btn btn-primary" id="LoginButton" OnServerClick="LoginButton_OnServerClick"></button>
+                    <button runat="server" class="btn btn-primary" id="LoginButton" OnServerClick="LoginButton_OnServerClick" CausesValidation="False"></button>
                 </div>
                 
     </div>

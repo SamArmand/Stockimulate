@@ -163,6 +163,11 @@
                 </div>
 
            </div>
+        
+            <div class="col-sm-10 bg-danger" id="StatusDiv">
+    
+                <h1>Q1 | Day 20 | Market CLOSED </h1>
+            </div>
 
            <div class="col-sm-12 NewsDiv" id="NewsDiv" runat="server"></div>
 
