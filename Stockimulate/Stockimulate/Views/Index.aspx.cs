@@ -10,11 +10,11 @@ namespace Stockimulate.Views
 {
     public partial class Index : Page
     {
-        private static Dictionary<string, int> _indexPrice;
-        private static Dictionary<string, int> _indexChange;
-        private static string _news = string.Empty;
 
-        private static int _day;
+        private static string _news = string.Empty;
+        private static string _marketStatus = "CLOSED";
+
+        private static int _quarter;
         private static Dictionary<string, List<int>> _prices;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -22,9 +22,27 @@ namespace Stockimulate.Views
             if (HttpContext.Current.Session["Role"] as string != "Administrator")
                 Response.Redirect("PublicViews/AccessDenied.aspx");
 
-            var instrument = DataAccess.SessionInstance.Instruments[Request.QueryString["index"]];
+            StatusSpan.InnerHtml = _marketStatus;
 
-            var symbols = DataAccess.SessionInstance.Instruments.Keys.ToArray();
+            var instruments = DataAccess.SessionInstance.GetAllInstruments();
+            var instrument = instruments[Request.QueryString["index"]];
+
+            if (_marketStatus == "CLOSED")
+            {
+                StatusDiv.Attributes["class"] = "col-sm-10 bg-danger";
+                var day = _prices[instrument.Symbol].Count;
+                DaySpan.InnerHtml = day == 0 ? day.ToString() : (day - 1).ToString();
+            }
+            else
+            {
+                StatusDiv.Attributes["class"] = "col-sm-10 bg-success";
+                DaySpan.InnerHtml = (_prices[instrument.Symbol].Count).ToString();
+            }
+
+
+            QuarterSpan.InnerHtml = _quarter.ToString();
+
+            var symbols = instruments.Keys.ToArray();
 
             for (var i = 0; i<symbols.Length; ++i)
                 if (symbols[i] == instrument.Symbol)
@@ -39,21 +57,23 @@ namespace Stockimulate.Views
             IndexChangeNegativeDiv.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;text-align:center; display: none;";
             IndexChangeNoneDiv.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;text-align:center; display: none;";
 
-            if (_indexChange == null || _indexPrice == null || _prices == null)
+            if (_prices == null)
                 Reset();
 
-            if (_indexPrice != null) IndexPriceDiv.InnerHtml = "<h1>$" + _indexPrice[Title] + "</h1>";
+            IndexPriceDiv.InnerHtml = "<h1>$" + instrument.Price + "</h1>";
 
-            if (_indexChange != null && _indexChange[Title] > 0)
+            if (instrument.LastChange > 0)
             {
-                IndexChangePositiveH1.InnerHtml = _indexChange[Title].ToString();
+                IndexChangePositiveH1.InnerHtml = instrument.LastChange.ToString();
                 IndexChangePositiveDiv.Style["display"] = "block";
             }
-            else if (_indexChange != null && _indexChange[Title] < 0)
+
+            else if (instrument.LastChange < 0)
             {
-                IndexChangeNegativeH1.InnerHtml = (_indexChange[Title]*-1).ToString();
+                IndexChangeNegativeH1.InnerHtml = instrument.LastChange.ToString();
                 IndexChangeNegativeDiv.Style["display"] = "block";
             }
+
             else
                 IndexChangeNoneDiv.Style["display"] = "block";
 
@@ -62,12 +82,12 @@ namespace Stockimulate.Views
 
             var javascriptArray = "[";
 
-            for(var i=0; i<=_day; ++i)
+            for(var i=0; i<_prices[Title].Count; ++i)
             {
                 if (_prices != null && _prices[Title].Count > 0)
                     javascriptArray += "[" + i +"," + _prices[Title].ElementAt(i) +"]";
 
-                if (i != _day)
+                if (i != _prices[Title].Count)
                     javascriptArray += ", ";
             }
 
@@ -80,38 +100,35 @@ namespace Stockimulate.Views
 
         internal static void Update(DayInfo dayInfo)
         {
-
-            foreach (var instrument in DataAccess.Instance.Instruments)
-            {
-                _indexChange[instrument.Key] = dayInfo.Effects[instrument.Key];
-                _indexPrice[instrument.Key] += _indexChange[instrument.Key];
-
-                _prices[instrument.Key].Add(_indexPrice[instrument.Key]);
-            }
-
-            _day = dayInfo.TradingDay;
-
+            foreach (var instrument in DataAccess.Instance.GetAllInstruments())
+                _prices[instrument.Key].Add(instrument.Value.Price);
+          
             if (dayInfo.NewsItem != string.Empty)
                 _news = dayInfo.NewsItem;
         }
 
-        public static void Reset()
+        internal static void Reset()
         {
-            _indexChange = new Dictionary<string, int>();
-            _indexPrice = new Dictionary<string, int>();
             _prices = new Dictionary<string, List<int>>();
 
-            _day = 0;
+            _quarter = 0;
+            _marketStatus = "CLOSED";
 
             _news = string.Empty;
 
             foreach (var instrument in DataAccess.Instance.Instruments)
-            {
-                _indexChange.Add(instrument.Key, 0);
-                _indexPrice.Add(instrument.Key, 0);
                 _prices.Add(instrument.Key, new List<int>());
-            }
+        }
 
+        internal static void OpenMarket()
+        {
+            _marketStatus = "OPEN";
+            _quarter++;
+        }
+
+        internal static void CloseMarket()
+        {
+            _marketStatus = "CLOSED";
         }
        
     }

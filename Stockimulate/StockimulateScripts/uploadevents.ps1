@@ -27,7 +27,7 @@ foreach ($event in $events) {
     $connection.ConnectionString = $connectionString
     $command = $connection.CreateCommand()
 
-    $query = "INSERT INTO Events (TradingDay, News, EffectIndex1, EffectIndex2, EffectIndex3) VALUES (@TradingDay, @News, @EffectIndex1, @EffectIndex2, @EffectIndex3);"
+    $query = "INSERT INTO Events (TradingDay, News, EffectIndex1, EffectIndex2) VALUES (@TradingDay, @News, @EffectIndex1, @EffectIndex2);"
 
     $command.CommandText = $query
 
@@ -35,7 +35,6 @@ foreach ($event in $events) {
     $command.Parameters.AddWithValue("@News", $news)
     $command.Parameters.AddWithValue("@EffectIndex1", $event.IND1)
     $command.Parameters.AddWithValue("@EffectIndex2", $event.IND2)
-	$command.Parameters.AddWithValue("@EffectIndex3", $event.IND3)
 
     $connection.Open()
     $command.ExecuteNonQuery()

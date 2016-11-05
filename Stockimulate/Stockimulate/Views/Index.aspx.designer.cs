@@ -76,6 +76,42 @@ namespace Stockimulate.Views {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangeNoneH1;
         
         /// <summary>
+        /// StatusDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl StatusDiv;
+        
+        /// <summary>
+        /// QuarterSpan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl QuarterSpan;
+        
+        /// <summary>
+        /// DaySpan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DaySpan;
+        
+        /// <summary>
+        /// StatusSpan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl StatusSpan;
+        
+        /// <summary>
         /// NewsDiv control.
         /// </summary>
         /// <remarks>

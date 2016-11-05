@@ -397,10 +397,11 @@ namespace Stockimulate.Architecture
 
             var connection = new SqlConnection(ConnectionString);
 
-            var command = new SqlCommand("UPDATE Instruments SET Price=@Price WHERE Symbol=@Symbol;") { CommandType = CommandType.Text };
+            var command = new SqlCommand("UPDATE Instruments SET Price=@Price, LastChange=@LastChange WHERE Symbol=@Symbol;") { CommandType = CommandType.Text };
 
             command.Parameters.AddWithValue("@Price", instrument.Price);
             command.Parameters.AddWithValue("@Symbol", instrument.Symbol);
+            command.Parameters.AddWithValue("@LastChange", instrument.LastChange);
 
             connection.Open();
 
@@ -417,7 +418,7 @@ namespace Stockimulate.Architecture
         {
             var connection = new SqlConnection(ConnectionString);
 
-            var command = new SqlCommand("SELECT Symbol, Price, Name, Type, Id FROM Instruments WHERE Symbol=@Symbol;") { CommandType = CommandType.Text };
+            var command = new SqlCommand("SELECT Symbol, Price, Name, Type, Id, LastChange FROM Instruments WHERE Symbol=@Symbol;") { CommandType = CommandType.Text };
 
             command.Parameters.AddWithValue("@Symbol", symbol);
 
@@ -434,7 +435,8 @@ namespace Stockimulate.Architecture
                 reader.GetInt32(reader.GetOrdinal("Price")),
                 reader.GetString(reader.GetOrdinal("Name")),
                 reader.GetString(reader.GetOrdinal("Type")),
-                reader.GetInt32(reader.GetOrdinal("Id")));
+                reader.GetInt32(reader.GetOrdinal("Id")),
+                reader.GetInt32(reader.GetOrdinal("LastChange")));
 
             reader.Dispose();
             command.Dispose();
@@ -447,7 +449,7 @@ namespace Stockimulate.Architecture
         {
             var connection = new SqlConnection(ConnectionString);
 
-            var command = new SqlCommand("SELECT Symbol, Price, Name, Type, Id FROM Instruments;") { CommandType = CommandType.Text };
+            var command = new SqlCommand("SELECT Symbol, Price, Name, Type, Id, LastChange FROM Instruments;") { CommandType = CommandType.Text };
 
             connection.Open();
 
@@ -466,7 +468,8 @@ namespace Stockimulate.Architecture
                     reader.GetInt32(reader.GetOrdinal("Price")),
                     reader.GetString(reader.GetOrdinal("Name")),
                     reader.GetString(reader.GetOrdinal("Type")),
-                    reader.GetInt32(reader.GetOrdinal("Id"))));
+                    reader.GetInt32(reader.GetOrdinal("Id")),
+                    reader.GetInt32(reader.GetOrdinal("LastChange"))));
             }
             reader.Dispose();
             command.Dispose();
@@ -481,7 +484,7 @@ namespace Stockimulate.Architecture
 
             var connection = new SqlConnection(ConnectionString);
 
-            var command = new SqlCommand("UPDATE Traders SET Funds='1000000'; DELETE FROM Trades; UPDATE Instruments SET Price='0';") {CommandType = CommandType.Text};
+            var command = new SqlCommand("UPDATE Traders SET Funds='1000000'; DELETE FROM Trades; UPDATE Instruments SET Price='0', LastChange='0';") {CommandType = CommandType.Text};
 
             connection.Open();
 

@@ -14,9 +14,9 @@ namespace Stockimulate.Architecture
         private const int Quarter1Day = 64;
         private const int Quarter2Day = 124;
         private const int Quarter3Day = 188;
-        private const int Quarter4Day = 252;
+        private const int Quarter4Day = 251;
 
-        private const int TimeInterval = 28000;
+        private const int TimeInterval = 3000;
 
         private readonly DataAccess _dataAccess;
 
@@ -30,6 +30,8 @@ namespace Stockimulate.Architecture
         private Status _status;
         private Mode _mode;
 
+        private string _marketStatus;
+
         private readonly Dictionary<string, Instrument> _instruments;
 
         private string _table;
@@ -38,6 +40,10 @@ namespace Stockimulate.Architecture
 
         public void Play()
         {
+            _marketStatus = "open";
+            Index.OpenMarket();
+            _context.Clients.All.openMarket();
+
             _status = Status.Playing;
 
             _timer.Enabled = true;
@@ -50,16 +56,21 @@ namespace Stockimulate.Architecture
         {
             _status = Status.Paused;
 
-            _timer.Enabled = false;
-
-            _dataAccess.UpdateReportsEnabled("True");
+            CloseMarket();
         }
 
         public void Stop()
         {
             _status = Status.Stopped;
 
+            CloseMarket();
+        }
+
+        private void CloseMarket()
+        {
             _timer.Enabled = false;
+
+            _context.Clients.All.closeMarket();
 
             _dataAccess.UpdateReportsEnabled("True");
         }
@@ -87,13 +98,30 @@ namespace Stockimulate.Architecture
             foreach (var instrument in _instruments)
             {
                 instrument.Value.Price += dayInfo.Effects[instrument.Key];
+                instrument.Value.LastChange = dayInfo.Effects[instrument.Key];
                 _dataAccess.Update(instrument.Value);
             }
 
-            Index.Update(dayInfo);      
+            if ((_dayNumber == Quarter1Day && _mode == Mode.Competition) || _dayNumber == Quarter2Day ||
+                _dayNumber == Quarter3Day)
+            {
+                _marketStatus = "closed";
+                Index.CloseMarket();
+                Pause();
+            }
+
+            else if ((_dayNumber == Quarter1Day && _mode == Mode.Practice) || _dayNumber == Quarter4Day)
+            {
+                _marketStatus = "closed";
+                Index.CloseMarket();
+                Stop();
+            }
+
+            else
+                Index.Update(dayInfo);
 
             //send update to pages
-            var message = new List<string> {_dayNumber.ToString(), dayInfo.NewsItem};
+            var message = new List<string> {_dayNumber.ToString(), dayInfo.NewsItem, _marketStatus};
 
             message.AddRange(_instruments.Select(instrument => dayInfo.Effects[instrument.Key].ToString()));
 
@@ -133,6 +161,8 @@ namespace Stockimulate.Architecture
 
             _status = Status.Ready;
 
+            _marketStatus = "closed";
+
         }
 
         private static Simulator _instance;
@@ -144,12 +174,6 @@ namespace Stockimulate.Architecture
             _dayNumber++;
 
             Update();
-
-            if ((_dayNumber == Quarter1Day && _mode == Mode.Competition) || _dayNumber == Quarter2Day || _dayNumber == Quarter3Day)
-                Pause();
-
-            else if ((_dayNumber == Quarter1Day && _mode == Mode.Practice) || _dayNumber == Quarter4Day)
-                Stop();
 
         }
 
