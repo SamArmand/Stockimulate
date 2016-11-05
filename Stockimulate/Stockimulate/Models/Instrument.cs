@@ -12,14 +12,17 @@
 
         internal int Id { get; }
 
-        internal Instrument(string symbol, int price, string name, string type, int id)
+        internal Instrument(string symbol, int price, string name, string type, int id, int lastChange)
         {
             Symbol = symbol;
             Price = price;
             Name = name;
             Type = type;
             Id = id;
+            LastChange = lastChange;
         }
+
+        internal int LastChange { get; set; }
                    
     }
 }
