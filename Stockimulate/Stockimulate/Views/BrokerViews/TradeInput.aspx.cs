@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -32,9 +33,11 @@ namespace Stockimulate.Views.BrokerViews
                 }
 
             //LAZY TODO: WTF IS THIS
-            SecurityDropDownList.Items.Add(_brokerId%2 == 0
-                ? new ListItem("NUGT", "NUGT")
-                : new ListItem("CHIN", "CHIN"));
+            foreach (
+                var instrument in
+                    _dataAccess.Instruments.Where(
+                        instrument => instrument.Value.Id == _brokerId%_dataAccess.Instruments.Count))
+                SecurityDropDownList.Items.Add(new ListItem(instrument.Key, instrument.Key));
         }
 
         protected void Submit_Click(object sender, EventArgs e)
