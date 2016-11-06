@@ -80,23 +80,25 @@
                 
                 $("#IndexPriceDiv").html("<h1>$" + currentPrice + "</h1>");
 
-                $('.IndexChangePositive').hide();
-                $('.IndexChangeNegative').hide();
-                $('.IndexChangeNone').hide();
+                
+                $("#IndexChangeDiv").removeClass("bg-success");
+                $("#IndexChangeDiv").removeClass("bg-danger");
+                $("#IndexChangeDiv").removeClass("bg-warning");
 
                 if (effect > 0) {
-                    $('.IndexChangePositiveH1').html(effect);
-                    $('.IndexChangePositive').show();
+                    $("#IndexChangeDiv").addClass("bg-success");
+                    $('#IndexChangeH1').html("+" + effect);
                 }
 
                 else if (effect < 0) {
-                    $('.IndexChangeNegativeH1').html(effect*-1);
-                    $('.IndexChangeNegative').show();
+                    $("#IndexChangeDiv").addClass("bg-danger");
+                    $('#IndexChangeH1').html(effect);
                 }
 
-                else
-                    $('.IndexChangeNone').show();
-
+                else {
+                    $("#IndexChangeDiv").addClass("bg-warning");
+                    $('#IndexChangeH1').html("+" + effect);
+                }
 
                 if (message[1] !== "")
                     $('.NewsDiv').html("<h2>" + message[1] + "</h2>");
@@ -159,27 +161,9 @@
 
                 </div>
 
-                <div class="col-sm-12 bg-success IndexChangePositive" id="IndexChangePositiveDiv" style="display:none;text-align:center" runat="server">
-    
-                    <h1 style="display:inline-block">+</h1>
+                <div class="col-sm-12 bg-warning" id="IndexChangeDiv" style="display:block;text-align:center" runat="server">
 
-                    <h1 style="display:inline-block" class="IndexChangePositiveH1" id="IndexChangePositiveH1" runat="server"></h1>
-
-                </div>
-
-                <div class="col-sm-12 bg-danger IndexChangeNegative" id="IndexChangeNegativeDiv" style="display:none;text-align:center" runat="server">
-    
-                    <h1 style="display:inline-block">-</h1>
-
-                    <h1 style="display:inline-block" class="IndexChangeNegativeH1" id="IndexChangeNegativeH1" runat="server"></h1>
-
-                </div>
-
-                <div class="col-sm-12 bg-warning IndexChangeNone" id="IndexChangeNoneDiv" style="display:none;text-align:center" runat="server">
-    
-                    <h1 style="display:inline-block">+</h1>
-
-                    <h1 style="display:inline-block" class="IndexChangeNoneH1" id="IndexChangeNoneH1" runat="server">0</h1>
+                    <h1 style="display:inline-block" id="IndexChangeH1" runat="server">0</h1>
 
                 </div>
 

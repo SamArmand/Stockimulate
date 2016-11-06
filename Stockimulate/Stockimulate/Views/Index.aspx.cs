@@ -22,6 +22,12 @@ namespace Stockimulate.Views
             if (HttpContext.Current.Session["Role"] as string != "Administrator")
                 Response.Redirect("PublicViews/AccessDenied.aspx");
 
+            if (_prices == null)
+                Reset();
+
+            if (_prices == null)
+                return;
+
             StatusSpan.InnerHtml = _marketStatus;
 
             var instruments = DataAccess.SessionInstance.GetAllInstruments();
@@ -33,12 +39,12 @@ namespace Stockimulate.Views
                 var day = _prices[instrument.Symbol].Count;
                 DaySpan.InnerHtml = day == 0 ? day.ToString() : (day - 1).ToString();
             }
+
             else
             {
                 StatusDiv.Attributes["class"] = "col-sm-10 bg-success";
                 DaySpan.InnerHtml = (_prices[instrument.Symbol].Count).ToString();
             }
-
 
             QuarterSpan.InnerHtml = _quarter.ToString();
 
@@ -53,29 +59,25 @@ namespace Stockimulate.Views
                     
             Title = instrument.Symbol;
 
-            IndexChangePositiveDiv.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;text-align:center; display: none;";
-            IndexChangeNegativeDiv.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;text-align:center; display: none;";
-            IndexChangeNoneDiv.Style.Value = "position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;text-align:center; display: none;";
-
-            if (_prices == null)
-                Reset();
-
             IndexPriceDiv.InnerHtml = "<h1>$" + instrument.Price + "</h1>";
 
             if (instrument.LastChange > 0)
             {
-                IndexChangePositiveH1.InnerHtml = instrument.LastChange.ToString();
-                IndexChangePositiveDiv.Style["display"] = "block";
+                IndexChangeH1.InnerHtml = "+" + instrument.LastChange;
+                IndexChangeDiv.Attributes["class"] = "col-sm-12 bg-success";
             }
 
             else if (instrument.LastChange < 0)
             {
-                IndexChangeNegativeH1.InnerHtml = instrument.LastChange.ToString();
-                IndexChangeNegativeDiv.Style["display"] = "block";
+                IndexChangeH1.InnerHtml = instrument.LastChange.ToString();
+                IndexChangeDiv.Attributes["class"] = "col-sm-12 bg-danger";
             }
 
             else
-                IndexChangeNoneDiv.Style["display"] = "block";
+            {
+                IndexChangeH1.InnerHtml = "+" + instrument.LastChange;
+                IndexChangeDiv.Attributes["class"] = "col-sm-12 bg-warning";
+            }
 
             if (_news != "null")
                 NewsDiv.InnerHtml = "<h2>" + _news + "</h2>";
@@ -126,10 +128,6 @@ namespace Stockimulate.Views
             _quarter++;
         }
 
-        internal static void CloseMarket()
-        {
-            _marketStatus = "CLOSED";
-        }
-       
+        internal static void CloseMarket() => _marketStatus = "CLOSED";
     }
 }

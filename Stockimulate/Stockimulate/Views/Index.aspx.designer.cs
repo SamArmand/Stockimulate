@@ -22,58 +22,22 @@ namespace Stockimulate.Views {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexPriceDiv;
         
         /// <summary>
-        /// IndexChangePositiveDiv control.
+        /// IndexChangeDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangePositiveDiv;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangeDiv;
         
         /// <summary>
-        /// IndexChangePositiveH1 control.
+        /// IndexChangeH1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangePositiveH1;
-        
-        /// <summary>
-        /// IndexChangeNegativeDiv control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangeNegativeDiv;
-        
-        /// <summary>
-        /// IndexChangeNegativeH1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangeNegativeH1;
-        
-        /// <summary>
-        /// IndexChangeNoneDiv control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangeNoneDiv;
-        
-        /// <summary>
-        /// IndexChangeNoneH1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangeNoneH1;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndexChangeH1;
         
         /// <summary>
         /// StatusDiv control.
