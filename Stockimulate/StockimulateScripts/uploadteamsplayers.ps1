@@ -2,25 +2,13 @@
 
 $connectionString = "Data Source=h98ohmld2f.database.windows.net;Initial Catalog=Stockimulate;Integrated Security=False;User ID=JMSXTech;Password=jmsx!2014;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;"
 
-$teamID = "";
+$teamID = ""
 
 $connection = New-Object -TypeName System.Data.SqlClient.SqlConnection
 $connection.ConnectionString = $connectionString
 $command = $connection.CreateCommand()
 
-$query = "DELETE FROM Players"
-
-$command.CommandText = $query
-$connection.Open()
-$command.ExecuteNonQuery()
-
-$connection.Close()
-
-$connection = New-Object -TypeName System.Data.SqlClient.SqlConnection
-$connection.ConnectionString = $connectionString
-$command = $connection.CreateCommand()
-
-$query = "DELETE FROM Teams"
+$query = "DELETE FROM Trades; DELETE FROM Accounts; DELETE FROM Traders; DELETE FROM Teams;"
 
 $command.CommandText = $query
 $connection.Open()
@@ -50,42 +38,54 @@ Function GET-Temppassword() {
 
 $entities = Import-Csv "teamsplayers.csv"
 
+$currentTeam = ""
+
+$teamID = 0;
+$traderID = 0;
+
 foreach ($entity in $entities) {
 
-    $query = "";
+    if ($entity.Team -ne $currentTeam) {
 
-    $connection = New-Object -TypeName System.Data.SqlClient.SqlConnection
-    $connection.ConnectionString = $connectionString
-    $command = $connection.CreateCommand()
+		$currentTeam = $entity.Team
 
-    if ($entity.IsTeam -eq "1") {
+        $teamID++
 
-        $teamID = $entity.ID
+		$connection = New-Object -TypeName System.Data.SqlClient.SqlConnection
+		$connection.ConnectionString = $connectionString
+		$command = $connection.CreateCommand()
 
         $query = "INSERT INTO Teams (Id, Name, Code) VALUES (@Id, @Name, @Code);"
         
         $command.CommandText = $query
 
-        $command.Parameters.AddWithValue("@Id", $entity.ID)
-        $command.Parameters.AddWithValue("@Name", $entity.Name)
+        $command.Parameters.AddWithValue("@Id", $teamID)
+        $command.Parameters.AddWithValue("@Name", $currentTeam)
         $command.Parameters.AddWithValue("@Code", (GET-Temppassword 4 $alphabet))
 
-    }
+		$connection.Open()
+		$command.ExecuteNonQuery()
 
-    else {
-
-        $query = "INSERT INTO Players (Id, Name, TeamId, Funds) VALUES (@Id, @Name, @TeamId, '1000000');"
-        $command.CommandText = $query
-
-        $command.Parameters.AddWithValue("@Id", $entity.ID)
-        $command.Parameters.AddWithValue("@Name", $entity.Name)
-        $command.Parameters.AddWithValue("@TeamId", $teamID)
+		$connection.close()
 
     }
 
-    $connection.Open()
-    $command.ExecuteNonQuery()
+	$traderID++
 
-    $connection.close()
+	$connection = New-Object -TypeName System.Data.SqlClient.SqlConnection
+    $connection.ConnectionString = $connectionString
+    $command = $connection.CreateCommand()
+
+    $query = "INSERT INTO Traders (Id, Name, TeamId, Funds) VALUES (@Id, @Name, @TeamId, 1000000);"
+    $command.CommandText = $query
+
+    $command.Parameters.AddWithValue("@Id", $traderID)
+    $command.Parameters.AddWithValue("@Name", $entity.Name)
+    $command.Parameters.AddWithValue("@TeamId", $teamID)
+
+	$connection.Open()
+	$command.ExecuteNonQuery()
+
+	$connection.close()
 
 }

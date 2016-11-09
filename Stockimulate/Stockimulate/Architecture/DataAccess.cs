@@ -324,7 +324,7 @@ namespace Stockimulate.Architecture
 
             var connection = new SqlConnection(ConnectionString);
 
-            var command = new SqlCommand("SELECT Id, Name FROM Teams WHERE NOT Id=0;") {CommandType = CommandType.Text};
+            var command = new SqlCommand("SELECT Id, Name FROM Teams WHERE NOT Id=0 AND NOT Id=72;") {CommandType = CommandType.Text};
 
             connection.Open();
 
