@@ -36,7 +36,7 @@ namespace Stockimulate.Architecture
             if (buyerTeamId == sellerTeamId)
                 throw new Exception("Buyer and Seller must be on different teams.");
 
-            if (buyer.Funds - (price * quantity) < 0 && buyerTeamId != 0)
+            if (buyer.Funds - (price * quantity) < 0 && buyerTeamId != 0 && buyerTeamId != 72)
                 throw new Exception("Buyer has insufficient funds.");
 
             Account buyerAccount;

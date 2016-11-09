@@ -1,306 +1,301 @@
-ID,Name,IsTeam,
-1,MP Financials,1,
-1,Mikael Clermont Pereira ,,
-2,Rodrigo Arrambide,,
-3,Adrien Neret ,,
-4,Patrick Lee,,
-3,The Narcos,1,
-5,Alina Israilian ,,
-6,Marco Tremblay ,,
-7,Fares Alkassmy ,,
-8,Andrei Bochis ,,
-5,Pen-15,1,
-9,Kevin Gemme ,,
-10,Bruno Letarte,,
-11,Charles Lavoie-Aubuchon,,
-12,Nicolas Sylvestre,,
-7,EZ CASH,1,
-13,Thi Thu Hien Tu ,,
-14,Lisa Nguyen,,
-15,Ruyao Liu,,
-16,Minh Pham,,
-9,The Dream Team,1,
-17,Kevin Di Valerio,,
-18,Julia Lafreniere,,
-19,Melissa Palumbo,,
-20,Andria Saba ,,
-11,Market Makers,1,
-21,Alessandro Mina ,,
-22,Emanuele Pizzuto,,
-23,Ariana Petosa ,,
-24,Stephanie Lee ,,
-13,Les massifs,1,
-25,Andres Mauricio Agudelo,,
-26,Olivier Dorais-Dumas ,,
-27,Tristan Lessard ,,
-28,Maria Rivera,,
-15,Goldshire,1,
-29,Lorenzo Cancian-Kavoliunas ,,
-30,Dang-khoi Vo ,,
-31,Paul Nguyen,,
-32,Ram Kumar ,,
-17,Wolves of Wall Street,1,
-33,Shaumia Suntharalingam,,
-34,Krishna Patel ,,
-35,Sunit Patel,,
-36,Vicranth Somasundaram,,
-19,Trump's Wall,1,
-37,Xavier Foccroulle-Ménard ,,
-38,Hugo Perron-Labonté ,,
-39,Mark Henderson,,
-40,Alin Potra ,,
-21,SRA HEC Montreal,1,
-41,Jean-Luc Marineau-Brunet ,,
-42,Sybille de La Tullaye ,,
-43,Jean-Patrick Jourdan ,,
-44,Olivier Albertson ,,
-23,MLSIC 1,1,
-45,Charles-Étienne Borduas ,,
-46,Emmanuelle D.-Tremblay ,,
-47,Allison Sibthorpe ,,
-48,Oleg Stratiev ,,
-25,Temporary,1,
-49,Xu Shan Huang ,,
-50,Sunny Truong ,,
-51,Ka Wai Ho ,,
-52,Tony Khoi Ly Nguyen ,,
-27,PitBulls,1,
-53,Amine Hadbi ,,
-54,Alexis Ethier ,,
-55,Siqi Wang ,,
-56,Victor Li ,,
-29,Out Here Getting This Money,1,
-57,Anthony Esposito ,,
-58,Andrew Hunkeler ,,
-59,Mikael Clement ,,
-60,Octavio Nahas ,,
-31,One Up On Guy Street,1,
-61,Charles Marcil ,,
-62,Anh Quan Pham ,,
-63,Shaan Martin ,,
-64,Zi yue Sun ,,
-33,GMT,1,
-65,Thomas Coutu ,,
-66,Emilie Granger ,,
-67,Nicolas Schafer ,,
-68,Samuel Pintal ,,
-35,Team UQAC,1,
-69,Raphaël Boudreau-Larouche ,,
-70,Nicolas Harvey-Girard ,,
-71,David Desjardins ,,
-72,Vincent Ouellet ,,
-37,YOLO,1,
-73,Chaoyang Shen ,,
-74,Wei Yi Wang ,,
-75,Jiachen Li ,,
-76,Terence Liu ,,
-39,Enter the Voiiid,1,
-77,Chirag Gandhi ,,
-78,Isha Bhardwaj ,,
-79,Brendan Paranthaman ,,
-80,Arjun Somasundaram ,,
-41,BIC 1,1,
-81,Christian Fournier ,,
-82,Philippe Willson,,
-83,Shawn Dubuc,,
-84,Bradley Toogood,,
-43,BIC 3,1,
-85,Natalya Wijenje,,
-86,Natasha Paikin,,
-87,Assane Pouye,,
-88,Fred Gatali,,
-45,BIC 4,1,
-89,Valeriya Patrei ,,
-90,Hamed Hader ,,
-91,Carlo Pecetti,,
-92,Jack Ward,,
-47,BIC 2,1,
-93,Charles-Autoine Brault,,
-94,Etienne Bouchard,,
-95,Piers Mulvihill,,
-96,Steve Filion,,
-49,McGill's Delegation,1,
-97,Alexandre Deslippe,,
-98,Alexandre Duchesne,,
-99,Philip Trifiro,,
-100,Sean Saggi,,
-51,Victorious Secret,1,
-101,Jean-Christophe Vinette ,,
-102,Christophe Mallette ,,
-103,Philippe Dumouchel,,
-104,Thierry Bleau ,,
-53,JDCESG,1,
-105,Félix Lamarche-Bélanger ,,
-106,Edouard Tessier-Blais ,,
-107,Maxime Trépanier ,,
-108,Mathieu Marois ,,
-55,Telfer School of Management,1,
-109,Roma Stepenchenko,,
-110,Daniel Kirshner,,
-111,Lixin Lu,,
-112,Andy Yu,,
-57,Alpha Dogs,1,
-113,Lawrence Greenberg ,,
-114,Adam Schachter,,
-115,Alisa Oiknine ,,
-116,Adam Krasner,,
-59,Red Light Capital,1,
-117,Gabriel Steinberg ,,
-118,Mathieu Mackay ,,
-119,Dustin Miller ,,
-120,Lucas Duarte ,,
-61,Gold Diggers,1,
-121,Jonathan Massimo Stinziani ,,
-122,Alex Bergeron-Harris ,,
-123,Jorge Eduardo Mancio ,,
-124,Alicia Remont ,,
-63,Stratton Oakmont,1,
-125,Jean-Frédérick Labranche,,
-126,Francis Lussier,,
-127,Nicolas Pfister,,
-128,Érick Lauzière,,
-65,The Future,1,
-129,Eugene Joannides ,,
-130,Karl Keseris,,
-131,Karly El-Jalkh,,
-132,Guillaume Ferrant,,
-67,University of Guelph-Humber,1,
-133,Zachary Ferreira,,
-134,Sanpras Furtado,,
-135,John Lorenzo,,
-136,Chad Wagner,,
-69,Sherbrooke Machine,1,
-137,Andrew Doucet-McDonald ,,
-138,Catherine Marius-Caron ,,
-139,Frederic Gagnon ,,
-140,Alexis Thérien ,,
-70,Hogwards Delegation,1,
-141,Morgan Dias-Leclerc ,,
-142,Christian Pavilanis,,
-143,Daniel Murray ,,
-144,Luca Mazzone ,,
-73,Wolves of Guy Street,1,
-145,Genevieve Dalcourt-Malenfant ,,
-146,Lynncey Masilamany ,,
-147,Tarus Lesiuk ,,
-148,Antoine David,,
-75,Moncton Team,1,
-149,Marc-André Laforge ,,
-150,Sebastien Guay,,
-151,Miguel Voisine,,
-152,Luc Landry ,,
-79,FlashCrash,1,
-153,Jesse Bergman,,
-154,Daniel Singer,,
-155,Andrea Miles,,
-156,John Akhras,,
-81,BIC 5,1,
-157,Aroon Gill ,,
-158,Nicolas Lastrade-Brais ,,
-159,Robert Lagasse ,,
-160,Abdul Jamil,,
-83,MK Investments,1,
-161,Marc Anthony De Luca ,,
-162,Francois Cardinal ,,
-163,Gregory Jansezian,,
-164,Valentin Farca ,,
-85,HMNB,1,
-165,Egil Xhoxhaj,,
-166,Hawa Keita ,,
-167,Manel Azeli,,
-168,Nancy Pham,,
-87,Cash Money,1,
-169,Anthony Courey ,,
-170,Kamal Mahmud ,,
-171,Salman Rahim ,,
-172,Kevin Phok ,,
-89,Team G.A.S.,1,
-173,Michael Palumbo ,,
-174,Matthew Samberg,,
-175,Derek Andrews ,,
-176,Ryan Gold ,,
-91,O'Leary's Pot of Gold,1,
-177,Akaash Srivastava ,,
-178,Andrew D. Matte,,
-179,Mazen Chahbaz ,,
-180,Silvana Toma,,
-93,SHJL,1,
-181,Stéphanie Higgins,,
-182,Alexandra Caron ,,
-183,Jade Lesage ,,
-184,Amjad Alaik ,,
-95,Prototype,1,
-185,Yu Ying Li Wen ,,
-186,Alfred Ocampo ,,
-187,Ali Hage,,
-188,James Sukosd ,,
-97,Integral Panic,1,
-189,Bronte Macfarlane ,,
-190,Anthony de Sousa ,,
-191,Christopher Ng ,,
-192,Leah Brookes ,,
-99,Dominators,1,
-193,Ali Masoud,,
-194,Antoine Beauchemin ,,
-195,Cedric Beaudoin ,,
-196,Sharjeela Khan ,,
-101,Sexy Turtle Wolfpack,1,
-197,Sebastien Montplaisir ,,
-198,Kirandeep Singh ,,
-199,Patrick Doré ,,
-200,Sukhpreet Gill ,,
-103,Alpha,1,
-201,Ovidiu-Adrian Belei ,,
-202,Aghiad Altahhan ,,
-203,Yassine Chaabi,,
-204,Stefan Luca ,,
-105,The Wall Street Crew,1,
-205,Diego Dubois ,,
-206,Yuxi Huang ,,
-207,Olivier Gougeon ,,
-208,Rémi Bastien ,,
-107,We have sexy ASSets,1,
-209,Vincent Dansereau ,,
-210,Mohammed Zokari ,,
-211,Thierry Lafontaine-Chicha ,,
-212,Evgueni Kravtsov ,,
-109,CAZAH,1,
-213,Catherine Poulin-Filion,,
-214,Camille Ennab ,,
-215,Nik Chyzenski,,
-216,Kira Cormier,,
-111,Mighty Morphin' Stock Exchangers,1,
-217,Jonathan Macdonald-Akbari ,,
-218,Christine Audette ,,
-219,Michael Chelly ,,
-220,Garo Assilian ,,
-113,Exchange Partners Ltd.,1,
-221,Stephano D'Angelo,,
-222,Miguel Campos ,,
-223,David Oliver Bonde,,
-224,Stefan Jørgensen ,,
-115,JMSB,1,
-225,Ari Mirzayan ,,
-226,Michael Tobi,,
-227,Nicole Matta,,
-228,Alexander Paralovo ,,
-117,Pegasus,1,
-229,Alexandros Touloumenidis ,,
-230,Bassilios Kostopoulos ,,
-231,George Dafnas ,,
-232,Tarik Ben Driss ,,
-119,Buy High Sell Low,1,
-233,Ladchan Veluppillai ,,
-234,Zachary Frotten ,,
-235,Yann-Axel Gamambaye ,,
-236,Andrew Boyle ,,
-121,UPenn Team,1,
-237,William Chan,,
-238,Daniel Kozy,,
-239,Josh Maxwell,,
-240,Jim Wallace,,
-123,Money Hungry Hippos,1,
-241,Daniel Couturier ,,
-242,Baptiste Attar ,,
-243,Armand Lorrain ,,
-244,Dudley Balan ,,
+Name,Team
+Lorenka Rosado,A Team
+Isabella Mendoza,A Team
+Adam Perez,A Team
+William Baron,A Team
+Rudy Grow,The Wharton School
+Anthony Esposito,The Wharton School
+Octavio Nahas,The Wharton School
+John Gouliaris,The Wharton School
+Christopher Potter,Stock Hawks
+Yanick Pilon,Stock Hawks
+Julia Rose Polisena,Stock Hawks
+Matthew Taylor,Stock Hawks
+Egil Xhoxhaj,The Belforts
+Hershlee Vernet,The Belforts
+Zachary Guenette,The Belforts
+Andrew Chi,The Belforts
+James Sibounheuang,Elite Traders
+Melissa Sciangula,Elite Traders
+Michael Pallone,Elite Traders
+Eleni Manias,Elite Traders
+Calvin Truchon,Quantitative Teasing
+Gabriel Flonta,Quantitative Teasing
+Valeriya Patrei,Quantitative Teasing
+Philippe Carmant,Quantitative Teasing
+Valentin Farca,MGMV Capital
+Guanfu Teng,MGMV Capital
+Mark-Anthony Deluca,MGMV Capital
+Matthew Samberg,MGMV Capital
+Matthew Di Nicolantonio,The Young Benjamins Club
+Paolo Fiorilli,The Young Benjamins Club
+Alexandra DeRenzis,The Young Benjamins Club
+Marcus Verteuil,The Young Benjamins Club
+Christopher Ng,ROI on ROIds
+Anh Quan Pham,ROI on ROIds
+Gabriel Sansregret,ROI on ROIds
+Barry Bai,ROI on ROIds
+Kyra Konig,Wolves of Guy Street
+Alejandro Rendon,Wolves of Guy Street
+Mamoun Bennani,Wolves of Guy Street
+Gregory Jansezian,Wolves of Guy Street
+Yuxi Huang,The Storm
+Dewen Lin,The Storm
+Cookie Shworan,The Storm
+Victor Decalf,The Storm
+Madisyn Dhak,JIC Ladies
+Joelle Masse,JIC Ladies
+Shauni Inder,JIC Ladies
+Stephanie Luijkx,JIC Ladies
+Fang Jun Wang,Monkey Kings
+Harvey Peng,Monkey Kings
+Shay Prajapat,Monkey Kings
+Kevin-Edward Nguyen,Monkey Kings
+Jonathan Garofalo,East Enders
+Alex Limosani,East Enders
+Abdulatif Dalab,East Enders
+Sunny Truong,East Enders
+Thomas Coutu,GMT
+Gabriel Tremblay,GMT
+Emilie Granger,GMT
+Nicolas Schafer Schafer,GMT
+Camly Nguyen,JAC PAC
+Mark Trad,JAC PAC
+Arina Caraterzi,JAC PAC
+Pamela Singh,JAC PAC
+Lucas Schachtler,JAC PAC 1
+Veronica D'Urbano,JAC PAC 1
+Tiffany Ou Yang,JAC PAC 1
+Mushfiq Kamal,JAC PAC 1
+Guillaume Dragon,Stockers
+Sebastien Laroche,Stockers
+Marc Sanderson,Stockers
+Alex Noel,Stockers
+Danoosh Sahebi Ghazvini,WuTang Financial
+Cedric Sarno,WuTang Financial
+Kevin Sanchez,WuTang Financial
+Ben Carr,WuTang Financial
+Kimberly Janeiro,Dawgs of Wallstreet
+Alexandre Gadoury,Dawgs of Wallstreet
+Antoine Bergeron Gravel,Dawgs of Wallstreet
+Michel Loutchkine,Dawgs of Wallstreet
+Dennis Gudbran,ADMR Capital
+Roman Melzer,ADMR Capital
+Anthony Psycharis,ADMR Capital
+Bruno Moureaux,ADMR Capital
+Kim Losier,Highrollers
+Aghiles Boumati,Highrollers
+Nicholas McInnis,Highrollers
+Mikael Clermont Pereira,Highrollers
+Jerome Diamond,Team Cheddar
+John Hatzepetros,Team Cheddar
+Ze Jun Liu,Team Cheddar
+Jonathan Yee,Team Cheddar
+Christopher Nichilo,ROI or Die Trying
+Julien Rizkallah-Leroux,ROI or Die Trying
+Anastasia Artemova,ROI or Die Trying
+Aditi Hossain,ROI or Die Trying
+Alexandre Duckett-Dufresne,Papraz Capital
+Samuel Dubois,Papraz Capital
+Jean-Samuel Coderre,Papraz Capital
+Luc Bouchard-Lalancette,Papraz Capital
+Jackie Jin,J.A.K Investments
+Alex Guarino,J.A.K Investments
+Dan Nguyen,J.A.K Investments
+Aoi Yamaguchi,J.A.K Investments
+Simon Constantineau,Brebeuf Represent
+Ismael Bentkowski,Brebeuf Represent
+Philippe Comeau,Brebeuf Represent
+Thomas Tran,Brebeuf Represent
+Philippe Willson,BIC 1
+Shawn Dubuc,BIC 1
+Fred Gatali,BIC 1
+Guilherme Pablo Goncalves,BIC 1
+Steve Filion,BIC 2
+Luc Tardif,BIC 2
+Jack Mai,BIC 2
+Nicolas Lastrade Brais,BIC 2
+Natalya Wijenje,BIC 3
+Margarita Acero,BIC 3
+Alysha Thistlewaite,BIC 3
+Nicolas Charlton,BIC 3
+Carlo Pacetti,BIC 4
+Peter Serellas,BIC 4
+Johnathan Jones,BIC 4
+Jack Westington,BIC 4
+Manon Beauchart,BIC 5
+George Habib,BIC 5
+Aron Patella,BIC 5
+Mael Gagnon,BIC 5
+Liam Rourke,BIC 6
+William Albitbol,BIC 6
+Luke Roy,BIC 6
+Kareem Brathwaite-Henry,BIC 6
+Piers Mulhivil,BIC 7
+Wei Qui,BIC 7
+Benjamin Collier,BIC 7
+Willy Piette,BIC 7
+Jimmy Boateng,BIC 8
+Samo Cebular,BIC 8
+Noah Jepson,BIC 8
+Yassine Nassiri,BIC 8
+Alex Laflamme,BIC 9
+Dominic Breton-Veillette,BIC 9
+Victor Damoiseau,BIC 9
+Marc-Benoit Roch,BIC 9
+Camille Lavictoire,Team SRA
+Pauline Barraque-Bigot,Team SRA
+Naomie Desjardins,Team SRA
+Pierre Monin,Team SRA
+Richard Babaiants,Foreign Policy
+Jiuzhou Huang,Foreign Policy
+Haotian Chen,Foreign Policy
+Andrei Stroia,Foreign Policy
+Philippe Miller,The WOWS
+Caesar Esfandiari,The WOWS
+Ravishan Jayasuriya,The WOWS
+Jad Kassmy,The WOWS
+Johannes Wolter,The Bodacious Boys
+Oliver Vasseur,The Bodacious Boys
+David Potvin,The Bodacious Boys
+Louis Natier,The Bodacious Boys
+Mingze Deng,TripleXTraders
+Charles-David Chadwick,TripleXTraders
+Ameer Nizami,TripleXTraders
+Samuel Goyer,TripleXTraders
+Maddy Sedgewick,Financial Four
+William Grigat,Financial Four
+Scott Tin,Financial Four
+Clara De Richoufftz,Financial Four
+Kais Abusamhadaneh,Hot Stox
+Tala Abdul Salam,Hot Stox
+Oussama Sabbagh,Hot Stox
+Yasin Karakilic,Hot Stox
+Marianne Lacoste,Bullmarket
+Azelie Pouliot,Bullmarket
+Julien Giroux-Harvey,Bullmarket
+Marine Comtois-Guibert,Bullmarket
+Kevin Ansems,Risky Business
+Alex Roach,Risky Business
+Theo Profeta,Risky Business
+Abdy Sajous,Risky Business
+Morgan Dias-Leclerc,Hogwarts Delegation
+Jean-Christophe Vinette,Hogwarts Delegation
+Christian Pavilanis,Hogwarts Delegation
+Antoine Loranger,Hogwarts Delegation
+John Allen,The Executives
+Guillaume Bourassa-Benoit,The Executives
+Jeffrey Tavares Linhares,The Executives
+Kai Kuong Wong,The Executives
+June Boodajee,Lightshadow
+Olivier Jalbert,Lightshadow
+Dylan Dorfman,Lightshadow
+Tianhui Yu,Lightshadow
+Maxime Lachance,FidelCashFlow
+Keanu Vivish,FidelCashFlow
+Vincent Cerri,FidelCashFlow
+Paul Grosfils,FidelCashFlow
+Julia Lafreniere,JMUCC Dream Team
+Solene Tanguay,JMUCC Dream Team
+Genevieve Collette,JMUCC Dream Team
+Kim Chanel Vallee-Seguin,JMUCC Dream Team
+Francesca Scalia,Cash Cows
+Adriana Gaeta,Cash Cows
+Mitra Javadi,Cash Cows
+Mejda Bendelloul,Cash Cows
+Nima Mansoori,Key to Success 4.0
+Jonathan Park,Key to Success 4.0
+Hassan Sheikh,Key to Success 4.0
+Nicolas MacIsaac,Key to Success 4.0
+Simon Beaudry,Sharks
+William Sirois,Sharks
+Jordan Fefer,Sharks
+Jonathan Wu,Sharks
+Joacquim Crosswell,University of Guelph-Humber
+David Golec,University of Guelph-Humber
+Sanampreet Mutty,University of Guelph-Humber
+Pooja Sevak,University of Guelph-Humber
+Alin Potra,Legal Money
+Oleg Stratiev,Legal Money
+Xavier Menard,Legal Money
+Laurent Poirier McClure,Legal Money
+Denis Simotas,Malakes
+Fahad Syed,Malakes
+Maria Hatzipetros,Malakes
+Tina Khadivi,Malakes
+Yuchen Xie,The Big Short
+Mitchell Turk,The Big Short
+Ian Moore,The Big Short
+Frankie Sunnyshine,The Big Short
+Kevin Gemme,JMUCC Squad
+Eunice Lieu,JMUCC Squad
+Melissa Tran,JMUCC Squad
+Anja Rajao,JMUCC Squad
+Kris Gandhi,The Wolves of Waffle Street
+Ram Virhia,The Wolves of Waffle Street
+Charles Moyen,The Wolves of Waffle Street
+Jasmeet Combo,The Wolves of Waffle Street
+Mark Nowrang,Felix's Boys/Girls
+Melissa Piro,Felix's Boys/Girls
+Ahmed Ba,Felix's Boys/Girls
+Leah Brookes,Felix's Boys/Girls
+Zubair Munawer,The Money Team
+Adil Sajjad,The Money Team
+Joshu Brown,The Money Team
+Li Tian,The Money Team
+Charles Levesque,Sherby Traders
+Valerie Beaupre,Sherby Traders
+Benjamin Marcoux Marchand,Sherby Traders
+Miguel Bessette,Sherby Traders
+Mohammed Zokari,The Winning Team
+Hisham Alsaidi,The Winning Team
+Julian Lopez,The Winning Team
+Brandon Lois Tremblay,The Winning Team
+Claudia Di Iorio,MLSIC
+Charles Ceelen,MLSIC
+Ouvedi naiken,MLSIC
+Ezter Biro,MLSIC
+Nathan Leblanc,The Rookies
+Michael Balliana,The Rookies
+Bruno Lalli,The Rookies
+Joel Swieca,The Rookies
+Olivier Dorais-Dumas,Dunder Mifflin
+Jerôme Carrier,Dunder Mifflin
+Charles Blais-Dionne,Dunder Mifflin
+Lucas Rodrigues,Dunder Mifflin
+Stamen Garnenkov,The Hedgers
+Sebasien Raymond,The Hedgers
+Livia Gabou,The Hedgers
+Antoine Polgari,The Hedgers
+Ilyass Najem,The Golden Diggers
+Alexandre Chek,The Golden Diggers
+Oussama Boudaa,The Golden Diggers
+Ryan Bickerton,The Golden Diggers
+Jonathan Ferreira,The Quaaludes
+Michael Zatkovic,The Quaaludes
+Michael Bucci,The Quaaludes
+Gabriel Lukuc,The Quaaludes
+Robert Andraka,Take Over FC
+Malek Abdali,Take Over FC
+Vincent Michaud,Take Over FC
+Julian Farinaccio,Take Over FC
+Julien Kang,The Black Swans
+Mulong Sui,The Black Swans
+Alessandro Carelli,The Black Swans
+Esteban Van,The Black Swans
+Frederick Cote,Market Makers
+Martin Tzakov,Market Makers
+Chris de Biler,Market Makers
+Cedric Beaudoin,Market Makers
+Charles Lachapelle,Market Makers
+Stephanie Riad,Market Makers
+Alex Bergeron-Harris,Market Makers
+Michael Yeremyan,Market Makers
+Vitalie Crestianov,Ballers
+Richard Yuan,Ballers
+Jessica Chen,Ballers
+Marilynn Ethier,Ballers
+Ganesu Varun,CSIEXPERT
+Zniber Othmane,CSIEXPERT
+Zniber Karim,CSIEXPERT
+Gaspard Junior,CSIEXPERT
