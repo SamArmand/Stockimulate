@@ -51,9 +51,7 @@
 
                     title: {
                         text: 'Price'
-                    },
-
-                    min: 0
+                    }
                 },
 
                 series: [{
