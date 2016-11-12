@@ -27,17 +27,15 @@ namespace Stockimulate.Views.BrokerViews
 
             if (_brokerId == 0)
                 foreach (var instrument in _dataAccess.Instruments)
-                {
                     SecurityDropDownList.Items.Add(new ListItem(instrument.Key, instrument.Key));
-                    return;
-                }
 
             //LAZY TODO: WTF IS THIS
-            foreach (
-                var instrument in
-                    _dataAccess.Instruments.Where(
-                        instrument => instrument.Value.Id == _brokerId%_dataAccess.Instruments.Count))
-                SecurityDropDownList.Items.Add(new ListItem(instrument.Key, instrument.Key));
+            else
+                foreach (
+                    var instrument in
+                        _dataAccess.Instruments.Where(
+                            instrument => instrument.Value.Id == _brokerId%_dataAccess.Instruments.Count))
+                    SecurityDropDownList.Items.Add(new ListItem(instrument.Key, instrument.Key));
         }
 
         protected void Submit_Click(object sender, EventArgs e)
