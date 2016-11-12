@@ -155,11 +155,11 @@
             
             <div class="col-sm-2">
     
-                <div class="col-sm-12 bg-primary IndexPriceDiv" id="IndexPriceDiv" style="text-align:center" runat="server">
+                <div class="col-sm-12 bg-primary IndexPriceDiv text-white" id="IndexPriceDiv" style="text-align:center" runat="server">
 
                 </div>
 
-                <div class="col-sm-12 bg-warning" id="IndexChangeDiv" style="display:block;text-align:center" runat="server">
+                <div class="col-sm-12 bg-warning text-white" id="IndexChangeDiv" style="display:block;text-align:center" runat="server">
 
                     <h1 style="display:inline-block" id="IndexChangeH1" runat="server">0</h1>
 
@@ -167,7 +167,7 @@
 
            </div>
         
-            <div class="" id="StatusDiv" runat="server">
+            <div class="text-white" id="StatusDiv" runat="server">
     
                 <h1>Q<span id="QuarterSpan" runat="server"></span> | Day <span id="DaySpan" runat="server"></span> | Market <span id="StatusSpan" runat="server"></span> </h1>
             </div>
