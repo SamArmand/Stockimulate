@@ -485,7 +485,7 @@ namespace Stockimulate.Architecture
 
             var connection = new SqlConnection(ConnectionString);
 
-            var command = new SqlCommand("UPDATE Traders SET Funds='1000000'; DELETE FROM Trades; UPDATE Instruments SET Price='0', LastChange='0';") {CommandType = CommandType.Text};
+            var command = new SqlCommand("UPDATE Traders SET Funds='1000000'; DELETE FROM Trades; DELETE FROM Accounts; UPDATE Instruments SET Price='0', LastChange='0';") {CommandType = CommandType.Text};
 
             connection.Open();
 
