@@ -35,14 +35,14 @@ namespace Stockimulate.Views
 
             if (_marketStatus == "CLOSED")
             {
-                StatusDiv.Attributes["class"] = "col-sm-10 bg-danger";
+                StatusDiv.Attributes["class"] = "col-sm-10 bg-danger text-white";
                 var day = _prices[instrument.Symbol].Count;
                 DaySpan.InnerHtml = day == 0 ? day.ToString() : (day - 1).ToString();
             }
 
             else
             {
-                StatusDiv.Attributes["class"] = "col-sm-10 bg-success";
+                StatusDiv.Attributes["class"] = "col-sm-10 bg-success text-white";
                 DaySpan.InnerHtml = (_prices[instrument.Symbol].Count).ToString();
             }
 
@@ -64,19 +64,19 @@ namespace Stockimulate.Views
             if (instrument.LastChange > 0)
             {
                 IndexChangeH1.InnerHtml = "+" + instrument.LastChange;
-                IndexChangeDiv.Attributes["class"] = "col-sm-12 bg-success";
+                IndexChangeDiv.Attributes["class"] = "col-sm-12 bg-success text-white";
             }
 
             else if (instrument.LastChange < 0)
             {
                 IndexChangeH1.InnerHtml = instrument.LastChange.ToString();
-                IndexChangeDiv.Attributes["class"] = "col-sm-12 bg-danger";
+                IndexChangeDiv.Attributes["class"] = "col-sm-12 bg-danger text-white";
             }
 
             else
             {
                 IndexChangeH1.InnerHtml = "+" + instrument.LastChange;
-                IndexChangeDiv.Attributes["class"] = "col-sm-12 bg-warning";
+                IndexChangeDiv.Attributes["class"] = "col-sm-12 bg-warning text-white";
             }
 
             if (_news != "null")
