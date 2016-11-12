@@ -101,7 +101,7 @@
                 }
 
                 if (message[1] !== "")
-                    $('.NewsDiv').html("<h2>" + message[1] + "</h2>");
+                    $('#NewsDiv').html("<h2>" + message[1] + "</h2>");
 
 
                 if (message[2] === "closed") {
@@ -174,7 +174,7 @@
                 <h1>Q<span id="QuarterSpan" runat="server"></span> | Day <span id="DaySpan" runat="server"></span> | Market <span id="StatusSpan" runat="server"></span> </h1>
             </div>
 
-           <div class="col-sm-12 NewsDiv" id="NewsDiv" runat="server"></div>
+           <div class="col-sm-12" id="NewsDiv" runat="server"></div>
 
 </div>
 
