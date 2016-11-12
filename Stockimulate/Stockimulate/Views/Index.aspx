@@ -11,8 +11,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/signalr.js/2.2.1/jquery.signalR.min.js"></script>
     <%-- ReSharper disable once Html.PathError --%>
-    <script src="../signalr/hubs"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+    <script src="/signalr/hubs"></script>
+      
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/5.0.0/highcharts.js"></script>
 
     <%-- ReSharper disable PossiblyUnassignedProperty --%>
@@ -134,8 +135,7 @@
 
     </script>
     <%-- ReSharper restore PossiblyUnassignedProperty --%>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css"/>
-
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous"/>
 </head>
 <body>
 
@@ -143,7 +143,7 @@
     
             
         <div class="col-sm-12">
-            <img style="max-height: 100px;" src="../img/JMSX.png" alt="JMSX.png"/>
+            <img style="max-height: 100px;" src="/img/JMSX.png" alt="JMSX.png"/>
 
             </div>
         
