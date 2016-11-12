@@ -48,8 +48,12 @@ namespace Stockimulate.Architecture
                     throw new Exception("This trade puts the buyer's position at over 100.");
 
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+
+                if (exception.Message == "This trade puts the buyer's position at over 100.")
+                    throw;
+
                 buyerAccount = new Account(symbol, buyerId, 0);
                 if (buyerAccount.Position + quantity > 100 && buyerTeamId != 0)
                     throw new Exception("This trade puts the buyer's position at over 100.");
@@ -66,8 +70,11 @@ namespace Stockimulate.Architecture
                     throw new Exception("This trade puts the seller's position at below -100.");
 
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                if (exception.Message == "This trade puts the seller's position at below -100.")
+                    throw;
+
                 sellerAccount = new Account(symbol, sellerId, 0);
                 if (sellerAccount.Position - quantity < -100 && sellerTeamId != 0)
                     throw new Exception("This trade puts the seller's position at below -100.");

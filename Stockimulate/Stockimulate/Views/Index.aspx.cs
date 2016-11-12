@@ -113,7 +113,7 @@ namespace Stockimulate.Views
         {
             _prices = new Dictionary<string, List<int>>();
 
-            _quarter = 0;
+            _quarter = 2;
             _marketStatus = "CLOSED";
 
             _news = string.Empty;
