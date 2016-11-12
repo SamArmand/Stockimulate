@@ -1,54 +1,45 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/PublicViews/PublicMaster.Master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="Stockimulate.Views.PublicViews.Home" %>
 <asp:Content ID="HomeContent" ContentPlaceHolderID="PublicMasterContentPlaceHolder" runat="server">
     
-        <legend><h1>Welcome to JMSX 2015</h1></legend>
+        <legend><h1>Welcome to JMSX 2016</h1></legend>
     
-    <h2>A Word with the President</h2>
-    
-    <p class="lead">On November 8th 2016, US Republican Presidential Candidate Ronald Trumped was elected as the 45th President of the United States. With the executive power granted to the nation’s highest office, President Trumped swiftly began to decree bills into law. According to Trumped, these executive orders will, beyond the shred of a doubt (or humility), Make American Great Again! Most, if not all, of Mr. Trumped’s attention was geared towards foreign policy rather than alleviating the mounting domestic inequality crisis facing the commander in chief. His corsairs were unmistakably aimed at China, which felt the full strength of his wrath. Unsurprisingly, the global markets’ response to this frantic legislative agenda was catastrophic. Asian equity markets crashed overnight as investors feared that what came to be known as “Ronald’s Mad Spree” would harm trade. Negative economic indicators followed suit across the globe. The Asian market’s pullback effects spread across the EU as well the US. A meagre year after President Trumped took office, the full impact if his policies were felt and the world fell into a more formidable recession than the Great Recession of ‘08.</p>
-      
-      <p class="lead">In order to clear his name and remind the world that only he can fix the problem he most definitely did not create, President Trumped appeared on Charlie Blue’s 60 Minutes. Here is a sample of the interview that once again rocked the financial markets:</p>
-    
-    <br />
+    <h2>The House of Cards</h2>
 
-    <blockquote><strong>Trumped:</strong> Charlie, let me tell you, we’ve got the BEST man to handle this job. My man Carl HeCahn (US Secretary of the Treasury) did deals for years; he totally has this under control.</blockquote>
+    <blockquote>
+        
+        <p>“The European Union was a noble dream, but as happens with most dreams, reality eventually sets in. It is simply not possible to maintain economic unity and a single monetary policy among a collection of states each of which sets its own fiscal policies. Europe’s sovereign debt was the first sign that something was structurally wrong. Germany spent years loaning euros to poorer Eurozone countries, so they could buy German-made goods. Other exporting nations within the EU did the same. The resulting trade imbalance had to show itself somewhere. It did… in the government debts of countries like Greece, Italy, Spain, Portugal, and Ireland. Now add the political tensions from the migrant crisis and Brexit, and Europe’s collapse becomes increasingly real. </p>
+        
+        <br/>
+        
+        <p>The European Central Bank is becoming dangerously over-extended and the whole euro project is unworkable in its current form. One day, the house of cards will collapse. The euro has been betrayed by politics, lamenting that the experiment went wrong from the beginning and has since degenerated into a fiscal free-for-all that once again masks the festering pathologies. Realistically, it will be a case of muddling through, struggling from one crisis to the next. The Eurozone has not overcome its structural incoherence. A beguiling combination of cheap oil, a cheap euro, quantitative easing and less fiscal austerity have disguised this, but the short-term effects are already fading.</p>
+        
+        <br/>
+        
+        <p>There are many possible outcomes to a European financial crisis stemming from massive sovereign debts and unbalanced budgets. What would save Europe is Germany getting rid of the euro and returning to the Deutsch Mark. If poorer southern EU countries left the euro, they would face a huge debt repayment. But if Germany were to drop the euro, the value of the single currency would plummet, and as a result, struggling member states would become more competitive. The boost in exports would stimulate economies in the southern periphery.”</p>
+        
+        <footer class="blockquote-footer">Maria Kitkarska, recipient of the Nobel Prize in Economics</footer>
+        <footer class="blockquote-footer">2016 Summit on the Economics of Policing</footer>
+    </blockquote>
     
-    <blockquote class="blockquote-reverse"><strong>Charlie:</strong> Mr. HeCahn is a great businessman – we both know that. But right now, to fix the world economy, don’t you think we need an experienced economist instead?</blockquote>
-    
-    <blockquote><strong>Trumped:</strong> Listen Charlie, before I became President, I made deals for a living. I was great at it. I even wrote a book on making deals. Everywhere you go it’s all about deals, deals, deals and more deals. I think that to solve this problem, we need to make a deal with China.</blockquote>
-    
-    <blockquote class="blockquote-reverse"><strong>Charlie:</strong> What about China?</blockquote>
-    
-    <blockquote><strong>Trumped</strong> My friend Carl has connections.</blockquote>
-    
-    <blockquote class="blockquote-reverse"><strong>Charlie:</strong> What kind of connections?</blockquote>
-    
-    <blockquote><strong>Trumped</strong> I’ll give you one word: GOLD.</blockquote>
-
-    <br/>
-
-    <p class="lead">As soon as the word GOLD was muttered, global markets received mixed reactions. </p>
-    
-    <br/>
+    <p>We are now in 2018. Germany is officially out of the euro currency.</p>
 
     <h2>JMSX Market Dynamics</h2>
     
     <br/>
 
-    <p class="lead">Participants will be able to trade on the <strong>John Molson Commodities Exchange</strong> for the futures of <strong>John Molson Emerging Markets Index (CHIN)</strong> and the <strong>John Molson Miners Index (NUGT)</strong>. The price is influenced by announcements of major news that appear periodically on screen as well as the release of monthly and quarterly economic indicators. Reactions to news or numbers may lag or be instantaneous. Participants are expected to trade based on how they interpret the news and their anticipation of the market reaction.</p>
+    <p class="lead">Participants will be able to trade the <strong>John Molson German Index (DTSCH)</strong> for the futures of <strong>John Molson Emerging Markets Index (CHIN)</strong> and the <strong>Euro against the US Dollar (EUR/USD)</strong>. The spot price is influenced by announcements of major news that appear periodically on screen as well as the release of monthly and quarterly economic indicators. Reactions to news or numbers may lag or be instantaneous. Participants are expected to trade based on how they interpret the news and their anticipation of the market reaction. </p>
     
     <br/>
 
-    <h3>John Molson Emerging Markets Index (JMSX: CHIN)</h3>
+    <h3>John Molson German Index</h3>
     
-    <p class="lead">The John Molson Emerging Markets Index is designed to measure the overall performance of common stocks across the Emerging Markets companies. The sector encompasses those industries that tend to be the most sensitive to political as well as economical news. The index includes leading Emerging Market in Technology, Manufacturing and Consumer Staples.</p>
+    <p class="lead">The John Molson German Index (DTSCH) is designed to measure the overall performance of common stocks of German firms. It is a blue chip stock market index consisting of the 20 major German companies, such as Adidas, BASF, Bayer, BMW, Daimler, Deutsche Bank, Lufthansa, SAP, Volkswagen, and others. Reflecting the composition of the German economy, the top sectors represented in the index are Chemicals, Automobile, Industrials and Healthcare.</p>
     
     <br/>
 
-    <h3>The John Molson Miners Index (JMSX: NUGT)</h3>
+    <h3>The Euro</h3>
     
-    <p class="lead">The John Molson Miners Index reflects security prices of Gold and Silver (a by-product of Gold Mining) Miners in North America.</p>
-    
+    <p class="lead">The relation of the euro against the US dollar is designated as EUR/USD. Here, the euro is the base currency and the US dollar is the counter currency. Therefore, the quotation EUR/USD 1.25 means that it takes 1.25 US dollars to buy 1 euro. Currently, the pair is trading at par (EUR/USD 1.00), implying that it takes 1,000 USD to buy 1,000 euro for example. When indicators show a strong and growing economy, currency tends to appreciate. Keep in mind that you are trading the euro against the USD. Therefore, the EUR/USD is also expected to appreciate if the US dollar depreciates. </p>
     
     <br/>
 
@@ -69,6 +60,16 @@
     <h3>Unemployment Rate</h3>
     
     <p class="lead">The unemployment rate is a measure of the prevalence of unemployment and it is calculated as a percentage by dividing the number of unemployed individuals by all individuals currently in the labor force. During periods of recession, an economy usually experiences a relatively high unemployment rate.</p>
+    
+    <br/>
+    
+    <h3>Indices</h3>
+    
+    <p class="lead">The Purchasing Managers’ Index (PMI) is an indicator of the economic health of the manufacturing sector. </p>
+        
+    <br/>
+
+        <p>The Consumer Confidence Index is an indicator designed to measure consumer confidence, which is defined as the degree of optimism on the state of the economy that consumers are expressing through their activities of savings and spending.</p>
     
     <br/>
 
