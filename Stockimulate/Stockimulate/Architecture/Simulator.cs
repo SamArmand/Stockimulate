@@ -16,7 +16,7 @@ namespace Stockimulate.Architecture
         private const int Quarter3Day = 188;
         private const int Quarter4Day = 251;
 
-        private const int TimeInterval = 3000;
+        private const int TimeInterval = 28000;
 
         private readonly DataAccess _dataAccess;
 

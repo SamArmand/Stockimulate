@@ -1,4 +1,3 @@
-C:\Users\SamArmand\Source\Repos\Stockimulate\Stockimulate\Stockimulate\obj\Debug\Stockimulate.csprojResolveAssemblyReference.cache
 C:\Users\SamArmand\Source\Repos\Stockimulate\Stockimulate\Stockimulate\bin\ApplicationInsights.config
 C:\Users\SamArmand\Source\Repos\Stockimulate\Stockimulate\Stockimulate\bin\Stockimulate.dll.config
 C:\Users\SamArmand\Source\Repos\Stockimulate\Stockimulate\Stockimulate\bin\Stockimulate.dll

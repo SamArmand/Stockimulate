@@ -8,8 +8,8 @@
         <fieldset>
 
           <!-- Form Name -->
-          <legend><h1>Trade</h1></legend>
-            
+          <legend><h1>Trade<span id ="SymbolLegendSpan" runat="server"></span></h1></legend>
+
           <!-- Text input-->
           <div class="form-group row">
             <label class="col-sm-1 control-label">Buyer ID</label>
