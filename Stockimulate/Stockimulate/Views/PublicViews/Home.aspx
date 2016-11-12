@@ -21,7 +21,7 @@
         <footer class="blockquote-footer">2016 Summit on the Economics of Policing</footer>
     </blockquote>
     
-    <p>We are now in 2018. Germany is officially out of the euro currency.</p>
+    <p class="lead">We are now in 2018. Germany is officially out of the euro currency.</p>
 
     <h2>JMSX Market Dynamics</h2>
     
@@ -69,7 +69,7 @@
         
     <br/>
 
-        <p>The Consumer Confidence Index is an indicator designed to measure consumer confidence, which is defined as the degree of optimism on the state of the economy that consumers are expressing through their activities of savings and spending.</p>
+        <p class="lead">The Consumer Confidence Index is an indicator designed to measure consumer confidence, which is defined as the degree of optimism on the state of the economy that consumers are expressing through their activities of savings and spending.</p>
     
     <br/>
 
