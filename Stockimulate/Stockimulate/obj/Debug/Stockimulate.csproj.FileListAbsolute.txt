@@ -29,3 +29,4 @@ C:\Users\SamArmand\Source\Repos\Stockimulate\Stockimulate\Stockimulate\bin\Micro
 C:\Users\SamArmand\Source\Repos\Stockimulate\Stockimulate\Stockimulate\bin\Newtonsoft.Json.xml
 C:\Users\SamArmand\Source\Repos\Stockimulate\Stockimulate\Stockimulate\obj\Debug\Stockimulate.dll
 C:\Users\SamArmand\Source\Repos\Stockimulate\Stockimulate\Stockimulate\obj\Debug\Stockimulate.pdb
+C:\Users\SamArmand\Source\Repos\Stockimulate\Stockimulate\Stockimulate\obj\Debug\Stockimulate.csprojResolveAssemblyReference.cache
