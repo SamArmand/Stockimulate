@@ -43,8 +43,7 @@
                         text: 'Trading Day'
                     },
 
-                    min: 0,
-                    max: 252
+                    min: 0
                 },
 
                 yAxis: {
@@ -53,8 +52,7 @@
                         text: 'Price'
                     },
 
-                    min: 0,
-                    max: 4000
+                    min: 0
                 },
 
                 series: [{

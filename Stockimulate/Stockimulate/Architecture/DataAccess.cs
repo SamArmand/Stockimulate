@@ -41,7 +41,7 @@ namespace Stockimulate.Architecture
         {
             var connection = new SqlConnection(ConnectionString);
 
-            var command = new SqlCommand("INSERT INTO Trades (BuyerId, SellerId, Symbol, Quantity, Price, MarketPrice, Flagged) VALUES (@BuyerId, @SellerId, @Symbol, @Quantity, @Price, @MarketPrice, @Flagged);") {CommandType = CommandType.Text};
+            var command = new SqlCommand("INSERT INTO Trades (BuyerId, SellerId, Symbol, Quantity, Price, MarketPrice, Flagged, BrokerId) VALUES (@BuyerId, @SellerId, @Symbol, @Quantity, @Price, @MarketPrice, @Flagged, @BrokerId);") {CommandType = CommandType.Text};
 
             command.Parameters.AddWithValue("@BuyerId", trade.Buyer.Id);
             command.Parameters.AddWithValue("@SellerId", trade.Seller.Id);
@@ -50,6 +50,7 @@ namespace Stockimulate.Architecture
             command.Parameters.AddWithValue("@Price", trade.Price);
             command.Parameters.AddWithValue("@MarketPrice", trade.MarketPrice);
             command.Parameters.AddWithValue("@Flagged", trade.Flagged.ToString());
+            command.Parameters.AddWithValue("@BrokerId", trade.BrokerId.ToString());
 
             connection.Open();
 
@@ -358,7 +359,7 @@ namespace Stockimulate.Architecture
             queryStringBuilder.Append("SELECT News");
 
             for (var i = 0; i < Instruments.Count; ++i)
-                queryStringBuilder.Append(", EffectIndex" + (i + 1));
+                queryStringBuilder.Append(", EffectIndex" + i);
 
             queryStringBuilder.Append(" FROM " + table + " WHERE TradingDay=@TradingDay;");
 
