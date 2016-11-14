@@ -9,11 +9,6 @@ namespace Stockimulate.Architecture
         public void CreateTrade(int buyerId, int sellerId, string symbol, int quantity, int price, int brokerId)
         {
 
-            var dataAccess = DataAccess.SessionInstance;
-
-            if (buyerId == 0)
-                price = dataAccess.GetInstrument(symbol).Price;
-
             if (buyerId < 0 || sellerId < 0)
                 throw new Exception("IDs cannot be negative.");
             if (buyerId == sellerId)
@@ -22,6 +17,8 @@ namespace Stockimulate.Architecture
                 throw new Exception("Quantity must be at least 1.");
             if (price < 1)
                 throw new Exception("Price must be at least 1.");
+
+            var dataAccess = DataAccess.SessionInstance;
 
             var buyer = dataAccess.GetTrader(buyerId);
             var seller = dataAccess.GetTrader(sellerId);
@@ -42,26 +39,17 @@ namespace Stockimulate.Architecture
             if (buyer.Funds - (price * quantity) < 0 && buyerTeamId != 0 && buyerTeamId != 72)
                 throw new Exception("Buyer has insufficient funds.");
 
-            var alreadyExceeded = false;
-
             Account buyerAccount;
             var createdBuyerAccount = false;
             try
             {
                 buyerAccount = buyer.Accounts[symbol];
                 if (buyerAccount.Position + quantity > 100 && buyerTeamId != 0)
-                {
-                    alreadyExceeded = true;
                     throw new Exception("This trade puts the buyer's position at over 100.");
-                }
 
             }
             catch (Exception)
             {
-
-                if (alreadyExceeded)
-                    throw;
-
                 buyerAccount = new Account(symbol, buyerId, 0);
                 if (buyerAccount.Position + quantity > 100 && buyerTeamId != 0)
                     throw new Exception("This trade puts the buyer's position at over 100.");
@@ -75,16 +63,11 @@ namespace Stockimulate.Architecture
 
                 sellerAccount = seller.Accounts[symbol];
                 if (sellerAccount.Position - quantity < -100 && sellerTeamId != 0)
-                {
-                    alreadyExceeded = true;
-                    throw new Exception("This trade puts the seller's position at below -100.");                   
-                }
+                    throw new Exception("This trade puts the seller's position at below -100.");
+
             }
             catch (Exception)
             {
-                if (alreadyExceeded)
-                    throw;
-
                 sellerAccount = new Account(symbol, sellerId, 0);
                 if (sellerAccount.Position - quantity < -100 && sellerTeamId != 0)
                     throw new Exception("This trade puts the seller's position at below -100.");
