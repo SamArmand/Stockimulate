@@ -41,46 +41,34 @@ namespace Stockimulate.Architecture
 
             Account buyerAccount;
             var createdBuyerAccount = false;
+
             try
             {
                 buyerAccount = buyer.Accounts[symbol];
-                if (buyerAccount.Position + quantity > 100 && buyerTeamId != 0)
-                    throw new Exception("This trade puts the buyer's position at over 100.");
-
             }
-            catch (Exception exception)
+            catch
             {
-
-                if (exception.Message == "This trade puts the buyer's position at over 100.")
-                    throw;
-
                 buyerAccount = new Account(symbol, buyerId, 0);
-                if (buyerAccount.Position + quantity > 100 && buyerTeamId != 0)
-                    throw new Exception("This trade puts the buyer's position at over 100.");
                 createdBuyerAccount = true;
             }
+
+            if (buyerAccount.Position + quantity > 100 && buyerTeamId != 0)
+                throw new Exception("This trade puts the buyer's position at over 100.");
 
             Account sellerAccount;
             var createdSellerAccount = false;
             try
             {
-
                 sellerAccount = seller.Accounts[symbol];
-                if (sellerAccount.Position - quantity < -100 && sellerTeamId != 0)
-                    throw new Exception("This trade puts the seller's position at below -100.");
-
             }
-            catch (Exception exception)
+            catch
             {
-                if (exception.Message == "This trade puts the seller's position at below -100.")
-                    throw;
-
                 sellerAccount = new Account(symbol, sellerId, 0);
-                if (sellerAccount.Position - quantity < -100 && sellerTeamId != 0)
-                    throw new Exception("This trade puts the seller's position at below -100.");
                 createdSellerAccount = true;
             }
-                
+
+            if (sellerAccount.Position - quantity < -100 && sellerTeamId != 0)
+                throw new Exception("This trade puts the seller's position at below -100.");
 
             buyerAccount.Position += quantity;
             sellerAccount.Position -= quantity;
