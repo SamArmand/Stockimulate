@@ -133,17 +133,23 @@ namespace Stockimulate.Architecture
         public void SetCompetitionMode()
         {
             _mode = Mode.Competition;
-            _dayNumber = 0;
+            _dayNumber = 0; //TODO EMERGENCY SHOULD BE 0
 
             _table = "Events";
 
             foreach (var instrument in _instruments)
             {
-                instrument.Value.Price = 0;
-                _dataAccess.Update(instrument.Value);
+                if (instrument.Key == "DTSCH")
+                    instrument.Value.Price = 0;
             }
 
-            Update();
+            for (int i = 0; i < 125; ++i)
+            {
+                Update();
+                _dayNumber++;
+            }
+
+            //Update();
         }
 
         private Simulator()
