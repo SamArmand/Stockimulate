@@ -119,37 +119,30 @@ namespace Stockimulate.Architecture
 
             else
                 Index.Update(dayInfo);
-
-            //send update to pages
+            
             var message = new List<string> {_dayNumber.ToString(), dayInfo.NewsItem, _marketStatus};
 
             message.AddRange(_instruments.Select(instrument => dayInfo.Effects[instrument.Key].ToString()));
-
+            
+            //send update to pages
             _context.Clients.All.sendMessage(message.ToArray());
-            //_context.Clients.All.sendBrokerMessage(message.ToArray());
 
         }
 
         public void SetCompetitionMode()
         {
             _mode = Mode.Competition;
-            _dayNumber = 0; //TODO EMERGENCY SHOULD BE 0
+            _dayNumber = 0;
 
             _table = "Events";
 
             foreach (var instrument in _instruments)
             {
-                if (instrument.Key == "DTSCH")
-                    instrument.Value.Price = 0;
+                instrument.Value.Price = 0;
+                _dataAccess.Update(instrument.Value);
             }
 
-            for (int i = 0; i < 125; ++i)
-            {
-                Update();
-                _dayNumber++;
-            }
-
-            //Update();
+            Update();
         }
 
         private Simulator()
