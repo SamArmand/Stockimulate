@@ -1,11 +1,11 @@
 ﻿<Properties StartupConfiguration="{D37EE335-297F-4E0B-A83B-948CB806A72F}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Stockimulate/Views/AdministratorViews/AdminPanel.aspx.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Stockimulate/Models/Trade.cs">
     <Files>
       <File FileName="TradeFixer/Program.cs" Line="13" Column="48" />
       <File FileName="TradeFixer/DataAccess.cs" Line="20" Column="3" />
       <File FileName="TradeFixer/TradeManager.cs" Line="21" Column="40" />
       <File FileName="TradeFixer/Models/Account.cs" Line="11" Column="84" />
-      <File FileName="Stockimulate/Architecture/DataAccess.cs" Line="24" Column="1" />
+      <File FileName="Stockimulate/Architecture/DataAccess.cs" Line="105" Column="84" />
       <File FileName="TradeFixer/packages.config" Line="1" Column="1" />
       <File FileName="TradeFixer/Models/Broker.cs" Line="1" Column="21" />
       <File FileName="TradeFixer/Models/DayInfo.cs" Line="3" Column="11" />
@@ -13,10 +13,11 @@
       <File FileName="TradeFixer/Models/Team.cs" Line="15" Column="77" />
       <File FileName="TradeFixer/Models/Trade.cs" Line="1" Column="28" />
       <File FileName="TradeFixer/Models/Trader.cs" Line="20" Column="95" />
-      <File FileName="Stockimulate/Architecture/TradeManager.cs" Line="28" Column="31" />
-      <File FileName="Stockimulate/Architecture/Simulator.cs" Line="1" Column="1" />
+      <File FileName="Stockimulate/Architecture/TradeManager.cs" Line="84" Column="13" />
+      <File FileName="Stockimulate/Architecture/Simulator.cs" Line="38" Column="11" />
       <File FileName="Stockimulate/Views/AdministratorViews/AdminPanel.aspx" Line="31" Column="119" />
-      <File FileName="Stockimulate/Views/AdministratorViews/AdminPanel.aspx.cs" Line="1" Column="1" />
+      <File FileName="Stockimulate/Views/AdministratorViews/AdminPanel.aspx.cs" Line="136" Column="48" />
+      <File FileName="Stockimulate/Models/Trade.cs" Line="19" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
