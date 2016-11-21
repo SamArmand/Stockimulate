@@ -19,7 +19,7 @@ namespace Stockimulate.Views.PublicViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText TeamNumberInput;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl TeamNumberInput;
         
         /// <summary>
         /// TeamCodeDiv control.
@@ -37,7 +37,7 @@ namespace Stockimulate.Views.PublicViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText TeamCodeInput;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl TeamCodeInput;
         
         /// <summary>
         /// CancelButton control.
