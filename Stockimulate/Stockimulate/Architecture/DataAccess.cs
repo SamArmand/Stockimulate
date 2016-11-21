@@ -76,7 +76,7 @@ namespace Stockimulate.Architecture
                                             " AND Sellers.TeamId" + (sellerTeamId == string.Empty ? ">-1" : "=@SellerTeamId") + 
                                             " AND Trades.Symbol" + (symbol == string.Empty ? " LIKE '%%'" : "=@Symbol") + 
                                             " AND Trades.Flagged" + (flagged == string.Empty ? " LIKE '%%'" : "=@Flagged") + 
-                                            " ORDER BY ID ASC;") { CommandType = CommandType.Text };
+                                            " ORDER BY Trades.Id ASC;") { CommandType = CommandType.Text };
 
             if (buyerId != string.Empty)
                 command.Parameters.AddWithValue("@BuyerId", buyerId);
