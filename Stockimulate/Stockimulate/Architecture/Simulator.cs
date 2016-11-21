@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
-using Microsoft.AspNet.SignalR;
 using Stockimulate.Models;
 using Stockimulate.Views;
 
 namespace Stockimulate.Architecture
 {
 
-    internal class Simulator : Hub
+    internal class Simulator
     {
         
         private const int Quarter1Day = 64;
@@ -36,13 +35,13 @@ namespace Stockimulate.Architecture
 
         private string _table;
 
-        private readonly IHubContext _context;
+        //private readonly IHubContext _context;
 
         public void Play()
         {
             _marketStatus = "open";
             Index.OpenMarket();
-            _context.Clients.All.openMarket();
+            //_context.Clients.All.openMarket();
 
             _status = Status.Playing;
 
@@ -70,7 +69,7 @@ namespace Stockimulate.Architecture
         {
             _timer.Enabled = false;
 
-            _context.Clients.All.closeMarket();
+            //_context.Clients.All.closeMarket();
 
             _dataAccess.UpdateReportsEnabled("True");
         }
@@ -125,7 +124,7 @@ namespace Stockimulate.Architecture
             message.AddRange(_instruments.Select(instrument => dayInfo.Effects[instrument.Key].ToString()));
             
             //send update to pages
-            _context.Clients.All.sendMessage(message.ToArray());
+            //_context.Clients.All.sendMessage(message.ToArray());
 
         }
 
@@ -156,7 +155,7 @@ namespace Stockimulate.Architecture
             _timer.Elapsed += NextDay;
             _timer.Enabled = false;
 
-            _context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
+            //_context = GlobalHost.ConnectionManager.GetHubContext<Simulator>();
 
             _status = Status.Ready;
 
@@ -202,7 +201,7 @@ namespace Stockimulate.Architecture
             Index.Reset();
             _dataAccess.Reset();
 
-            _context.Clients.All.sendMessage(new List<string> { "0", "", "0", "0" });
+            //_context.Clients.All.sendMessage(new List<string> { "0", "", "0", "0" });
             //_context.Clients.All.sendBrokerMessage(0, 0);
 
             _status = Status.Ready;
@@ -214,7 +213,7 @@ namespace Stockimulate.Architecture
 			Index.Reset();
 			_dataAccess.SortaReset();
 
-			_context.Clients.All.sendMessage(new List<string> { "0", "", "0", "0" });
+			//_context.Clients.All.sendMessage(new List<string> { "0", "", "0", "0" });
 			//_context.Clients.All.sendBrokerMessage(0, 0);
 
             var trades = _dataAccess.GetTrades("","","","","","");
