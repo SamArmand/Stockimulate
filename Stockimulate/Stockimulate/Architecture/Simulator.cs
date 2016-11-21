@@ -10,7 +10,9 @@ namespace Stockimulate.Architecture
 
     internal class Simulator
     {
-        
+
+		private static int _lastID = 0;
+
         private const int Quarter1Day = 64;
         private const int Quarter2Day = 124;
         private const int Quarter3Day = 188;
@@ -208,25 +210,33 @@ namespace Stockimulate.Architecture
             _status = Status.Ready;
         }
 
-        public void SortaReset()
+		public bool SortaReset()
 		{
 			Stop();
 			Index.Reset();
-			_dataAccess.SortaReset();
+
+			if (_lastID == 0)
+				_dataAccess.SortaReset();
 
 			//_context.Clients.All.sendMessage(new List<string> { "0", "", "0", "0" });
 			//_context.Clients.All.sendBrokerMessage(0, 0);
 
             var trades = _dataAccess.GetTrades("","","","","","");
 
+			int newCount = 0;
+
             var tradeManager = new TradeManager();
 
-            foreach (var trade in trades) {
+			for (int i = _lastID; i < trades.Count; ++i) {
+
+				_lastID++;
+				newCount++;
 
 				try
 				{
-
-					tradeManager.CreateTrade(trade.Buyer.Id, trade.Seller.Id, trade.Instrument.Symbol, trade.Quantity, trade.Price, trade.BrokerId);
+					tradeManager.CreateTrade(trades[i].Buyer.Id, trades[i].Seller.Id, trades[i].Instrument.Symbol, trades[i].Quantity, trades[i].Price, trades[i].BrokerId);
+					if (newCount == 1000)
+						return false;
 				}
 
 				catch (Exception e)
@@ -237,7 +247,12 @@ namespace Stockimulate.Architecture
 
             }
 
+			_lastID = 0;
+
 			_status = Status.Ready;
+
+			return true;
+
 		}
 
     }
