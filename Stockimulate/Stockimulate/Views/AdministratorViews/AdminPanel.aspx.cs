@@ -117,6 +117,24 @@ namespace Stockimulate.Views.AdministratorViews
 
         }
 
+        protected void FixTrades_Click(object sender, EventArgs e)
+		{
+
+			ErrorDiv.Style.Value = "display: none;";
+			WarningDiv.Style.Value = "display: none;";
+
+			if (!VerifyInput.Checked)
+			{
+				WarningDiv.Style.Value = "display: inline;";
+				return;
+			}
+
+			ClearForm();
+
+			_simulator.SortaReset();
+
+		}
+
         protected void Continue_Click(object sender, EventArgs e)
         {
 

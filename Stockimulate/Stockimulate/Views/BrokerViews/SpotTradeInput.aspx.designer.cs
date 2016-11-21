@@ -37,7 +37,7 @@ namespace Stockimulate.Views.BrokerViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl TraderIdInput;
+		protected global::System.Web.UI.HtmlControls.HtmlInputText TraderIdInput;
         
         /// <summary>
         /// TraderIdInputValidation control.
@@ -64,7 +64,7 @@ namespace Stockimulate.Views.BrokerViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl QuantityInput;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText QuantityInput;
         
         /// <summary>
         /// QuantityInputValidation control.

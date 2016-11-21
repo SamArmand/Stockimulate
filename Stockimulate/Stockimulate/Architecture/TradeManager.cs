@@ -3,10 +3,10 @@ using Stockimulate.Models;
 
 namespace Stockimulate.Architecture
 {
-    class TradeManager
+    internal class TradeManager
     {
 
-        public void CreateTrade(int buyerId, int sellerId, string symbol, int quantity, int price, int brokerId)
+        internal void CreateTrade(int buyerId, int sellerId, string symbol, int quantity, int price, int brokerId)
         {
 
             if (buyerId < 0 || sellerId < 0)
@@ -81,7 +81,7 @@ namespace Stockimulate.Architecture
 
             var flagged = Math.Abs((float)(price - marketPrice) / marketPrice) > 0.25f;
 
-            dataAccess.Insert(new Trade(0, buyer, seller, instrument, quantity, price, marketPrice, flagged, brokerId));
+            //dataAccess.Insert(new Trade(0, buyer, seller, instrument, quantity, price, marketPrice, flagged, brokerId));
             dataAccess.Update(buyer);
             dataAccess.Update(seller);
             if (createdBuyerAccount)

@@ -19,7 +19,7 @@ namespace Stockimulate.Views.RegulatorViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl BuyerIdInput;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText BuyerIdInput;
         
         /// <summary>
         /// SellerIdInput control.
@@ -28,7 +28,7 @@ namespace Stockimulate.Views.RegulatorViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl SellerIdInput;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText SellerIdInput;
         
         /// <summary>
         /// BuyerTeamIdInput control.
@@ -37,7 +37,7 @@ namespace Stockimulate.Views.RegulatorViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl BuyerTeamIdInput;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText BuyerTeamIdInput;
         
         /// <summary>
         /// SellerTeamIdInput control.
@@ -46,7 +46,7 @@ namespace Stockimulate.Views.RegulatorViews {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl SellerTeamIdInput;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText SellerTeamIdInput;
         
         /// <summary>
         /// SecurityDropDownList control.

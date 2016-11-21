@@ -8,7 +8,7 @@ using Stockimulate.Views;
 namespace Stockimulate.Architecture
 {
 
-    public class Simulator : Hub
+    internal class Simulator : Hub
     {
         
         private const int Quarter1Day = 64;
@@ -207,5 +207,28 @@ namespace Stockimulate.Architecture
 
             _status = Status.Ready;
         }
+
+        public void SortaReset()
+		{
+			Stop();
+			Index.Reset();
+			_dataAccess.SortaReset();
+
+			_context.Clients.All.sendMessage(new List<string> { "0", "", "0", "0" });
+			//_context.Clients.All.sendBrokerMessage(0, 0);
+
+            var trades = _dataAccess.GetTrades("","","","","","");
+
+            var tradeManager = new TradeManager();
+
+            foreach (var trade in trades) {
+
+				tradeManager.CreateTrade(trade.Buyer.Id, trade.Seller.Id, trade.Instrument.Symbol, trade.Quantity, trade.Price, trade.BrokerId);
+
+            }
+
+			_status = Status.Ready;
+		}
+
     }
 }

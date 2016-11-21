@@ -28,6 +28,8 @@
 
             <asp:Button ID="ResetTradesButton" CssClass="btn btn-primary" runat="server" Text="Reset Trades" OnClick="ResetTrades_Click" />
             
+            <asp:Button ID="FixTradesButton" CssClass="btn btn-primary" runat="server" Text="Fix Trades" OnClick="FixTrades_Click" />
+            
 
             <br />
             <br />
