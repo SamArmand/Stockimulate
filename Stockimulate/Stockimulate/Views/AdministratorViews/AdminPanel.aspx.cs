@@ -131,9 +131,10 @@ namespace Stockimulate.Views.AdministratorViews
 
 			ClearForm();
 
-			_simulator.SortaReset();
-
-			WarningDiv.Style.Value = "display: inline;";
+			if (_simulator.SortaReset())
+				WarningDiv.Style.Value = "display: inline;";
+			else
+				ErrorDiv.Style.Value = "display: inline;";
 
 		}
 
