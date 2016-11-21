@@ -133,6 +133,8 @@ namespace Stockimulate.Views.AdministratorViews
 
 			_simulator.SortaReset();
 
+			WarningDiv.Style.Value = "display: inline;";
+
 		}
 
         protected void Continue_Click(object sender, EventArgs e)
