@@ -498,6 +498,24 @@ namespace Stockimulate.Architecture
 
         }
 
+        internal void SortaReset()
+		{
+
+			var connection = new SqlConnection(ConnectionString);
+
+			var command = new SqlCommand("UPDATE Traders SET Funds='1000000'; DELETE FROM Accounts; UPDATE Instruments SET Price='0', LastChange='0';") { CommandType = CommandType.Text };
+
+			connection.Open();
+
+			command.Connection = connection;
+
+			command.ExecuteNonQuery();
+
+			command.Dispose();
+			connection.Dispose();
+
+		}
+
         internal bool IsReportsEnabled()
         {
             var connection = new SqlConnection(ConnectionString);
