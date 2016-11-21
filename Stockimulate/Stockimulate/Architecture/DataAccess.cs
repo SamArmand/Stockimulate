@@ -102,7 +102,7 @@ namespace Stockimulate.Architecture
             while (reader.Read())
             {
 
-                trades.Add(new Trade(reader.GetInt32(reader.GetOrdinal("TradeId")),
+                trades.Add(new Trade(0,
                     GetTrader(reader.GetInt32(reader.GetOrdinal("BuyerId"))),
                     GetTrader(reader.GetInt32(reader.GetOrdinal("SellerId"))),
                     Instruments[reader.GetString(reader.GetOrdinal("TradeSymbol"))],
