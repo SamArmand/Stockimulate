@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
 using Stockimulate.Models;
@@ -222,7 +223,17 @@ namespace Stockimulate.Architecture
 
             foreach (var trade in trades) {
 
-				tradeManager.CreateTrade(trade.Buyer.Id, trade.Seller.Id, trade.Instrument.Symbol, trade.Quantity, trade.Price, trade.BrokerId);
+				try
+				{
+
+					tradeManager.CreateTrade(trade.Buyer.Id, trade.Seller.Id, trade.Instrument.Symbol, trade.Quantity, trade.Price, trade.BrokerId);
+				}
+
+				catch (Exception e)
+				{
+					if (!e.Message.StartsWith("This trade", StringComparison.Ordinal))
+						throw;
+				}
 
             }
 
