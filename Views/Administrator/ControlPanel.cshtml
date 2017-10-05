@@ -1,0 +1,93 @@
+@{
+    Layout = "_NavPage";
+}
+@using Stockimulate.ViewModels.Administrator
+@model ControlPanelViewModel
+
+        <fieldset>
+
+        <!-- Form Name -->
+          <legend><h1>Control Panel</h1></legend>
+            
+
+        <div class="row">
+            
+
+            <form method="post" asp-controller="ControlPanel">
+                
+                <input type="submit" class="btn btn-primary" value="Play Practice" formaction="PlayPractice"/>
+                <input type="submit" class="btn btn-primary" value="Play Competition" formaction="PlayCompetition" />
+                <input type="submit" class="btn btn-primary" value="Continue" formaction="Continue" />
+
+                <br />
+                <br />
+
+                <input type="submit" class="btn btn-primary" value="Reset Trades" formaction="ResetTrades" />
+            
+                <br />
+                <br />
+
+                <div class="form-group row">
+            
+                    <label class="col-sm-1 control-label">Security</label>
+                    <div class="col-sm-2">
+                
+                        <select asp-for="Symbol" class="form-control">
+                            @ControlPanelViewModel.RenderOptions()
+                        </select>
+
+                    </div>
+
+                    <label class="col-sm-1 col-sm-offset-1 control-label">Price</label>
+                    <div class="col-sm-2">
+                        <input type="number" asp-for="Price" placeholder="Price" class="form-control"/>
+                    </div>
+
+                    <input type="submit" class="btn btn-primary" value="Update" formaction="UpdatePrice"/>
+            
+                </div>
+
+                <div class="form-group row">
+            
+                    <label id="ReportsEnabledSpan">@ControlPanelViewModel.IsReportsEnabled().ToString()</label>
+
+                    <input type="submit" class="btn btn-primary" value="Toggle Reports" formaction="ToggleReportsEnabled"/>
+            
+
+
+                    <br />
+
+                    <br />
+
+                </div>
+                
+                
+                <input asp-for="IsVerifiedInput" type="checkbox" /> I am aware of what I am doing and that any wrong selection may completely break the competition.         
+                
+            </form>
+
+
+                <br />
+    <br />
+
+         
+            @switch (Model.State)
+            {
+                case "Error":
+                    <div id="ErrorDiv" runat="server" class="alert alert-danger bg-danger col-lg-5">
+                        @Model.ErrorMessage
+                    </div>
+                    break;
+                case "Warning":
+                    <div id="WarningDiv" runat="server" class="alert alert-warning bg-warning col-lg-5">
+                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                        <strong>Info!</strong> Please read the above statement and check the checkbox before clicking any button.
+                    </div>
+                    break;
+                default:
+                    <div></div>
+                    break;
+            }
+
+        </div>
+        </fieldset>
