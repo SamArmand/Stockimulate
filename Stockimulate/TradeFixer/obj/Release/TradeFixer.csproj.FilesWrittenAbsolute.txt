@@ -1,5 +1,0 @@
-/Users/SamArmand/Development/GitHub/Stockimulate/Stockimulate/TradeFixer/obj/Release/.NETFramework,Version=v4.5.1.AssemblyAttribute.cs
-/Users/SamArmand/Development/GitHub/Stockimulate/Stockimulate/TradeFixer/bin/Release/System.Data.Common.dll
-/Users/SamArmand/Development/GitHub/Stockimulate/Stockimulate/TradeFixer/bin/Release/System.Data.SqlClient.dll
-/Users/SamArmand/Development/GitHub/Stockimulate/Stockimulate/TradeFixer/bin/Release/TradeFixer.exe
-/Users/SamArmand/Development/GitHub/Stockimulate/Stockimulate/TradeFixer/obj/Release/TradeFixer.exe

@@ -1,6 +1,0 @@
-﻿<%@ Master Language="C#" MasterPageFile="~/Views/MainMaster.Master" AutoEventWireup="true" CodeBehind="PublicMaster.master.cs" Inherits="Stockimulate.Views.PublicViews.PublicMaster" %>
-<asp:Content ID="PublicMasterContent" ContentPlaceHolderID="MainMasterContentPlaceHolder" runat="server">
-
-    <asp:ContentPlaceHolder ID="PublicMasterContentPlaceHolder" runat="server"/>
-
-</asp:Content>
