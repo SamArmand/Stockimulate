@@ -5,122 +5,130 @@
 @model TickerViewModel
 
 
-    <div class="container-fluid">
-        
-            <div class="col-sm-10" id="GraphDiv">
-    
-                
-            </div>
+<div class="container-fluid">
 
+    <div class="row">
+
+        <div class="col-9" id="GraphDiv">
+
+            <canvas id="Chart"></canvas>
+
+        </div>
+
+        <div class="col-3">
+
+            <div class="card text-white mb-3 text-center bg-primary" style="max-width: 20rem;">
+                <div class="card-body">
+                    <h1 id="TickerPriceH1">$@Model.Price</h1>
+                </div>
+            </div>
             
-            <div class="col-sm-2">
-    
-                <div class="col-sm-12 bg-primary text-white" style="text-align:center">
-                    <h1 id="TickerPriceH1">@Model.Price</h1>
+            <div class="card text-white mb-3 text-center @Model.TickerChangeDivCssCLass" id="TickerChangeDiv" style="max-width: 20rem;">
+                <div class="card-body">
+                    <h1 id="TickerChangeH1">@Model.Change</h1>
                 </div>
-
-                <div class="@Model.TickerChangeDivCssCLass" id="TickerChangeDiv" style="display:block;text-align:center">
-
-                    <h1 style="display:inline-block" id="TickerChangeH1">@Model.Change</h1>
-
-                </div>
-
-           </div>
-        
-            <div class="@Model.StatusDivCssClass" id="StatusDiv">
-    
-                <h1>Q<span id="QuarterSpan">@TickerViewModel.Quarter.ToString()</span> | Day <span id="DaySpan">@TickerViewModel.Day.ToString()</span> | Market <span id="StatusSpan">@TickerViewModel.MarketStatus</span> </h1>
             </div>
+            
+        </div>
 
-        <div class="col-sm-12"><h2 id="NewsH2">@TickerViewModel.News</h2></div>
+    </div>
+
+    <div class="col-sm-10 text-white @Model.StatusDivCssClass" id="StatusDiv">
+
+        <h1>Q<span id="QuarterSpan">@TickerViewModel.Quarter.ToString()</span> | Day <span id="DaySpan">@TickerViewModel.Day.ToString()</span> | Market <span id="StatusSpan">@TickerViewModel.MarketStatus</span>
+        </h1>
+    </div>
+
+    <div class="col-sm-12">
+        <h2 id="NewsH2">@TickerViewModel.News</h2>
+    </div>
 
 </div>
 
-    <div id="DataDiv" style="display:none;">@Model.Data</div>
-    <div id="TickerNameSymbolDiv" style="display:none;">@Model.TickerNameAndSymbol</div>
-
-    <div id="TickerIdDiv" style="display: none;">@Model.TickerId</div>
-
+<script src="https://js.pusher.com/4.1/pusher.min.js"></script>
 <script>
-    "use strict";
 
-    const channel = Pusher('3a92cb578fb0877c47f0', {
-        cluster: 'us2',
-        encrypted: true
-    }).subscribe('stockimulate');
-            
-    channel.bind('update-market', function(days, news, effects) {
+    const channel = (new Pusher('3a92cb578fb0877c47f0',
+        {
+            cluster: 'us2',
+            encrypted: true
+        })).subscribe('stockimulate');
 
-        const id = parseInt(document.getElementById("TickerIdDiv").text());
-                
-        const effect = effects[id];
-                               
-        //$('#GraphDiv').highcharts().series[0].addPoint([parseInt(message[0]), currentPrice], true, false);
+    channel.bind('update-market',
+        function(message) {
 
-        const newPrice = parseInt(document.getElementById("TickerPriceDiv").text().substring(1)) + effect;
-        
-        document.getElementById("TickerPriceH1").innerHTML = `$${newPrice}`;
+            const effect = message.effects[@Model.TickerId];
 
-        config.data.datasets[0].data.push(newPrice);
-        
-        if (effect > 0) {
-            document.getElementById("TickerChangeDiv").className = "col-sm-12 bg-success text-white";
-            document.getElementById("TickerChangeH1").innerHTML = `+${effect}`;
-        }
-                
-        else if (effect < 0) {
-            document.getElementById("TickerChangeDiv").className = "col-sm-12 bg-danger text-white";
-            document.getElementById("TickerChangeH1").innerHTML = effect;
-        } 
-                
-        else {
-            document.getElementById("TickerChangeDiv").className = "col-sm-12 bg-warning text-white";
-            document.getElementById("TickerChangeH1").innerHTML = `+${effect}`;
-        }
-                
-        if (news !== "")
-            document.getElementById("NewsH2").innerHTML = news;
+            const newPrice = parseInt(document.getElementById("TickerPriceH1").innerText.substring(1)) + effect;
 
-    });
+            document.getElementById("DaySpan").innerHTML = message.day;
 
-    channel.bind('open-market', function() {
+            document.getElementById("TickerPriceH1").innerHTML = `$${newPrice}`;
 
-        document.getElementById("StatusDiv").className = "col-sm-10 text-white bg-success";
-        document.getElementById("StatusSpan").innerHTML = "OPEN";
-        document.getElementById("DaySpan").innerHTML = (parseInt(document.getElementById("DaySpan").innerHTML) + 1);
-        document.getElementById("QuarterSpan").innerHTML = (parseInt(document.getElementById("QuarterSpan").innerHTML) + 1);
-        
-    });
+            chart.data.datasets[0].data.push({x: parseInt(message.day), y: newPrice});
+            window.myLine.update();
 
-    channel.bind('close-market', function() {
-        document.getElementById("StatusDiv").className = "col-sm-10 text-white bg-danger";
-        document.getElementById("StatusSpan").innerHTML = "CLOSED"; 
-    });
+            if (effect > 0) {
+                document.getElementById("TickerChangeDiv").className = "col-sm-12 bg-success text-white";
+                document.getElementById("TickerChangeH1").innerHTML = `+${effect}`;
+            } else if (effect < 0) {
+                document.getElementById("TickerChangeDiv").className = "col-sm-12 bg-danger text-white";
+                document.getElementById("TickerChangeH1").innerHTML = effect;
+            } else {
+                document.getElementById("TickerChangeDiv").className = "col-sm-12 bg-warning text-white";
+                document.getElementById("TickerChangeH1").innerHTML = `+${effect}`;
+            }
 
-    var config = {
+            if (message.news !== "")
+                document.getElementById("NewsH2").innerHTML = message.news;
+        });
+
+    channel.bind('open-market',
+        function() {
+
+            document.getElementById("StatusDiv").className = "col-sm-10 text-white bg-success";
+            document.getElementById("StatusSpan").innerHTML = "OPEN";
+            document.getElementById("DaySpan").innerHTML = (parseInt(document.getElementById("DaySpan").innerHTML) + 1);
+            document.getElementById("QuarterSpan").innerHTML =
+                (parseInt(document.getElementById("QuarterSpan").innerHTML) + 1);
+
+        });
+
+    channel.bind('close-market',
+        function() {
+
+            document.getElementById("StatusDiv").className = "col-sm-10 text-white bg-danger";
+            document.getElementById("StatusSpan").innerHTML = "CLOSED";
+        });
+
+    var chart = {
         type: 'line',
         data: {
             datasets: [
                 {
                     backgroundColor: '#000000',
                     borderColor: '#000000',
-                    data: eval(document.getElementById("DataDiv").innerText)
+                    data: eval(@Model.Data)
                 }
             ]
         },
         options: {
             elements: {
                 line: {
-                    tension: 0 // disables bezier curves
+                    tension: 0, // disables bezier curves
+                    fill: false
+                },
+                point: {
+                    radius: 0
                 }
             },
             legend: {
                 display: false
             },
             responsive: true,
-            title:{
-                display:true,
-                text: document.getElementById("TickerNameSymbolDiv").innerHTML
+            title: {
+                display: true,
+                text: "@Model.TickerNameAndSymbol"
             },
             tooltips: {
                 mode: 'index',
@@ -131,32 +139,30 @@
                 intersect: true
             },
             scales: {
-                xAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: false
-                    },
-                    ticks: {
-                        min: 0,
-                        max: 251
+                xAxes: [
+                    {
+                        type: 'linear',
+                        display: true,
+                        scaleLabel: {
+                            display: false
+                        }
                     }
-                }],
-                yAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: false
-                    },
-                    ticks: {
-                        min: 0,
-                        max: 3000
+                ],
+                yAxes: [
+                    {
+                        type: 'linear',
+                        display: true,
+                        scaleLabel: {
+                            display: false
+                        }
                     }
-                }]
+                ]
             }
         }
     };
 
     window.onload = function() {
-        window.myLine = new Chart(document.getElementById("canvas").getContext("2d"), config);
+        window.myLine = new Chart(document.getElementById("Chart").getContext("2d"), chart);
     };
 
 </script>

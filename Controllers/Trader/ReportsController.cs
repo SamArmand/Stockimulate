@@ -30,9 +30,7 @@ namespace Stockimulate.Controllers.Trader
             return View(Constants.ReportsPath, reportsViewModel);
         }
 
-        public IActionResult Submit(ReportsViewModel reportsViewModel) => Reports(new ReportsViewModel
-        {
-            Team = Team.Get(reportsViewModel.TeamId)
-        });
+        public IActionResult Submit(ReportsViewModel reportsViewModel) => RedirectToAction("Reports", "Reports",
+            new ReportsViewModel {Team = Team.Get(reportsViewModel.TeamId)});
     }
 }

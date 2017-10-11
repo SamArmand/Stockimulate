@@ -48,5 +48,26 @@ namespace Stockimulate.Models
             connection.Dispose();
         }
 
+        internal static void Reset()
+        {
+            var connection = new SqlConnection(Constants.ConnectionString);
+
+            var command =
+                new SqlCommand(
+                    "UPDATE Traders SET Funds='1000000'; DELETE FROM Trades; DELETE FROM Accounts; UPDATE Securities SET Price='0', LastChange='0';")
+                {
+                    CommandType = CommandType.Text
+                };
+
+            connection.Open();
+
+            command.Connection = connection;
+
+            command.ExecuteNonQuery();
+
+            command.Dispose();
+            connection.Dispose();
+        }
+
     }
 }

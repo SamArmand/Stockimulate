@@ -3,7 +3,6 @@
 }
 @model Stockimulate.ViewModels.NavPageViewModel
 
-<div class="container">   
     <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -40,32 +39,31 @@
             @if (string.IsNullOrEmpty(Model.Role))
             {
 
-                <form class="form-inline my-2 my-lg-0" method="post" asp-controller="NavPage" asp-action="Login">
+                <form class="form-inline my-2 my-lg-0 login-form" method="post" asp-controller="NavPage" asp-action="Login">
                     <div class="form-group mr-sm-2">
-                        <input type="text" class="form-control" placeholder="Username" asp-for="Username">
+                        <input type="text" class="form-control input-sm" placeholder="Username" asp-for="Username">
                     </div>
                     <div class="form-group mr-sm-2">
-                        <input type="password" class="form-control" placeholder="Password" asp-for="Password">
+                        <input type="password" class="form-control input-sm" placeholder="Password" asp-for="Password">
                     </div>
-                    <button class="btn btn-primary">Sign In</button>
+                    <button class="btn btn-sm btn-primary btn-log">Sign In</button>
                 </form>
             }
 
             else
             {
-                <div class="form-inline my-2 my-lg-0">
+                <form class="form-inline my-2 my-lg-0" method="post" asp-controller="NavPage" asp-action="Logout">
                     
                     <div class="form-group nav-text text-white mr-sm-2">@Model.Role</div>
-                    <a  asp-controller="NavPage" asp-action="Logout" class="btn btn-primary my-2 my-sm-0">Log Out</a>
+                    <button class="btn btn-sm btn-primary btn-log">Log Out</button>
                     
-                </div>
+                </form>
             }
            
         </div>
     </nav>
-</div> 
 
-<div class="container">
+<div class="container mt-4">
 
     @RenderBody()
 

@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Timers;
 using PusherServer;
@@ -12,20 +10,20 @@ namespace Stockimulate.Architecture
 {
     internal sealed class Simulator
     {
+
         private readonly Pusher _pusher = new Pusher(
-            Constants.PusherAppId,
-            Constants.PusherAppKey,
-            Constants.PusherAppSecret,
+            "408443",
+            "3a92cb578fb0877c47f0",
+            "3b721fdd0041a944df93",
             new PusherOptions
             {
-                Cluster = Constants.PusherCluster,
+                Cluster = "us2",
                 Encrypted = true
             });
 
         private readonly Timer _timer = new Timer
         {
-            Interval = Constants.TimerInterval,
-            Enabled = false,
+            Interval = Constants.TimerInterval
         };
 
         private int _dayNumber;
@@ -50,6 +48,11 @@ namespace Stockimulate.Architecture
         private readonly Dictionary<string, Security> _securities = Security.GetAll();
 
         private string _table;
+
+        private static Simulator _instance;
+        internal static Simulator Instance => _instance ?? (_instance = new Simulator());
+
+        private Simulator() => _timer.Elapsed += NextDay;
 
         public async void Play()
         {
@@ -111,6 +114,22 @@ namespace Stockimulate.Architecture
             Update();
         }
 
+        internal void SetCompetitionMode()
+        {
+            _mode = Mode.Competition;
+            _dayNumber = 0;
+
+            _table = "Events";
+
+            foreach (var security in _securities)
+            {
+                security.Value.Price = 0;
+                Security.Update(security.Value);
+            }
+
+            Update();
+        }
+
         private async void Update()
         {
             var dayInfo = DayInfo.Get(_table, _dayNumber);
@@ -140,7 +159,7 @@ namespace Stockimulate.Architecture
 
             await _pusher.TriggerAsync(
                 "stockimulate",
-                "close-market",
+                "update-market",
                 new
                 {
                     day = _dayNumber,
@@ -148,27 +167,6 @@ namespace Stockimulate.Architecture
                     effects = _securities.Select(security => dayInfo.Effects[security.Key]).ToArray()
                 });
         }
-
-        internal void SetCompetitionMode()
-        {
-            _mode = Mode.Competition;
-            _dayNumber = 0;
-
-            _table = "Events";
-
-            foreach (var security in _securities)
-            {
-                security.Value.Price = 0;
-                Security.Update(security.Value);
-            }
-
-            Update();
-        }
-
-        private Simulator() => _timer.Elapsed += NextDay;
-
-        private static Simulator _instance;
-        internal static Simulator Instance => _instance ?? (_instance = new Simulator());
 
         private void NextDay(object source, ElapsedEventArgs e)
         {
@@ -187,24 +185,7 @@ namespace Stockimulate.Architecture
         {
             Stop();
             TickerViewModel.Reset();
-
-            var connection = new SqlConnection(Constants.ConnectionString);
-
-            var command =
-                new SqlCommand(
-                    "UPDATE Traders SET Funds='1000000'; DELETE FROM Trades; DELETE FROM Accounts; UPDATE Instruments SET Price='0', LastChange='0';")
-                {
-                    CommandType = CommandType.Text
-                };
-
-            connection.Open();
-
-            command.Connection = connection;
-
-            command.ExecuteNonQuery();
-
-            command.Dispose();
-            connection.Dispose();
+            AppSettings.Reset();
 
             await _pusher.TriggerAsync(
                 "stockimulate",
