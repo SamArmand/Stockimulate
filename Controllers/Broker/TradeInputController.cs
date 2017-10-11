@@ -26,12 +26,10 @@ namespace Stockimulate.Controllers.Broker
             return View(Constants.TradeInputPath, tradeInputViewModel);
         }
 
-        public IActionResult Cancel() => TradeInput();
-
         public IActionResult Submit(TradeInputViewModel tradeInputViewModel)
         {
             if (!tradeInputViewModel.IsChecked)
-                return TradeInput(new TradeInputViewModel
+                return RedirectToAction("TradeInput", "TradeInput", new TradeInputViewModel
                 {
                     Result = "Warning"
                 });
@@ -139,13 +137,19 @@ namespace Stockimulate.Controllers.Broker
             else
                 Account.Update(sellerAccount);
 
-            return TradeInput(new TradeInputViewModel {Result = "Success"});
+            return RedirectToAction("TradeInput", "TradeInput", new TradeInputViewModel
+            {
+                Result = "Success",
+            });
         }
 
-        private IActionResult Error(string errorMessage) => TradeInput(new TradeInputViewModel
+        private IActionResult Error(string errorMessage)
         {
-            Result = "Error",
-            ErrorMessage = errorMessage
-        });
+            return RedirectToAction("TradeInput", "TradeInput", new TradeInputViewModel
+            {
+                Result = "Error",
+                ErrorMessage = errorMessage
+            });
+        }
     }
 }

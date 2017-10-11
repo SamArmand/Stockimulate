@@ -32,7 +32,7 @@ namespace Stockimulate.ViewModels.Administrator
             var securities = Security.GetAll();
             var security = securities[symbol];
 
-            StatusDivCssClass = "col-sm-10 text-white " + MarketStatus == "CLOSED" ? "bg-danger" : "bg-success";
+            StatusDivCssClass = MarketStatus == "CLOSED" ? "bg-danger" : "bg-success";
 
             Day = _prices[symbol].Count;
             Day -= (Day == 0 || MarketStatus == "OPEN") ? 0 : 1;
@@ -51,19 +51,19 @@ namespace Stockimulate.ViewModels.Administrator
             if (security.LastChange > 0)
             {
                 Change = "+" + security.LastChange;
-                TickerChangeDivCssCLass = "col-sm-12 bg-success text-white";
+                TickerChangeDivCssCLass = "bg-success";
             }
 
             else if (security.LastChange < 0)
             {
                 Change = security.LastChange.ToString();
-                TickerChangeDivCssCLass = "col-sm-12 bg-danger text-white";
+                TickerChangeDivCssCLass = "bg-danger";
             }
 
             else
             {
                 Change = "+" + security.LastChange;
-                TickerChangeDivCssCLass = "col-sm-12 bg-warning text-white";
+                TickerChangeDivCssCLass = "bg-warning";
             }
 
             var javascriptArray = new StringBuilder("[");
@@ -71,9 +71,9 @@ namespace Stockimulate.ViewModels.Administrator
             for (var i = 0; i < _prices[symbol].Count; ++i)
             {
                 if (_prices != null && _prices[symbol].Count > 0)
-                    javascriptArray.Append("[" + i + "," + _prices[symbol].ElementAt(i) + "]");
+                    javascriptArray.Append("{x: " + i + ", y: " + _prices[symbol].ElementAt(i) + "}");
 
-                if (i != _prices[symbol].Count)
+                if (i != _prices[symbol].Count - 1)
                     javascriptArray.Append(", ");
             }
 

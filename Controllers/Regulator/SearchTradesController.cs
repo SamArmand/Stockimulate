@@ -23,20 +23,15 @@ namespace Stockimulate.Controllers.Regulator
             return View(Constants.SearchTradesPath, searchTradesViewModel);
         }
 
-        public IActionResult Cancel() => SearchTrades();
-
-        public IActionResult Submit(SearchTradesViewModel searchTradesViewModel)
+        public IActionResult Submit(SearchTradesViewModel searchTradesViewModel) => RedirectToAction("SearchTrades", "SearchTrades", new SearchTradesViewModel
         {
-            return SearchTrades(new SearchTradesViewModel
-            {
-                Trades = Trade.Get(
-                    searchTradesViewModel.BuyerId,
-                    searchTradesViewModel.BuyerTeamId,
-                    searchTradesViewModel.SellerId,
-                    searchTradesViewModel.SellerTeamId,
-                    searchTradesViewModel.Symbol,
-                    searchTradesViewModel.Flagged)
-            });
-        }
+            Trades = Trade.Get(
+                searchTradesViewModel.BuyerId,
+                searchTradesViewModel.BuyerTeamId,
+                searchTradesViewModel.SellerId,
+                searchTradesViewModel.SellerTeamId,
+                searchTradesViewModel.Symbol,
+                searchTradesViewModel.Flagged)
+        });
     }
 }

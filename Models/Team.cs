@@ -61,10 +61,10 @@ namespace Stockimulate.Models
 
             var connection = new SqlConnection(Constants.ConnectionString);
 
-            var command =
-                new SqlCommand(needCode
-                    ? "SELECT Id, Name FROM Teams WHERE Id=@Id AND Code=@Code;"
-                    : "SELECT Id, Name FROM Teams WHERE Id=@Id;") {CommandType = CommandType.Text};
+            var command = new SqlCommand("SELECT Id, Name FROM Teams WHERE Id=@Id" + (needCode ? " AND Code=@Code" : string.Empty) + ";")
+            {
+                CommandType = CommandType.Text
+            };
 
             command.Parameters.AddWithValue("@Id", id);
 

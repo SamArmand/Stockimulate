@@ -18,6 +18,10 @@ namespace Stockimulate.Controllers
 
         public IActionResult Login(NavPageViewModel navPageViewModel)
         {
+
+            if (navPageViewModel.Username == null || navPageViewModel.Password == null)
+                return RedirectToAction("Home", "Home");
+
             try
             {
                 var team = Team.Get(int.Parse(navPageViewModel.Username), navPageViewModel.Password,

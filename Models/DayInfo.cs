@@ -27,9 +27,7 @@ namespace Stockimulate.Models
             for (var i = 0; i < Security.GetAll().Count; ++i)
                 queryStringBuilder.Append(", EffectIndex" + i);
 
-            queryStringBuilder.Append(" FROM " + table + " WHERE TradingDay=@TradingDay;");
-
-            var command = new SqlCommand(queryStringBuilder.ToString()) {CommandType = CommandType.Text};
+            var command = new SqlCommand(queryStringBuilder.Append(" FROM " + table + " WHERE TradingDay=@TradingDay;").ToString()) {CommandType = CommandType.Text};
 
             command.Parameters.AddWithValue("@TradingDay", tradingDay);
 
@@ -43,14 +41,16 @@ namespace Stockimulate.Models
 
             var newsItem = reader.GetString(reader.GetOrdinal("News"));
 
+            var dayInfo = new DayInfo(
+                Security.GetAll().ToDictionary(security => security.Key,
+                    security => reader.GetInt32(reader.GetOrdinal("EffectIndex" + security.Value.Id))),
+                newsItem == "null" ? string.Empty : newsItem);
+
             reader.Dispose();
             command.Dispose();
             connection.Dispose();
 
-            return new DayInfo(
-                Security.GetAll().ToDictionary(security => security.Key,
-                    security => reader.GetInt32(reader.GetOrdinal("EffectIndex" + security.Value.Id))),
-                newsItem == "null" ? string.Empty : newsItem);
+            return dayInfo;
         }
     }
 }
