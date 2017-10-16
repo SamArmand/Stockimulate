@@ -1,0 +1,77 @@
+@{
+  Layout = "NavPage";
+}
+@model SearchTradesViewModel
+
+<form class="form-horizontal" role="form" method="post" asp-controller="SearchTrades">
+<fieldset>
+  <legend><h1>Search Trades</h1></legend>
+    
+  <div class="form-group row">
+    <label class="col-sm-1 control-label">Buyer ID</label>
+    <div class="col-sm-2">
+      <input id="BuyerIdInput" type="number" placeholder="Buyer ID" class="form-control" asp-for="BuyerId"/>        
+    </div>
+
+    <label class="col-sm-1 col-sm-offset-1 control-label">Seller ID</label>
+    <div class="col-sm-2">
+      <input id="SellerIdInput" type="number" placeholder="Seller ID" class="form-control" asp-for="SellerId"/>
+    </div>
+  </div>
+    
+  <br />
+
+  <div class="form-group row">
+    <label class="col-sm-1 control-label">Buyer Team ID</label>
+    <div class="col-sm-2">
+      <input id="BuyerTeamIdInput" type="number" placeholder="Buyer Team ID" class="form-control" asp-for="BuyerTeamId"/>        
+    </div>
+
+    <label class="col-sm-1 col-sm-offset-1 control-label">Seller Team ID</label>
+    <div class="col-sm-2">
+      <input id="SellerTeamIdInput" type="number" placeholder="Seller Team ID" class="form-control" asp-for="SellerTeamId"/>
+    </div>
+  </div>
+
+  <br/>
+
+  <div class="form-group row">
+    <label class="col-sm-1 control-label">Security</label>
+    <div class="col-sm-2">
+                
+      <select ID="SecurityDropDownList" class="form-control" asp-for="Symbol">
+        <option value="" selected="selected">Any</option>
+        @SearchTradesViewModel.RenderOptions()
+      </select>
+
+    </div>
+
+    <label class="col-sm-1 col-sm-offset-1 control-label">Flagged</label>
+    <div class="col-sm-2">
+      <select class="form-control" asp-for="Flagged">
+        <option value="" selected="selected">Any</option>
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+      </select>
+    </div>
+  </div>
+            
+  <br/>
+
+  <div class="row">
+    <div class="btn-group col-sm-12"> 
+
+      <input type="submit" formaction="SearchTrades" value="Cancel" class="btn btn-default"/>
+      <input type="submit" formaction="Submit" value="Submit" class="btn btn-primary"/>
+
+    </div>              
+  </div>
+            
+  <br/>
+            
+    @Model.Results()
+            
+</fieldset>
+</form>
+    
+    <br/>

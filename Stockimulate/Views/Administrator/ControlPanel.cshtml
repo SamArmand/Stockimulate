@@ -1,0 +1,83 @@
+@{
+    Layout = "NavPage";
+}
+@model ControlPanelViewModel
+
+        <fieldset class="control-panel">
+
+        <!-- Form Name -->
+          <legend><h1>Control Panel</h1></legend>
+            
+            <div class="row">
+         
+                <form method="post" asp-controller="ControlPanel" class="col ml-4">
+                    
+                    @* Disclaimer *@
+                    <div class="row">
+                        <div class="col-12"></div>
+                        <label>
+                            <input asp-for="IsVerifiedInput" type="checkbox"/>
+                            <em class="disclaimer"> I am aware of what I am doing and that any wrong selection may completely break the competition.</em>
+                        </label>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-8 col-sm-1">
+                            <input type="submit" class="btn btn-primary mr-sm-2" value="Play Practice" formaction="PlayPractice"/>
+                            <input type="submit" class="btn btn-primary mr-sm-2" value="Play Competition" formaction="PlayCompetition"/>
+                            <input type="submit" class="btn btn-success mr-sm-2" value="Continue" formaction="Continue"/>
+                        </div>
+                        <div class="col-md-4 col-sm-1 pull-right">                        
+                            <input type="submit" class="btn btn-danger" value="Reset Trades" formaction="ResetTrades"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <div class="input-group">
+                                <span class="input-group-addon">Security</span>
+                                <span class="input-group form-control col-sm-2">
+                                    <select asp-for="Symbol" class="">
+                                        @ControlPanelViewModel.RenderOptions()
+                                    </select>
+                                </span>
+                                <span class="input-group-addon">$</span>
+                                <input type="number" asp-for="Price" placeholder="Price" class="form-control col-sm-2"/>
+                                <input type="submit" class="btn btn-primary" value="Update" formaction="UpdatePrice"/>
+                            </div>
+                    
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="form-group row">
+                        <label id="ReportsEnabledSpan">
+                            <input type="submit" class="btn btn-primary" value="Toggle Reports" formaction="ToggleReportsEnabled"/>
+                            @ControlPanelViewModel.IsReportsEnabled().ToString()
+                        </label>
+                    </div>
+
+                </form>
+            </div>
+            
+            <div class="row-12">
+                @switch (Model.State)
+                {
+                    case "Error":
+                        <div id="ErrorDiv" runat="server" class="alert alert-danger bg-danger col-12">
+                            @Model.ErrorMessage
+                        </div>
+                        break;
+                    case "Warning":
+                        <div id="WarningDiv" runat="server" class="alert alert-warning bg-warning col-12">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            <strong>Info!</strong> Please read the above statement and check the checkbox before clicking any button.
+                        </div>
+                        break;
+                    default:
+                        <div></div>
+                        break;
+                }
+            </div>
+            
+        </fieldset>
