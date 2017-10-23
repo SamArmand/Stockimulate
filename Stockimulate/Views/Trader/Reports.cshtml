@@ -1,6 +1,7 @@
 @{
     Layout = "NavPage";
 }
+@using Stockimulate.Models
 @model ReportsViewModel
 
       <div class="row">
@@ -9,7 +10,7 @@
 
 </div><!-- /.row -->
 
-@if (@Model.Role == "Administrator" || @Model.Role == "Regulator")
+@if (Model.Role == "Administrator" || Model.Role == "Regulator")
 {
 
     <br/>
@@ -34,6 +35,113 @@
 
     <br />
 
-    @Model.RenderReport()
-    
-    <br/>
+    @if (Model.Team != null)
+    {
+        <h3>@Model.Team.Name - @Model.Team.Id</h3>
+        <table class="table">
+            <thead class="thead-inverse">
+            <tr>
+                <th>Security</th>
+                <th>Position</th>
+                <th>Current Price</th>
+                <th>Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            
+            @{
+                var prices = Security.GetAll().Values.ToDictionary(x => x.Symbol, x => x.Price);
+                var teamPositions = Model.Team.Positions();
+                var teamPositionValues = Model.Team.PositionValues(prices);
+            }
+
+            @foreach (var key in teamPositions.Select(teamPosition => teamPosition.Key))
+            {
+                <tr>        
+                    <th scope="row">@key</th>
+                    <td>@teamPositions[key]</td>
+                    <td>@prices[key]</td>
+                    <td>@teamPositionValues[key]</td>
+                </tr>
+            }
+
+            <tr>
+                <th scope="row">Funds</th>
+                <td/>
+                <td/>
+                <td>@Model.Team.Funds</td>
+            </tr>
+            <tr>
+                <th scope="row">Total</th>
+                <td/>
+                <td/>
+                <td>@Model.Team.TotalValue(prices)</td>
+            </tr>
+            <tr>
+                <th scope="row">P&amp;L</th>
+                <td/>
+                <td/>
+                <td>@Model.Team.PnL(prices)</td>
+            </tr>
+            <tr>
+                <th scope="row">Average P&amp;L</th>
+                <td/>
+                <td/>
+                <td>@Model.Team.AveragePnL(prices)</td>
+            </tr>
+            </tbody>
+        </table>
+
+        foreach (var trader in Model.Team.Traders)
+            {
+
+                <h3>@trader.Name - @trader.Id</h3>
+                <table class="table">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>Security</th>
+                            <th>Position</th>
+                            <th>Current Price</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                
+
+                @foreach (var account in trader.Accounts)
+                {
+                    var key = account.Key;
+
+                    <tr>
+                        <th scope="row">@key</th>
+                        <td>@account.Value.Position</td>
+                        <td>@prices[key]</td>
+                        <td>@trader.PositionValues(prices)[key]</td>
+                    </tr>
+                }
+
+                    <tr>
+                        <th scope="row">Funds</th>
+                        <td/>
+                        <td/>
+                        <td>@trader.Funds</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Total</th>
+                        <td/>
+                        <td/>
+                        <td>@trader.TotalValue(prices)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">P&amp;L</th>
+                        <td/>
+                        <td/>
+                        <td>@trader.PnL(prices)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            }
+
+    }    
+<br/>

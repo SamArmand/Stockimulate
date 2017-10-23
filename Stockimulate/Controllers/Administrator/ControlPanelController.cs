@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Stockimulate.Architecture;
 using Stockimulate.Helpers;
@@ -26,7 +27,7 @@ namespace Stockimulate.Controllers.Administrator
             return View(Constants.ControlPanelPath, controlPanelViewModel);
         }
 
-        public IActionResult PlayPractice(ControlPanelViewModel controlPanelViewModel)
+        public async Task<IActionResult> PlayPractice(ControlPanelViewModel controlPanelViewModel)
         {
             if (!controlPanelViewModel.IsVerifiedInput)
                 return ControlPanel(new ControlPanelViewModel {State = "Warning"});
@@ -40,12 +41,12 @@ namespace Stockimulate.Controllers.Administrator
                     "Error! Simulator is not READY to play another simulation.\nPlease reset the current simulation data.");
 
 
-            _simulator.SetPracticeMode();
+            await _simulator.SetPracticeMode();
 
             return ControlPanel();
         }
 
-        public IActionResult PlayCompetition(ControlPanelViewModel controlPanelViewModel)
+        public async Task<IActionResult> PlayCompetitionAsync(ControlPanelViewModel controlPanelViewModel)
         {
             if (!controlPanelViewModel.IsVerifiedInput)
                 return ControlPanel(new ControlPanelViewModel {State = "Warning"});
@@ -59,7 +60,7 @@ namespace Stockimulate.Controllers.Administrator
                     "Error! Simulator is not READY to play another simulation.\nPlease reset the current simulation data.");
 
 
-            _simulator.SetCompetitionMode();
+            await _simulator.SetCompetitionMode();
 
             return ControlPanel();
         }
@@ -74,7 +75,7 @@ namespace Stockimulate.Controllers.Administrator
             return ControlPanel();
         }
 
-        public IActionResult Continue(ControlPanelViewModel controlPanelViewModel)
+        public async Task<IActionResult> ContinueAsync(ControlPanelViewModel controlPanelViewModel)
         {
             if (!controlPanelViewModel.IsVerifiedInput)
                 return ControlPanel(new ControlPanelViewModel {State = "Warning"});
@@ -82,7 +83,7 @@ namespace Stockimulate.Controllers.Administrator
             if (!_simulator.IsPaused())
                 return Error("Error! There is no PAUSED simulation in progress.");
 
-            _simulator.Play();
+            await _simulator.Play();
 
             return ControlPanel();
         }
@@ -106,7 +107,7 @@ namespace Stockimulate.Controllers.Administrator
             if (!controlPanelViewModel.IsVerifiedInput)
                 return ControlPanel(new ControlPanelViewModel {State = "Warning"});
 
-            AppSettings.UpdateReportsEnabled(AppSettings.IsReportsEnabled() ? "False" : "True");
+            AppSettings.UpdateReportsEnabled(!AppSettings.IsReportsEnabled());
 
             return ControlPanel();
         }

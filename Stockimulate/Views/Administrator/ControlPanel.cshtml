@@ -1,6 +1,7 @@
 @{
     Layout = "NavPage";
 }
+@using Stockimulate.Models
 @model ControlPanelViewModel
 
         <fieldset class="control-panel">
@@ -38,7 +39,10 @@
                                 <span class="input-group-addon">Security</span>
                                 <span class="input-group form-control col-sm-2">
                                     <select asp-for="Symbol" class="">
-                                        @ControlPanelViewModel.RenderOptions()
+                                        @foreach (var security in Security.GetAll())
+                                        {
+                                            <option>@security.Key</option>
+                                        }
                                     </select>
                                 </span>
                                 <span class="input-group-addon">$</span>
@@ -53,7 +57,7 @@
                     <div class="form-group row">
                         <label id="ReportsEnabledSpan">
                             <input type="submit" class="btn btn-primary" value="Toggle Reports" formaction="ToggleReportsEnabled"/>
-                            @ControlPanelViewModel.IsReportsEnabled().ToString()
+                            @AppSettings.IsReportsEnabled()
                         </label>
                     </div>
 

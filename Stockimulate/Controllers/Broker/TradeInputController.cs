@@ -2,7 +2,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Stockimulate.Helpers;
+ using Stockimulate.Helpers;
 using Stockimulate.Models;
 using Stockimulate.ViewModels.Broker;
 
@@ -102,19 +102,20 @@ namespace Stockimulate.Controllers.Broker
 
             buyerAccount.Position += quantity;
             sellerAccount.Position -= quantity;
+            const int maxPosition = Constants.MaxPosition;
 
-            if (buyerAccount.Position > 100 && buyerTeamId != 0)
+            if (buyerAccount.Position > maxPosition && buyerTeamId != 0)
             {
-                note.Append("Buyer Penalty: " + (buyerAccount.Position - 100));
-                buyerAccount.Position = 100;
+                note.Append("Buyer Penalty: " + (buyerAccount.Position - maxPosition));
+                buyerAccount.Position = maxPosition;
             }
 
-            if (sellerAccount.Position < -100 && sellerTeamId != 0)
+            if (sellerAccount.Position < -maxPosition && sellerTeamId != 0)
             {
-                if (note.Length != 0) note.Append(" ");
-                var penalty = (Math.Abs(sellerAccount.Position) - 100);
-                seller.Funds -= 2 * penalty;
-                note.Append("Seller Penalty: " + penalty);
+                var penalty = (Math.Abs(sellerAccount.Position) - maxPosition);
+                seller.Funds -= 2 * price * penalty;
+                sellerAccount.Position = -maxPosition;
+                note.Append((note.Length == 0 ? string.Empty : " ") + "Seller Penalty: " + penalty);
             }
 
             var security = Security.Get(symbol);
@@ -124,7 +125,7 @@ namespace Stockimulate.Controllers.Broker
             seller.Funds += quantity * price;
 
             Trade.Insert(new Trade(buyer, seller, security, quantity, price, marketPrice,
-                Math.Abs((float) (price - marketPrice) / marketPrice) > 0.25f, tradeInputViewModel.BrokerId,
+                Math.Abs((float) (price - marketPrice) / marketPrice) > Constants.FlagThreshold, tradeInputViewModel.BrokerId,
                 note.ToString()));
             Models.Trader.Update(buyer);
             Models.Trader.Update(seller);

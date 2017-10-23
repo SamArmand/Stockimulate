@@ -1,6 +1,7 @@
 @{
   Layout = "NavPage";
 }
+@using Stockimulate.Models
 @model SearchTradesViewModel
 
 <form class="form-horizontal" role="form" method="post" asp-controller="SearchTrades">
@@ -41,7 +42,10 @@
                 
       <select ID="SecurityDropDownList" class="form-control" asp-for="Symbol">
         <option value="" selected="selected">Any</option>
-        @SearchTradesViewModel.RenderOptions()
+        @foreach (var security in Security.GetAll())
+        {
+          <option>@security.Key</option>
+        }
       </select>
 
     </div>
@@ -69,7 +73,44 @@
             
   <br/>
             
-    @Model.Results()
+  @if (Model.Trades != null)
+  {
+    <table class="table">
+      <thead class="thead-inverse">
+      <tr>
+        <th>Buyer</th>
+        <th>Buyer Team</th>
+        <th>Seller</th>
+        <th>Seller Team</th>
+        <th>Security</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Market Price</th>
+        <th>Broker</th>
+        <th>Note</th>
+      </tr>
+      <thead>
+      <tbody>
+      
+      @foreach (var trade in Model.Trades)
+      {
+      <tr@(trade.Flagged ? " class=\"table-danger\"" : string.Empty)>
+        <td>@trade.Buyer.Id</td>
+        <td>@trade.Buyer.Team.Id</td>
+        <td>@trade.Seller.Id</td>
+        <td>@trade.Seller.Team.Id</td>
+        <td>@trade.Security.Symbol</td>
+        <td>@trade.Quantity</td>
+        <td>@trade.Price</td>
+        <td>@trade.MarketPrice</td>
+        <td>@trade.BrokerId</td>
+        <td>@trade.Note</td>
+      </tr>
+      }
+      
+      </tbody>
+    </table>
+  }
             
 </fieldset>
 </form>

@@ -5,24 +5,15 @@ using Stockimulate.Helpers;
 
 namespace Stockimulate.Models
 {
-    internal sealed class Security
+    public sealed class Security
     {
-        internal string Name { get; }
+        internal string Name { get; private set; }
 
-        internal int Price { get; set; }
+        public int Price { get; internal set; }
 
-        internal string Symbol { get; }
+        public string Symbol { get; private set; }
 
-        internal int Id { get; }
-
-        private Security(string symbol, int price, string name, int id, int lastChange)
-        {
-            Symbol = symbol;
-            Price = price;
-            Name = name;
-            Id = id;
-            LastChange = lastChange;
-        }
+        public int Id { get; private set; }
 
         internal int LastChange { get; set; }
 
@@ -71,12 +62,14 @@ namespace Stockimulate.Models
 
             reader.Read();
 
-            var instrument = new Security(
-                symbol,
-                reader.GetInt32(reader.GetOrdinal("Price")),
-                reader.GetString(reader.GetOrdinal("Name")),
-                reader.GetInt32(reader.GetOrdinal("Id")),
-                reader.GetInt32(reader.GetOrdinal("LastChange")));
+            var instrument = new Security
+            {
+                Symbol = symbol,
+                Price = reader.GetInt32(reader.GetOrdinal("Price")),
+                Name = reader.GetString(reader.GetOrdinal("Name")),
+                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                LastChange = reader.GetInt32(reader.GetOrdinal("LastChange"))
+            };
 
             reader.Dispose();
             command.Dispose();
@@ -85,7 +78,7 @@ namespace Stockimulate.Models
             return instrument;
         }
 
-        internal static Dictionary<string, Security> GetAll()
+        public static Dictionary<string, Security> GetAll()
         {
             var connection = new SqlConnection(Constants.ConnectionString);
 
@@ -107,12 +100,14 @@ namespace Stockimulate.Models
             {
                 var symbol = reader.GetString(reader.GetOrdinal("Symbol"));
 
-                securities.Add(symbol, new Security(
-                    symbol,
-                    reader.GetInt32(reader.GetOrdinal("Price")),
-                    reader.GetString(reader.GetOrdinal("Name")),
-                    reader.GetInt32(reader.GetOrdinal("Id")),
-                    reader.GetInt32(reader.GetOrdinal("LastChange"))));
+                securities.Add(symbol, new Security
+                {
+                    Symbol = symbol,
+                    Price = reader.GetInt32(reader.GetOrdinal("Price")),
+                    Name = reader.GetString(reader.GetOrdinal("Name")),
+                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                    LastChange = reader.GetInt32(reader.GetOrdinal("LastChange"))
+                });
             }
 
             reader.Dispose();

@@ -6,41 +6,33 @@ using Stockimulate.Helpers;
 
 namespace Stockimulate.Models
 {
-    internal sealed class Trader
+    public sealed class Trader
     {
-        private readonly int _teamId;
+        private int _teamId;
 
-        internal int Id { get; }
+        public int Id { get; private set; }
 
-        internal string Name { get; }
+        public string Name { get; private set; }
 
         //Lazy load
         private Team _team;
 
-        internal Team Team => _team ?? (_team = Team.Get(_teamId));
+        public Team Team => _team ?? (_team = Team.Get(_teamId));
 
         //Lazy load
         private Dictionary<string, Account> _accounts;
 
-        internal Dictionary<string, Account> Accounts => _accounts ?? (_accounts = Account.Get(Id));
+        public Dictionary<string, Account> Accounts => _accounts ?? (_accounts = Account.Get(Id));
 
-        internal int Funds { get; set; }
+        public int Funds { get; internal set; }
 
-        private Trader(int id, string name, int teamId, int funds)
-        {
-            Id = id;
-            Name = name;
-            _teamId = teamId;
-            Funds = funds;
-        }
+        public int TotalValue(Dictionary<string, int> prices) => Funds + PositionValues(prices).Values.Sum();
 
-        internal int TotalValue(Dictionary<string, int> prices) => Funds + PositionValues(prices).Values.Sum();
-
-        internal Dictionary<string, int> PositionValues(Dictionary<string, int> prices) => prices
+        public Dictionary<string, int> PositionValues(Dictionary<string, int> prices) => prices
             .Where(price => Accounts.ContainsKey(price.Key)).ToDictionary(price => price.Key,
                 price => _accounts[price.Key].Position * price.Value);
 
-        internal int PnL(Dictionary<string, int> prices) => TotalValue(prices) - 1000000;
+        public int PnL(Dictionary<string, int> prices) => TotalValue(prices) - 1000000;
 
         internal static void Update(Trader trader)
         {
@@ -83,9 +75,13 @@ namespace Stockimulate.Models
             var reader = command.ExecuteReader();
 
             if (reader.Read())
-                player = new Trader(id, reader.GetString(reader.GetOrdinal("Name")),
-                    reader.GetInt32(reader.GetOrdinal("TeamId")),
-                    reader.GetInt32(reader.GetOrdinal("Funds")));
+                player = new Trader
+            {
+                Id = id,
+                Name = reader.GetString(reader.GetOrdinal("Name")),
+                _teamId = reader.GetInt32(reader.GetOrdinal("TeamId")),
+                Funds = reader.GetInt32(reader.GetOrdinal("Funds"))
+            };
 
             reader.Dispose();
             command.Dispose();
@@ -94,7 +90,7 @@ namespace Stockimulate.Models
             return player;
         }
 
-        public static List<Trader> GetInTeam(int teamId)
+        internal static List<Trader> GetInTeam(int teamId)
         {
             var traders = new List<Trader>();
 
@@ -115,10 +111,13 @@ namespace Stockimulate.Models
             var reader = command.ExecuteReader();
 
             while (reader.Read())
-                traders.Add(new Trader(reader.GetInt32(reader.GetOrdinal("Id")),
-                    reader.GetString(reader.GetOrdinal("Name")),
-                    teamId,
-                    reader.GetInt32(reader.GetOrdinal("Funds"))));
+                traders.Add(new Trader
+                {
+                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                    Name = reader.GetString(reader.GetOrdinal("Name")),
+                    _teamId = teamId,
+                    Funds = reader.GetInt32(reader.GetOrdinal("Funds"))
+                });
 
             reader.Dispose();
             command.Dispose();

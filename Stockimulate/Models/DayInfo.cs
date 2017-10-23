@@ -9,14 +9,8 @@ namespace Stockimulate.Models
 {
     internal sealed class DayInfo
     {
-        internal Dictionary<string, int> Effects { get; }
-        internal string NewsItem { get; }
-
-        private DayInfo(Dictionary<string, int> effects, string newsItem)
-        {
-            Effects = effects;
-            NewsItem = newsItem;
-        }
+        internal Dictionary<string, int> Effects { get; private set; }
+        internal string NewsItem { get; private set; }
 
         internal static DayInfo Get(string mode, int tradingDay)
         {
@@ -41,10 +35,12 @@ namespace Stockimulate.Models
 
             var newsItem = reader.GetString(reader.GetOrdinal("News"));
 
-            var dayInfo = new DayInfo(
-                Security.GetAll().ToDictionary(security => security.Key,
+            var dayInfo = new DayInfo
+            {
+                Effects = Security.GetAll().ToDictionary(security => security.Key,
                     security => reader.GetInt32(reader.GetOrdinal("EffectIndex" + security.Value.Id))),
-                newsItem == "null" ? string.Empty : newsItem);
+                NewsItem = newsItem == "null" ? string.Empty : newsItem
+            };
 
             reader.Dispose();
             command.Dispose();

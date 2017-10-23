@@ -5,17 +5,17 @@ using Stockimulate.Helpers;
 
 namespace Stockimulate.Models
 {
-    internal sealed class Trade
+    public sealed class Trade
     {
-        internal Trader Buyer { get; }
-        internal Trader Seller { get; }
-        internal Security Security { get; }
-        internal int Quantity { get; }
-        internal int Price { get; }
-        internal int MarketPrice { get; }
-        internal bool Flagged { get; }
-        internal int BrokerId { get; }
-        internal string Note { get; }
+        public Trader Buyer { get; }
+        public Trader Seller { get; }
+        public Security Security { get; }
+        public int Quantity { get; }
+        public int Price { get; }
+        public int MarketPrice { get; }
+        public bool Flagged { get; }
+        public int BrokerId { get; }
+        public string Note { get; }
 
         internal Trade(Trader buyer, Trader seller, Security security, int quantity, int price, int marketPrice,
             bool flagged, int brokerId, string note)
@@ -48,7 +48,7 @@ namespace Stockimulate.Models
             command.Parameters.AddWithValue("@Quantity", trade.Quantity);
             command.Parameters.AddWithValue("@Price", trade.Price);
             command.Parameters.AddWithValue("@MarketPrice", trade.MarketPrice);
-            command.Parameters.AddWithValue("@Flagged", trade.Flagged.ToString());
+            command.Parameters.AddWithValue("@Flagged", trade.Flagged);
             command.Parameters.AddWithValue("@BrokerId", trade.BrokerId.ToString());
             command.Parameters.AddWithValue("@Note", trade.Note);
 
@@ -68,7 +68,8 @@ namespace Stockimulate.Models
             var connection = new SqlConnection(Constants.ConnectionString);
 
             var command = new SqlCommand(
-                "SELECT Trades.Id AS Id, Buyers.Id AS BuyerId, Buyers.TeamId AS BuyerTeamId, Sellers.Id AS SellerId, Sellers.TeamId AS SellerTeamId, Trades.Symbol AS Symbol, Trades.Quantity AS Quantity, Trades.Price AS Price, Trades.MarketPrice AS MarketPrice, Trades.Flagged AS Flagged, Trades.BrokerId AS BrokerId, Trades.Note AS Note " +
+                "SELECT Trades.Id AS Id, Buyers.Id AS BuyerId, Buyers.TeamId AS BuyerTeamId, Sellers.Id AS SellerId, " +
+                "Sellers.TeamId AS SellerTeamId, Trades.Symbol AS Symbol, Trades.Quantity AS Quantity, Trades.Price AS Price, Trades.MarketPrice AS MarketPrice, Trades.Flagged AS Flagged, Trades.BrokerId AS BrokerId, Trades.Note AS Note " +
                 "FROM Trades JOIN Traders Buyers ON Trades.BuyerId=Buyers.Id JOIN Traders Sellers ON Trades.SellerId=Sellers.Id " +
                 "WHERE Buyers.Id" + (string.IsNullOrEmpty(buyerId) ? ">-1" : "=@BuyerId") +
                 " AND Sellers.Id" + (string.IsNullOrEmpty(sellerId) ? ">-1" : "=@SellerId") +
@@ -89,7 +90,7 @@ namespace Stockimulate.Models
             if (!string.IsNullOrEmpty(symbol))
                 command.Parameters.AddWithValue("@Symbol", symbol);
             if (!string.IsNullOrEmpty(flagged))
-                command.Parameters.AddWithValue("@Flagged", flagged);
+                command.Parameters.AddWithValue("@Flagged", flagged == "Yes");
 
             connection.Open();
 
@@ -107,7 +108,7 @@ namespace Stockimulate.Models
                     reader.GetInt32(reader.GetOrdinal("Quantity")),
                     reader.GetInt32(reader.GetOrdinal("Price")),
                     reader.GetInt32(reader.GetOrdinal("MarketPrice")),
-                    bool.Parse(reader.GetString(reader.GetOrdinal("Flagged"))),
+                    reader.GetBoolean(reader.GetOrdinal("Flagged")),
                     reader.GetInt32(reader.GetOrdinal("BrokerId")),
                     reader.IsDBNull(reader.GetOrdinal("Note")) ? "" : reader.GetString(reader.GetOrdinal("Note"))));
 

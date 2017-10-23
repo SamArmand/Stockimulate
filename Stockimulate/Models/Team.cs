@@ -6,26 +6,20 @@ using Stockimulate.Helpers;
 
 namespace Stockimulate.Models
 {
-    internal sealed class Team
+    public sealed class Team
     {
-        internal int Id { get; }
+        public int Id { get; private set; }
 
-        internal string Name { get; }
+        public string Name { get; private set; }
 
         //Lazy
         private List<Trader> _traders;
 
-        internal List<Trader> Traders => _traders ?? (_traders = Trader.GetInTeam(Id));
+        public List<Trader> Traders => _traders ?? (_traders = Trader.GetInTeam(Id));
 
-        internal int Funds => Traders.Sum(trader => trader.Funds);
+        public int Funds => Traders.Sum(trader => trader.Funds);
 
-        private Team(int id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
-
-        internal Dictionary<string, int> Positions()
+        public Dictionary<string, int> Positions()
         {
             var positions = new Dictionary<string, int>();
 
@@ -38,7 +32,7 @@ namespace Stockimulate.Models
             return positions;
         }
 
-        internal Dictionary<string, int> PositionValues(Dictionary<string, int> prices)
+        public Dictionary<string, int> PositionValues(Dictionary<string, int> prices)
         {
             var positions = Positions();
 
@@ -48,11 +42,11 @@ namespace Stockimulate.Models
             return positions;
         }
 
-        internal int TotalValue(Dictionary<string, int> prices) => Funds + PositionValues(prices).Values.Sum();
+        public int TotalValue(Dictionary<string, int> prices) => Funds + PositionValues(prices).Values.Sum();
 
-        internal int PnL(Dictionary<string, int> prices) => Traders.Sum(trader => trader.PnL(prices));
+        public int PnL(Dictionary<string, int> prices) => Traders.Sum(trader => trader.PnL(prices));
 
-        internal int AveragePnL(Dictionary<string, int> prices) => PnL(prices) / Traders.Count;
+        public int AveragePnL(Dictionary<string, int> prices) => PnL(prices) / Traders.Count;
 
         internal static Team Get(int id, string code = "", bool needCode = false)
         {
@@ -87,7 +81,11 @@ namespace Stockimulate.Models
 
             reader.Read();
 
-            var team = new Team(id, reader.GetString(reader.GetOrdinal("Name")));
+            var team = new Team
+            {
+                Id = id,
+                Name = reader.GetString(reader.GetOrdinal("Name"))
+            };
 
             reader.Dispose();
             command.Dispose();
@@ -96,7 +94,7 @@ namespace Stockimulate.Models
             return team;
         }
 
-        internal static IEnumerable<Team> GetAll()
+        public static IEnumerable<Team> GetAll()
         {
             var connection = new SqlConnection(Constants.ConnectionString);
 
@@ -115,8 +113,11 @@ namespace Stockimulate.Models
             var teams = new List<Team>();
 
             while (reader.Read())
-                teams.Add(new Team(reader.GetInt32(reader.GetOrdinal("Id")),
-                    reader.GetString(reader.GetOrdinal("Name"))));
+                teams.Add(new Team
+                {
+                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                    Name = reader.GetString(reader.GetOrdinal("Name"))
+                });
 
             reader.Dispose();
             command.Dispose();
