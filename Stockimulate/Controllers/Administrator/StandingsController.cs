@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Stockimulate.Helpers;
-using Stockimulate.ViewModels.Administrator;
+using Stockimulate.ViewModels;
 
 namespace Stockimulate.Controllers.Administrator
 {
@@ -15,7 +15,7 @@ namespace Stockimulate.Controllers.Administrator
                 return RedirectToAction("Home", "Home");
 
             ModelState.Clear();
-            return View(Constants.StandingsPath, new StandingsViewModel {Role = loggedInAs});
+            return View(Constants.StandingsPath, new NavPageViewModel{ Role = loggedInAs });
         }
     }
 }

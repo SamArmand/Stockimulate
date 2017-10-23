@@ -1,6 +1,7 @@
 @{
     Layout = "NavPage";
 }
+@using Stockimulate.Models
 @model TradeInputViewModel
 
 <div class="row">
@@ -11,7 +12,30 @@
 
                 <!-- Form Name -->
                 <legend>
-                    <h1>Trade<span>@Model.Instrument</span></h1>
+                    <h1>Trade 
+                        @{
+                            var securities = Security.GetAll();
+                            var theSecurity = string.Empty;
+
+                            try
+                            {
+                                var brokerPermission = int.Parse(Model.Role.Substring(7)) % securities.Count;
+
+                                foreach (var security in securities.Where(security => security.Value.Id == brokerPermission))
+                                {
+                                    theSecurity = security.Key;
+
+                                    break;
+                                }
+                            }
+
+                            catch (Exception)
+                            {
+                                //ignored
+                            }
+                        }
+                        @theSecurity
+                    </h1>
                 </legend>
 
                 <!-- Text input-->
@@ -33,7 +57,18 @@
                     <div class="col-sm-2">
                         
                         <select class="form-control" asp-for="Symbol">
-                            @Model.RenderOptions()
+
+                            @if (Model.Role == "Administrator")
+                            {
+                                foreach (var security in securities)
+                                {
+                                    <option>@security.Key</option>
+                                }
+                            }
+                            else
+                            {
+                                <option>@theSecurity</option>
+                            }
                         </select>
 
                     </div>

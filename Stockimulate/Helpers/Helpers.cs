@@ -5,9 +5,8 @@
         internal static string ConnectionString;
         internal static string PusherAppId;
         internal static string PusherAppSecret;
-
-        internal const string PusherAppKey = "3a92cb578fb0877c47f0";
-        internal const string PusherCluster = "us2";
+        internal static string PusherAppKey;
+        internal static string PusherCluster;
 
         internal const string HomePath = "~/Views/Public/Home.cshtml";
         internal const string ReportsPath = "~/Views/Trader/Reports.cshtml";
@@ -23,5 +22,9 @@
         internal const int Quarter4Day = 251;
 
         internal const int TimerInterval = 28000;
+
+        internal const int MaxPosition = 100;
+        internal const float FlagThreshold = 0.25f;
+
     }
 }

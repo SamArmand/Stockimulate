@@ -4,14 +4,13 @@ using Stockimulate.Helpers;
 
 namespace Stockimulate.Models
 {
-    internal static class AppSettings
+    public static class AppSettings
     {
-
-        internal static bool IsReportsEnabled()
+        public static bool IsReportsEnabled()
         {
             var connection = new SqlConnection(Constants.ConnectionString);
 
-            var command = new SqlCommand("SELECT ReportsEnabled FROM AppSettings WHERE Id=0;") {CommandType = CommandType.Text};
+            var command = new SqlCommand("SELECT ReportsEnabled FROM AppSettings;") { CommandType = CommandType.Text };
 
             connection.Open();
 
@@ -21,22 +20,22 @@ namespace Stockimulate.Models
 
             reader.Read();
 
-            var result = reader.GetString(reader.GetOrdinal("ReportsEnabled"));
+            var result = reader.GetBoolean(reader.GetOrdinal("ReportsEnabled"));
 
             reader.Dispose();
             command.Dispose();
             connection.Dispose();
 
-            return (result == "True");
+            return result;
         }
 
-        internal static void UpdateReportsEnabled(string p)
+        internal static void UpdateReportsEnabled(bool reportsEnabled)
         {
             var connection = new SqlConnection(Constants.ConnectionString);
 
-            var command = new SqlCommand("UPDATE AppSettings SET ReportsEnabled=@ReportsEnabled;") {CommandType = CommandType.Text};
+            var command = new SqlCommand("UPDATE AppSettings SET ReportsEnabled=@ReportsEnabled;") { CommandType = CommandType.Text };
 
-            command.Parameters.AddWithValue("@ReportsEnabled", p);
+            command.Parameters.AddWithValue("@ReportsEnabled", reportsEnabled.ToString());
 
             connection.Open();
 

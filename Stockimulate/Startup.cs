@@ -1,12 +1,18 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Stockimulate.Helpers;
 
 namespace Stockimulate
 {
+    [SuppressMessage("ReSharper", "MemberCanBeInternal")]
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class Startup
     {
         public Startup(IHostingEnvironment env)
@@ -17,9 +23,11 @@ namespace Stockimulate
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
-            Helpers.Constants.ConnectionString = Configuration.GetConnectionString("MS_TableConnectionString");
-            Helpers.Constants.PusherAppId = Configuration.GetConnectionString("Pusher_AppId");
-            Helpers.Constants.PusherAppSecret = Configuration.GetConnectionString("Pusher_AppSecret");
+            Constants.ConnectionString = Configuration.GetConnectionString("MS_TableConnectionString");
+            Constants.PusherAppId = Configuration.GetConnectionString("Pusher_AppId");
+            Constants.PusherAppSecret = Configuration.GetConnectionString("Pusher_AppSecret");
+            Constants.PusherAppKey = Configuration.GetConnectionString("Pusher_AppKey");
+            Constants.PusherCluster = Configuration.GetConnectionString("Pusher_Cluster");
         }
 
         public IConfigurationRoot Configuration { get; }

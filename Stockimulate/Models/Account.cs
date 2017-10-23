@@ -5,7 +5,7 @@ using Stockimulate.Helpers;
 
 namespace Stockimulate.Models
 {
-    internal sealed class Account
+    public sealed class Account
     {
         private readonly string _symbol;
         private readonly int _traderId;
@@ -20,7 +20,7 @@ namespace Stockimulate.Models
 
         private Trader Trader => _trader ?? (_trader = Trader.Get(_traderId));
 
-        internal int Position { get; set; }
+        public int Position { get; internal set; }
 
         internal Account(string symbol, int traderId, int position)
         {

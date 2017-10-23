@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Timers;
 using PusherServer;
 using Stockimulate.Helpers;
@@ -10,14 +11,13 @@ namespace Stockimulate.Architecture
 {
     internal sealed class Simulator
     {
-
         private readonly Pusher _pusher = new Pusher(
-            "408443",
-            "3a92cb578fb0877c47f0",
-            "3b721fdd0041a944df93",
+            Constants.PusherAppId,
+            Constants.PusherAppKey,
+            Constants.PusherAppSecret,
             new PusherOptions
             {
-                Cluster = "us2",
+                Cluster = Constants.PusherCluster,
                 Encrypted = true
             });
 
@@ -52,7 +52,7 @@ namespace Stockimulate.Architecture
 
         private Simulator() => _timer.Elapsed += Update;
 
-        internal async void Play()
+        internal async Task Play()
         {
             TickerViewModel.OpenMarket();
 
@@ -63,12 +63,12 @@ namespace Stockimulate.Architecture
 
             _status = Status.Playing;
 
-            AppSettings.UpdateReportsEnabled("False");
+            AppSettings.UpdateReportsEnabled(false);
 
             _timer.Enabled = true;
         }
 
-        private async void CloseMarket(DayInfo dayInfo, Status status)
+        private async Task CloseMarket(DayInfo dayInfo, Status status)
         {
             _timer.Enabled = false;
             _status = status;
@@ -86,21 +86,21 @@ namespace Stockimulate.Architecture
                     close = true
                 });
 
-            AppSettings.UpdateReportsEnabled("True");
+            AppSettings.UpdateReportsEnabled(true);
         }
 
-        internal void SetPracticeMode()
+        internal async Task SetPracticeMode()
         {
             _mode = Mode.Practice;
 
-            Play();
+            await Play();
         }
 
-        internal void SetCompetitionMode()
+        internal async Task SetCompetitionMode()
         {
             _mode = Mode.Competition;
 
-            Play();
+            await Play();
         }
 
         private async void Update(object source, ElapsedEventArgs e)
@@ -121,11 +121,11 @@ namespace Stockimulate.Architecture
                 case Constants.Quarter1Day when _mode == Mode.Competition:
                 case Constants.Quarter2Day:
                 case Constants.Quarter3Day:
-                    CloseMarket(dayInfo, Status.Paused);
+                    await CloseMarket(dayInfo, Status.Paused);
                     break;
                 case Constants.Quarter1Day when _mode == Mode.Practice:
                 case Constants.Quarter4Day:
-                    CloseMarket(dayInfo, Status.Stopped);
+                    await CloseMarket(dayInfo, Status.Stopped);
                     break;
                 default:
                     TickerViewModel.Update(dayInfo);
