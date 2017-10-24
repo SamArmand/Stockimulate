@@ -56,7 +56,7 @@ namespace Stockimulate.Models
                     var tradePrice = trade.Price;
 
                     //Check for Penalty and Modify Trade Quantity
-                    var potentialPosition = currentPosition + trade.Buyer.Id == Id ? trade.Quantity : -trade.Quantity;
+                    var potentialPosition = currentPosition + trade.Quantity * (trade.Buyer.Id == Id ? 1 : -1);
                     if (Math.Abs(potentialPosition) > maxPosition)
                     {
                         var penalty = Math.Abs(potentialPosition) - maxPosition;
