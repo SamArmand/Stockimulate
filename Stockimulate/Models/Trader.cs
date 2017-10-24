@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -16,52 +17,103 @@ namespace Stockimulate.Models
 
         //Lazy load
         private Team _team;
-
         public Team Team => _team ?? (_team = Team.Get(_teamId));
 
         //Lazy load
-        private Dictionary<string, Account> _accounts;
+        private Dictionary<string, List<Trade>> _trades;
+        private Dictionary<string, List<Trade>> Trades => _trades ?? (_trades = Trade.GetByTrader(Id));
 
-        public Dictionary<string, Account> Accounts => _accounts ?? (_accounts = Account.Get(Id));
+        public Dictionary<string, int> RealizedPnLs { get; private set; }
+        public Dictionary<string, int> UnrealizedPnLs { get; private set; }
+        public Dictionary<string, int> TotalPnLs { get; private set; }
+        public Dictionary<string, int> Positions { get; private set; }
+        public Dictionary<string, int> AverageOpenPrices { get; private set; }
 
-        public int Funds { get; internal set; }
+        public int AccumulatedPenalties { get; private set; }
+        public int AccumulatedPenaltiesValue { get; private set; }
 
-        public int TotalValue(Dictionary<string, int> prices) => Funds + PositionValues(prices).Values.Sum();
-
-        public Dictionary<string, int> PositionValues(Dictionary<string, int> prices) => prices
-            .Where(price => Accounts.ContainsKey(price.Key)).ToDictionary(price => price.Key,
-                price => _accounts[price.Key].Position * price.Value);
-
-        public int PnL(Dictionary<string, int> prices) => TotalValue(prices) - 1000000;
-
-        internal static void Update(Trader trader)
+        internal void Calculate(Dictionary<string, int> prices)
         {
-            var connection = new SqlConnection(Constants.ConnectionString);
+            RealizedPnLs = new Dictionary<string, int>();
+            UnrealizedPnLs = new Dictionary<string, int>();
+            TotalPnLs = new Dictionary<string, int>();
+            Positions = new Dictionary<string, int>();
+            AverageOpenPrices = new Dictionary<string, int>();
 
-            var command =
-                new SqlCommand("UPDATE Traders SET Funds=@Funds WHERE Id=@Id;") {CommandType = CommandType.Text};
+            foreach (var kvp in Trades)
+            {
+                var totalBuyQuantity = 0;
+                var averageBuyPrice = 0;
+                var totalSellQuantity = 0;
+                var averageSellPrice = 0;
 
-            command.Parameters.AddWithValue("@Funds", trader.Funds);
-            command.Parameters.AddWithValue("@Id", trader.Id);
+                var currentPosition = 0;
+                const int maxPosition = Constants.MaxPosition;
 
-            connection.Open();
+                foreach (var trade in kvp.Value)
+                {
 
-            command.Connection = connection;
+                    var tradePrice = trade.Price;
 
-            command.ExecuteNonQuery();
+                    //Check for Penalty and Modify Trade Quantity
+                    var potentialPosition = currentPosition + trade.Buyer.Id == Id ? trade.Quantity : -trade.Quantity;
+                    if (Math.Abs(potentialPosition) > maxPosition)
+                    {
+                        var penalty = Math.Abs(potentialPosition) - maxPosition;
+                        trade.Quantity -= penalty;
+                        AccumulatedPenalties += penalty;
+                        AccumulatedPenaltiesValue += penalty * tradePrice;
+                        trade.Note = "Penalty: " + penalty;
+                    }
 
-            command.Dispose();
-            connection.Dispose();
+                    var tradeQuantity = trade.Quantity;
+
+                    if (trade.Buyer.Id == Id)
+                    {
+                        currentPosition += tradeQuantity;
+                        totalBuyQuantity += tradeQuantity;
+                        averageBuyPrice += tradeQuantity * tradePrice;
+                    }
+
+                    else if (trade.Seller.Id == Id)
+                    {
+                        currentPosition -= tradeQuantity;
+                        totalSellQuantity += tradeQuantity;
+                        averageSellPrice += tradeQuantity * tradePrice;
+                    }
+                }
+
+                averageBuyPrice /= totalBuyQuantity > 0 ? totalBuyQuantity : 1;
+                averageSellPrice /= totalSellQuantity > 0 ? totalSellQuantity : 1;
+
+                var realizedPnL = (averageSellPrice - averageBuyPrice) * Math.Min(totalBuyQuantity, totalSellQuantity);
+
+                RealizedPnLs.Add(kvp.Key, realizedPnL);
+
+                var position = totalBuyQuantity - totalSellQuantity;
+
+                Positions.Add(kvp.Key, position);
+
+                var averageOpenPrice = position >= 0 ? averageBuyPrice : averageSellPrice;
+
+                AverageOpenPrices.Add(kvp.Key, averageOpenPrice);
+
+                var unrealizedPnL = (prices[kvp.Key] - averageOpenPrice) * position;
+
+                UnrealizedPnLs.Add(kvp.Key, unrealizedPnL);
+
+                TotalPnLs.Add(kvp.Key, realizedPnL + unrealizedPnL);
+            }
         }
+
+        public int PnL() => TotalPnLs.Sum(e => e.Value) - AccumulatedPenaltiesValue;
 
         internal static Trader Get(int id)
         {
-            Trader player = null;
-
             var connection = new SqlConnection(Constants.ConnectionString);
 
             var command =
-                new SqlCommand("SELECT Name, TeamId, Funds FROM Traders WHERE Id=@Id;")
+                new SqlCommand("SELECT Name, TeamId FROM Traders WHERE Id=@Id;")
                 {
                     CommandType = CommandType.Text
                 };
@@ -74,13 +126,14 @@ namespace Stockimulate.Models
 
             var reader = command.ExecuteReader();
 
+            Trader player = null;
+
             if (reader.Read())
                 player = new Trader
             {
                 Id = id,
                 Name = reader.GetString(reader.GetOrdinal("Name")),
-                _teamId = reader.GetInt32(reader.GetOrdinal("TeamId")),
-                Funds = reader.GetInt32(reader.GetOrdinal("Funds"))
+                _teamId = reader.GetInt32(reader.GetOrdinal("TeamId"))
             };
 
             reader.Dispose();
@@ -92,12 +145,10 @@ namespace Stockimulate.Models
 
         internal static List<Trader> GetInTeam(int teamId)
         {
-            var traders = new List<Trader>();
-
             var connection = new SqlConnection(Constants.ConnectionString);
 
             var command =
-                new SqlCommand("SELECT Id, Name, Funds FROM Traders WHERE TeamId=@TeamId;")
+                new SqlCommand("SELECT Id, Name FROM Traders WHERE TeamId=@TeamId;")
                 {
                     CommandType = CommandType.Text
                 };
@@ -110,13 +161,14 @@ namespace Stockimulate.Models
 
             var reader = command.ExecuteReader();
 
+            var traders = new List<Trader>();
+
             while (reader.Read())
                 traders.Add(new Trader
                 {
                     Id = reader.GetInt32(reader.GetOrdinal("Id")),
                     Name = reader.GetString(reader.GetOrdinal("Name")),
-                    _teamId = teamId,
-                    Funds = reader.GetInt32(reader.GetOrdinal("Funds"))
+                    _teamId = teamId
                 });
 
             reader.Dispose();

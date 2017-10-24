@@ -10,7 +10,9 @@
 
 </div><!-- /.row -->
 
-@if (Model.Role == "Administrator" || Model.Role == "Regulator")
+@{ var role = Model.Role;}
+
+@if (role == "Administrator" || role == "Regulator")
 {
 
     <br/>
@@ -35,24 +37,34 @@
 
     <br />
 
-    @if (Model.Team != null)
+@{
+    var team = Model.Team;
+}
+
+@if (team != null)
     {
-        <h3>@Model.Team.Name - @Model.Team.Id</h3>
+        <h3>@team.Name - @team.Id</h3>
         <table class="table">
             <thead class="thead-inverse">
             <tr>
                 <th>Security</th>
                 <th>Position</th>
                 <th>Current Price</th>
-                <th>Value</th>
+                <th>Realized P&amp;L</th>
+                <th>Unrealized P&amp;L</th>
+                <th>Total P&amp;L</th>
             </tr>
             </thead>
             <tbody>
             
             @{
                 var prices = Security.GetAll().Values.ToDictionary(x => x.Symbol, x => x.Price);
-                var teamPositions = Model.Team.Positions();
-                var teamPositionValues = Model.Team.PositionValues(prices);
+                team.Calculate(prices);
+
+                var teamPositions = team.Positions;
+                var teamRealizedPnLs = team.RealizedPnLs;
+                var teamUnrealizedPnLs = team.UnrealizedPnLs;
+                var teamTotalPnLs = team.TotalPnLs;
             }
 
             @foreach (var key in teamPositions.Select(teamPosition => teamPosition.Key))
@@ -61,38 +73,48 @@
                     <th scope="row">@key</th>
                     <td>@teamPositions[key]</td>
                     <td>@prices[key]</td>
-                    <td>@teamPositionValues[key]</td>
+                    <td>@teamRealizedPnLs[key]</td>
+                    <td>@teamUnrealizedPnLs[key]</td>
+                    <td>@teamTotalPnLs[key]</td>
                 </tr>
             }
 
-            <tr>
-                <th scope="row">Funds</th>
-                <td/>
-                <td/>
-                <td>@Model.Team.Funds</td>
-            </tr>
+            @{
+                var teamAccumulatedPenalties = team.AccumulatedPenalties;
+
+                if (teamAccumulatedPenalties > 0)
+                {
+                    <tr>
+                        <th scope="row">Penalties</th>
+                        <td>@teamAccumulatedPenalties</td>
+                        <td/>
+                        <td/>
+                        <td/>
+                        <td>@team.AccumulatedPenaltiesValue</td>
+                    </tr>
+                }
+            }
+
             <tr>
                 <th scope="row">Total</th>
                 <td/>
                 <td/>
-                <td>@Model.Team.TotalValue(prices)</td>
-            </tr>
-            <tr>
-                <th scope="row">P&amp;L</th>
                 <td/>
                 <td/>
-                <td>@Model.Team.PnL(prices)</td>
+                <td>@team.PnL()</td>
             </tr>
             <tr>
                 <th scope="row">Average P&amp;L</th>
                 <td/>
                 <td/>
-                <td>@Model.Team.AveragePnL(prices)</td>
+                <td/>
+                <td/>
+                <td>@team.AveragePnL()</td>
             </tr>
             </tbody>
         </table>
 
-        foreach (var trader in Model.Team.Traders)
+        foreach (var trader in team.Traders)
             {
 
                 <h3>@trader.Name - @trader.Id</h3>
@@ -101,42 +123,62 @@
                         <tr>
                             <th>Security</th>
                             <th>Position</th>
+                            <th>Average Open Price</th>
                             <th>Current Price</th>
-                            <th>Value</th>
+                            <th>Realized P&amp;L</th>
+                            <th>Unrealized P&amp;L</th>
+                            <th>Total P&amp;L</th>
                         </tr>
                     </thead>
                     <tbody>
                 
+                    @{
+                        var traderPostions = trader.Positions;
+                        var traderAverageOpenPrices = trader.AverageOpenPrices;
+                        var traderRealizedPnLs = trader.RealizedPnLs;
+                        var traderUnrealizedPnLs = trader.UnrealizedPnLs;
+                        var traderTotalPnLs = trader.TotalPnLs;
+                    }    
 
-                @foreach (var account in trader.Accounts)
+                @foreach (var key in traderPostions.Select(position => position.Key))
                 {
-                    var key = account.Key;
-
                     <tr>
                         <th scope="row">@key</th>
-                        <td>@account.Value.Position</td>
+                        <td>@traderPostions[key]</td>
+                        <td>@traderAverageOpenPrices[key]</td>
                         <td>@prices[key]</td>
-                        <td>@trader.PositionValues(prices)[key]</td>
+                        <td>@traderRealizedPnLs[key]</td>
+                        <td>@traderUnrealizedPnLs[key]</td>
+                        <td>@traderTotalPnLs[key]</td>
                     </tr>
                 }
 
-                    <tr>
-                        <th scope="row">Funds</th>
-                        <td/>
-                        <td/>
-                        <td>@trader.Funds</td>
-                    </tr>
+                    @{
+                        var traderAccumulatedPenalties = trader.AccumulatedPenalties;
+
+                        if (traderAccumulatedPenalties > 0)
+                         {
+                             <tr>
+                                 <th scope="row">Penalties</th>
+                                 <td>@trader.AccumulatedPenalties</td>
+                                 <td/>
+                                 <td/>
+                                 <td/>
+                                 <td/>
+                                 <td>@trader.AccumulatedPenaltiesValue</td>
+                             </tr>
+                         }
+                    }
+                    
+
                     <tr>
                         <th scope="row">Total</th>
                         <td/>
                         <td/>
-                        <td>@trader.TotalValue(prices)</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">P&amp;L</th>
                         <td/>
                         <td/>
-                        <td>@trader.PnL(prices)</td>
+                        <td/>
+                        <td>@trader.PnL()</td>
                     </tr>
                 </tbody>
             </table>
