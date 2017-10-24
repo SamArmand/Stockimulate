@@ -24,7 +24,14 @@
 
                 var prices = Security.GetAll().Values.ToDictionary(x => x.Symbol, x => x.Price);
 
-                var teams = Team.GetAll().OrderByDescending(t => t.AveragePnL(prices)).ToList();
+                var teams = Team.GetAll().ToList();
+
+                foreach (var team in teams)
+                {
+                    team.Calculate(prices);
+                }
+
+                teams = teams.OrderByDescending(t => t.AveragePnL()).ToList();
 
                 var rank = 0;
 
@@ -36,16 +43,16 @@
 
                     <tr>
                         <th scope="row">
-                            @(i > 0 && teams[i].AveragePnL(prices) == teams[i - 1].AveragePnL(prices)
+                            @(i > 0 && teams[i].AveragePnL() == teams[i - 1].AveragePnL()
                                   ? "-"
                                   : rank.ToString())
                         </th>
                         <td>@teams[i].Name - @teams[i].Id</td>
-                        <td>$@teams[i].AveragePnL(prices)</td>
+                        <td>$@teams[i].AveragePnL()</td>
                     </tr>
                 }
 
-                traders = traders.OrderByDescending(t => t.PnL(prices)).ToList();
+                traders = traders.OrderByDescending(t => t.PnL()).ToList();
             }
             </tbody>
         </table>
@@ -74,12 +81,12 @@
                     ++rank;
                     <tr>
                         <th scope="row">
-                        @(i > 0 && traders.ElementAt(i).PnL(prices) == traders.ElementAt(i - 1).PnL(prices)
+                        @(i > 0 && traders.ElementAt(i).PnL() == traders.ElementAt(i - 1).PnL()
                             ? "-"
                             : rank.ToString())
                         </th>
                         <td>@traders.ElementAt(i).Name - @traders.ElementAt(i).Id</td>
-                        <td>$@traders.ElementAt(i).PnL(prices)</td>
+                        <td>$@traders.ElementAt(i).PnL()</td>
                     </tr>
                 }
             }

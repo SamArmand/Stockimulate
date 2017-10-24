@@ -15,44 +15,50 @@ namespace Stockimulate.Models
         //Lazy
         private List<Trader> _traders;
 
-        public List<Trader> Traders => _traders ?? (_traders = Trader.GetInTeam(Id));
+        public IEnumerable<Trader> Traders => _traders ?? (_traders = Trader.GetInTeam(Id));
 
-        public int Funds => Traders.Sum(trader => trader.Funds);
+        public Dictionary<string, int> RealizedPnLs { get; private set; }
+        public Dictionary<string, int> UnrealizedPnLs { get; private set; }
+        public Dictionary<string, int> TotalPnLs { get; private set; }
+        public Dictionary<string, int> Positions { get; private set; }
 
-        public Dictionary<string, int> Positions()
+        public int AccumulatedPenalties { get; private set; }
+        public int AccumulatedPenaltiesValue { get; private set; }
+
+        public void Calculate(Dictionary<string, int> prices)
         {
-            var positions = new Dictionary<string, int>();
+            RealizedPnLs = new Dictionary<string, int>();
+            UnrealizedPnLs = new Dictionary<string, int>();
+            TotalPnLs = new Dictionary<string, int>();
+            Positions = new Dictionary<string, int>();
 
-            foreach (var account in Traders.SelectMany(trader => trader.Accounts))
-                if (positions.ContainsKey(account.Key))
-                    positions[account.Key] += account.Value.Position;
-                else
-                    positions.Add(account.Key, account.Value.Position);
+            foreach (var trader in Traders)
+            {
+                trader.Calculate(prices);
 
-            return positions;
+                foreach (var key in trader.TotalPnLs.Select(kvp => kvp.Key))
+                {
+                    if (!Positions.ContainsKey(key)) Positions.Add(key, trader.Positions[key]);
+                    else Positions[key] += trader.Positions[key];
+
+                    if (!RealizedPnLs.ContainsKey(key)) RealizedPnLs.Add(key, trader.RealizedPnLs[key]);
+                    else RealizedPnLs[key] += trader.RealizedPnLs[key];
+
+                    if (!UnrealizedPnLs.ContainsKey(key)) RealizedPnLs.Add(key, trader.UnrealizedPnLs[key]);
+                    else UnrealizedPnLs[key] += trader.UnrealizedPnLs[key];
+                }
+
+                AccumulatedPenalties += trader.AccumulatedPenalties;
+                AccumulatedPenaltiesValue += trader.AccumulatedPenaltiesValue;
+
+            }
+
+            foreach (var kvp in from kvp in RealizedPnLs let key = kvp.Key select kvp)
+                TotalPnLs.Add(kvp.Key, RealizedPnLs[kvp.Key] + UnrealizedPnLs[kvp.Key]);
         }
-
-        public Dictionary<string, int> PositionValues(Dictionary<string, int> prices)
-        {
-            var positions = Positions();
-
-            foreach (var price in prices.Where(price => positions.ContainsKey(price.Key)))
-                positions[price.Key] *= price.Value;
-
-            return positions;
-        }
-
-        public int TotalValue(Dictionary<string, int> prices) => Funds + PositionValues(prices).Values.Sum();
-
-        public int PnL(Dictionary<string, int> prices) => Traders.Sum(trader => trader.PnL(prices));
-
-        public int AveragePnL(Dictionary<string, int> prices) => PnL(prices) / Traders.Count;
 
         internal static Team Get(int id, string code = "", bool needCode = false)
         {
-            if (id < 0)
-                return null;
-
             var connection = new SqlConnection(Constants.ConnectionString);
 
             var command = new SqlCommand("SELECT Id, Name FROM Teams WHERE Id=@Id" + (needCode ? " AND Code=@Code" : string.Empty) + ";")
@@ -93,6 +99,10 @@ namespace Stockimulate.Models
 
             return team;
         }
+
+        public int PnL() => TotalPnLs.Sum(e => e.Value) - AccumulatedPenaltiesValue;
+
+        public int AveragePnL() => PnL() / Traders.Count();
 
         public static IEnumerable<Team> GetAll()
         {

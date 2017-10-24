@@ -1,8 +1,7 @@
-﻿﻿using System;
-using System.Text;
+﻿using System;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
- using Stockimulate.Helpers;
+using Stockimulate.Helpers;
 using Stockimulate.Models;
 using Stockimulate.ViewModels.Broker;
 
@@ -68,75 +67,12 @@ namespace Stockimulate.Controllers.Broker
             if (buyerTeamId == sellerTeamId)
                 return Error("Buyer and Seller must be on different teams.");
 
-            //TODO: Azure Service Bus
-
-            Account buyerAccount;
-            var createdBuyerAccount = false;
-
             var symbol = tradeInputViewModel.Symbol;
 
-            try
-            {
-                buyerAccount = buyer.Accounts[symbol];
-            }
-            catch
-            {
-                buyerAccount = new Account(symbol, buyerId, 0);
-                createdBuyerAccount = true;
-            }
+            var marketPrice = Security.Get(symbol).Price;
 
-            Account sellerAccount;
-            var createdSellerAccount = false;
-
-            try
-            {
-                sellerAccount = seller.Accounts[symbol];
-            }
-            catch
-            {
-                sellerAccount = new Account(symbol, sellerId, 0);
-                createdSellerAccount = true;
-            }
-
-            var note = new StringBuilder();
-
-            buyerAccount.Position += quantity;
-            sellerAccount.Position -= quantity;
-            const int maxPosition = Constants.MaxPosition;
-
-            if (buyerAccount.Position > maxPosition && buyerTeamId != 0)
-            {
-                note.Append("Buyer Penalty: " + (buyerAccount.Position - maxPosition));
-                buyerAccount.Position = maxPosition;
-            }
-
-            if (sellerAccount.Position < -maxPosition && sellerTeamId != 0)
-            {
-                var penalty = (Math.Abs(sellerAccount.Position) - maxPosition);
-                seller.Funds -= 2 * price * penalty;
-                sellerAccount.Position = -maxPosition;
-                note.Append((note.Length == 0 ? string.Empty : " ") + "Seller Penalty: " + penalty);
-            }
-
-            var security = Security.Get(symbol);
-            var marketPrice = security.Price;
-
-            buyer.Funds -= quantity * price;
-            seller.Funds += quantity * price;
-
-            Trade.Insert(new Trade(buyer, seller, security, quantity, price, marketPrice,
-                Math.Abs((float) (price - marketPrice) / marketPrice) > Constants.FlagThreshold, tradeInputViewModel.BrokerId,
-                note.ToString()));
-            Models.Trader.Update(buyer);
-            Models.Trader.Update(seller);
-            if (createdBuyerAccount)
-                Account.Insert(buyerAccount);
-            else
-                Account.Update(buyerAccount);
-            if (createdSellerAccount)
-                Account.Insert(sellerAccount);
-            else
-                Account.Update(sellerAccount);
+            Trade.Insert(new Trade(buyerId, sellerId, symbol, quantity, price, marketPrice,
+                Math.Abs((float) (price - marketPrice) / marketPrice) > Constants.FlagThreshold, tradeInputViewModel.BrokerId));
 
             return TradeInput(new TradeInputViewModel {Result = "Success"});
         }
