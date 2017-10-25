@@ -40,15 +40,14 @@ namespace Stockimulate.Controllers.Administrator
                 return Error(
                     "Error! Simulator is not READY to play another simulation.\nPlease reset the current simulation data.");
 
-
             await _simulator.SetPracticeMode();
 
-            return ControlPanel();
+            return RedirectToAction("ControlPanel");
         }
 
-        public async Task<IActionResult> PlayCompetitionAsync(ControlPanelViewModel controlPanelViewModel)
+        public async Task<IActionResult> PlayCompetitionAsync(ControlPanelViewModel viewModel)
         {
-            if (!controlPanelViewModel.IsVerifiedInput)
+            if (!viewModel.IsVerifiedInput)
                 return ControlPanel(new ControlPanelViewModel {State = "Warning"});
 
             if (_simulator.IsPlaying() || _simulator.IsPaused())
@@ -59,25 +58,24 @@ namespace Stockimulate.Controllers.Administrator
                 return Error(
                     "Error! Simulator is not READY to play another simulation.\nPlease reset the current simulation data.");
 
-
             await _simulator.SetCompetitionMode();
 
-            return ControlPanel();
+            return RedirectToAction("ControlPanel");
         }
 
-        public IActionResult ResetTrades(ControlPanelViewModel controlPanelViewModel)
+        public IActionResult ResetTrades(ControlPanelViewModel viewModel)
         {
-            if (!controlPanelViewModel.IsVerifiedInput)
+            if (!viewModel.IsVerifiedInput)
                 return ControlPanel(new ControlPanelViewModel {State = "Warning"});
 
             _simulator.Reset();
 
-            return ControlPanel();
+            return RedirectToAction("ControlPanel");
         }
 
-        public async Task<IActionResult> ContinueAsync(ControlPanelViewModel controlPanelViewModel)
+        public async Task<IActionResult> ContinueAsync(ControlPanelViewModel viewModel)
         {
-            if (!controlPanelViewModel.IsVerifiedInput)
+            if (!viewModel.IsVerifiedInput)
                 return ControlPanel(new ControlPanelViewModel {State = "Warning"});
 
             if (!_simulator.IsPaused())
@@ -85,31 +83,31 @@ namespace Stockimulate.Controllers.Administrator
 
             await _simulator.Play();
 
-            return ControlPanel();
+            return RedirectToAction("ControlPanel");
         }
 
-        public IActionResult UpdatePrice(ControlPanelViewModel controlPanelViewModel)
+        public IActionResult UpdatePrice(ControlPanelViewModel viewModel)
         {
-            if (!controlPanelViewModel.IsVerifiedInput)
+            if (!viewModel.IsVerifiedInput)
                 return ControlPanel(new ControlPanelViewModel {State = "Warning"});
 
-            if (controlPanelViewModel.Price < 0)
+            if (viewModel.Price < 0)
                 return Error("Price must be a postive integer!");
 
-            var security = Security.GetAll()[controlPanelViewModel.Symbol];
-            security.Price = controlPanelViewModel.Price;
+            var security = Security.GetAll()[viewModel.Symbol];
+            security.Price = viewModel.Price;
             Security.Update(security);
-            return ControlPanel();
+            return RedirectToAction("ControlPanel");
         }
 
-        public IActionResult ToggleReportsEnabled(ControlPanelViewModel controlPanelViewModel)
+        public IActionResult ToggleReportsEnabled(ControlPanelViewModel viewModel)
         {
-            if (!controlPanelViewModel.IsVerifiedInput)
+            if (!viewModel.IsVerifiedInput)
                 return ControlPanel(new ControlPanelViewModel {State = "Warning"});
 
             AppSettings.UpdateReportsEnabled(!AppSettings.IsReportsEnabled());
 
-            return ControlPanel();
+            return RedirectToAction("ControlPanel");
         }
 
         private IActionResult Error(string errorMessage) => ControlPanel(new ControlPanelViewModel

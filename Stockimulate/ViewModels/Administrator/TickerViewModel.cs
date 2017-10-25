@@ -31,8 +31,6 @@ namespace Stockimulate.ViewModels.Administrator
                 foreach (var security in securities)
                     _prices.Add(security.Key, new List<int>());
 
-            var tickerSecurity = securities[symbol];
-
             StatusDivCssClass = MarketStatus == "CLOSED" ? "bg-danger" : "bg-success";
 
             Day = _prices[symbol].Count;
@@ -46,6 +44,8 @@ namespace Stockimulate.ViewModels.Administrator
                     TickerId = i;
                     break;
                 }
+
+            var tickerSecurity = securities[symbol];
 
             Price = tickerSecurity.Price;
 

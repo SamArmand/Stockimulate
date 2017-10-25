@@ -109,10 +109,13 @@ namespace Stockimulate.Models
             var connection = new SqlConnection(Constants.ConnectionString);
 
             var command =
-                new SqlCommand("SELECT Id, Name FROM Teams WHERE NOT Id=0 AND NOT Id=72;")
+                new SqlCommand("SELECT Id, Name FROM Teams WHERE NOT Id=@ExchangeId AND NOT Id=@MarketMakersId;")
                 {
                     CommandType = CommandType.Text
                 };
+
+            command.Parameters.AddWithValue("@ExchangeId", Constants.ExchangeId);
+            command.Parameters.AddWithValue("@ExchangeId", Constants.MarketMakersId);
 
             connection.Open();
 

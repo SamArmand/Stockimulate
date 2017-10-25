@@ -7,8 +7,8 @@ namespace Stockimulate.Controllers.Public
 {
     public sealed class HomeController : Controller
     {
-        public IActionResult Home(NavPageViewModel navPageViewModel = null) => View(Constants.HomePath,
-            navPageViewModel ?? new NavPageViewModel
+        public IActionResult Home(NavigationLayoutViewModel viewModel = null) => View(Constants.HomePath,
+            viewModel ?? new NavigationLayoutViewModel
             {
                 Role = HttpContext.Session.GetString("LoggedInAs")
             });

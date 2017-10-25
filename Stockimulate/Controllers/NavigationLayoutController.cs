@@ -6,7 +6,7 @@ using Stockimulate.ViewModels;
 
 namespace Stockimulate.Controllers
 {
-    public sealed class NavPageController : Controller
+    public sealed class NavigationLayoutController : Controller
     {
         public IActionResult Home() => RedirectToAction("Home", "Home");
 
@@ -16,20 +16,20 @@ namespace Stockimulate.Controllers
             return RedirectToAction("Home", "Home");
         }
 
-        public IActionResult Login(NavPageViewModel navPageViewModel)
+        public IActionResult Login(NavigationLayoutViewModel viewModel)
         {
 
-            if (navPageViewModel.Username == null || navPageViewModel.Password == null)
+            if (viewModel.Username == null || viewModel.Password == null)
                 return RedirectToAction("Home", "Home");
 
             try
             {
-                var team = Team.Get(int.Parse(navPageViewModel.Username), navPageViewModel.Password,
+                var team = Team.Get(int.Parse(viewModel.Username), viewModel.Password,
                     true);
 
                 if (team != null)
                 {
-                    HttpContext.Session.SetString("LoggedInAs", "Team" + navPageViewModel.Username);
+                    HttpContext.Session.SetString("LoggedInAs", "Team" + viewModel.Username);
 
                     return RedirectToAction("Reports", "Reports");
                 }
@@ -39,19 +39,19 @@ namespace Stockimulate.Controllers
                 //ignore
             }
 
-            if (navPageViewModel.Username == "admin" && navPageViewModel.Password == "samisadmin")
+            if (viewModel.Username == "admin" && viewModel.Password == "samisadmin")
             {
                 HttpContext.Session.SetString("LoggedInAs", "Administrator");
                 return RedirectToAction("ControlPanel", "ControlPanel");
             }
 
-            if (navPageViewModel.Username.StartsWith("broker", StringComparison.Ordinal) && navPageViewModel.Password.StartsWith("broker", StringComparison.Ordinal))
+            if (viewModel.Username.StartsWith("broker", StringComparison.Ordinal) && viewModel.Password.StartsWith("broker", StringComparison.Ordinal))
             {
-                HttpContext.Session.SetString("LoggedInAs", "Broker " + navPageViewModel.Username.Substring(6));
+                HttpContext.Session.SetString("LoggedInAs", "Broker " + viewModel.Username.Substring(6));
                 return RedirectToAction("TradeInput", "TradeInput");
             }
 
-            if (navPageViewModel.Username == "regulator" && navPageViewModel.Password == "regulator")
+            if (viewModel.Username == "regulator" && viewModel.Password == "regulator")
                 HttpContext.Session.SetString("LoggedInAs", "Regulator");
 
             ModelState.Clear();

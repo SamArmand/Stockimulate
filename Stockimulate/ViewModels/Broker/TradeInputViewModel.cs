@@ -1,6 +1,6 @@
 ﻿namespace Stockimulate.ViewModels.Broker
 {
-    public sealed class TradeInputViewModel : NavPageViewModel
+    public sealed class TradeInputViewModel : NavigationLayoutViewModel
     {
         internal int BrokerId { get; set; }
 

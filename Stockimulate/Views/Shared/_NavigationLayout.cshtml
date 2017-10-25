@@ -1,7 +1,7 @@
 ﻿@{
     Layout = "_Layout";
 }
-@model NavPageViewModel
+@model NavigationLayoutViewModel
 @{
     var role = Model.Role;
 }
@@ -42,7 +42,7 @@
             @if (string.IsNullOrEmpty(role))
             {
 
-                <form class="form-inline my-2 my-lg-0 login-form" method="post" asp-controller="NavPage" asp-action="Login">
+                <form class="form-inline my-2 my-lg-0 login-form" method="post" asp-controller="NavigationLayout" asp-action="Login">
                     <div class="form-group mr-sm-2">
                         <input type="text" class="form-control input-sm" placeholder="Username" asp-for="Username">
                     </div>
@@ -55,7 +55,7 @@
 
             else
             {
-                <form class="form-inline my-2 my-lg-0" method="post" asp-controller="NavPage" asp-action="Logout">
+                <form class="form-inline my-2 my-lg-0" method="post" asp-controller="NavigationLayout" asp-action="Logout">
                     
                     <div class="form-group nav-text text-white mr-sm-2">@role</div>
                     <button class="btn btn-sm btn-primary btn-log">Log Out</button>

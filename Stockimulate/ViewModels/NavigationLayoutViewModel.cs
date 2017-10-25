@@ -1,6 +1,6 @@
 ﻿namespace Stockimulate.ViewModels
 {
-    public class NavPageViewModel
+    public class NavigationLayoutViewModel
     {
         public string Role { get; internal set; } = string.Empty;
         public string Username { get; set; }
