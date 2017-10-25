@@ -1,5 +1,5 @@
 @{
-    Layout = "NavPage";
+    Layout = "_NavigationLayout";
 }
 @using Stockimulate.Models
 @model ControlPanelViewModel
@@ -12,6 +12,17 @@
             <div class="row">
          
                 <form method="post" asp-controller="ControlPanel" class="col ml-4">
+                    
+                    <div class="row">
+                        <div class="row-12">
+                            <ul>
+                                @foreach (var security in Security.GetAll())
+                                {
+                                    <li><a target="_blank" asp-controller="Ticker" asp-action="Ticker" asp-route-symbol="@security.Key">@security.Key</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
                     
                     @* Disclaimer *@
                     <div class="row">

@@ -3,7 +3,7 @@ using Stockimulate.Models;
 
 namespace Stockimulate.ViewModels.Regulator
 {
-    public sealed class SearchTradesViewModel : NavPageViewModel
+    public sealed class SearchTradesViewModel : NavigationLayoutViewModel
     {
         public List<Trade> Trades { get; internal set; }
 

@@ -27,7 +27,7 @@ namespace Stockimulate.Models
         public int MarketPrice { get; }
         public bool Flagged { get; }
         public int BrokerId { get; }
-        public string Note { get; set; } = string.Empty;
+        public string Note { get; internal set; } = string.Empty;
 
         internal Trade(int buyerId, int sellerId, string symbol, int quantity, int price, int marketPrice,
             bool flagged, int brokerId)

@@ -52,12 +52,12 @@ namespace Stockimulate.Models
 
                 foreach (var trade in kvp.Value)
                 {
-
                     var tradePrice = trade.Price;
 
                     //Check for Penalty and Modify Trade Quantity
                     var potentialPosition = currentPosition + trade.Quantity * (trade.Buyer.Id == Id ? 1 : -1);
-                    if (Math.Abs(potentialPosition) > maxPosition)
+                    if (Id != Constants.ExchangeId && _teamId != Constants.MarketMakersId
+                        && Math.Abs(potentialPosition) > maxPosition)
                     {
                         var penalty = Math.Abs(potentialPosition) - maxPosition;
                         trade.Quantity -= penalty;
@@ -94,7 +94,11 @@ namespace Stockimulate.Models
 
                 Positions.Add(kvp.Key, position);
 
-                var averageOpenPrice = position >= 0 ? averageBuyPrice : averageSellPrice;
+                var averageOpenPrice = 0;
+                if (position > 0)
+                    averageOpenPrice = averageBuyPrice;
+                else if (position < 0)
+                    averageOpenPrice = averageSellPrice;
 
                 AverageOpenPrices.Add(kvp.Key, averageOpenPrice);
 

@@ -8,30 +8,30 @@ namespace Stockimulate.Controllers.Regulator
 {
     public sealed class SearchTradesController : Controller
     {
-        public IActionResult SearchTrades(SearchTradesViewModel searchTradesViewModel = null)
+        public IActionResult SearchTrades(SearchTradesViewModel viewModel = null)
         {
             var loggedInAs = HttpContext.Session.GetString("LoggedInAs");
 
             if (string.IsNullOrEmpty(loggedInAs) || loggedInAs != "Administrator" && loggedInAs != "Regulator")
                 return RedirectToAction("Home", "Home");
 
-            if (searchTradesViewModel == null) searchTradesViewModel = new SearchTradesViewModel();
+            if (viewModel == null) viewModel = new SearchTradesViewModel();
 
-            searchTradesViewModel.Role = loggedInAs;
+            viewModel.Role = loggedInAs;
 
             ModelState.Clear();
-            return View(Constants.SearchTradesPath, searchTradesViewModel);
+            return View(Constants.SearchTradesPath, viewModel);
         }
 
-        public IActionResult Submit(SearchTradesViewModel searchTradesViewModel) => SearchTrades(new SearchTradesViewModel
+        public IActionResult Submit(SearchTradesViewModel viewModel) => SearchTrades(new SearchTradesViewModel
         {
             Trades = Trade.Get(
-                searchTradesViewModel.BuyerId,
-                searchTradesViewModel.BuyerTeamId,
-                searchTradesViewModel.SellerId,
-                searchTradesViewModel.SellerTeamId,
-                searchTradesViewModel.Symbol,
-                searchTradesViewModel.Flagged)
+                viewModel.BuyerId,
+                viewModel.BuyerTeamId,
+                viewModel.SellerId,
+                viewModel.SellerTeamId,
+                viewModel.Symbol,
+                viewModel.Flagged)
         });
     }
 }

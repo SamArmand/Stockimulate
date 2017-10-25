@@ -2,7 +2,7 @@
 
 namespace Stockimulate.ViewModels.Trader
 {
-    public sealed class ReportsViewModel : NavPageViewModel
+    public sealed class ReportsViewModel : NavigationLayoutViewModel
     {
         public int TeamId { get; set; }
 

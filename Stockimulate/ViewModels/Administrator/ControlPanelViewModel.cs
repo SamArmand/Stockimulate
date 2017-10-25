@@ -1,6 +1,6 @@
 ﻿namespace Stockimulate.ViewModels.Administrator
 {
-    public sealed class ControlPanelViewModel : NavPageViewModel
+    public sealed class ControlPanelViewModel : NavigationLayoutViewModel
     {
         public bool IsVerifiedInput { get; set; }
 

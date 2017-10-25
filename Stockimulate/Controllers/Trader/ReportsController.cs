@@ -8,7 +8,7 @@ namespace Stockimulate.Controllers.Trader
 {
     public sealed class ReportsController : Controller
     {
-        public IActionResult Reports(ReportsViewModel reportsViewModel = null)
+        public IActionResult Reports(ReportsViewModel viewModel = null)
         {
             var loggedInAs = HttpContext.Session.GetString("LoggedInAs");
 
@@ -23,16 +23,16 @@ namespace Stockimulate.Controllers.Trader
                     Team = Team.Get(int.Parse(loggedInAs.Substring(4)))
                 });
 
-            if (reportsViewModel == null) reportsViewModel = new ReportsViewModel();
-            reportsViewModel.Role = loggedInAs;
+            if (viewModel == null) viewModel = new ReportsViewModel();
+            viewModel.Role = loggedInAs;
 
             ModelState.Clear();
-            return View(Constants.ReportsPath, reportsViewModel);
+            return View(Constants.ReportsPath, viewModel);
         }
 
-        public IActionResult Submit(ReportsViewModel reportsViewModel) => Reports(new ReportsViewModel
+        public IActionResult Submit(ReportsViewModel viewModel) => Reports(new ReportsViewModel
         {
-            Team = Team.Get(reportsViewModel.TeamId)
+            Team = Team.Get(viewModel.TeamId)
         });
     }
 }

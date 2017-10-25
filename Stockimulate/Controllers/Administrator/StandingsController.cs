@@ -15,7 +15,7 @@ namespace Stockimulate.Controllers.Administrator
                 return RedirectToAction("Home", "Home");
 
             ModelState.Clear();
-            return View(Constants.StandingsPath, new NavPageViewModel{ Role = loggedInAs });
+            return View(Constants.StandingsPath, new NavigationLayoutViewModel{ Role = loggedInAs });
         }
     }
 }

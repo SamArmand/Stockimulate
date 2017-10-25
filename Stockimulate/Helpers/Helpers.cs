@@ -26,5 +26,7 @@
         internal const int MaxPosition = 100;
         internal const float FlagThreshold = 0.25f;
 
+        internal const int ExchangeId = 0;
+        internal const int MarketMakersId = 72;
     }
 }
