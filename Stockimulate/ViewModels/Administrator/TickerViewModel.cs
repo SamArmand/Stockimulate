@@ -72,13 +72,13 @@ namespace Stockimulate.ViewModels.Administrator
             TickerNameAndSymbol = tickerSecurity.Name + " (" + symbol + ")";
         }
 
-        internal static void Update(DayInfo dayInfo, bool close = false)
+        internal static void Update(TradingDay tradingDay, bool close = false)
         {
             foreach (var security in Security.GetAll())
                 _prices[security.Key].Add(security.Value.Price);
 
-            if (dayInfo.NewsItem != string.Empty)
-                News = dayInfo.NewsItem;
+            if (tradingDay.NewsItem != string.Empty)
+                News = tradingDay.NewsItem;
 
             if (close) MarketStatus = "CLOSED";
             else ++Day;

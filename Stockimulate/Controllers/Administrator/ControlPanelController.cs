@@ -27,7 +27,7 @@ namespace Stockimulate.Controllers.Administrator
             return View(Constants.ControlPanelPath, controlPanelViewModel);
         }
 
-        public async Task<IActionResult> PlayPractice(ControlPanelViewModel controlPanelViewModel)
+        public async Task<IActionResult> PlayPracticeAsync(ControlPanelViewModel controlPanelViewModel)
         {
             if (!controlPanelViewModel.IsVerifiedInput)
                 return ControlPanel(new ControlPanelViewModel {State = "Warning"});

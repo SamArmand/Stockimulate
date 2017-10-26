@@ -50,6 +50,8 @@ namespace Stockimulate.Architecture
         private static Simulator _instance;
         internal static Simulator Instance => _instance ?? (_instance = new Simulator());
 
+        private readonly Dictionary<string, List<TradingDay>> _tradingDays = TradingDay.GetAll();
+
         private Simulator() => _timer.Elapsed += Update;
 
         internal async Task Play()
@@ -68,12 +70,12 @@ namespace Stockimulate.Architecture
             _timer.Enabled = true;
         }
 
-        private async Task CloseMarket(DayInfo dayInfo, Status status)
+        private async Task CloseMarket(TradingDay tradingDay, Status status)
         {
             _timer.Enabled = false;
             _status = status;
 
-            TickerViewModel.Update(dayInfo, true);
+            TickerViewModel.Update(tradingDay, true);
 
             await _pusher.TriggerAsync(
                 "stockimulate",
@@ -81,8 +83,8 @@ namespace Stockimulate.Architecture
                 new
                 {
                     day = _dayNumber,
-                    news = dayInfo.NewsItem,
-                    effects = _securities.Select(security => dayInfo.Effects[security.Key]).ToArray(),
+                    news = tradingDay.NewsItem,
+                    effects = _securities.Select(security => tradingDay.Effects[security.Key]).ToArray(),
                     close = true
                 });
 
@@ -105,14 +107,14 @@ namespace Stockimulate.Architecture
 
         private async void Update(object source, ElapsedEventArgs e)
         {
-            ++_dayNumber;
+            var tradingDay = _tradingDays[_mode.ToString()].FirstOrDefault(t => t.Day == ++_dayNumber);
 
-            var dayInfo = DayInfo.Get(_mode.ToString(), _dayNumber);
+            if (tradingDay == null) return;
 
             foreach (var security in _securities)
             {
-                security.Value.Price += dayInfo.Effects[security.Key];
-                security.Value.LastChange = dayInfo.Effects[security.Key];
+                security.Value.Price += tradingDay.Effects[security.Key];
+                security.Value.LastChange = tradingDay.Effects[security.Key];
                 Security.Update(security.Value);
             }
 
@@ -121,14 +123,14 @@ namespace Stockimulate.Architecture
                 case Constants.Quarter1Day when _mode == Mode.Competition:
                 case Constants.Quarter2Day:
                 case Constants.Quarter3Day:
-                    await CloseMarket(dayInfo, Status.Paused);
+                    await CloseMarket(tradingDay, Status.Paused);
                     break;
                 case Constants.Quarter1Day when _mode == Mode.Practice:
                 case Constants.Quarter4Day:
-                    await CloseMarket(dayInfo, Status.Stopped);
+                    await CloseMarket(tradingDay, Status.Stopped);
                     break;
                 default:
-                    TickerViewModel.Update(dayInfo);
+                    TickerViewModel.Update(tradingDay);
                     break;
             }
 
@@ -138,8 +140,8 @@ namespace Stockimulate.Architecture
                 new
                 {
                     day = _dayNumber,
-                    news = dayInfo.NewsItem,
-                    effects = _securities.Select(security => dayInfo.Effects[security.Key]).ToArray(),
+                    news = tradingDay.NewsItem,
+                    effects = _securities.Select(security => tradingDay.Effects[security.Key]).ToArray(),
                     close = false
                 });
         }
