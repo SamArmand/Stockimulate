@@ -9,6 +9,7 @@ namespace Stockimulate.Controllers.Broker
 {
     public sealed class TradeInputController : Controller
     {
+        [HttpGet]
         public IActionResult TradeInput(TradeInputViewModel viewModel = null)
         {
             var loggedInAs = HttpContext.Session.GetString("LoggedInAs");
@@ -22,9 +23,13 @@ namespace Stockimulate.Controllers.Broker
             viewModel.BrokerId = loggedInAs.StartsWith("Broker", StringComparison.Ordinal) ? int.Parse(loggedInAs.Substring(6)) : 0;
 
             ModelState.Clear();
+
+            ViewData["Title"] = "Trade Input";
+
             return View(Constants.TradeInputPath, viewModel);
         }
 
+        [HttpPost]
         public IActionResult Submit(TradeInputViewModel viewModel)
         {
             if (!viewModel.IsChecked)

@@ -12,6 +12,7 @@ namespace Stockimulate.Controllers.Administrator
     {
         private readonly Simulator _simulator = Simulator.Instance;
 
+        [HttpGet]
         public IActionResult ControlPanel(ControlPanelViewModel controlPanelViewModel = null)
         {
             var loggedInAs = HttpContext.Session.GetString("LoggedInAs");
@@ -24,9 +25,13 @@ namespace Stockimulate.Controllers.Administrator
             controlPanelViewModel.Role = loggedInAs;
 
             ModelState.Clear();
+
+            ViewData["Title"] = "Control Panel";
+
             return View(Constants.ControlPanelPath, controlPanelViewModel);
         }
 
+        [HttpPost]
         public async Task<IActionResult> PlayPracticeAsync(ControlPanelViewModel controlPanelViewModel)
         {
             if (!controlPanelViewModel.IsVerifiedInput)
@@ -45,6 +50,7 @@ namespace Stockimulate.Controllers.Administrator
             return RedirectToAction("ControlPanel");
         }
 
+        [HttpPost]
         public async Task<IActionResult> PlayCompetitionAsync(ControlPanelViewModel viewModel)
         {
             if (!viewModel.IsVerifiedInput)
@@ -63,6 +69,7 @@ namespace Stockimulate.Controllers.Administrator
             return RedirectToAction("ControlPanel");
         }
 
+        [HttpPost]
         public IActionResult ResetTrades(ControlPanelViewModel viewModel)
         {
             if (!viewModel.IsVerifiedInput)
@@ -73,6 +80,7 @@ namespace Stockimulate.Controllers.Administrator
             return RedirectToAction("ControlPanel");
         }
 
+        [HttpPost]
         public async Task<IActionResult> ContinueAsync(ControlPanelViewModel viewModel)
         {
             if (!viewModel.IsVerifiedInput)
@@ -86,6 +94,7 @@ namespace Stockimulate.Controllers.Administrator
             return RedirectToAction("ControlPanel");
         }
 
+        [HttpPost]
         public IActionResult UpdatePrice(ControlPanelViewModel viewModel)
         {
             if (!viewModel.IsVerifiedInput)
@@ -100,6 +109,7 @@ namespace Stockimulate.Controllers.Administrator
             return RedirectToAction("ControlPanel");
         }
 
+        [HttpPost]
         public IActionResult ToggleReportsEnabled(ControlPanelViewModel viewModel)
         {
             if (!viewModel.IsVerifiedInput)

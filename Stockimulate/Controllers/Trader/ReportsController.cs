@@ -8,6 +8,7 @@ namespace Stockimulate.Controllers.Trader
 {
     public sealed class ReportsController : Controller
     {
+        [HttpGet]
         public IActionResult Reports(ReportsViewModel viewModel = null)
         {
             var loggedInAs = HttpContext.Session.GetString("LoggedInAs");
@@ -27,9 +28,13 @@ namespace Stockimulate.Controllers.Trader
             viewModel.Role = loggedInAs;
 
             ModelState.Clear();
+
+            ViewData["Title"] = "Reports";
+
             return View(Constants.ReportsPath, viewModel);
         }
 
+        [HttpPost]
         public IActionResult Submit(ReportsViewModel viewModel) => Reports(new ReportsViewModel
         {
             Team = Team.Get(viewModel.TeamId)
