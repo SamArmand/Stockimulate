@@ -115,7 +115,7 @@ namespace Stockimulate.Models
                 };
 
             command.Parameters.AddWithValue("@ExchangeId", Constants.ExchangeId);
-            command.Parameters.AddWithValue("@ExchangeId", Constants.MarketMakersId);
+            command.Parameters.AddWithValue("@MarketMakersId", Constants.MarketMakersId);
 
             connection.Open();
 
