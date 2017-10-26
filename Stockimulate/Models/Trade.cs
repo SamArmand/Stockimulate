@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Stockimulate.Helpers;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using Stockimulate.Helpers;
 
 namespace Stockimulate.Models
 {

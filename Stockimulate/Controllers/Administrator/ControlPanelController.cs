@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Stockimulate.Architecture;
 using Stockimulate.Helpers;
 using Stockimulate.Models;
 using Stockimulate.ViewModels.Administrator;
+using System.Threading.Tasks;
 
 namespace Stockimulate.Controllers.Administrator
 {

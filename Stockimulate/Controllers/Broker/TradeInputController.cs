@@ -1,9 +1,9 @@
-﻿using System;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Stockimulate.Helpers;
 using Stockimulate.Models;
 using Stockimulate.ViewModels.Broker;
+using System;
 
 namespace Stockimulate.Controllers.Broker
 {

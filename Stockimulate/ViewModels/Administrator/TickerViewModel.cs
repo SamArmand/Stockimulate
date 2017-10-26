@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Stockimulate.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Stockimulate.Models;
 
 namespace Stockimulate.ViewModels.Administrator
 {
