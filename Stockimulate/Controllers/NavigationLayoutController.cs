@@ -8,14 +8,17 @@ namespace Stockimulate.Controllers
 {
     public sealed class NavigationLayoutController : Controller
     {
+        [HttpGet]
         public IActionResult Home() => RedirectToAction("Home", "Home");
 
+        [HttpPost]
         public IActionResult Logout()
         {
             HttpContext.Session.SetString("LoggedInAs", string.Empty);
             return RedirectToAction("Home", "Home");
         }
 
+        [HttpPost]
         public IActionResult Login(NavigationLayoutViewModel viewModel)
         {
 

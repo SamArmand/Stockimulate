@@ -7,6 +7,7 @@ namespace Stockimulate.Controllers.Administrator
 {
     public sealed class TickerController : Controller
     {
+        [HttpGet]
         public IActionResult Ticker(string symbol)
         {
             var loggedInAs = HttpContext.Session.GetString("LoggedInAs");
@@ -15,6 +16,9 @@ namespace Stockimulate.Controllers.Administrator
                 return RedirectToAction("Home", "Home");
 
             ModelState.Clear();
+
+            ViewData["Title"] = symbol;
+
             return View(Constants.TickerPath, new TickerViewModel(symbol));
         }
     }

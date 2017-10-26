@@ -8,6 +8,7 @@ namespace Stockimulate.Controllers.Regulator
 {
     public sealed class SearchTradesController : Controller
     {
+        [HttpGet]
         public IActionResult SearchTrades(SearchTradesViewModel viewModel = null)
         {
             var loggedInAs = HttpContext.Session.GetString("LoggedInAs");
@@ -20,9 +21,13 @@ namespace Stockimulate.Controllers.Regulator
             viewModel.Role = loggedInAs;
 
             ModelState.Clear();
+
+            ViewData["Title"] = "Search Trades";
+
             return View(Constants.SearchTradesPath, viewModel);
         }
 
+        [HttpPost]
         public IActionResult Submit(SearchTradesViewModel viewModel) => SearchTrades(new SearchTradesViewModel
         {
             Trades = Trade.Get(

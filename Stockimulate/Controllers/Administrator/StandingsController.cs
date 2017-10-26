@@ -7,6 +7,7 @@ namespace Stockimulate.Controllers.Administrator
 {
     public sealed class StandingsController : Controller
     {
+        [HttpGet]
         public IActionResult Standings()
         {
             var loggedInAs = HttpContext.Session.GetString("LoggedInAs");
@@ -15,6 +16,9 @@ namespace Stockimulate.Controllers.Administrator
                 return RedirectToAction("Home", "Home");
 
             ModelState.Clear();
+
+            ViewData["Title"] = "Standings";
+
             return View(Constants.StandingsPath, new NavigationLayoutViewModel{ Role = loggedInAs });
         }
     }
