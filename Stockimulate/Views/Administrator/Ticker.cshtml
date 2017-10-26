@@ -45,10 +45,12 @@
 <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
 <script>
 
+    // ReSharper disable once PossiblyUnassignedProperty
     const channel = (new Pusher('3a92cb578fb0877c47f0',
         {
             cluster: 'us2',
             encrypted: true
+// ReSharper disable once PossiblyUnassignedProperty
         })).subscribe('stockimulate');
 
     channel.bind('update-market',
@@ -137,6 +139,10 @@
                         display: true,
                         scaleLabel: {
                             display: false
+                        },
+                        ticks: {
+                            min: 0,
+                            max: 251
                         }
                     }
                 ],
@@ -146,6 +152,10 @@
                         display: true,
                         scaleLabel: {
                             display: false
+                        },
+                        ticks: {
+                            min: 0,
+                            max: 3000
                         }
                     }
                 ]
@@ -154,7 +164,8 @@
     };
 
     window.onload = function() {
-        window.myLine = new Chart(document.getElementById("Chart").getContext("2d"), chart);
+// ReSharper disable once PossiblyUnassignedProperty
+        window.myLine = new window.Chart(document.getElementById("Chart").getContext("2d"), chart);
     };
 
 </script>
