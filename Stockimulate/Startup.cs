@@ -71,7 +71,7 @@ namespace Stockimulate
 
             app.UseMvc(routes => routes.MapRoute(
                 "default",
-                "{controller=NavPage}/{action=Home}/{id?}"));
+                "{controller=NavigationLayout}/{action=Home}/{id?}"));
 
         }
     }
