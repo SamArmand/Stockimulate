@@ -8,6 +8,7 @@ namespace Stockimulate.Controllers.Administrator
     public sealed class TickerController : Controller
     {
         [HttpGet]
+        [Route("Ticker/{symbol}")]
         public IActionResult Ticker(string symbol)
         {
             var loggedInAs = HttpContext.Session.GetString("LoggedInAs");
