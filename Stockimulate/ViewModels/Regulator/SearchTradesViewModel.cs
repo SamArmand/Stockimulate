@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Stockimulate.Models;
+﻿using Stockimulate.Models;
+using System.Collections.Generic;
 
 namespace Stockimulate.ViewModels.Regulator
 {

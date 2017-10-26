@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Timers;
-using PusherServer;
+﻿using PusherServer;
 using Stockimulate.Helpers;
 using Stockimulate.Models;
 using Stockimulate.ViewModels.Administrator;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Timers;
 
 namespace Stockimulate.Architecture
 {

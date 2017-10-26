@@ -1,8 +1,8 @@
-﻿using System;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Stockimulate.Models;
 using Stockimulate.ViewModels;
+using System;
 
 namespace Stockimulate.Controllers
 {
