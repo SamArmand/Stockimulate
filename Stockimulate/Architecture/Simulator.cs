@@ -58,10 +58,32 @@ namespace Stockimulate.Architecture
         {
             TickerViewModel.OpenMarket();
 
-            await _pusher.TriggerAsync(
-                "stockimulate",
-                "open-market",
-                new { });
+            if (_dayNumber == 0)
+            {
+                await _pusher.TriggerAsync(
+                    "stockimulate",
+                    "open-market",
+                    new { });
+            }
+
+            else
+            {
+                var tradingDay = _tradingDays[_mode.ToString()].FirstOrDefault(t => t.Day == 0);
+                if (tradingDay == null) return;
+
+                await _pusher.TriggerAsync(
+                    "stockimulate",
+                    "update-market",
+                    new
+                    {
+                        day = _dayNumber,
+                        news = tradingDay.NewsItem,
+                        effects = _securities.Select(security => tradingDay.Effects[security.Key]).ToArray(),
+                        close = false
+                    });
+
+                TickerViewModel.Update(tradingDay);
+            }
 
             _status = Status.Playing;
 

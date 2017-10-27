@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace Stockimulate.Models
 {
@@ -16,6 +17,9 @@ namespace Stockimulate.Models
         public int Id { get; private set; }
 
         internal int LastChange { get; set; }
+
+        private static List<string> _symbols;
+        public static List<string> Symbols => _symbols ?? (_symbols = GetAll().Select(t => t.Key).ToList());
 
         internal static void Update(Security security)
         {

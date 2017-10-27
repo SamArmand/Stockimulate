@@ -56,9 +56,16 @@
     channel.bind('update-market',
         function(message) {
 
-            const effect = message.effects[@Model.TickerId];
-
-            const newPrice = parseInt(document.getElementById("TickerPriceH1").innerText.substring(1)) + effect;
+            var effect;
+            var newPrice;
+            
+            if (message.day === 0) {
+                effect = 0;
+                newPrice = message.effects[@Model.TickerId];
+            } else {
+                effect = message.effects[@Model.TickerId];
+                newPrice = parseInt(document.getElementById("TickerPriceH1").innerText.substring(1)) + effect;
+            }
 
             document.getElementById("TickerPriceH1").innerHTML = `$${newPrice}`;
 
