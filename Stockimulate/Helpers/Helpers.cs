@@ -21,7 +21,7 @@
         internal const int Quarter3Day = 188;
         internal const int Quarter4Day = 251;
 
-        internal const int TimerInterval = 28000;
+        internal const int TimerInterval = 10000;
 
         internal const int MaxPosition = 100;
         internal const float FlagThreshold = 0.25f;

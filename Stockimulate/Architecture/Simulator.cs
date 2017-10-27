@@ -58,15 +58,13 @@ namespace Stockimulate.Architecture
         {
             TickerViewModel.OpenMarket();
 
-            if (_dayNumber == 0)
-            {
-                await _pusher.TriggerAsync(
-                    "stockimulate",
-                    "open-market",
-                    new { });
-            }
 
-            else
+            await _pusher.TriggerAsync(
+                "stockimulate",
+                "open-market",
+                new { });
+
+            if (_dayNumber == 0)
             {
                 var tradingDay = _tradingDays[_mode.ToString()].FirstOrDefault(t => t.Day == 0);
                 if (tradingDay == null) return;
