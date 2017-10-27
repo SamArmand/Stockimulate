@@ -11,14 +11,18 @@ namespace Stockimulate.Controllers.Regulator
         [HttpGet]
         public IActionResult SearchTrades(SearchTradesViewModel viewModel = null)
         {
-            var loggedInAs = HttpContext.Session.GetString("LoggedInAs");
+            var role = HttpContext.Session.GetString("Role");
 
-            if (string.IsNullOrEmpty(loggedInAs) || loggedInAs != "Administrator" && loggedInAs != "Regulator")
+            if (string.IsNullOrEmpty(role) || role != "Administrator" && role != "Regulator")
                 return RedirectToAction("Home", "Home");
 
             if (viewModel == null) viewModel = new SearchTradesViewModel();
 
-            viewModel.Role = loggedInAs;
+            viewModel.Login = new Login
+            {
+                Role = role,
+                Username = HttpContext.Session.GetString("Username")
+            };
 
             ModelState.Clear();
 

@@ -11,21 +11,22 @@ namespace Stockimulate.Controllers.Trader
         [HttpGet]
         public IActionResult Reports(ReportsViewModel viewModel = null)
         {
-            var loggedInAs = HttpContext.Session.GetString("LoggedInAs");
+            var role = HttpContext.Session.GetString("Role");
 
-            if (string.IsNullOrEmpty(loggedInAs) || loggedInAs != "Administrator" && loggedInAs != "Regulator" &&
-                loggedInAs.Substring(0, 4) != "Team")
+            if (string.IsNullOrEmpty(role) || role != "Administrator" && role != "Regulator" &&
+                role != "Team")
                 return RedirectToAction("Home", "Home");
 
-            if (loggedInAs.Substring(0, 4) == "Team")
-                return View(Constants.ReportsPath, new ReportsViewModel
-                {
-                    Role = loggedInAs,
-                    Team = Team.Get(int.Parse(loggedInAs.Substring(4)))
-                });
-
             if (viewModel == null) viewModel = new ReportsViewModel();
-            viewModel.Role = loggedInAs;
+
+            viewModel.Login = new Login
+            {
+                Role = role,
+                Username = HttpContext.Session.GetString("Username")
+            };
+
+            if (role.Substring(0, 4) == "Team")
+                return View(Constants.ReportsPath, viewModel);
 
             ModelState.Clear();
 

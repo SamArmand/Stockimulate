@@ -13,28 +13,32 @@ namespace Stockimulate.Controllers.Administrator
         private readonly Simulator _simulator = Simulator.Instance;
 
         [HttpGet]
-        public IActionResult ControlPanel(ControlPanelViewModel controlPanelViewModel = null)
+        public IActionResult ControlPanel(ControlPanelViewModel viewModel = null)
         {
-            var loggedInAs = HttpContext.Session.GetString("LoggedInAs");
+            var role = HttpContext.Session.GetString("Role");
 
-            if (string.IsNullOrEmpty(loggedInAs) || loggedInAs != "Administrator")
+            if (string.IsNullOrEmpty(role) || role != "Administrator")
                 return RedirectToAction("Home", "Home");
 
-            if (controlPanelViewModel == null) controlPanelViewModel = new ControlPanelViewModel();
+            if (viewModel == null) viewModel = new ControlPanelViewModel();
 
-            controlPanelViewModel.Role = loggedInAs;
+            viewModel.Login = new Login
+            {
+                Role = role,
+                Username = HttpContext.Session.GetString("Username")
+            };
 
             ModelState.Clear();
 
             ViewData["Title"] = "Control Panel";
 
-            return View(Constants.ControlPanelPath, controlPanelViewModel);
+            return View(Constants.ControlPanelPath, viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> PlayPracticeAsync(ControlPanelViewModel controlPanelViewModel)
+        public async Task<IActionResult> PlayPracticeAsync(ControlPanelViewModel viewModel)
         {
-            if (!controlPanelViewModel.IsVerifiedInput)
+            if (!viewModel.IsVerifiedInput)
                 return ControlPanel(new ControlPanelViewModel {State = "Warning"});
 
             if (_simulator.IsPlaying() || _simulator.IsPaused())

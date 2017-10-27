@@ -26,11 +26,11 @@ namespace Stockimulate.Models
         public int Price { get; }
         public int MarketPrice { get; }
         public bool Flagged { get; }
-        public int BrokerId { get; }
+        public string BrokerId { get; }
         public string Note { get; internal set; } = string.Empty;
 
         internal Trade(int buyerId, int sellerId, string symbol, int quantity, int price, int marketPrice,
-            bool flagged, int brokerId)
+            bool flagged, string brokerId)
         {
             _buyerId = buyerId;
             _sellerId = sellerId;
@@ -119,7 +119,7 @@ namespace Stockimulate.Models
                     reader.GetInt32(reader.GetOrdinal("Price")),
                     reader.GetInt32(reader.GetOrdinal("MarketPrice")),
                     reader.GetBoolean(reader.GetOrdinal("Flagged")),
-                    reader.GetInt32(reader.GetOrdinal("BrokerId"))));
+                    reader.GetString(reader.GetOrdinal("BrokerId"))));
 
             reader.Dispose();
             command.Dispose();
@@ -159,7 +159,7 @@ namespace Stockimulate.Models
                     reader.GetInt32(reader.GetOrdinal("Price")),
                     reader.GetInt32(reader.GetOrdinal("MarketPrice")),
                     reader.GetBoolean(reader.GetOrdinal("Flagged")),
-                    reader.GetInt32(reader.GetOrdinal("BrokerId"))
+                    reader.GetString(reader.GetOrdinal("BrokerId"))
                     ));
             }
 
