@@ -74,8 +74,12 @@ namespace Stockimulate.ViewModels.Administrator
 
         internal static void Update(TradingDay tradingDay, bool close = false)
         {
-            foreach (var security in Security.GetAll())
-                _prices[security.Key].Add(security.Value.Price);
+            if (tradingDay.Day == 0)
+                foreach (var symbol in Security.Symbols)
+                    _prices[symbol].Add(tradingDay.Effects[symbol]);
+            else
+                foreach (var symbol in Security.Symbols)
+                    _prices[symbol].Add(_prices[symbol].Last() + tradingDay.Effects[symbol]);
 
             if (tradingDay.NewsItem != string.Empty)
                 News = tradingDay.NewsItem;
@@ -93,8 +97,8 @@ namespace Stockimulate.ViewModels.Administrator
 
             News = string.Empty;
 
-            foreach (var security in Security.GetAll())
-                _prices.Add(security.Key, new List<int>());
+            foreach (var symbol in Security.Symbols)
+                _prices.Add(symbol, new List<int>());
         }
 
         internal static void OpenMarket()
