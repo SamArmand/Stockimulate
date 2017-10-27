@@ -4,10 +4,10 @@ using Stockimulate.Helpers;
 
 namespace Stockimulate.Models
 {
-    public class Login
+    public sealed class Login
     {
-        public string Role { get; set; } = string.Empty;
-        public string Username { get; set; } = string.Empty;
+        public string Role { get; internal set; } = string.Empty;
+        public string Username { get; internal set; } = string.Empty;
 
         internal static Login Get(string username, string password)
         {
@@ -15,7 +15,7 @@ namespace Stockimulate.Models
 
             var command =
                 new SqlCommand(
-                    "SELECT Role, Username FROM FROM Logins WHERE Username=@Username AND Password=@Password;")
+                    "SELECT Role, Username FROM Logins WHERE Username=@Username AND Password=@Password;")
                 {
                     CommandType = CommandType.Text
                 };
