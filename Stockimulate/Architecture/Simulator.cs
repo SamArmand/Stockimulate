@@ -107,7 +107,8 @@ namespace Stockimulate.Architecture
 
         private async void Update(object source, ElapsedEventArgs e)
         {
-            var tradingDay = _tradingDays[_mode.ToString()].FirstOrDefault(t => t.Day == ++_dayNumber);
+            ++_dayNumber;
+            var tradingDay = _tradingDays[_mode.ToString()].FirstOrDefault(t => t.Day == _dayNumber);
 
             if (tradingDay == null) return;
 
