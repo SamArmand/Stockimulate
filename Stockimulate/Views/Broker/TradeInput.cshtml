@@ -19,7 +19,7 @@
 
                             try
                             {
-                                var brokerPermission = int.Parse(Model.Role.Substring(7)) % securities.Count;
+                                var brokerPermission = int.Parse(Model.Login.Username.Substring(6)) % securities.Count;
 
                                 foreach (var security in securities.Where(security => security.Value.Id == brokerPermission))
                                 {
@@ -58,7 +58,7 @@
                         
                         <select class="form-control" asp-for="Symbol">
 
-                            @if (Model.Role == "Administrator")
+                            @if (Model.Login.Role == "Administrator")
                             {
                                 foreach (var security in securities)
                                 {

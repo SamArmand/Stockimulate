@@ -62,7 +62,7 @@ namespace Stockimulate.Models
 
             reader.Read();
 
-            var instrument = new Security
+            var security = new Security
             {
                 Symbol = symbol,
                 Price = reader.GetInt32(reader.GetOrdinal("Price")),
@@ -75,7 +75,7 @@ namespace Stockimulate.Models
             command.Dispose();
             connection.Dispose();
 
-            return instrument;
+            return security;
         }
 
         public static Dictionary<string, Security> GetAll()

@@ -11,9 +11,9 @@ namespace Stockimulate.Controllers.Administrator
         [Route("Ticker/{symbol}")]
         public IActionResult Ticker(string symbol)
         {
-            var loggedInAs = HttpContext.Session.GetString("LoggedInAs");
+            var role = HttpContext.Session.GetString("Role");
 
-            if (string.IsNullOrEmpty(loggedInAs) || loggedInAs != "Administrator")
+            if (string.IsNullOrEmpty(role) || role != "Administrator")
                 return RedirectToAction("Home", "Home");
 
             ModelState.Clear();

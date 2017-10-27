@@ -14,7 +14,9 @@ namespace Stockimulate.Controllers
         [HttpPost]
         public IActionResult Logout()
         {
-            HttpContext.Session.SetString("LoggedInAs", string.Empty);
+            HttpContext.Session.SetString("Uername", string.Empty);
+            HttpContext.Session.SetString("Role", string.Empty);
+
             return RedirectToAction("Home", "Home");
         }
 
@@ -32,7 +34,8 @@ namespace Stockimulate.Controllers
 
                 if (team != null)
                 {
-                    HttpContext.Session.SetString("LoggedInAs", "Team" + viewModel.Username);
+                    HttpContext.Session.SetString("Username", "team" + viewModel.Username);
+                    HttpContext.Session.SetString("Role", "Team");
 
                     return RedirectToAction("Reports", "Reports");
                 }
@@ -42,23 +45,23 @@ namespace Stockimulate.Controllers
                 //ignore
             }
 
-            if (viewModel.Username == "admin" && viewModel.Password == "samisadmin")
+            var login = Models.Login.Get(viewModel.Username, viewModel.Password);
+            HttpContext.Session.SetString("Role", login.Role);
+            HttpContext.Session.SetString("Username", login.Username);
+
+            switch (login.Role)
             {
-                HttpContext.Session.SetString("LoggedInAs", "Administrator");
-                return RedirectToAction("ControlPanel", "ControlPanel");
+                case "Administrator":
+                    return RedirectToAction("ControlPanel", "ControlPanel");
+                case "Broker":
+                    return RedirectToAction("TradeInput", "TradeInput");
+                case "Regulator":
+                    return RedirectToAction("SearchTrades", "SearchTrades");
+                default:
+                    return RedirectToAction("Home", "Home");
             }
 
-            if (viewModel.Username.StartsWith("broker", StringComparison.Ordinal) && viewModel.Password.StartsWith("broker", StringComparison.Ordinal))
-            {
-                HttpContext.Session.SetString("LoggedInAs", "Broker " + viewModel.Username.Substring(6));
-                return RedirectToAction("TradeInput", "TradeInput");
-            }
 
-            if (viewModel.Username == "regulator" && viewModel.Password == "regulator")
-                HttpContext.Session.SetString("LoggedInAs", "Regulator");
-
-            ModelState.Clear();
-            return RedirectToAction("Home", "Home");
         }
     }
 }

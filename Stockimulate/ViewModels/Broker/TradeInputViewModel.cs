@@ -2,8 +2,6 @@
 {
     public sealed class TradeInputViewModel : NavigationLayoutViewModel
     {
-        internal int BrokerId { get; set; }
-
         public int BuyerId { get; set; }
         public int SellerId { get; set; }
         public string Symbol { get; set; }

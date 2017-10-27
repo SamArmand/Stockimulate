@@ -12,15 +12,18 @@ namespace Stockimulate.Controllers.Broker
         [HttpGet]
         public IActionResult TradeInput(TradeInputViewModel viewModel = null)
         {
-            var loggedInAs = HttpContext.Session.GetString("LoggedInAs");
+            var role = HttpContext.Session.GetString("Role");
 
-            if (string.IsNullOrEmpty(loggedInAs) || loggedInAs != "Administrator" && !loggedInAs.StartsWith("Broker", StringComparison.Ordinal))
+            if (string.IsNullOrEmpty(role) || role != "Administrator" && role != "Broker")
                 return RedirectToAction("Home", "Home");
 
             if (viewModel == null) viewModel = new TradeInputViewModel();
 
-            viewModel.Role = loggedInAs;
-            viewModel.BrokerId = loggedInAs.StartsWith("Broker", StringComparison.Ordinal) ? int.Parse(loggedInAs.Substring(6)) : 0;
+            viewModel.Login = new Login
+            {
+                Role = role,
+                Username = HttpContext.Session.GetString("Username")
+            };
 
             ModelState.Clear();
 
@@ -77,7 +80,7 @@ namespace Stockimulate.Controllers.Broker
             var marketPrice = Security.Get(symbol).Price;
 
             Trade.Insert(new Trade(buyerId, sellerId, symbol, quantity, price, marketPrice,
-                Math.Abs((float) (price - marketPrice) / marketPrice) > Constants.FlagThreshold, viewModel.BrokerId));
+                Math.Abs((float) (price - marketPrice) / marketPrice) > Constants.FlagThreshold, viewModel.Username));
 
             return TradeInput(new TradeInputViewModel {Result = "Success"});
         }

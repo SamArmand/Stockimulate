@@ -10,7 +10,7 @@
 
 </div><!-- /.row -->
 
-@{ var role = Model.Role;}
+@{ var role = Model.Login.Role;}
 
 @if (role == "Administrator" || role == "Regulator")
 {
@@ -168,8 +168,7 @@
                                  <td>@trader.AccumulatedPenaltiesValue</td>
                              </tr>
                          }
-                    }
-                    
+                    }              
 
                     <tr>
                         <th scope="row">Total</th>
@@ -184,6 +183,5 @@
             </table>
 
             }
-
     }    
 <br/>
