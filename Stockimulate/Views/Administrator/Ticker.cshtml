@@ -73,14 +73,14 @@
             window.myLine.update();
 
             if (effect > 0) {
-                document.getElementById("TickerChangeDiv").className = "col-sm-12 bg-success text-white";
+                document.getElementById("TickerChangeDiv").className = "card mb-3 text-center bg-success text-white";
                 document.getElementById("TickerChangeH1").innerHTML = `+${effect}`;
             } else {
                 document.getElementById("TickerChangeH1").innerHTML = effect;
                 if (effect < 0)
-                    document.getElementById("TickerChangeDiv").className = "col-sm-12 bg-danger text-white";
+                    document.getElementById("TickerChangeDiv").className = "card mb-3 text-center bg-danger text-white";
                 else
-                    document.getElementById("TickerChangeDiv").className = "col-sm-12 bg-warning text-white";
+                    document.getElementById("TickerChangeDiv").className = "card mb-3 text-center bg-warning text-white";
             }
 
             if (message.news !== "")

@@ -1,7 +1,6 @@
 ﻿using Stockimulate.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Stockimulate.ViewModels.Administrator
 {
@@ -23,45 +22,47 @@ namespace Stockimulate.ViewModels.Administrator
         public readonly string Change;
         public readonly string TickerNameAndSymbol;
 
+        private static readonly Dictionary<string, int> LastChange = new Dictionary<string, int>();
+
         public TickerViewModel(string symbol)
         {
-            var securities = Security.GetAll();
+            var symbols = Security.Symbols.ToList();
 
             if (_prices.Count == 0)
-                foreach (var security in securities)
-                    _prices.Add(security.Key, new List<int>());
+                foreach (var aSymbol in symbols)
+                    _prices.Add(aSymbol, new List<int>());
+            if (LastChange.Count == 0)
+                foreach (var aSymbol in symbols)
+                    LastChange.Add(aSymbol, 0);
 
             StatusDivCssClass = MarketStatus == "CLOSED" ? "bg-danger" : "bg-success";
 
             Day = _prices[symbol].Count;
             Day -= (Day == 0 || MarketStatus == "OPEN") ? 0 : 1;
 
-            var symbols = securities.Keys.ToArray();
-
-            for (var i = 0; i < symbols.Length; ++i)
+            for (var i = 0; i < symbols.Count; ++i)
                 if (symbols[i] == symbol)
                 {
                     TickerId = i;
                     break;
                 }
 
-            var tickerSecurity = securities[symbol];
+            Price = _prices[symbol].Count == 0 ? 0 : _prices[symbol].Last();
+            var lastChange = LastChange[symbol];
 
-            Price = tickerSecurity.Price;
-
-            if (tickerSecurity.LastChange > 0)
+            if (lastChange > 0)
             {
-                Change = "+" + tickerSecurity.LastChange;
+                Change = "+" + lastChange;
                 TickerChangeDivCssCLass = "bg-success";
             }
 
             else
             {
-                Change = tickerSecurity.LastChange.ToString();
-                TickerChangeDivCssCLass = tickerSecurity.LastChange < 0 ? "bg-danger" : "bg-warning";
+                Change = lastChange.ToString();
+                TickerChangeDivCssCLass = lastChange < 0 ? "bg-danger" : "bg-warning";
             }
 
-            var stringBuilder = new StringBuilder("[");
+            var stringBuilder = new System.Text.StringBuilder("[");
 
             for (var i = 0; i < _prices[symbol].Count; ++i)
                 stringBuilder.Append("{x: " + i + ", y: " + _prices[symbol].ElementAt(i) + "}" +
@@ -69,7 +70,7 @@ namespace Stockimulate.ViewModels.Administrator
 
             Data = stringBuilder.Append("]").ToString();
 
-            TickerNameAndSymbol = tickerSecurity.Name + " (" + symbol + ")";
+            TickerNameAndSymbol = Security.Names.FirstOrDefault(n => n == symbol) + " (" + symbol + ")";
         }
 
         internal static void Update(TradingDay tradingDay, bool close = false)
@@ -79,13 +80,17 @@ namespace Stockimulate.ViewModels.Administrator
                     _prices[symbol].Add(tradingDay.Effects[symbol]);
             else
                 foreach (var symbol in Security.Symbols)
+                {
                     _prices[symbol].Add(_prices[symbol].Last() + tradingDay.Effects[symbol]);
+                    LastChange[symbol] = tradingDay.Effects[symbol];
+                }
 
             if (tradingDay.NewsItem != string.Empty)
                 News = tradingDay.NewsItem;
 
             if (close) MarketStatus = "CLOSED";
-            else ++Day;
+
+            else if (tradingDay.Day != 0) ++Day;
         }
 
         internal static void Reset()

@@ -135,7 +135,8 @@ namespace Stockimulate.Architecture
             foreach (var security in _securities)
             {
                 security.Value.Price += tradingDay.Effects[security.Key];
-                security.Value.LastChange = tradingDay.Effects[security.Key];
+                if (_dayNumber != 0)
+                    security.Value.LastChange = tradingDay.Effects[security.Key];
                 Security.Update(security.Value);
             }
 

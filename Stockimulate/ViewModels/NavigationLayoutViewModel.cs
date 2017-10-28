@@ -1,10 +1,8 @@
-﻿using Stockimulate.Models;
-
-namespace Stockimulate.ViewModels
+﻿namespace Stockimulate.ViewModels
 {
     public class NavigationLayoutViewModel
     {
-        public Login Login { get; set; }
+        public Models.Login Login { get; internal set; }
         public string Username { get; set; }
         public string Password { get; set; }
     }

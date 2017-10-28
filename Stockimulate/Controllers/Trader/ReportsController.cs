@@ -19,14 +19,18 @@ namespace Stockimulate.Controllers.Trader
 
             if (viewModel == null) viewModel = new ReportsViewModel();
 
+            var username = HttpContext.Session.GetString("Username");
+
             viewModel.Login = new Login
             {
                 Role = role,
-                Username = HttpContext.Session.GetString("Username")
+                Username = username
             };
 
-            if (role.Substring(0, 4) == "Team")
+            if (role.Substring(0, 4) == "Team") {
+                viewModel.Team = Team.Get(int.Parse(username.Substring(5)));
                 return View(Constants.ReportsPath, viewModel);
+            }
 
             ModelState.Clear();
 
