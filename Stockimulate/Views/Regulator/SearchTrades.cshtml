@@ -1,7 +1,7 @@
 @{
   Layout = "_NavigationLayout";
 }
-@using Stockimulate.Models
+
 @model SearchTradesViewModel
 
 <form class="form-horizontal" role="form" method="post" asp-controller="SearchTrades">
@@ -42,9 +42,9 @@
                 
       <select ID="SecurityDropDownList" class="form-control" asp-for="Symbol">
         <option value="" selected="selected">Any</option>
-        @foreach (var security in Security.GetAll())
+        @foreach (var symbol in Security.Symbols)
         {
-          <option>@security.Key</option>
+          <option>@symbol</option>
         }
       </select>
 

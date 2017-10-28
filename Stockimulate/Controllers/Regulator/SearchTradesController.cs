@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Stockimulate.Helpers;
 using Stockimulate.Models;
 using Stockimulate.ViewModels.Regulator;
 
@@ -28,7 +27,7 @@ namespace Stockimulate.Controllers.Regulator
 
             ViewData["Title"] = "Search Trades";
 
-            return View(Constants.SearchTradesPath, viewModel);
+            return View(Helpers.Constants.SearchTradesPath, viewModel);
         }
 
         [HttpPost]

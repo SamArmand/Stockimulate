@@ -48,7 +48,7 @@ namespace Stockimulate.Models
 
             var command =
                 new SqlCommand(
-                    "INSERT INTO Trades (BuyerId, SellerId, Symbol, Quantity, Price, MarketPrice, Flagged, BrokerId, Note) VALUES (@BuyerId, @SellerId, @Symbol, @Quantity, @Price, @MarketPrice, @Flagged, @BrokerId);")
+                    "INSERT INTO Trades (BuyerId, SellerId, Symbol, Quantity, Price, MarketPrice, Flagged, BrokerId) VALUES (@BuyerId, @SellerId, @Symbol, @Quantity, @Price, @MarketPrice, @Flagged, @BrokerId);")
                 {
                     CommandType = CommandType.Text
                 };
@@ -132,7 +132,7 @@ namespace Stockimulate.Models
         {
             var connection = new SqlConnection(Constants.ConnectionString);
 
-            var command = new SqlCommand("SELECT Id, BuyerId, SellerId, Symbol, Quantity, Price, Flagged, BrokerId FROM Trades WHERE BuyerId=@BuyerId OR SellerId=@SellerId ORDER BY Id ASC;") {CommandType = CommandType.Text};
+            var command = new SqlCommand("SELECT Id, BuyerId, SellerId, Symbol, Quantity, Price, MarketPrice, Flagged, BrokerId FROM Trades WHERE BuyerId=@BuyerId OR SellerId=@SellerId ORDER BY Id ASC;") {CommandType = CommandType.Text};
 
             command.Parameters.AddWithValue("@BuyerId", traderId);
             command.Parameters.AddWithValue("@SellerId", traderId);

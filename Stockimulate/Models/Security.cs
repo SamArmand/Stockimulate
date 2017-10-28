@@ -8,7 +8,7 @@ namespace Stockimulate.Models
 {
     public sealed class Security
     {
-        internal string Name { get; private set; }
+        private string Name { get; set; }
 
         public int Price { get; internal set; }
 
@@ -16,10 +16,12 @@ namespace Stockimulate.Models
 
         public int Id { get; private set; }
 
-        internal int LastChange { get; set; }
+        internal int LastChange { private get; set; }
 
         private static List<string> _symbols;
-        public static List<string> Symbols => _symbols ?? (_symbols = GetAll().Select(t => t.Key).ToList());
+        public static IEnumerable<string> Symbols => _symbols ?? (_symbols = GetAll().Select(t => t.Key).ToList());
+        private static List<string> _names;
+        internal static IEnumerable<string> Names => _names ?? (_names = GetAll().Select(t => t.Value.Name).ToList());
 
         internal static void Update(Security security)
         {

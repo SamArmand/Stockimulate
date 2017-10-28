@@ -44,7 +44,7 @@ namespace Stockimulate.Models
                     if (!RealizedPnLs.ContainsKey(key)) RealizedPnLs.Add(key, trader.RealizedPnLs[key]);
                     else RealizedPnLs[key] += trader.RealizedPnLs[key];
 
-                    if (!UnrealizedPnLs.ContainsKey(key)) RealizedPnLs.Add(key, trader.UnrealizedPnLs[key]);
+                    if (!UnrealizedPnLs.ContainsKey(key)) UnrealizedPnLs.Add(key, trader.UnrealizedPnLs[key]);
                     else UnrealizedPnLs[key] += trader.UnrealizedPnLs[key];
                 }
 

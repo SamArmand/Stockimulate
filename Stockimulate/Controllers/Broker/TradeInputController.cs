@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Stockimulate.Helpers;
 using Stockimulate.Models;
 using Stockimulate.ViewModels.Broker;
-using System;
 
 namespace Stockimulate.Controllers.Broker
 {
@@ -80,7 +79,7 @@ namespace Stockimulate.Controllers.Broker
             var marketPrice = Security.Get(symbol).Price;
 
             Trade.Insert(new Trade(buyerId, sellerId, symbol, quantity, price, marketPrice,
-                Math.Abs((float) (price - marketPrice) / marketPrice) > Constants.FlagThreshold, viewModel.Username));
+                System.Math.Abs((float) (price - marketPrice) / marketPrice) > Constants.FlagThreshold, HttpContext.Session.GetString("Username")));
 
             return TradeInput(new TradeInputViewModel {Result = "Success"});
         }
