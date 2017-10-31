@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Stockimulate.Architecture;
 using Stockimulate.Models;
@@ -40,17 +41,22 @@ namespace Stockimulate.Controllers.Administrator
             if (!viewModel.IsVerifiedInput)
                 return ControlPanel(new ControlPanelViewModel {State = "Warning"});
 
-            if (_simulator.IsPlaying() || _simulator.IsPaused())
-                return Error(
-                    "Error! Simulator is not READY to play another simulation.\nAnother simulation is in progress.");
-
-            if (_simulator.IsStopped())
-                return Error(
-                    "Error! Simulator is not READY to play another simulation.\nPlease reset the current simulation data.");
-
-            await _simulator.SetPracticeMode();
-
-            return RedirectToAction("ControlPanel");
+            switch (_simulator.SimulationState)
+            {
+                case Simulator.State.Playing:
+                case Simulator.State.Paused:
+                    return Error(
+                        "Error! Simulator is not READY to play another simulation.\nAnother simulation is in progress.");
+                case Simulator.State.Stopped:
+                    return Error(
+                        "Error! Simulator is not READY to play another simulation.\nPlease reset the current simulation data.");
+                case Simulator.State.Ready:
+                    _simulator.SimulationMode = Simulator.Mode.Practice;
+                    await _simulator.Play();
+                    return RedirectToAction("ControlPanel");
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         [HttpPost]
@@ -59,17 +65,22 @@ namespace Stockimulate.Controllers.Administrator
             if (!viewModel.IsVerifiedInput)
                 return ControlPanel(new ControlPanelViewModel {State = "Warning"});
 
-            if (_simulator.IsPlaying() || _simulator.IsPaused())
-                return Error(
-                    "Error! Simulator is not READY to play another simulation.\nAnother simulation is in progress.");
-
-            if (_simulator.IsStopped())
-                return Error(
-                    "Error! Simulator is not READY to play another simulation.\nPlease reset the current simulation data.");
-
-            await _simulator.SetCompetitionMode();
-
-            return RedirectToAction("ControlPanel");
+            switch (_simulator.SimulationState)
+            {
+                case Simulator.State.Playing:
+                case Simulator.State.Paused:
+                    return Error(
+                        "Error! Simulator is not READY to play another simulation.\nAnother simulation is in progress.");
+                case Simulator.State.Stopped:
+                    return Error(
+                        "Error! Simulator is not READY to play another simulation.\nPlease reset the current simulation data.");
+                case Simulator.State.Ready:
+                    _simulator.SimulationMode = Simulator.Mode.Competition;
+                    await _simulator.Play();
+                    return RedirectToAction("ControlPanel");
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         [HttpPost]
@@ -89,7 +100,7 @@ namespace Stockimulate.Controllers.Administrator
             if (!viewModel.IsVerifiedInput)
                 return ControlPanel(new ControlPanelViewModel {State = "Warning"});
 
-            if (!_simulator.IsPaused())
+            if (_simulator.SimulationState != Simulator.State.Paused)
                 return Error("Error! There is no PAUSED simulation in progress.");
 
             await _simulator.Play();

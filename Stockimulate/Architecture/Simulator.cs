@@ -9,8 +9,14 @@ using System.Timers;
 
 namespace Stockimulate.Architecture
 {
+    /// <summary>
+    /// This class handles the simulation logic.
+    /// </summary>
     internal sealed class Simulator
     {
+        /// <summary>
+        /// Object that stores the Pusher server information.
+        /// </summary>
         private readonly Pusher _pusher = new Pusher(
             Constants.PusherAppId,
             Constants.PusherAppKey,
@@ -21,14 +27,23 @@ namespace Stockimulate.Architecture
                 Encrypted = true
             });
 
+        /// <summary>
+        /// The timer that counts the time between trading days.
+        /// </summary>
         private readonly Timer _timer = new Timer
         {
             Interval = Constants.TimerInterval
         };
 
+        /// <summary>
+        /// Variable that keeps track of the current trading day.
+        /// </summary>
         private int _dayNumber;
 
-        private enum Status
+        /// <summary>
+        /// Enum of all possible simulation states.
+        /// </summary>
+        internal enum State
         {
             Playing,
             Paused,
@@ -36,28 +51,56 @@ namespace Stockimulate.Architecture
             Ready
         }
 
-        private enum Mode
+        /// <summary>
+        /// Enum of all possible simulation modes.
+        /// </summary>
+        internal enum Mode
         {
             Practice,
             Competition
         }
 
-        private Status _status = Status.Ready;
-        private Mode _mode;
+        /// <summary>
+        /// Property to keep track of current simulation state.
+        /// </summary>
+        internal State SimulationState { get; private set; } = State.Ready;
 
+        /// <summary>
+        /// Property to keep track of current simulation mode.
+        /// </summary>
+        internal Mode SimulationMode { private get; set; }
+
+        /// <summary>
+        /// Lists of traded securities. Initialized as current state of all securities.
+        /// </summary>
         private readonly Dictionary<string, Security> _securities = Security.GetAll();
 
+        /// <summary>
+        /// Private instance for singleton pattern.
+        /// </summary>
         private static Simulator _instance;
+        /// <summary>
+        /// Property returns singleton instance, initializing it first if necessary.
+        /// </summary>
         internal static Simulator Instance => _instance ?? (_instance = new Simulator());
 
+        /// <summary>
+        /// Lists of upcoming trading days to simulate.
+        /// </summary>
         private readonly Dictionary<string, List<TradingDay>> _tradingDays = TradingDay.GetAll();
 
+        /// <summary>
+        /// Private constructor. Sets the Elapsed handler for the timer.
+        /// </summary>
         private Simulator() => _timer.Elapsed += Update;
 
+        /// <summary>
+        /// Method to play the simulation and open the market.
+        /// </summary>
+        /// <returns></returns>
         internal async Task Play()
         {
             TickerViewModel.OpenMarket();
-
 
             await _pusher.TriggerAsync(
                 "stockimulate",
@@ -66,7 +109,7 @@ namespace Stockimulate.Architecture
 
             if (_dayNumber == 0)
             {
-                var tradingDay = _tradingDays[_mode.ToString()].FirstOrDefault(t => t.Day == 0);
+                var tradingDay = _tradingDays[SimulationMode.ToString()].FirstOrDefault(t => t.Day == 0);
                 if (tradingDay == null) return;
 
                 await _pusher.TriggerAsync(
@@ -83,17 +126,23 @@ namespace Stockimulate.Architecture
                 TickerViewModel.Update(tradingDay);
             }
 
-            _status = Status.Playing;
+            SimulationState = State.Playing;
 
             AppSettings.UpdateReportsEnabled(false);
 
             _timer.Enabled = true;
         }
 
-        private async Task CloseMarket(TradingDay tradingDay, Status status)
+        /// <summary>
+        /// Method to close the market.
+        /// </summary>
+        /// <param name="tradingDay"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        private async Task CloseMarket(TradingDay tradingDay, State state)
         {
             _timer.Enabled = false;
-            _status = status;
+            SimulationState = state;
 
             TickerViewModel.Update(tradingDay, true);
 
@@ -111,24 +160,15 @@ namespace Stockimulate.Architecture
             AppSettings.UpdateReportsEnabled(true);
         }
 
-        internal async Task SetPracticeMode()
-        {
-            _mode = Mode.Practice;
-
-            await Play();
-        }
-
-        internal async Task SetCompetitionMode()
-        {
-            _mode = Mode.Competition;
-
-            await Play();
-        }
-
+        /// <summary>
+        /// Updates the market with the current trading day info.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         private async void Update(object source, ElapsedEventArgs e)
         {
             ++_dayNumber;
-            var tradingDay = _tradingDays[_mode.ToString()].FirstOrDefault(t => t.Day == _dayNumber);
+            var tradingDay = _tradingDays[SimulationMode.ToString()].FirstOrDefault(t => t.Day == _dayNumber);
 
             if (tradingDay == null) return;
 
@@ -142,14 +182,14 @@ namespace Stockimulate.Architecture
 
             switch (_dayNumber)
             {
-                case Constants.Quarter1Day when _mode == Mode.Competition:
+                case Constants.Quarter1Day when SimulationMode == Mode.Competition:
                 case Constants.Quarter2Day:
                 case Constants.Quarter3Day:
-                    await CloseMarket(tradingDay, Status.Paused);
+                    await CloseMarket(tradingDay, State.Paused);
                     break;
-                case Constants.Quarter1Day when _mode == Mode.Practice:
+                case Constants.Quarter1Day when SimulationMode == Mode.Practice:
                 case Constants.Quarter4Day:
-                    await CloseMarket(tradingDay, Status.Stopped);
+                    await CloseMarket(tradingDay, State.Stopped);
                     break;
                 default:
                     TickerViewModel.Update(tradingDay);
@@ -168,12 +208,9 @@ namespace Stockimulate.Architecture
                 });
         }
 
-        internal bool IsPlaying() => _status == Status.Playing;
-
-        internal bool IsPaused() => _status == Status.Paused;
-
-        internal bool IsStopped() => _status == Status.Stopped;
-
+        /// <summary>
+        /// Resets the market.
+        /// </summary>
         internal void Reset()
         {
             _timer.Enabled = false;
@@ -188,7 +225,7 @@ namespace Stockimulate.Architecture
             TickerViewModel.Reset();
             AppSettings.Reset();
 
-            _status = Status.Ready;
+            SimulationState = State.Ready;
         }
     }
 }
