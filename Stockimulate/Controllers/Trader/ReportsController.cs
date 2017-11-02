@@ -28,7 +28,7 @@ namespace Stockimulate.Controllers.Trader
             };
 
             if (role.Substring(0, 4) == "Team") {
-                viewModel.Team = Team.Get(int.Parse(username.Substring(5)));
+                viewModel.Team = Team.Get(int.Parse(username.Substring(4)));
                 return View(Constants.ReportsPath, viewModel);
             }
 

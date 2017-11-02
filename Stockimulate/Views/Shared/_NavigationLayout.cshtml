@@ -16,7 +16,6 @@
                 
                 @if (!string.IsNullOrEmpty(role))
                 {
-
                     if (role == "Administrator")
                     {
                         <li class='nav-item'><a class='nav-link' asp-controller="ControlPanel" asp-action="ControlPanel">Control Panel</a></li>
@@ -34,7 +33,6 @@
                             </div>
                         </li>
                     }
-
                 }
 
             </ul>
@@ -57,7 +55,7 @@
             {
                 <form class="form-inline my-2 my-lg-0" method="post" asp-controller="NavigationLayout" asp-action="Logout">
                     
-                    <div class="form-group nav-text text-white mr-sm-2">@role</div>
+                    <div class="form-group nav-text text-white mr-sm-2">@Model.Login.Username</div>
                     <button class="btn btn-sm btn-primary btn-log">Log Out</button>
                     
                 </form>
