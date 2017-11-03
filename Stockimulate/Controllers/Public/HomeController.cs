@@ -11,17 +11,29 @@ namespace Stockimulate.Controllers.Public
         {
             ViewData["Title"] = "Home";
 
-            if (viewModel == null)
-                viewModel = new NavigationLayoutViewModel();
+            var role = HttpContext.Session.GetString("Role");
 
-            viewModel.Login = new Models.Login
+            switch (role)
             {
-                Role = HttpContext.Session.GetString("Role"),
-                Username = HttpContext.Session.GetString("Username")
-            };
+                case "Administrator":
+                    return RedirectToAction("ControlPanel", "ControlPanel");
+                case "Regulator":
+                    return RedirectToAction("SearchTrades", "SearchTrades");
+                case "Team":
+                    return RedirectToAction("Reports", "Reports");
+                default:
+                    if (viewModel == null)
+                        viewModel = new NavigationLayoutViewModel();
 
-            ModelState.Clear();
-            return View(Helpers.Constants.HomePath, viewModel);
+                    viewModel.Login = new Models.Login
+                    {
+                        Role = role,
+                        Username = HttpContext.Session.GetString("Username")
+                    };
+
+                    ModelState.Clear();
+                    return View(Helpers.Constants.HomePath, viewModel);
+            }
         }
     }
 }
