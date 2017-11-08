@@ -4,7 +4,7 @@
 
     <div class="row">
 
-        <div class="col-9" id="GraphDiv">
+        <div class="col-9" id="GraphDiv" style="position: relative;">
 
             <canvas id="Chart"></canvas>
 
@@ -12,19 +12,19 @@
 
         <div class="col-3">
 
-            <div class="card text-white mb-3 text-center bg-primary" style="max-width: 20rem;">
+            <div class="card text-white mb-3 text-center bg-primary">
                 <div class="card-body">
                     <h1 id="TickerPriceH1">$@Model.Price</h1>
                 </div>
             </div>
 
-            <div class="card text-white mb-3 text-center @Model.TickerChangeDivCssCLass" id="TickerChangeDiv" style="max-width: 20rem;">
+            <div class="card text-white mb-3 text-center @Model.TickerChangeDivCssCLass" id="TickerChangeDiv">
                 <div class="card-body">
                     <h1 id="TickerChangeH1">@Model.Change</h1>
                 </div>
             </div>
             
-            <div class="card text-white mb-3 text-center @Model.StatusDivCssClass" id="StatusDiv">
+            <div class="card text-white mb-3 text-center @Model.StatusDivCssClass" id="StatusDiv" style="height: auto">
 
                 <h1>
                     <div>Q<span id="QuarterSpan">@TickerViewModel.Quarter.ToString()</span></div>  
@@ -116,6 +116,7 @@
             ]
         },
         options: {
+            maintainAspectRatio: false,
             elements: {
                 line: {
                     tension: 0, // disables bezier curves
@@ -145,7 +146,7 @@
                 xAxes: [
                     {
                         type: 'linear',
-                        display: true,
+                        display: false,
                         scaleLabel: {
                             display: false
                         },
@@ -158,7 +159,6 @@
                 yAxes: [
                     {
                         type: 'linear',
-                        display: true,
                         scaleLabel: {
                             display: false
                         },

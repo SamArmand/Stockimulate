@@ -1,9 +1,9 @@
-﻿using System;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Stockimulate.Architecture;
 using Stockimulate.Models;
 using Stockimulate.ViewModels.Administrator;
+using System;
 using System.Threading.Tasks;
 
 namespace Stockimulate.Controllers.Administrator
