@@ -42,9 +42,9 @@
                 
       <select ID="SecurityDropDownList" class="form-control" asp-for="Symbol">
         <option value="" selected="selected">Any</option>
-        @foreach (var symbol in Security.Symbols)
+        @foreach (var nameAndSymbol in Security.NamesAndSymbols)
         {
-          <option>@symbol</option>
+          <option>@nameAndSymbol.Key</option>
         }
       </select>
 
@@ -65,7 +65,7 @@
   <div class="row">
     <div class="btn-group col-sm-12"> 
 
-      <input type="submit" formaction="SearchTrades" value="Cancel" class="btn btn-default"/>
+      <input type="submit" formaction="SearchTrades" value="Cancel" class="btn btn-secondary"/>
       <input type="submit" formaction="Submit" value="Submit" class="btn btn-primary"/>
 
     </div>              
@@ -76,7 +76,7 @@
   @if (Model.Trades != null)
   {
     <table class="table">
-      <thead class="thead-inverse">
+      <thead class="thead-dark">
       <tr>
         <th>Buyer</th>
         <th>Buyer Team</th>

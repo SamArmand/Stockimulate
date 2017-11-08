@@ -130,7 +130,7 @@ namespace Stockimulate.Architecture
 
             AppSettings.UpdateReportsEnabled(false);
 
-            _timer.Enabled = true;
+            _timer.Start();
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Stockimulate.Architecture
         /// <returns></returns>
         private async Task CloseMarket(TradingDay tradingDay, State state)
         {
-            _timer.Enabled = false;
+            _timer.Stop();
             SimulationState = state;
 
             TickerViewModel.Update(tradingDay, true);
@@ -193,19 +193,18 @@ namespace Stockimulate.Architecture
                     break;
                 default:
                     TickerViewModel.Update(tradingDay);
+                    await _pusher.TriggerAsync(
+                        "stockimulate",
+                        "update-market",
+                        new
+                        {
+                            day = _dayNumber,
+                            news = tradingDay.NewsItem,
+                            effects = _securities.Select(security => tradingDay.Effects[security.Key]).ToArray(),
+                            close = false
+                        });
                     break;
             }
-
-            await _pusher.TriggerAsync(
-                "stockimulate",
-                "update-market",
-                new
-                {
-                    day = _dayNumber,
-                    news = tradingDay.NewsItem,
-                    effects = _securities.Select(security => tradingDay.Effects[security.Key]).ToArray(),
-                    close = false
-                });
         }
 
         /// <summary>
@@ -213,7 +212,7 @@ namespace Stockimulate.Architecture
         /// </summary>
         internal void Reset()
         {
-            _timer.Enabled = false;
+            _timer.Stop();
             _dayNumber = 0;
 
             foreach (var security in _securities)

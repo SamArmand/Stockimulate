@@ -23,19 +23,21 @@
                     <h1 id="TickerChangeH1">@Model.Change</h1>
                 </div>
             </div>
+            
+            <div class="card text-white mb-3 text-center @Model.StatusDivCssClass" id="StatusDiv">
+
+                <h1>
+                    <div>Q<span id="QuarterSpan">@TickerViewModel.Quarter.ToString()</span></div>  
+                    <div>Day <span id="DaySpan">@TickerViewModel.Day.ToString()</span></div>
+                    <div>Market <span id="StatusSpan">@TickerViewModel.MarketStatus</span></div>
+                </h1>
+            </div>
 
         </div>
 
     </div>
 
-    <div class="col-sm-10 text-white @Model.StatusDivCssClass" id="StatusDiv">
-
-        <h1>
-            Q<span id="QuarterSpan">@TickerViewModel.Quarter.ToString()</span> | Day <span id="DaySpan">@TickerViewModel.Day.ToString()</span> | Market <span id="StatusSpan">@TickerViewModel.MarketStatus</span>
-        </h1>
-    </div>
-
-    <div class="col-sm-12">
+    <div class="col-12">
         <h2 id="NewsH2">@TickerViewModel.News</h2>
     </div>
 
@@ -65,6 +67,12 @@
             } else {
                 effect = message.effects[@Model.TickerId];
                 newPrice = parseInt(document.getElementById("TickerPriceH1").innerText.substring(1)) + effect;
+                
+                if (message.close) {
+                    document.getElementById("StatusDiv").className = "card text-white mb-3 text-center bg-danger";
+                    document.getElementById("StatusSpan").innerHTML = "CLOSED";
+                } else
+                    document.getElementById("DaySpan").innerHTML = (parseInt(document.getElementById("DaySpan").innerHTML) + 1);
             }
 
             document.getElementById("TickerPriceH1").innerHTML = `$${newPrice}`;
@@ -85,17 +93,11 @@
 
             if (message.news !== "")
                 document.getElementById("NewsH2").innerHTML = message.news;
-            
-            if (message.close) {
-                document.getElementById("StatusDiv").className = "col-sm-10 text-white bg-danger";
-                document.getElementById("StatusSpan").innerHTML = "CLOSED";
-            } else
-                document.getElementById("DaySpan").innerHTML = (parseInt(document.getElementById("DaySpan").innerHTML) + 1); 
         });
 
     channel.bind('open-market',
         function() {
-            document.getElementById("StatusDiv").className = "col-sm-10 text-white bg-success";
+            document.getElementById("StatusDiv").className = "card text-white mb-3 text-center bg-success";
             document.getElementById("StatusSpan").innerHTML = "OPEN";
             document.getElementById("DaySpan").innerHTML = (parseInt(document.getElementById("DaySpan").innerHTML) + 1);
             document.getElementById("QuarterSpan").innerHTML =

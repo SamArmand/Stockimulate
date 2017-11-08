@@ -18,10 +18,9 @@ namespace Stockimulate.Models
 
         internal int LastChange { private get; set; }
 
-        private static List<string> _symbols;
-        public static IEnumerable<string> Symbols => _symbols ?? (_symbols = GetAll().Select(t => t.Key).ToList());
-        private static List<string> _names;
-        internal static IEnumerable<string> Names => _names ?? (_names = GetAll().Select(t => t.Value.Name).ToList());
+        private static Dictionary<string, string> _namesAndSymbols;
+        public static Dictionary<string, string> NamesAndSymbols =>
+            _namesAndSymbols ?? (_namesAndSymbols = GetAll().ToDictionary(x => x.Key, x => x.Value.Name));
 
         internal static void Update(Security security)
         {
