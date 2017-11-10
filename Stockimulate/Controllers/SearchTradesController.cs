@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Stockimulate.Models;
 using Stockimulate.ViewModels.Regulator;
 
-namespace Stockimulate.Controllers.Regulator
+namespace Stockimulate.Controllers
 {
-    public sealed class SearchTradesController : Controller
+    public sealed class RegulatorController : Controller
     {
         [HttpGet]
         public IActionResult SearchTrades(SearchTradesViewModel viewModel = null)
@@ -13,7 +13,7 @@ namespace Stockimulate.Controllers.Regulator
             var role = HttpContext.Session.GetString("Role");
 
             if (string.IsNullOrEmpty(role) || role != "Administrator" && role != "Regulator")
-                return RedirectToAction("Home", "Home");
+                return RedirectToAction("Home", "Public");
 
             if (viewModel == null) viewModel = new SearchTradesViewModel();
 
@@ -27,7 +27,7 @@ namespace Stockimulate.Controllers.Regulator
 
             ViewData["Title"] = "Search Trades";
 
-            return View(Constants.SearchTradesPath, viewModel);
+            return View(viewModel);
         }
 
         [HttpPost]

@@ -18,9 +18,9 @@
                 {
                     if (role == "Administrator")
                     {
-                        <li class='nav-item'><a class='nav-link' asp-controller="ControlPanel" asp-action="ControlPanel">Control Panel</a></li>
-                        <li class='nav-item'><a class='nav-link' asp-controller="Standings" asp-action="Standings">Standings</a></li>
-                        <li class='nav-item'><a class='nav-link' asp-controller="TradeInput" asp-action="TradeInput" >Trade</a></li>
+                        <li class='nav-item'><a class='nav-link' asp-controller="Administrator" asp-action="ControlPanel">Control Panel</a></li>
+                        <li class='nav-item'><a class='nav-link' asp-controller="Administrator" asp-action="Standings">Standings</a></li>
+                        <li class='nav-item'><a class='nav-link' asp-controller="Broker" asp-action="TradeInput" >Trade</a></li>
                     }
 
                     if (role == "Administrator" || role == "Regulator")
@@ -28,8 +28,8 @@
                         <li class='nav-item dropdown'>
                             <a href='#' class='nav-link dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>Anti Fraud</a>
                             <div class='dropdown-menu'>
-                                <a class='dropdown-item' asp-controller="SearchTrades" asp-action="SearchTrades">Search Trades</a>
-                                <a class='dropdown-item' asp-controller="Reports" asp-action="Reports">Search Reports</a>
+                                <a class='dropdown-item' asp-controller="Regulator" asp-action="SearchTrades">Search Trades</a>
+                                <a class='dropdown-item' asp-controller="Trader" asp-action="Reports">Search Reports</a>
                             </div>
                         </li>
                     }

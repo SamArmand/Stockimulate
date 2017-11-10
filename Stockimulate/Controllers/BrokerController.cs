@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Stockimulate.Models;
 using Stockimulate.ViewModels.Broker;
 
-namespace Stockimulate.Controllers.Broker
+namespace Stockimulate.Controllers
 {
-    public sealed class TradeInputController : Controller
+    public sealed class BrokerController : Controller
     {
         [HttpGet]
         public IActionResult TradeInput(TradeInputViewModel viewModel = null)
@@ -14,7 +14,7 @@ namespace Stockimulate.Controllers.Broker
             var role = HttpContext.Session.GetString("Role");
 
             if (string.IsNullOrEmpty(role) || role != "Administrator" && role != "Broker")
-                return RedirectToAction("Home", "Home");
+                return RedirectToAction("Home", "Public");
 
             if (viewModel == null) viewModel = new TradeInputViewModel();
 
@@ -28,7 +28,7 @@ namespace Stockimulate.Controllers.Broker
 
             ViewData["Title"] = "Trade Input";
 
-            return View(Constants.TradeInputPath, viewModel);
+            return View(viewModel);
         }
 
         [HttpPost]
