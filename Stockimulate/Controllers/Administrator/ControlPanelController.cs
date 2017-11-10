@@ -52,7 +52,7 @@ namespace Stockimulate.Controllers.Administrator
                         "Error! Simulator is not READY to play another simulation.\nPlease reset the current simulation data.");
                 case Simulator.State.Ready:
                     _simulator.SimulationMode = Simulator.Mode.Practice;
-                    await _simulator.Play();
+                    await _simulator.PlayAsync();
                     return RedirectToAction("ControlPanel");
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -76,7 +76,7 @@ namespace Stockimulate.Controllers.Administrator
                         "Error! Simulator is not READY to play another simulation.\nPlease reset the current simulation data.");
                 case Simulator.State.Ready:
                     _simulator.SimulationMode = Simulator.Mode.Competition;
-                    await _simulator.Play();
+                    await _simulator.PlayAsync();
                     return RedirectToAction("ControlPanel");
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -103,7 +103,7 @@ namespace Stockimulate.Controllers.Administrator
             if (_simulator.SimulationState != Simulator.State.Paused)
                 return Error("Error! There is no PAUSED simulation in progress.");
 
-            await _simulator.Play();
+            await _simulator.PlayAsync();
 
             return RedirectToAction("ControlPanel");
         }
