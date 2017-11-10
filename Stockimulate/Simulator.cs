@@ -1,13 +1,12 @@
-﻿using PusherServer;
-using Stockimulate.Helpers;
-using Stockimulate.Models;
-using Stockimulate.ViewModels.Administrator;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
+using PusherServer;
+using Stockimulate.Models;
+using Stockimulate.ViewModels.Administrator;
 
-namespace Stockimulate.Architecture
+namespace Stockimulate
 {
     /// <summary>
     /// This class handles the simulation logic.
@@ -79,6 +78,7 @@ namespace Stockimulate.Architecture
         /// Private instance for singleton pattern.
         /// </summary>
         private static Simulator _instance;
+
         /// <summary>
         /// Property returns singleton instance, initializing it first if necessary.
         /// </summary>

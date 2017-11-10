@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Stockimulate.ViewModels.Administrator;
 
 namespace Stockimulate.Controllers.Administrator
 {
@@ -18,7 +19,7 @@ namespace Stockimulate.Controllers.Administrator
 
             ViewData["Title"] = symbol;
 
-            return View(Helpers.Constants.TickerPath, new ViewModels.Administrator.TickerViewModel(symbol));
+            return View(Constants.TickerPath, new TickerViewModel(symbol));
         }
     }
 }

@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Stockimulate.Models;
+using Stockimulate.ViewModels;
 
 namespace Stockimulate.Controllers
 {
@@ -18,7 +21,7 @@ namespace Stockimulate.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(ViewModels.NavigationLayoutViewModel viewModel)
+        public IActionResult Login(NavigationLayoutViewModel viewModel)
         {
 
             if (viewModel.Username == null || viewModel.Password == null)
@@ -26,7 +29,7 @@ namespace Stockimulate.Controllers
 
             try
             {
-                var team = Models.Team.Get(int.Parse(viewModel.Username), viewModel.Password,
+                var team = Team.Get(int.Parse(viewModel.Username), viewModel.Password,
                     true);
 
                 if (team != null)
@@ -37,7 +40,7 @@ namespace Stockimulate.Controllers
                     return RedirectToAction("Reports", "Reports");
                 }
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 //ignore
             }

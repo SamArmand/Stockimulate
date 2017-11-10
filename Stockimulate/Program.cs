@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Stockimulate
 {

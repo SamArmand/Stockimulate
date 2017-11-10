@@ -1,4 +1,4 @@
-﻿namespace Stockimulate.Helpers
+﻿namespace Stockimulate
 {
     internal static class Constants
     {

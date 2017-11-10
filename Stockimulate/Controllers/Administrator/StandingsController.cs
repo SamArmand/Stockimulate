@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Stockimulate.Models;
+using Stockimulate.ViewModels;
 
 namespace Stockimulate.Controllers.Administrator
 {
@@ -17,7 +19,7 @@ namespace Stockimulate.Controllers.Administrator
 
             ViewData["Title"] = "Standings";
 
-            return View(Helpers.Constants.StandingsPath, new ViewModels.NavigationLayoutViewModel{ Login = new Models.Login
+            return View(Constants.StandingsPath, new NavigationLayoutViewModel{ Login = new Login
             {
                 Role = role,
                 Username = HttpContext.Session.GetString("Username")

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Stockimulate.Models;
 using Stockimulate.ViewModels;
 
 namespace Stockimulate.Controllers.Public
@@ -25,14 +26,14 @@ namespace Stockimulate.Controllers.Public
                     if (viewModel == null)
                         viewModel = new NavigationLayoutViewModel();
 
-                    viewModel.Login = new Models.Login
+                    viewModel.Login = new Login
                     {
                         Role = role,
                         Username = HttpContext.Session.GetString("Username")
                     };
 
                     ModelState.Clear();
-                    return View(Helpers.Constants.HomePath, viewModel);
+                    return View(Constants.HomePath, viewModel);
             }
         }
     }

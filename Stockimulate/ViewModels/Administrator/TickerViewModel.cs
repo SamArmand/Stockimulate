@@ -1,6 +1,7 @@
-﻿using Stockimulate.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using Stockimulate.Models;
 
 namespace Stockimulate.ViewModels.Administrator
 {
@@ -62,7 +63,7 @@ namespace Stockimulate.ViewModels.Administrator
                 TickerChangeDivCssCLass = lastChange < 0 ? "bg-danger" : "bg-warning";
             }
 
-            var stringBuilder = new System.Text.StringBuilder("[");
+            var stringBuilder = new StringBuilder("[");
 
             for (var i = 0; i < _prices[symbol].Count; ++i)
                 stringBuilder.Append("{x: " + i + ", y: " + _prices[symbol].ElementAt(i) + "}" +

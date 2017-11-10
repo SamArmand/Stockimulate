@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Stockimulate.Helpers;
-using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Stockimulate
 {
@@ -72,7 +71,6 @@ namespace Stockimulate
             app.UseMvc(routes => routes.MapRoute(
                 "default",
                 "{controller=NavigationLayout}/{action=Home}/{id?}"));
-
         }
     }
 }

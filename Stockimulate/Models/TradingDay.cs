@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 
 namespace Stockimulate.Models
 {
@@ -12,14 +14,14 @@ namespace Stockimulate.Models
 
         internal static Dictionary<string, List<TradingDay>> GetAll()
         {
-            var connection = new SqlConnection(Helpers.Constants.ConnectionString);
+            var connection = new SqlConnection(Constants.ConnectionString);
 
-            var queryStringBuilder = new System.Text.StringBuilder("SELECT Day, News, Mode");
+            var queryStringBuilder = new StringBuilder("SELECT Day, News, Mode");
 
             for (var i = 0; i < Security.GetAll().Count; ++i)
                 queryStringBuilder.Append(", Effect" + (i+1));
 
-            var command = new SqlCommand(queryStringBuilder.Append(" FROM TradingDays ORDER BY Day ASC;").ToString()) {CommandType = System.Data.CommandType.Text};
+            var command = new SqlCommand(queryStringBuilder.Append(" FROM TradingDays ORDER BY Day ASC;").ToString()) {CommandType = CommandType.Text};
 
             connection.Open();
 

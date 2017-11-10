@@ -1,8 +1,11 @@
-﻿namespace Stockimulate.ViewModels.Regulator
+﻿using System.Collections.Generic;
+using Stockimulate.Models;
+
+namespace Stockimulate.ViewModels.Regulator
 {
     public sealed class SearchTradesViewModel : NavigationLayoutViewModel
     {
-        public System.Collections.Generic.List<Models.Trade> Trades { get; internal set; }
+        public List<Trade> Trades { get; internal set; }
 
         public string BuyerId { get; set; }
         public string SellerId { get; set; }
