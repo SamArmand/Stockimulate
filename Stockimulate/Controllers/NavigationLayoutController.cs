@@ -9,7 +9,7 @@ namespace Stockimulate.Controllers
     public sealed class NavigationLayoutController : Controller
     {
         [HttpGet]
-        public IActionResult Home() => RedirectToAction("Home", "Home");
+        public IActionResult Home() => RedirectToAction("Home", "Public");
 
         [HttpPost]
         public IActionResult Logout()
@@ -17,15 +17,14 @@ namespace Stockimulate.Controllers
             HttpContext.Session.SetString("Uername", string.Empty);
             HttpContext.Session.SetString("Role", string.Empty);
 
-            return RedirectToAction("Home", "Home");
+            return RedirectToAction("Home", "Public");
         }
 
         [HttpPost]
         public IActionResult Login(NavigationLayoutViewModel viewModel)
         {
-
             if (viewModel.Username == null || viewModel.Password == null)
-                return RedirectToAction("Home", "Home");
+                return RedirectToAction("Home", "Public");
 
             try
             {
@@ -37,7 +36,7 @@ namespace Stockimulate.Controllers
                     HttpContext.Session.SetString("Username", "team" + viewModel.Username);
                     HttpContext.Session.SetString("Role", "Team");
 
-                    return RedirectToAction("Reports", "Reports");
+                    return RedirectToAction("Reports", "Trader");
                 }
             }
             catch (Exception)
@@ -52,16 +51,14 @@ namespace Stockimulate.Controllers
             switch (login.Role)
             {
                 case "Administrator":
-                    return RedirectToAction("ControlPanel", "ControlPanel");
+                    return RedirectToAction("ControlPanel", "Administrator");
                 case "Broker":
-                    return RedirectToAction("TradeInput", "TradeInput");
+                    return RedirectToAction("TradeInput", "Broker");
                 case "Regulator":
-                    return RedirectToAction("SearchTrades", "SearchTrades");
+                    return RedirectToAction("SearchTrades", "Regulator");
                 default:
-                    return RedirectToAction("Home", "Home");
+                    return RedirectToAction("Home", "Public");
             }
-
-
         }
     }
 }

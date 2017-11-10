@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Stockimulate.Models;
 using Stockimulate.ViewModels.Trader;
 
-namespace Stockimulate.Controllers.Trader
+namespace Stockimulate.Controllers
 {
-    public sealed class ReportsController : Controller
+    public sealed class TraderController : Controller
     {
         [HttpGet]
         public IActionResult Reports(ReportsViewModel viewModel = null)
@@ -14,7 +14,7 @@ namespace Stockimulate.Controllers.Trader
 
             if (string.IsNullOrEmpty(role) || role != "Administrator" && role != "Regulator" &&
                 role != "Team")
-                return RedirectToAction("Home", "Home");
+                return RedirectToAction("Home", "Public");
 
             if (viewModel == null) viewModel = new ReportsViewModel();
 
@@ -26,16 +26,13 @@ namespace Stockimulate.Controllers.Trader
                 Username = username
             };
 
-            if (role.Substring(0, 4) == "Team") {
-                viewModel.Team = Team.Get(int.Parse(username.Substring(4)));
-                return View(Constants.ReportsPath, viewModel);
-            }
+            if (role.Substring(0, 4) == "Team") viewModel.Team = Team.Get(int.Parse(username.Substring(4)));
 
             ModelState.Clear();
 
             ViewData["Title"] = "Reports";
 
-            return View(Constants.ReportsPath, viewModel);
+            return View(viewModel);
         }
 
         [HttpPost]

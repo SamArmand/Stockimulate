@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Stockimulate.Models;
 using Stockimulate.ViewModels;
 
-namespace Stockimulate.Controllers.Public
+namespace Stockimulate.Controllers
 {
-    public sealed class HomeController : Controller
+    public sealed class PublicController : Controller
     {
         [HttpGet]
         public IActionResult Home(NavigationLayoutViewModel viewModel = null)
@@ -17,11 +17,11 @@ namespace Stockimulate.Controllers.Public
             switch (role)
             {
                 case "Administrator":
-                    return RedirectToAction("ControlPanel", "ControlPanel");
+                    return RedirectToAction("ControlPanel", "Administrator");
                 case "Regulator":
-                    return RedirectToAction("SearchTrades", "SearchTrades");
+                    return RedirectToAction("SearchTrades", "Regulator");
                 case "Team":
-                    return RedirectToAction("Reports", "Reports");
+                    return RedirectToAction("Reports", "Trader");
                 default:
                     if (viewModel == null)
                         viewModel = new NavigationLayoutViewModel();
@@ -33,7 +33,7 @@ namespace Stockimulate.Controllers.Public
                     };
 
                     ModelState.Clear();
-                    return View(Constants.HomePath, viewModel);
+                    return View(viewModel);
             }
         }
     }
