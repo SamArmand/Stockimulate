@@ -92,13 +92,13 @@ namespace Stockimulate.Architecture
         /// <summary>
         /// Private constructor. Sets the Elapsed handler for the timer.
         /// </summary>
-        private Simulator() => _timer.Elapsed += Update;
+        private Simulator() => _timer.Elapsed += UpdateAsync;
 
         /// <summary>
         /// Method to play the simulation and open the market.
         /// </summary>
         /// <returns></returns>
-        internal async Task Play()
+        internal async Task PlayAsync()
         {
             TickerViewModel.OpenMarket();
 
@@ -139,7 +139,7 @@ namespace Stockimulate.Architecture
         /// <param name="tradingDay"></param>
         /// <param name="state"></param>
         /// <returns></returns>
-        private async Task CloseMarket(TradingDay tradingDay, State state)
+        private async Task CloseMarketAsync(TradingDay tradingDay, State state)
         {
             _timer.Stop();
             SimulationState = state;
@@ -165,7 +165,7 @@ namespace Stockimulate.Architecture
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
-        private async void Update(object source, ElapsedEventArgs e)
+        private async void UpdateAsync(object source, ElapsedEventArgs e)
         {
             ++_dayNumber;
             var tradingDay = _tradingDays[SimulationMode.ToString()].FirstOrDefault(t => t.Day == _dayNumber);
@@ -185,11 +185,11 @@ namespace Stockimulate.Architecture
                 case Constants.Quarter1Day when SimulationMode == Mode.Competition:
                 case Constants.Quarter2Day:
                 case Constants.Quarter3Day:
-                    await CloseMarket(tradingDay, State.Paused);
+                    await CloseMarketAsync(tradingDay, State.Paused);
                     break;
                 case Constants.Quarter1Day when SimulationMode == Mode.Practice:
                 case Constants.Quarter4Day:
-                    await CloseMarket(tradingDay, State.Stopped);
+                    await CloseMarketAsync(tradingDay, State.Stopped);
                     break;
                 default:
                     TickerViewModel.Update(tradingDay);
