@@ -58,12 +58,12 @@ namespace Stockimulate.Controllers
             if (price < 1)
                 return Error("Price must be at least 1.");
 
-            var buyer = Models.Trader.Get(buyerId);
+            var buyer = Trader.Get(buyerId);
 
             if (buyer == null)
                 return Error("Buyer does not exist.");
 
-            var seller = Models.Trader.Get(sellerId);
+            var seller = Trader.Get(sellerId);
 
             if (seller == null)
                 return Error("Seller does not exist.");
