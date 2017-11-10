@@ -1,5 +1,4 @@
-﻿using Stockimulate.Helpers;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
 
 namespace Stockimulate.Models

@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Stockimulate.Helpers;
 using Stockimulate.Models;
 using Stockimulate.ViewModels.Broker;
 
@@ -79,7 +79,7 @@ namespace Stockimulate.Controllers.Broker
             var marketPrice = Security.Get(symbol).Price;
 
             Trade.Insert(new Trade(buyerId, sellerId, symbol, quantity, price, marketPrice,
-                System.Math.Abs((float) (price - marketPrice) / marketPrice) > Constants.FlagThreshold, HttpContext.Session.GetString("Username")));
+                Math.Abs((float) (price - marketPrice) / marketPrice) > Constants.FlagThreshold, HttpContext.Session.GetString("Username")));
 
             return TradeInput(new TradeInputViewModel {Result = "Success"});
         }
