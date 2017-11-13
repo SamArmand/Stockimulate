@@ -27,14 +27,9 @@ namespace Stockimulate.ViewModels.Administrator
 
         public TickerViewModel(string symbol)
         {
-            var namesAndSymbols = Security.NamesAndSymbols.ToList();
+            CheckInitialized();
 
-            if (_prices.Count == 0)
-                foreach (var nameAndSymbol in namesAndSymbols)
-                    _prices.Add(nameAndSymbol.Key, new List<int>());
-            if (LastChange.Count == 0)
-                foreach (var nameAndSymbol in namesAndSymbols)
-                    LastChange.Add(nameAndSymbol.Key, 0);
+            var namesAndSymbols = Security.NamesAndSymbols.ToList();
 
             StatusDivCssClass = MarketStatus == "CLOSED" ? "bg-danger" : "bg-success";
 
@@ -74,13 +69,27 @@ namespace Stockimulate.ViewModels.Administrator
             TickerNameAndSymbol = Security.NamesAndSymbols.FirstOrDefault(n => n.Key == symbol).Value + " (" + symbol + ")";
         }
 
+        private static void CheckInitialized()
+        {
+            if (_prices.Count == 0)
+                foreach (var symbol in Security.NamesAndSymbols.Keys)
+                    _prices.Add(symbol, new List<int>());
+
+            if (LastChange.Count != 0) return;
+
+            foreach (var symbol in Security.NamesAndSymbols.Keys)
+                LastChange.Add(symbol, 0);
+        }
+
         internal static void Update(TradingDay tradingDay, bool close = false)
         {
+            CheckInitialized();
+
             if (tradingDay.Day == 0)
-                foreach (var symbol in Security.NamesAndSymbols.Select(nameAndSymbol => nameAndSymbol.Key))
+                foreach (var symbol in Security.NamesAndSymbols.Keys)
                     _prices[symbol].Add(tradingDay.Effects[symbol]);
             else
-                foreach (var symbol in Security.NamesAndSymbols.Select(nameAndSymbol => nameAndSymbol.Key))
+                foreach (var symbol in Security.NamesAndSymbols.Keys)
                 {
                     _prices[symbol].Add(_prices[symbol].Last() + tradingDay.Effects[symbol]);
                     LastChange[symbol] = tradingDay.Effects[symbol];
@@ -103,7 +112,7 @@ namespace Stockimulate.ViewModels.Administrator
 
             News = string.Empty;
 
-            foreach (var symbol in Security.NamesAndSymbols.Select(nameAndSymbol => nameAndSymbol.Key))
+            foreach (var symbol in Security.NamesAndSymbols.Keys)
             {
                 _prices.Add(symbol, new List<int>());
                 LastChange[symbol] = 0;
