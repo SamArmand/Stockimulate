@@ -4,112 +4,112 @@
 @model TradeInputViewModel
 
 <div class="row">
-    <div class="col-md-12">
+<div class="col-12">
         
-        <form class="form-horizontal" role="form" method="post" asp-controller="Broker">
-            <fieldset>
+    <form class="form-horizontal" role="form" method="post" asp-controller="Broker">
+        <fieldset>
 
-                <!-- Form Name -->
-                <legend>
-                    <h1>Trade 
-                        @{
-                            var securities = Security.GetAll();
-                            var theSecurity = string.Empty;
+            <!-- Form Name -->
+            <legend>
+                <h1>Trade 
+                    @{
+                        var securities = Security.GetAll();
+                        var theSecurity = string.Empty;
 
-                            try
+                        try
+                        {
+                            var brokerPermission = int.Parse(Model.Login.Username.Substring(6)) % securities.Count;
+
+                            foreach (var security in securities.Where(security => security.Value.Id == brokerPermission))
                             {
-                                var brokerPermission = int.Parse(Model.Login.Username.Substring(6)) % securities.Count;
+                                theSecurity = security.Key;
 
-                                foreach (var security in securities.Where(security => security.Value.Id == brokerPermission))
-                                {
-                                    theSecurity = security.Key;
-
-                                    break;
-                                }
-                            }
-
-                            catch (Exception)
-                            {
-                                //ignored
+                                break;
                             }
                         }
-                        @theSecurity
-                    </h1>
-                </legend>
 
-                <!-- Text input-->
-                <div class="form-group row">
-                    <label class="col-sm-1 col-form-label">Buyer ID</label>
-                    <div class="col-sm-2">
-                        <input type="number" placeholder="Buyer ID" class="form-control" asp-for="BuyerId" required/>
-                    </div>
+                        catch (Exception)
+                        {
+                            //ignored
+                        }
+                    }
+                    @theSecurity
+                </h1>
+            </legend>
 
-                    <label class="col-sm-1 col-sm-offset-1 col-form-label">Seller ID</label>
-                    <div class="col-sm-2">
-                        <input type="number" placeholder="Seller ID" class="form-control" asp-for="SellerId" required/>
-                    </div>
+            <!-- Text input-->
+            <div class="form-group row">
+                <label class="col-sm-1 col-form-label">Buyer ID</label>
+                <div class="col-sm-2">
+                    <input type="number" placeholder="Buyer ID" class="form-control" asp-for="BuyerId" required/>
                 </div>
 
-                <!-- Text input-->
-                <div class="form-group row">
-                    <label class="col-sm-1 col-form-label">Security</label>
-                    <div class="col-sm-2">
+                <label class="col-sm-1 col-sm-offset-1 col-form-label">Seller ID</label>
+                <div class="col-sm-2">
+                    <input type="number" placeholder="Seller ID" class="form-control" asp-for="SellerId" required/>
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group row">
+                <label class="col-sm-1 col-form-label">Security</label>
+                <div class="col-sm-2">
                         
-                        <select class="form-control" asp-for="Symbol">
+                    <select class="form-control" asp-for="Symbol">
 
-                            @if (Model.Login.Role == "Administrator")
+                        @if (Model.Login.Role == "Administrator")
+                        {
+                            foreach (var security in securities)
                             {
-                                foreach (var security in securities)
-                                {
-                                    <option>@security.Key</option>
-                                }
+                                <option>@security.Key</option>
                             }
-                            else
-                            {
-                                <option>@theSecurity</option>
-                            }
-                        </select>
+                        }
+                        else
+                        {
+                            <option>@theSecurity</option>
+                        }
+                    </select>
 
-                    </div>
-
-                    <label class="col-sm-1 col-sm-offset-1 col-form-label">Quantity</label>
-                    <div class="col-sm-2">
-                        <input type="number" placeholder="Quantity" class="form-control" asp-for="Quantity"/>
-                    </div>
                 </div>
 
-                <div class="form-group row">
-                    <label class="col-sm-1 col-form-label">Price</label>
-                    <div class="col-sm-2 ">
-                        <input type="number" placeholder="Price" class="form-control" asp-for="Price"/>
-                    </div>
+                <label class="col-sm-1 col-sm-offset-1 col-form-label">Quantity</label>
+                <div class="col-sm-2">
+                    <input type="number" placeholder="Quantity" class="form-control" asp-for="Quantity"/>
                 </div>
+            </div>
 
-                <div class="form-group row">
+            <div class="form-group row">
+                <label class="col-sm-1 col-form-label">Price</label>
+                <div class="col-sm-2 ">
+                    <input type="number" placeholder="Price" class="form-control" asp-for="Price"/>
+                </div>
+            </div>
 
-                    <div class="form-check">
+            <div class="form-group row">
+
+                <div class="form-check">
                     <label class="form-check-label">
                         <input type="checkbox" class="form-check-input" asp-for="IsChecked">
                         I have verified that all fields are correct and wish to submit this trade.
                     </label>
-                    </div>
-
                 </div>
 
-                <div class="row">
-                    <div class="btn-group col-sm-12">
+            </div>
 
-                        <input type="submit" formaction="TradeInput" value="Cancel" class="btn btn-secondary"/>
-                        <input type="submit" formaction="Submit" value="Submit" class="btn btn-primary"/>
+            <div class="row">
+                <div class="btn-group col-sm-12">
 
-                    </div>
+                    <input type="submit" formaction="TradeInput" value="Cancel" class="btn btn-secondary"/>
+                    <input type="submit" formaction="Submit" value="Submit" class="btn btn-primary"/>
+
                 </div>
+            </div>
 
-            </fieldset>
-        </form>
+        </fieldset>
+    </form>
 
-    </div><!-- /.col-lg-12 -->
-</div><!-- /.row -->
+</div>
+</div>
 
     <br />
 

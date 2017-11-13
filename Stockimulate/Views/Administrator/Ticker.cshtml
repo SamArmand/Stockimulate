@@ -43,14 +43,14 @@
 
 </div>
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.js" integrity="sha256-Ps0pf4Ma5dU+zSI0m+Spwq+9QE5EjL5yt0dfWGPEugQ=" crossorigin="anonymous"></script>
 <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
 <script>
 
     // ReSharper disable once PossiblyUnassignedProperty
-    const channel = (new Pusher('3a92cb578fb0877c47f0',
+    const channel = (new Pusher('@Constants.PusherAppKey',
         {
-            cluster: 'us2',
+            cluster: '@Constants.PusherCluster',
             encrypted: true
 // ReSharper disable once PossiblyUnassignedProperty
         })).subscribe('stockimulate');

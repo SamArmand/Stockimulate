@@ -1,12 +1,12 @@
 ﻿namespace Stockimulate
 {
-    internal static class Constants
+    public static class Constants
     {
+        public static string PusherAppKey;
+        public static string PusherCluster;
         internal static string ConnectionString;
         internal static string PusherAppId;
         internal static string PusherAppSecret;
-        internal static string PusherAppKey;
-        internal static string PusherCluster;
 
         internal const int Quarter1Day = 64;
         internal const int Quarter2Day = 124;
