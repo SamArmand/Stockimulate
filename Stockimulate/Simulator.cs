@@ -18,8 +18,8 @@ namespace Stockimulate
         /// </summary>
         private readonly Pusher _pusher = new Pusher(
             Constants.PusherAppId,
-            Constants.PusherAppKey,
-            Constants.PusherAppSecret,
+            Constants.PusherKey,
+            Constants.PusherSecret,
             new PusherOptions
             {
                 Cluster = Constants.PusherCluster,
