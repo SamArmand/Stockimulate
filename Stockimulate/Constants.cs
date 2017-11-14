@@ -2,11 +2,11 @@
 {
     public static class Constants
     {
-        public static string PusherAppKey;
+        public static string PusherKey;
         public static string PusherCluster;
         internal static string ConnectionString;
         internal static string PusherAppId;
-        internal static string PusherAppSecret;
+        internal static string PusherSecret;
 
         internal const int Quarter1Day = 64;
         internal const int Quarter2Day = 124;

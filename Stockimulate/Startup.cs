@@ -24,8 +24,8 @@ namespace Stockimulate
             Configuration = builder.Build();
             Constants.ConnectionString = Configuration.GetConnectionString("MS_TableConnectionString");
             Constants.PusherAppId = Configuration.GetConnectionString("Pusher_AppId");
-            Constants.PusherAppSecret = Configuration.GetConnectionString("Pusher_AppSecret");
-            Constants.PusherAppKey = Configuration.GetConnectionString("Pusher_AppKey");
+            Constants.PusherSecret = Configuration.GetConnectionString("Pusher_Secret");
+            Constants.PusherKey = Configuration.GetConnectionString("Pusher_Key");
             Constants.PusherCluster = Configuration.GetConnectionString("Pusher_Cluster");
         }
 
