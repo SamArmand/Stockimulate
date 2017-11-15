@@ -10,8 +10,6 @@ namespace Stockimulate.Controllers
 {
     public sealed class AdministratorController : Controller
     {
-        private readonly Simulator _simulator = Simulator.Instance;
-
         #region ControlPanel
 
         [HttpGet]
@@ -38,36 +36,19 @@ namespace Stockimulate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PlayPracticeAsync(ControlPanelViewModel viewModel)
-        {
-            if (!viewModel.IsVerifiedInput)
-                return ControlPanel(new ControlPanelViewModel {State = "Warning"});
-
-            switch (_simulator.SimulationState)
-            {
-                case Simulator.State.Playing:
-                case Simulator.State.Paused:
-                    return Error(
-                        "Error! Simulator is not READY to play another simulation.\nAnother simulation is in progress.");
-                case Simulator.State.Stopped:
-                    return Error(
-                        "Error! Simulator is not READY to play another simulation.\nPlease reset the current simulation data.");
-                case Simulator.State.Ready:
-                    _simulator.SimulationMode = Simulator.Mode.Practice;
-                    await _simulator.PlayAsync();
-                    return RedirectToAction("ControlPanel");
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
+        public async Task<IActionResult> PlayPracticeAsync(ControlPanelViewModel viewModel) => await PlayAsync(viewModel, Simulator.Mode.Practice);
 
         [HttpPost]
-        public async Task<IActionResult> PlayCompetitionAsync(ControlPanelViewModel viewModel)
+        public async Task<IActionResult> PlayCompetitionAsync(ControlPanelViewModel viewModel) => await PlayAsync(viewModel, Simulator.Mode.Competition);
+
+        private async Task<IActionResult> PlayAsync(ControlPanelViewModel viewModel, Simulator.Mode mode)
         {
             if (!viewModel.IsVerifiedInput)
                 return ControlPanel(new ControlPanelViewModel {State = "Warning"});
 
-            switch (_simulator.SimulationState)
+            var simulator = Simulator.Instance;
+
+            switch (simulator.SimulationState)
             {
                 case Simulator.State.Playing:
                 case Simulator.State.Paused:
@@ -77,8 +58,8 @@ namespace Stockimulate.Controllers
                     return Error(
                         "Error! Simulator is not READY to play another simulation.\nPlease reset the current simulation data.");
                 case Simulator.State.Ready:
-                    _simulator.SimulationMode = Simulator.Mode.Competition;
-                    await _simulator.PlayAsync();
+                    simulator.SimulationMode = mode;
+                    await simulator.PlayAsync();
                     return RedirectToAction("ControlPanel");
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -91,7 +72,7 @@ namespace Stockimulate.Controllers
             if (!viewModel.IsVerifiedInput)
                 return ControlPanel(new ControlPanelViewModel {State = "Warning"});
 
-            _simulator.Reset();
+            Simulator.Instance.Reset();
 
             return RedirectToAction("ControlPanel");
         }
@@ -102,10 +83,12 @@ namespace Stockimulate.Controllers
             if (!viewModel.IsVerifiedInput)
                 return ControlPanel(new ControlPanelViewModel {State = "Warning"});
 
-            if (_simulator.SimulationState != Simulator.State.Paused)
+            var simulator = Simulator.Instance;
+
+            if (simulator.SimulationState != Simulator.State.Paused)
                 return Error("Error! There is no PAUSED simulation in progress.");
 
-            await _simulator.PlayAsync();
+            await simulator.PlayAsync();
 
             return RedirectToAction("ControlPanel");
         }
