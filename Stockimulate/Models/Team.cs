@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -60,10 +59,7 @@ namespace Stockimulate.Models
         {
             var connection = new SqlConnection(Constants.ConnectionString);
 
-            var command = new SqlCommand("SELECT Id, Name FROM Teams WHERE Id=@Id" + (needCode ? " AND Code=@Code" : string.Empty) + ";")
-            {
-                CommandType = CommandType.Text
-            };
+            var command = new SqlCommand("SELECT Id, Name FROM Teams WHERE Id=@Id" + (needCode ? " AND Code=@Code" : string.Empty) + ";");
 
             command.Parameters.AddWithValue("@Id", id);
 
@@ -108,10 +104,7 @@ namespace Stockimulate.Models
             var connection = new SqlConnection(Constants.ConnectionString);
 
             var command =
-                new SqlCommand("SELECT Id, Name FROM Teams WHERE NOT Id=@ExchangeId AND NOT Id=@MarketMakersId;")
-                {
-                    CommandType = CommandType.Text
-                };
+                new SqlCommand("SELECT Id, Name FROM Teams WHERE NOT Id=@ExchangeId AND NOT Id=@MarketMakersId;");
 
             command.Parameters.AddWithValue("@ExchangeId", Constants.ExchangeId);
             command.Parameters.AddWithValue("@MarketMakersId", Constants.MarketMakersId);

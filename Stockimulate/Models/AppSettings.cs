@@ -1,5 +1,4 @@
-﻿using System.Data;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 
 namespace Stockimulate.Models
 {
@@ -9,7 +8,7 @@ namespace Stockimulate.Models
         {
             var connection = new SqlConnection(Constants.ConnectionString);
 
-            var command = new SqlCommand("SELECT ReportsEnabled FROM AppSettings;") { CommandType = CommandType.Text };
+            var command = new SqlCommand("SELECT ReportsEnabled FROM AppSettings;");
 
             connection.Open();
 
@@ -32,7 +31,7 @@ namespace Stockimulate.Models
         {
             var connection = new SqlConnection(Constants.ConnectionString);
 
-            var command = new SqlCommand("UPDATE AppSettings SET ReportsEnabled=@ReportsEnabled;") { CommandType = CommandType.Text };
+            var command = new SqlCommand("UPDATE AppSettings SET ReportsEnabled=@ReportsEnabled;");
 
             command.Parameters.AddWithValue("@ReportsEnabled", reportsEnabled.ToString());
 
@@ -52,10 +51,7 @@ namespace Stockimulate.Models
 
             var command =
                 new SqlCommand(
-                    "DELETE FROM Trades; UPDATE Securities SET Price='0', LastChange='0';")
-                {
-                    CommandType = CommandType.Text
-                };
+                    "DELETE FROM Trades; UPDATE Securities SET Price='0', LastChange='0';");
 
             connection.Open();
 

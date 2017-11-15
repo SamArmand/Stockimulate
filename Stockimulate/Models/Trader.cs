@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -67,6 +66,7 @@ namespace Stockimulate.Models
 
                     var tradeQuantity = trade.Quantity;
 
+                    //Check if Trader is the buyer
                     if (trade.Buyer.Id == Id)
                     {
                         currentPosition += tradeQuantity;
@@ -74,8 +74,9 @@ namespace Stockimulate.Models
                         averageBuyPrice += tradeQuantity * tradePrice;
                     }
 
-                    else if (trade.Seller.Id == Id)
+                    else
                     {
+                        //Trader is the seller
                         currentPosition -= tradeQuantity;
                         totalSellQuantity += tradeQuantity;
                         averageSellPrice += tradeQuantity * tradePrice;
@@ -116,10 +117,7 @@ namespace Stockimulate.Models
             var connection = new SqlConnection(Constants.ConnectionString);
 
             var command =
-                new SqlCommand("SELECT Name, TeamId FROM Traders WHERE Id=@Id;")
-                {
-                    CommandType = CommandType.Text
-                };
+                new SqlCommand("SELECT Name, TeamId FROM Traders WHERE Id=@Id;");
 
             command.Parameters.AddWithValue("@Id", id);
 
@@ -151,10 +149,7 @@ namespace Stockimulate.Models
             var connection = new SqlConnection(Constants.ConnectionString);
 
             var command =
-                new SqlCommand("SELECT Id, Name FROM Traders WHERE TeamId=@TeamId;")
-                {
-                    CommandType = CommandType.Text
-                };
+                new SqlCommand("SELECT Id, Name FROM Traders WHERE TeamId=@TeamId;");
 
             command.Parameters.AddWithValue("@TeamId", teamId);
 
