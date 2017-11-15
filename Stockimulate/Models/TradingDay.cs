@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -21,7 +20,7 @@ namespace Stockimulate.Models
             for (var i = 0; i < Security.GetAll().Count; ++i)
                 queryStringBuilder.Append(", Effect" + (i+1));
 
-            var command = new SqlCommand(queryStringBuilder.Append(" FROM TradingDays ORDER BY Day ASC;").ToString()) {CommandType = CommandType.Text};
+            var command = new SqlCommand(queryStringBuilder.Append(" FROM TradingDays ORDER BY Day ASC;").ToString());
 
             connection.Open();
 
