@@ -17,8 +17,8 @@ namespace Stockimulate.Models
 
             var queryStringBuilder = new StringBuilder("SELECT Day, News, Mode");
 
-            for (var i = 0; i < Security.GetAll().Count; ++i)
-                queryStringBuilder.Append(", Effect" + (i+1));
+            for (var i = 1; i <= Security.GetAll().Count; ++i)
+                queryStringBuilder.Append(", Effect" + i);
 
             var command = new SqlCommand(queryStringBuilder.Append(" FROM TradingDays ORDER BY Day ASC;").ToString());
 
