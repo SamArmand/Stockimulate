@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 
 namespace Stockimulate.Models
@@ -47,10 +46,7 @@ namespace Stockimulate.Models
 
             var command =
                 new SqlCommand(
-                    "INSERT INTO Trades (BuyerId, SellerId, Symbol, Quantity, Price, MarketPrice, Flagged, BrokerId) VALUES (@BuyerId, @SellerId, @Symbol, @Quantity, @Price, @MarketPrice, @Flagged, @BrokerId);")
-                {
-                    CommandType = CommandType.Text
-                };
+                    "INSERT INTO Trades (BuyerId, SellerId, Symbol, Quantity, Price, MarketPrice, Flagged, BrokerId) VALUES (@BuyerId, @SellerId, @Symbol, @Quantity, @Price, @MarketPrice, @Flagged, @BrokerId);");
 
             command.Parameters.AddWithValue("@BuyerId", trade._buyerId);
             command.Parameters.AddWithValue("@SellerId", trade._sellerId);
@@ -86,7 +82,7 @@ namespace Stockimulate.Models
                 " AND Sellers.TeamId" + (string.IsNullOrEmpty(sellerTeamId) ? ">-1" : "=@SellerTeamId") +
                 " AND Trades.Symbol" + (string.IsNullOrEmpty(symbol) ? " LIKE '%%'" : "=@Symbol") +
                 " AND Trades.Flagged" + (string.IsNullOrEmpty(flagged) ? " LIKE '%%'" : "=@Flagged") +
-                " ORDER BY Trades.Id ASC;") {CommandType = CommandType.Text};
+                " ORDER BY Trades.Id ASC;");
 
             if (!string.IsNullOrEmpty(buyerId))
                 command.Parameters.AddWithValue("@BuyerId", buyerId);
@@ -131,7 +127,7 @@ namespace Stockimulate.Models
         {
             var connection = new SqlConnection(Constants.ConnectionString);
 
-            var command = new SqlCommand("SELECT Id, BuyerId, SellerId, Symbol, Quantity, Price, MarketPrice, Flagged, BrokerId FROM Trades WHERE BuyerId=@BuyerId OR SellerId=@SellerId ORDER BY Id ASC;") {CommandType = CommandType.Text};
+            var command = new SqlCommand("SELECT Id, BuyerId, SellerId, Symbol, Quantity, Price, MarketPrice, Flagged, BrokerId FROM Trades WHERE BuyerId=@BuyerId OR SellerId=@SellerId ORDER BY Id ASC;");
 
             command.Parameters.AddWithValue("@BuyerId", traderId);
             command.Parameters.AddWithValue("@SellerId", traderId);

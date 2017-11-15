@@ -141,11 +141,14 @@ namespace Stockimulate.Controllers
 
             ViewData["Title"] = "Standings";
 
-            return View(new NavigationLayoutViewModel{ Login = new Login
+            return View(new NavigationLayoutViewModel
             {
-                Role = role,
-                Username = HttpContext.Session.GetString("Username")
-            } });
+                Login = new Login
+                {
+                    Role = role,
+                    Username = HttpContext.Session.GetString("Username")
+                }
+            });
         }
 
         #endregion

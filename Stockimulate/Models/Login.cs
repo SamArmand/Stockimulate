@@ -1,5 +1,4 @@
-﻿using System.Data;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 
 namespace Stockimulate.Models
 {
@@ -14,10 +13,7 @@ namespace Stockimulate.Models
 
             var command =
                 new SqlCommand(
-                    "SELECT Role, Username FROM Logins WHERE Username=@Username AND Password=@Password;")
-                {
-                    CommandType = CommandType.Text
-                };
+                    "SELECT Role, Username FROM Logins WHERE Username=@Username AND Password=@Password;");
 
             command.Parameters.AddWithValue("@Username", username);
             command.Parameters.AddWithValue("@Password", password);

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -26,10 +25,7 @@ namespace Stockimulate.Models
             var connection = new SqlConnection(Constants.ConnectionString);
 
             var command =
-                new SqlCommand("UPDATE Securities SET Price=@Price, LastChange=@LastChange WHERE Symbol=@Symbol;")
-                {
-                    CommandType = CommandType.Text
-                };
+                new SqlCommand("UPDATE Securities SET Price=@Price, LastChange=@LastChange WHERE Symbol=@Symbol;");
 
             command.Parameters.AddWithValue("@Price", security.Price);
             command.Parameters.AddWithValue("@Symbol", security.Symbol);
@@ -51,10 +47,7 @@ namespace Stockimulate.Models
 
             var command =
                 new SqlCommand(
-                    "SELECT Symbol, Price, Name, Type, Id, LastChange FROM Securities WHERE Symbol=@Symbol;")
-                {
-                    CommandType = CommandType.Text
-                };
+                    "SELECT Symbol, Price, Name, Type, Id, LastChange FROM Securities WHERE Symbol=@Symbol;");
 
             command.Parameters.AddWithValue("@Symbol", symbol);
 
@@ -87,10 +80,7 @@ namespace Stockimulate.Models
             var connection = new SqlConnection(Constants.ConnectionString);
 
             var command =
-                new SqlCommand("SELECT Symbol, Price, Name, Id, LastChange FROM Securities;")
-                {
-                    CommandType = CommandType.Text
-                };
+                new SqlCommand("SELECT Symbol, Price, Name, Id, LastChange FROM Securities;");
 
             connection.Open();
 
