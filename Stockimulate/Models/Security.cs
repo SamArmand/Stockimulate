@@ -87,7 +87,7 @@ namespace Stockimulate.Models
             var connection = new SqlConnection(Constants.ConnectionString);
 
             var command =
-                new SqlCommand("SELECT Symbol, Price, Name, Type, Id, LastChange FROM Securities;")
+                new SqlCommand("SELECT Symbol, Price, Name, Id, LastChange FROM Securities;")
                 {
                     CommandType = CommandType.Text
                 };
