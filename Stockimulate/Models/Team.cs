@@ -34,7 +34,7 @@ namespace Stockimulate.Models
             {
                 trader.Calculate(prices);
 
-                foreach (var key in trader.TotalPnLs.Select(kvp => kvp.Key))
+                foreach (var key in trader.TotalPnLs.Keys)
                 {
                     if (!Positions.ContainsKey(key)) Positions.Add(key, trader.Positions[key]);
                     else Positions[key] += trader.Positions[key];
@@ -51,8 +51,8 @@ namespace Stockimulate.Models
 
             }
 
-            foreach (var kvp in from kvp in RealizedPnLs let key = kvp.Key select kvp)
-                TotalPnLs.Add(kvp.Key, RealizedPnLs[kvp.Key] + UnrealizedPnLs[kvp.Key]);
+            foreach (var key in RealizedPnLs.Keys)
+                TotalPnLs.Add(key, RealizedPnLs[key] + UnrealizedPnLs[key]);
         }
 
         internal static Team Get(int id, string code = "", bool needCode = false)
@@ -99,7 +99,7 @@ namespace Stockimulate.Models
 
         public int AveragePnL() => PnL() / Traders.Count();
 
-        public static IEnumerable<Team> GetAll()
+        public static List<Team> GetAll()
         {
             var connection = new SqlConnection(Constants.ConnectionString);
 

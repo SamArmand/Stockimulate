@@ -23,7 +23,7 @@
 
                 var prices = Security.GetAll().Values.ToDictionary(x => x.Symbol, x => x.Price);
 
-                var teams = Team.GetAll().ToList();
+                var teams = Team.GetAll();
 
                 foreach (var team in teams)
                 {
