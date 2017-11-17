@@ -28,7 +28,7 @@ namespace Stockimulate.Controllers
 
             ViewData["Title"] = "Trade Input";
 
-            return View(viewModel);
+            return View("~/Views/Broker/TradeInput.cshtml", viewModel);
         }
 
         [HttpPost]
