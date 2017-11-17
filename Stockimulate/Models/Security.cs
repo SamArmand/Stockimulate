@@ -47,7 +47,7 @@ namespace Stockimulate.Models
 
             var command =
                 new SqlCommand(
-                    "SELECT Symbol, Price, Name, Type, Id, LastChange FROM Securities WHERE Symbol=@Symbol;");
+                    "SELECT Symbol, Price, Name, Id, LastChange FROM Securities WHERE Symbol=@Symbol;");
 
             command.Parameters.AddWithValue("@Symbol", symbol);
 
