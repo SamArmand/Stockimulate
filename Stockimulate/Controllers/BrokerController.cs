@@ -28,7 +28,7 @@ namespace Stockimulate.Controllers
 
             ViewData["Title"] = "Trade Input";
 
-            return View("~/Views/Broker/TradeInput.cshtml", viewModel);
+            return View("TradeInput", viewModel);
         }
 
         [HttpPost]
@@ -83,6 +83,9 @@ namespace Stockimulate.Controllers
 
             return TradeInput(new TradeInputViewModel {Result = "Success"});
         }
+
+        [HttpPost]
+        public IActionResult Cancel() => TradeInput();
 
         private IActionResult Error(string errorMessage) => TradeInput(new TradeInputViewModel
         {
