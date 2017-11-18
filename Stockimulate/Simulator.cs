@@ -112,6 +112,12 @@ namespace Stockimulate
                 var tradingDay = _tradingDays[SimulationMode.ToString()].FirstOrDefault(t => t.Day == 0);
                 if (tradingDay == null) return;
 
+                foreach (var security in _securities)
+                {
+                    security.Value.Price += tradingDay.Effects[security.Key];
+                    Security.Update(security.Value);
+                }
+
                 await _pusher.TriggerAsync(
                     "stockimulate",
                     "update-market",
@@ -175,8 +181,7 @@ namespace Stockimulate
             foreach (var security in _securities)
             {
                 security.Value.Price += tradingDay.Effects[security.Key];
-                if (_dayNumber != 0)
-                    security.Value.LastChange = tradingDay.Effects[security.Key];
+                security.Value.LastChange = tradingDay.Effects[security.Key];
                 Security.Update(security.Value);
             }
 

@@ -27,7 +27,7 @@ namespace Stockimulate.Controllers
 
             ViewData["Title"] = "Search Trades";
 
-            return View(viewModel);
+            return View("SearchTrades", viewModel);
         }
 
         [HttpPost]

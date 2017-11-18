@@ -32,7 +32,7 @@ namespace Stockimulate.Controllers
 
             ViewData["Title"] = "Control Panel";
 
-            return View(viewModel);
+            return View("ControlPanel", viewModel);
         }
 
         [HttpPost]
