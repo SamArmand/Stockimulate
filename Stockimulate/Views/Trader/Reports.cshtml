@@ -75,39 +75,39 @@
                     <tr>
                         <th scope="row">@key</th>
                         <td>@teamPositions[key]</td>
-                        <td>@prices[key]</td>
+                        <td>$@string.Format("{0:n0}", prices[key])</td>
 
                         @{
                             var realizedPnL = teamRealizedPnLs[key];
                             if (realizedPnL < 0)
                             {
-                                <td style="color: red">(@Math.Abs(realizedPnL))</td>
+                                <td style="color: red">($@string.Format("{0:n0}", Math.Abs(realizedPnL)))</td>
                             }
                             else
                             {
-                                <td>@realizedPnL</td>
+                                <td>$@string.Format("{0:n0}", realizedPnL)</td>
                             }
 
                             var unrealizedPnL = teamUnrealizedPnLs[key];
 
                             if (unrealizedPnL < 0)
                             {
-                                <td style="color: red">(@Math.Abs(unrealizedPnL))</td>
+                                <td style="color: red">($@string.Format("{0:n0}", Math.Abs(unrealizedPnL)))</td>
                             }
                             else
                             {
-                                <td>@unrealizedPnL</td>
+                                <td>$@string.Format("{0:n0}", unrealizedPnL)</td>
                             }
 
                             var totalPnL = teamTotalPnLs[key];
 
                             if (totalPnL < 0)
                             {
-                                <td style="color: red">(@Math.Abs(totalPnL))</td>
+                                <td style="color: red">($@string.Format("{0:n0}", Math.Abs(totalPnL)))</td>
                             }
                             else
                             {
-                                <td>@totalPnL</td>
+                                <td>$@string.Format("{0:n0}", totalPnL)</td>
                             }
                         }
 
@@ -124,7 +124,7 @@
                         <td/>
                         <td/>
                         <td/>
-                        <td>@team.AccumulatedPenaltiesValue</td>
+                        <td>$@string.Format("{0:n0}", team.AccumulatedPenaltiesValue)</td>
                     </tr>
                 }
             }
@@ -141,11 +141,11 @@
 
                     if (teamPnL < 0)
                     {
-                        <td style="color: red">(@Math.Abs(teamPnL))</td>
+                        <td style="color: red">($@string.Format("{0:n0}", Math.Abs(teamPnL)))</td>
                     }
                     else
                     {
-                        <td>@teamPnL</td>
+                        <td>$@string.Format("{0:n0}", teamPnL)</td>
                     }
                 }
                   
@@ -163,11 +163,11 @@
 
                     if (averagePnL < 0)
                     {
-                        <td style="color: red">(@Math.Abs(averagePnL))</td>
+                        <td style="color: red">($@string.Format("{0:n0}", Math.Abs(averagePnL)))</td>
                     }
                     else
                     {
-                        <td>@averagePnL</td>
+                        <td>$@string.Format("{0:n0}", averagePnL)</td>
                     }
                 }
                 
@@ -204,41 +204,41 @@
                         <tr>
                             <th scope="row">@key</th>
                             <td>@traderPostions[key]</td>
-                            <td>@traderAverageOpenPrices[key]</td>
-                            <td>@prices[key]</td>
+                            <td>$@string.Format("{0:n0}", traderAverageOpenPrices[key])</td>
+                            <td>$@string.Format("{0:n0}", prices[key])</td>
                             
                             @{
                                 var realizedPnL = traderRealizedPnLs[key];
 
                                 if (realizedPnL < 0)
                                 {
-                                    <td style="color: red">(@Math.Abs(realizedPnL))</td>
+                                    <td style="color: red">($@string.Format("{0:n0}", Math.Abs(realizedPnL)))</td>
                                 }
                                 else
                                 {
-                                    <td>@realizedPnL</td>
+                                    <td>$@string.Format("{0:n0}", realizedPnL)</td>
                                 }
 
                                 var unrealizedPnL = traderUnrealizedPnLs[key];
 
                                 if (unrealizedPnL < 0)
                                 {
-                                    <td style="color: red">(@Math.Abs(unrealizedPnL))</td>
+                                    <td style="color: red">($@string.Format("{0:n0}", Math.Abs(unrealizedPnL)))</td>
                                 }
                                 else
                                 {
-                                    <td>@unrealizedPnL</td>
+                                    <td>$@string.Format("{0:n0}", unrealizedPnL)</td>
                                 }
 
                                 var totalPnL = traderTotalPnLs[key];
 
                                 if (totalPnL < 0)
                                 {
-                                    <td style="color: red">(@Math.Abs(totalPnL))</td>
+                                    <td style="color: red">($@string.Format("{0:n0}", Math.Abs(totalPnL)))</td>
                                 }
                                 else
                                 {
-                                    <td>@totalPnL</td>
+                                    <td>$@string.Format("{0:n0}", totalPnL)</td>
                                 }
 
                             }
@@ -257,7 +257,7 @@
                             <td/>
                             <td/>
                             <td/>
-                            <td>@trader.AccumulatedPenaltiesValue</td>
+                            <td>$@string.Format("{0:n0}", trader.AccumulatedPenaltiesValue)</td>
                         </tr>
                     }
                 }
@@ -275,11 +275,11 @@
 
                         if (traderPnL < 0)
                         {
-                            <td style="color: red">(@Math.Abs(traderPnL))</td>
+                            <td style="color: red">($@string.Format("{0:n0}", Math.Abs(traderPnL)))</td>
                         }
                         else
                         {
-                            <td>@traderPnL</td>
+                            <td>$@string.Format("{0:n0}", traderPnL)</td>
                         }
                     }
                     

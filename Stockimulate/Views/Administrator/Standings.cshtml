@@ -34,18 +34,33 @@
 
                 for (var i = 0; i < teams.Count; ++i)
                 {
-                    traders.AddRange(teams[i].Traders);
+                    var team = teams[i];
+                    traders.AddRange(team.Traders);
 
                     ++rank;
 
+                    var teamAveragePnL = teams[i].AveragePnL();
                     <tr>
                         <th scope="row">
-                            @(i > 0 && teams[i].AveragePnL() == teams[i - 1].AveragePnL()
+                            @(i > 0 && teamAveragePnL == teams[i-1].AveragePnL()
                                   ? "-"
                                   : rank.ToString())
                         </th>
                         <td>@teams[i].Name - @teams[i].Id</td>
-                        <td>$@teams[i].AveragePnL()</td>
+                        
+                        @{
+
+                            if (teamAveragePnL < 0)
+                            {
+                                <td style="color: red">($@string.Format("{0:n0}", Math.Abs(teamAveragePnL)))</td>
+                            }
+                            else
+                            {
+                                <td>$@teamAveragePnL</td>
+                            }
+                        }
+                        
+                        
                     </tr>
                 }
 
@@ -76,14 +91,28 @@
                 for (var i = 0; i < traders.Count; ++i)
                 {
                     ++rank;
+                    var trader = traders[i];
+                    var traderPnL = trader.PnL();
+
                     <tr>
                         <th scope="row">
-                        @(i > 0 && traders.ElementAt(i).PnL() == traders.ElementAt(i - 1).PnL()
+                        @(i > 0 && traderPnL == traders[i - 1].PnL()
                             ? "-"
                             : rank.ToString())
                         </th>
-                        <td>@traders.ElementAt(i).Name - @traders.ElementAt(i).Id</td>
-                        <td>$@traders.ElementAt(i).PnL()</td>
+                        <td>@trader.Name - @trader.Id</td>
+                        
+                        @{
+                            if (traderPnL < 0)
+                            {
+                                <td style="color: red">($@string.Format("{0:n0}", Math.Abs(traderPnL)))</td>
+                            }
+                            else
+                            {
+                                <td>$@traderPnL</td>
+                            }
+                        }
+                        
                     </tr>
                 }
             }
