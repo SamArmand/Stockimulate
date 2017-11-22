@@ -45,6 +45,10 @@ namespace Stockimulate.Controllers
             }
 
             var login = Models.Login.Get(viewModel.Username, viewModel.Password);
+
+            if (login == null)
+                return RedirectToAction("Home", "Public");
+
             HttpContext.Session.SetString("Role", login.Role);
             HttpContext.Session.SetString("Username", login.Username);
 

@@ -3,44 +3,49 @@
 }
 @model ReportsViewModel
 
-      <div class="row">
+<div class="row">
 
-          <legend><h1>View Reports</h1></legend>
+    <legend>
+        <h1>View Reports</h1>
+    </legend>
 
 </div><!-- /.row -->
 
-@{ var role = Model.Login.Role;}
+@{
+    var role = Model.Login.Role;
 
-@if (role == "Administrator" || role == "Regulator")
-{
+    if (role == "Administrator" || role == "Regulator")
+     {
+         <br/>
 
-    <br/>
+         <div class="row">
+             <div class="col-lg-6">
+                 <form role="form" method="post" asp-controller="Trader">
+                     <div class="input-group">
+                         <input type="text" class="form-control" placeholder="Team ID" aria-label="Team ID" asp-for="TeamId">
+                         <span class="input-group-btn">
+                             <input type="submit" asp-action="Submit" value="Search" class="btn btn-primary" type="button"/>
+                         </span>
+                     </div>
+                 </form>
 
-    <div class="row">
-        <div class="col-lg-6">
-            <form role="form" method="post" asp-controller="Trader">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Team ID" aria-label="Team ID" asp-for="TeamId">
-                    <span class="input-group-btn">
-                        <input type="submit" asp-action="Submit" value="Search" class="btn btn-primary" type="button"/>
-                    </span>
-                </div> 
-            </form>
+             </div>
+         </div>
+     }
 
-        </div>          
-    </div>
+
 }
 
 
-    <br />
 
-    <br />
+<br/>
+
+<br/>
 
 @{
     var team = Model.Team;
-}
 
-@if (team != null)
+    if (team != null)
     {
         <h3>@team.Name - @team.Id</h3>
         <table class="table">
@@ -55,7 +60,7 @@
             </tr>
             </thead>
             <tbody>
-            
+
             @{
                 var prices = Security.GetAll().Values.ToDictionary(x => x.Symbol, x => x.Price);
                 team.Calculate(prices);
@@ -64,21 +69,51 @@
                 var teamRealizedPnLs = team.RealizedPnLs;
                 var teamUnrealizedPnLs = team.UnrealizedPnLs;
                 var teamTotalPnLs = team.TotalPnLs;
-            }
 
-            @foreach (var key in teamPositions.Select(teamPosition => teamPosition.Key))
-            {
-                <tr>        
-                    <th scope="row">@key</th>
-                    <td>@teamPositions[key]</td>
-                    <td>@prices[key]</td>
-                    <td>@teamRealizedPnLs[key]</td>
-                    <td>@teamUnrealizedPnLs[key]</td>
-                    <td>@teamTotalPnLs[key]</td>
-                </tr>
-            }
+                foreach (var key in teamPositions.Keys)
+                {
+                    <tr>
+                        <th scope="row">@key</th>
+                        <td>@teamPositions[key]</td>
+                        <td>@prices[key]</td>
 
-            @{
+                        @{
+                            var realizedPnL = teamRealizedPnLs[key];
+                            if (realizedPnL < 0)
+                            {
+                                <td style="color: red">(@Math.Abs(realizedPnL))</td>
+                            }
+                            else
+                            {
+                                <td>@realizedPnL</td>
+                            }
+
+                            var unrealizedPnL = teamUnrealizedPnLs[key];
+
+                            if (unrealizedPnL < 0)
+                            {
+                                <td style="color: red">(@Math.Abs(unrealizedPnL))</td>
+                            }
+                            else
+                            {
+                                <td>@unrealizedPnL</td>
+                            }
+
+                            var totalPnL = teamTotalPnLs[key];
+
+                            if (totalPnL < 0)
+                            {
+                                <td style="color: red">(@Math.Abs(totalPnL))</td>
+                            }
+                            else
+                            {
+                                <td>@totalPnL</td>
+                            }
+                        }
+
+                    </tr>
+                }
+
                 var teamAccumulatedPenalties = team.AccumulatedPenalties;
 
                 if (teamAccumulatedPenalties > 0)
@@ -100,87 +135,159 @@
                 <td/>
                 <td/>
                 <td/>
-                <td>@team.PnL()</td>
+                
+                @{
+                    var teamPnL = team.PnL();
+
+                    if (teamPnL < 0)
+                    {
+                        <td style="color: red">(@Math.Abs(teamPnL))</td>
+                    }
+                    else
+                    {
+                        <td>@teamPnL</td>
+                    }
+                }
+                  
             </tr>
+            
             <tr>
                 <th scope="row">Average P&amp;L</th>
                 <td/>
                 <td/>
                 <td/>
                 <td/>
-                <td>@team.AveragePnL()</td>
+                
+                @{
+                    var averagePnL = team.AveragePnL();
+
+                    if (averagePnL < 0)
+                    {
+                        <td style="color: red">(@Math.Abs(averagePnL))</td>
+                    }
+                    else
+                    {
+                        <td>@averagePnL</td>
+                    }
+                }
+                
             </tr>
             </tbody>
         </table>
 
         foreach (var trader in team.Traders)
-            {
+        {
+            <h3>@trader.Name - @trader.Id</h3>
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Security</th>
+                    <th>Position</th>
+                    <th>Average Open Price</th>
+                    <th>Current Price</th>
+                    <th>Realized P&amp;L</th>
+                    <th>Unrealized P&amp;L</th>
+                    <th>Total P&amp;L</th>
+                </tr>
+                </thead>
+                <tbody>
 
-                <h3>@trader.Name - @trader.Id</h3>
-                <table class="table">
-                    <thead class="thead-dark">
+                @{
+                    var traderPostions = trader.Positions;
+                    var traderAverageOpenPrices = trader.AverageOpenPrices;
+                    var traderRealizedPnLs = trader.RealizedPnLs;
+                    var traderUnrealizedPnLs = trader.UnrealizedPnLs;
+                    var traderTotalPnLs = trader.TotalPnLs;
+
+                    foreach (var key in traderPostions.Keys)
+                    {
                         <tr>
-                            <th>Security</th>
-                            <th>Position</th>
-                            <th>Average Open Price</th>
-                            <th>Current Price</th>
-                            <th>Realized P&amp;L</th>
-                            <th>Unrealized P&amp;L</th>
-                            <th>Total P&amp;L</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                
-                    @{
-                        var traderPostions = trader.Positions;
-                        var traderAverageOpenPrices = trader.AverageOpenPrices;
-                        var traderRealizedPnLs = trader.RealizedPnLs;
-                        var traderUnrealizedPnLs = trader.UnrealizedPnLs;
-                        var traderTotalPnLs = trader.TotalPnLs;
-                    }    
+                            <th scope="row">@key</th>
+                            <td>@traderPostions[key]</td>
+                            <td>@traderAverageOpenPrices[key]</td>
+                            <td>@prices[key]</td>
+                            
+                            @{
+                                var realizedPnL = traderRealizedPnLs[key];
 
-                @foreach (var key in traderPostions.Select(position => position.Key))
-                {
-                    <tr>
-                        <th scope="row">@key</th>
-                        <td>@traderPostions[key]</td>
-                        <td>@traderAverageOpenPrices[key]</td>
-                        <td>@prices[key]</td>
-                        <td>@traderRealizedPnLs[key]</td>
-                        <td>@traderUnrealizedPnLs[key]</td>
-                        <td>@traderTotalPnLs[key]</td>
-                    </tr>
+                                if (realizedPnL < 0)
+                                {
+                                    <td style="color: red">(@Math.Abs(realizedPnL))</td>
+                                }
+                                else
+                                {
+                                    <td>@realizedPnL</td>
+                                }
+
+                                var unrealizedPnL = traderUnrealizedPnLs[key];
+
+                                if (unrealizedPnL < 0)
+                                {
+                                    <td style="color: red">(@Math.Abs(unrealizedPnL))</td>
+                                }
+                                else
+                                {
+                                    <td>@unrealizedPnL</td>
+                                }
+
+                                var totalPnL = traderTotalPnLs[key];
+
+                                if (totalPnL < 0)
+                                {
+                                    <td style="color: red">(@Math.Abs(totalPnL))</td>
+                                }
+                                else
+                                {
+                                    <td>@totalPnL</td>
+                                }
+
+                            }
+                            
+                        </tr>
+                    }
+
+                    var traderAccumulatedPenalties = trader.AccumulatedPenalties;
+
+                    if (traderAccumulatedPenalties > 0)
+                    {
+                        <tr>
+                            <th scope="row">Penalties</th>
+                            <td>@trader.AccumulatedPenalties</td>
+                            <td/>
+                            <td/>
+                            <td/>
+                            <td/>
+                            <td>@trader.AccumulatedPenaltiesValue</td>
+                        </tr>
+                    }
                 }
 
+                <tr>
+                    <th scope="row">Total</th>
+                    <td/>
+                    <td/>
+                    <td/>
+                    <td/>
+                    <td/>
+                    
                     @{
-                        var traderAccumulatedPenalties = trader.AccumulatedPenalties;
+                        var traderPnL = trader.PnL();
 
-                        if (traderAccumulatedPenalties > 0)
-                         {
-                             <tr>
-                                 <th scope="row">Penalties</th>
-                                 <td>@trader.AccumulatedPenalties</td>
-                                 <td/>
-                                 <td/>
-                                 <td/>
-                                 <td/>
-                                 <td>@trader.AccumulatedPenaltiesValue</td>
-                             </tr>
-                         }
-                    }              
-
-                    <tr>
-                        <th scope="row">Total</th>
-                        <td/>
-                        <td/>
-                        <td/>
-                        <td/>
-                        <td/>
-                        <td>@trader.PnL()</td>
-                    </tr>
+                        if (traderPnL < 0)
+                        {
+                            <td style="color: red">(@Math.Abs(traderPnL))</td>
+                        }
+                        else
+                        {
+                            <td>@traderPnL</td>
+                        }
+                    }
+                    
+                </tr>
                 </tbody>
             </table>
+        }
+    }
+}
 
-            }
-    }    
 <br/>

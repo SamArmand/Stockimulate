@@ -21,13 +21,11 @@
             @{
                 var traders = new List<Trader>();
 
-                var prices = Security.GetAll().Values.ToDictionary(x => x.Symbol, x => x.Price);
-
                 var teams = Team.GetAll();
 
                 foreach (var team in teams)
                 {
-                    team.Calculate(prices);
+                    team.Calculate(Security.GetAll().Values.ToDictionary(x => x.Symbol, x => x.Price));
                 }
 
                 teams = teams.OrderByDescending(t => t.AveragePnL()).ToList();

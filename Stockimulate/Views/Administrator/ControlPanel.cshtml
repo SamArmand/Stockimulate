@@ -78,12 +78,12 @@
         @switch (Model.State)
         {
             case "Error":
-                <div id="ErrorDiv" runat="server" class="alert alert-danger bg-danger col-12">
+                <div class="alert alert-danger bg-danger col-12">
                     @Model.ErrorMessage
                 </div>
                 break;
             case "Warning":
-                <div id="WarningDiv" runat="server" class="alert alert-warning bg-warning col-12">
+                <div class="alert alert-warning bg-warning col-12">
                     <a href="#" class="close" data-dismiss="alert">&times;</a>
                     <strong>Info!</strong> Please read the above statement and check the checkbox before clicking any button.
                 </div>
