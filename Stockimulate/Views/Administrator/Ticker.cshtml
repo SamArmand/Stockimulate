@@ -47,6 +47,15 @@
 <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
 <script>
 
+    const tickerPriceH1 = document.getElementById("TickerPriceH1");
+    const statusDiv = document.getElementById("StatusDiv");
+    const statusSpan = document.getElementById("StatusSpan");
+    const daySpan = document.getElementById("DaySpan");
+    const quarterSpan = document.getElementById("QuarterSpan");
+    const tickerChangeDiv = document.getElementById("TickerChangeDiv");
+    const tickerChangeH1 = document.getElementById("TickerChangeH1");
+    const newsH2 = document.getElementById("NewsH2");
+    
     // ReSharper disable once PossiblyUnassignedProperty
     const channel = (new Pusher('@Constants.PusherKey',
         {
@@ -66,42 +75,42 @@
                 newPrice = message.effects[@Model.TickerId];
             } else {
                 effect = message.effects[@Model.TickerId];
-                newPrice = parseInt(document.getElementById("TickerPriceH1").innerText.substring(1)) + effect;
+                newPrice = parseInt(tickerPriceH1.innerText.substring(1)) + effect;
                 
                 if (message.close) {
-                    document.getElementById("StatusDiv").className = "card text-white mb-3 text-center bg-danger";
-                    document.getElementById("StatusSpan").innerHTML = "CLOSED";
+                    statusDiv.className = "card text-white mb-3 text-center bg-danger";
+                    statusSpan.innerHTML = "CLOSED";
                 } else
-                    document.getElementById("DaySpan").innerHTML = (parseInt(document.getElementById("DaySpan").innerHTML) + 1);
+                    daySpan.innerHTML = (parseInt(daySpan.innerHTML) + 1);
             }
 
-            document.getElementById("TickerPriceH1").innerHTML = `$${newPrice}`;
+            tickerPriceH1.innerHTML = `$${newPrice}`;
 
             chart.data.datasets[0].data.push({ x: parseInt(message.day), y: newPrice });
             window.myLine.update();
 
             if (effect > 0) {
-                document.getElementById("TickerChangeDiv").className = "card mb-3 text-center bg-success text-white";
-                document.getElementById("TickerChangeH1").innerHTML = `+${effect}`;
+                tickerChangeDiv.className = "card mb-3 text-center bg-success text-white";
+                tickerChangeH1.innerHTML = `+${effect}`;
             } else {
-                document.getElementById("TickerChangeH1").innerHTML = effect;
+                tickerChangeH1.innerHTML = effect;
                 if (effect < 0)
-                    document.getElementById("TickerChangeDiv").className = "card mb-3 text-center bg-danger text-white";
+                    tickerChangeDiv.className = "card mb-3 text-center bg-danger text-white";
                 else
-                    document.getElementById("TickerChangeDiv").className = "card mb-3 text-center bg-warning text-white";
+                    tickerChangeDiv.className = "card mb-3 text-center bg-warning text-white";
             }
 
             if (message.news !== "")
-                document.getElementById("NewsH2").innerHTML = message.news;
+                newsH2.innerHTML = message.news;
         });
 
     channel.bind('open-market',
         function() {
-            document.getElementById("StatusDiv").className = "card text-white mb-3 text-center bg-success";
-            document.getElementById("StatusSpan").innerHTML = "OPEN";
-            document.getElementById("DaySpan").innerHTML = (parseInt(document.getElementById("DaySpan").innerHTML) + 1);
-            document.getElementById("QuarterSpan").innerHTML =
-                (parseInt(document.getElementById("QuarterSpan").innerHTML) + 1);
+            statusDiv.className = "card text-white mb-3 text-center bg-success";
+            statusSpan.innerHTML = "OPEN";
+            daySpan.innerHTML = (parseInt(daySpan.innerHTML) + 1);
+            quarterSpan.innerHTML =
+                (parseInt(quarterSpan.innerHTML) + 1);
         });
 
     var chart = {
