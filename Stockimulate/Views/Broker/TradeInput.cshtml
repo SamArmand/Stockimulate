@@ -7,13 +7,14 @@
 }
 <div class="row">
     <div class="col-8">
-        
+
         <form class="form-horizontal" role="form" method="post" asp-controller="Broker">
             <fieldset>
 
                 <!-- Form Name -->
                 <legend>
-                    <h1>Trade 
+                    <h1>
+                        Trade
                         @{
                             var securities = Security.GetAll();
 
@@ -55,7 +56,7 @@
                 <div class="form-group row">
                     <label class="col-sm-1 col-form-label">Security</label>
                     <div class="col-sm-2">
-                        
+
                         <select class="form-control" asp-for="Symbol">
 
                             @if (Model.Login.Role == "Administrator")
@@ -109,7 +110,7 @@
             </fieldset>
         </form>
 
-        <br />
+        <br/>
 
         @switch (Model.Result)
         {
@@ -134,9 +135,9 @@
                 <br/>
                 break;
         }
-    
+
     </div>
-    
+
     <div class="col-4">
         @if (Model.Login.Role != "Administrator")
         {
@@ -150,36 +151,74 @@
             }
         }
     </div>
-    
+
 </div>
 
-<script src="https://js.pusher.com/4.1/pusher.min.js"></script>
-<script>
+@section Scripts {
 
-    // ReSharper disable once PossiblyUnassignedProperty
-    const channel = (new Pusher('@Constants.PusherKey',
-        {
-            cluster: '@Constants.PusherCluster',
-            encrypted: true
-// ReSharper disable once PossiblyUnassignedProperty
-        })).subscribe('stockimulate');
+    <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+    <script>
 
-    channel.bind('update-market',
-        function(message) {
-
-            var tickerDiv;
-            var priceH4;
-            var changeP;
-            
-            @if (Model.Login.Role == "Administrator")
+        // ReSharper disable once PossiblyUnassignedProperty
+        const channel = (new Pusher('@Constants.PusherKey',
             {
-                <text>
-                    var effect;
-                    var newPrice;
-                </text>
+                cluster: '@Constants.PusherCluster',
+                encrypted: true
+// ReSharper disable once PossiblyUnassignedProperty
+            })).subscribe('stockimulate');
 
-                foreach (var security in Security.GetAll())
+        channel.bind('update-market',
+            function(message) {
+
+                var tickerDiv;
+                var priceH4;
+                var changeP;
+            
+                @if (Model.Login.Role == "Administrator")
                 {
+                    <text>
+                        var effect;
+                        var newPrice;
+                    </text>
+
+                    foreach (var security in Security.GetAll())
+                    {
+                        var priceH4Id = "PriceH4" + security.Value.Symbol;
+                        var changePId = "ChangeP" + security.Value.Symbol;
+                        var tickerDivId = "TickerDiv" + security.Value.Symbol;
+                        <text>
+                
+                            tickerDiv = document.getElementById("@tickerDivId");
+                            priceH4 = document.getElementById("@priceH4Id");
+                            changeP = document.getElementById("@changePId");
+
+                            if (message.day === 0) {
+                                effect = 0;
+                                newPrice = message.effects[@security.Value.Id];
+                            } else {
+                                effect = message.effects[@security.Value.Id];
+                                newPrice = parseInt(priceH4.innerText.substring(1)) +
+                                    effect;
+                            }
+
+                            priceH4.innerHTML = `$${newPrice}`;
+
+                            if (effect > 0) {
+                                tickerDiv.className = "card mb-3 bg-success text-white";
+                                changeP.innerHTML = `+${effect}`;
+                            } else {
+                                changeP.innerHTML = effect;
+                                if (effect < 0)
+                                    tickerDiv.className = "card mb-3 bg-danger text-white";
+                                else
+                                    tickerDiv.className = "card mb-3 bg-warning text-white";
+                            }
+                        </text>
+                    }
+                }
+                else
+                {
+                    var security = Security.GetAll().FirstOrDefault(s => s.Key == symbol);
                     var priceH4Id = "PriceH4" + security.Value.Symbol;
                     var changePId = "ChangeP" + security.Value.Symbol;
                     var tickerDivId = "TickerDiv" + security.Value.Symbol;
@@ -188,7 +227,7 @@
                         tickerDiv = document.getElementById("@tickerDivId");
                         priceH4 = document.getElementById("@priceH4Id");
                         changeP = document.getElementById("@changePId");
-                        
+
                         if (message.day === 0) {
                             effect = 0;
                             newPrice = message.effects[@security.Value.Id];
@@ -212,48 +251,9 @@
                         }
                     </text>
                 }
-            }
-            else
-            {
-                var security = Security.GetAll().FirstOrDefault(s => s.Key == symbol);
-                var priceH4Id = "PriceH4" + security.Value.Symbol;
-                var changePId = "ChangeP" + security.Value.Symbol;
-                var tickerDivId = "TickerDiv" + security.Value.Symbol;
-                    <text>
-                
-                        tickerDiv = document.getElementById("@tickerDivId");
-                        priceH4 = document.getElementById("@priceH4Id");
-                        changeP = document.getElementById("@changePId");
-                        
-                        if (message.day === 0) {
-                            effect = 0;
-                            newPrice = message.effects[@security.Value.Id];
-                        } else {
-                            effect = message.effects[@security.Value.Id];
-                            newPrice = parseInt(priceH4.innerText.substring(1)) +
-                                effect;
-                        }
-
-                        priceH4.innerHTML = `$${newPrice}`;
-
-                        if (effect > 0) {
-                            tickerDiv.className = "card mb-3 bg-success text-white";
-                            changeP.innerHTML = `+${effect}`;
-                        } else {
-                            changeP.innerHTML = effect;
-                            if (effect < 0)
-                                tickerDiv.className = "card mb-3 bg-danger text-white";
-                            else
-                                tickerDiv.className = "card mb-3 bg-warning text-white";
-                        }
-                    </text>
-            }
             
-        });
-    
-</script>
+            });
 
+    </script>
 
-
-
-
+}
