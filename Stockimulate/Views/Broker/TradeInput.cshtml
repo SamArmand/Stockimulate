@@ -2,145 +2,257 @@
     Layout = "_NavigationLayout";
 }
 @model TradeInputViewModel
-
+@{
+    var symbol = string.Empty;
+}
 <div class="row">
-<div class="col-12">
+    <div class="col-8">
         
-    <form class="form-horizontal" role="form" method="post" asp-controller="Broker">
-        <fieldset>
+        <form class="form-horizontal" role="form" method="post" asp-controller="Broker">
+            <fieldset>
 
-            <!-- Form Name -->
-            <legend>
-                <h1>Trade 
-                    @{
-                        var securities = Security.GetAll();
-                        var theSecurity = string.Empty;
+                <!-- Form Name -->
+                <legend>
+                    <h1>Trade 
+                        @{
+                            var securities = Security.GetAll();
 
-                        try
-                        {
-                            var brokerPermission = int.Parse(Model.Login.Username.Substring(6)) % securities.Count;
-
-                            foreach (var security in securities.Where(security => security.Value.Id == brokerPermission))
+                            try
                             {
-                                theSecurity = security.Key;
+                                var brokerPermission = int.Parse(Model.Login.Username.Substring(6)) % securities.Count;
 
-                                break;
+                                foreach (var security in securities.Where(security => security.Value.Id == brokerPermission))
+                                {
+                                    symbol = security.Key;
+
+                                    break;
+                                }
+                            }
+
+                            catch (Exception)
+                            {
+                                //ignored
                             }
                         }
+                        @symbol
+                    </h1>
+                </legend>
 
-                        catch (Exception)
-                        {
-                            //ignored
-                        }
-                    }
-                    @theSecurity
-                </h1>
-            </legend>
+                <!-- Text input-->
+                <div class="form-group row">
+                    <label class="col-sm-1 col-form-label">Buyer ID</label>
+                    <div class="col-sm-2">
+                        <input type="number" placeholder="Buyer ID" class="form-control" asp-for="BuyerId" required/>
+                    </div>
 
-            <!-- Text input-->
-            <div class="form-group row">
-                <label class="col-sm-1 col-form-label">Buyer ID</label>
-                <div class="col-sm-2">
-                    <input type="number" placeholder="Buyer ID" class="form-control" asp-for="BuyerId" required/>
+                    <label class="col-sm-1 col-sm-offset-1 col-form-label">Seller ID</label>
+                    <div class="col-sm-2">
+                        <input type="number" placeholder="Seller ID" class="form-control" asp-for="SellerId" required/>
+                    </div>
                 </div>
 
-                <label class="col-sm-1 col-sm-offset-1 col-form-label">Seller ID</label>
-                <div class="col-sm-2">
-                    <input type="number" placeholder="Seller ID" class="form-control" asp-for="SellerId" required/>
-                </div>
-            </div>
-
-            <!-- Text input-->
-            <div class="form-group row">
-                <label class="col-sm-1 col-form-label">Security</label>
-                <div class="col-sm-2">
+                <!-- Text input-->
+                <div class="form-group row">
+                    <label class="col-sm-1 col-form-label">Security</label>
+                    <div class="col-sm-2">
                         
-                    <select class="form-control" asp-for="Symbol">
+                        <select class="form-control" asp-for="Symbol">
 
-                        @if (Model.Login.Role == "Administrator")
-                        {
-                            foreach (var security in securities)
+                            @if (Model.Login.Role == "Administrator")
                             {
-                                <option>@security.Key</option>
+                                foreach (var security in securities)
+                                {
+                                    <option>@security.Key</option>
+                                }
                             }
-                        }
-                        else
-                        {
-                            <option>@theSecurity</option>
-                        }
-                    </select>
+                            else
+                            {
+                                <option>@symbol</option>
+                            }
+                        </select>
+
+                    </div>
+
+                    <label class="col-sm-1 col-sm-offset-1 col-form-label">Quantity</label>
+                    <div class="col-sm-2">
+                        <input type="number" placeholder="Quantity" class="form-control" asp-for="Quantity"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-1 col-form-label">Price</label>
+                    <div class="col-sm-2 ">
+                        <input type="number" placeholder="Price" class="form-control" asp-for="Price"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" asp-for="IsChecked">
+                            I have verified that all fields are correct and wish to submit this trade.
+                        </label>
+                    </div>
 
                 </div>
 
-                <label class="col-sm-1 col-sm-offset-1 col-form-label">Quantity</label>
-                <div class="col-sm-2">
-                    <input type="number" placeholder="Quantity" class="form-control" asp-for="Quantity"/>
-                </div>
-            </div>
+                <div class="row">
+                    <div class="btn-group col-sm-12">
 
-            <div class="form-group row">
-                <label class="col-sm-1 col-form-label">Price</label>
-                <div class="col-sm-2 ">
-                    <input type="number" placeholder="Price" class="form-control" asp-for="Price"/>
-                </div>
-            </div>
+                        <input type="submit" formaction="Cancel" value="Cancel" class="btn btn-secondary"/>
+                        <input type="submit" formaction="Submit" value="Submit" class="btn btn-primary"/>
 
-            <div class="form-group row">
-
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" asp-for="IsChecked">
-                        I have verified that all fields are correct and wish to submit this trade.
-                    </label>
+                    </div>
                 </div>
 
-            </div>
+            </fieldset>
+        </form>
 
-            <div class="row">
-                <div class="btn-group col-sm-12">
+        <br />
 
-                    <input type="submit" formaction="Cancel" value="Cancel" class="btn btn-secondary"/>
-                    <input type="submit" formaction="Submit" value="Submit" class="btn btn-primary"/>
-
+        @switch (Model.Result)
+        {
+            case "Error":
+                <div class="alert alert-danger alert-error bg-danger col-lg-5">
+                    @Model.ErrorMessage
                 </div>
-            </div>
-
-        </fieldset>
-    </form>
-
+                break;
+            case "Success":
+                <div class="alert alert-success bg-success col-lg-5">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <strong>Success!</strong> Trade is complete.
+                </div>
+                break;
+            case "Warning":
+                <div class="alert alert-warning bg-warning col-lg-5">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <strong>Info!</strong> Verify all the fields in the form and check the checkbox before submitting.
+                </div>
+                break;
+            default:
+                <br/>
+                break;
+        }
+    
+    </div>
+    
+    <div class="col-4">
+        @if (Model.Login.Role != "Administrator")
+        {
+            @Html.Partial("MiniTickerPartial", new MiniTickerPartialViewModel {Symbol = symbol})
+        }
+        else
+        {
+            foreach (var key in Security.NamesAndSymbols.Keys)
+            {
+                @Html.Partial("MiniTickerPartial", new MiniTickerPartialViewModel {Symbol = key})
+            }
+        }
+    </div>
+    
 </div>
-</div>
 
-    <br />
+<script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+<script>
 
-    @if (Model.Result == "Error")
-    {
+    // ReSharper disable once PossiblyUnassignedProperty
+    const channel = (new Pusher('@Constants.PusherKey',
+        {
+            cluster: '@Constants.PusherCluster',
+            encrypted: true
+// ReSharper disable once PossiblyUnassignedProperty
+        })).subscribe('stockimulate');
 
-        <div id="ErrorDiv" class="alert alert-danger alert-error bg-danger col-lg-5">
-            @Model.ErrorMessage
-        </div>
+    channel.bind('update-market',
+        function(message) {
 
-    } 
+            var tickerDiv;
+            var priceH4;
+            var changeP;
+            
+            @if (Model.Login.Role == "Administrator")
+            {
+                <text>
+                    var effect;
+                    var newPrice;
+                </text>
 
-    @if (Model.Result == "Success")
-    {
+                foreach (var security in Security.GetAll())
+                {
+                    var priceH4Id = "PriceH4" + security.Value.Symbol;
+                    var changePId = "ChangeP" + security.Value.Symbol;
+                    var tickerDivId = "TickerDiv" + security.Value.Symbol;
+                    <text>
+                
+                        tickerDiv = document.getElementById("@tickerDivId");
+                        priceH4 = document.getElementById("@priceH4Id");
+                        changeP = document.getElementById("@changePId");
+                        
+                        if (message.day === 0) {
+                            effect = 0;
+                            newPrice = message.effects[@security.Value.Id];
+                        } else {
+                            effect = message.effects[@security.Value.Id];
+                            newPrice = parseInt(priceH4.innerText.substring(1)) +
+                                effect;
+                        }
 
-        <div id="SuccessDiv" class="alert alert-success bg-success col-lg-5">
-            <a href="#" class="close" data-dismiss="alert">&times;</a>
-            <strong>Success!</strong> Trade is complete.
-        </div>
+                        priceH4.innerHTML = `$${newPrice}`;
 
-    }
+                        if (effect > 0) {
+                            tickerDiv.className = "card mb-3 bg-success text-white";
+                            changeP.innerHTML = `+${effect}`;
+                        } else {
+                            changeP.innerHTML = effect;
+                            if (effect < 0)
+                                tickerDiv.className = "card mb-3 bg-danger text-white";
+                            else
+                                tickerDiv.className = "card mb-3 bg-warning text-white";
+                        }
+                    </text>
+                }
+            }
+            else
+            {
+                var security = Security.GetAll().FirstOrDefault(s => s.Key == symbol);
+                var priceH4Id = "PriceH4" + security.Value.Symbol;
+                var changePId = "ChangeP" + security.Value.Symbol;
+                var tickerDivId = "TickerDiv" + security.Value.Symbol;
+                    <text>
+                
+                        tickerDiv = document.getElementById("@tickerDivId");
+                        priceH4 = document.getElementById("@priceH4Id");
+                        changeP = document.getElementById("@changePId");
+                        
+                        if (message.day === 0) {
+                            effect = 0;
+                            newPrice = message.effects[@security.Value.Id];
+                        } else {
+                            effect = message.effects[@security.Value.Id];
+                            newPrice = parseInt(priceH4.innerText.substring(1)) +
+                                effect;
+                        }
 
-    @if (Model.Result == "Warning")
-    {
+                        priceH4.innerHTML = `$${newPrice}`;
 
-        <div id="WarningDiv" class="alert alert-warning bg-warning col-lg-5">
-            <a href="#" class="close" data-dismiss="alert">&times;</a>
-            <strong>Info!</strong> Verify all the fields in the form and check the checkbox before submitting.
-        </div>
+                        if (effect > 0) {
+                            tickerDiv.className = "card mb-3 bg-success text-white";
+                            changeP.innerHTML = `+${effect}`;
+                        } else {
+                            changeP.innerHTML = effect;
+                            if (effect < 0)
+                                tickerDiv.className = "card mb-3 bg-danger text-white";
+                            else
+                                tickerDiv.className = "card mb-3 bg-warning text-white";
+                        }
+                    </text>
+            }
+            
+        });
+    
+</script>
 
-    }
 
 
 
