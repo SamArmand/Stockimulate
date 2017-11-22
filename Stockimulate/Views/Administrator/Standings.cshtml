@@ -2,10 +2,12 @@
     Layout = "_NavigationLayout";
 }
 
-<legend><h1>Standings</h1></legend>
+<legend>
+    <h1>Standings</h1>
+</legend>
 <div class="row">
     <div class="col-6">
-        
+
         <h2>Teams</h2>
 
         <table class="table">
@@ -17,7 +19,7 @@
             </tr>
             <thead>
             <tbody>
-    
+
             @{
                 var traders = new List<Trader>();
 
@@ -42,12 +44,12 @@
                     var teamAveragePnL = teams[i].AveragePnL();
                     <tr>
                         <th scope="row">
-                            @(i > 0 && teamAveragePnL == teams[i-1].AveragePnL()
+                            @(i > 0 && teamAveragePnL == teams[i - 1].AveragePnL()
                                   ? "-"
                                   : rank.ToString())
                         </th>
                         <td>@teams[i].Name - @teams[i].Id</td>
-                        
+
                         @{
 
                             if (teamAveragePnL < 0)
@@ -59,8 +61,8 @@
                                 <td>$@teamAveragePnL</td>
                             }
                         }
-                        
-                        
+
+
                     </tr>
                 }
 
@@ -68,11 +70,11 @@
             }
             </tbody>
         </table>
-    
+
     </div>
 
     <div class="col-6">
-        
+
         <h2>Traders</h2>
 
         <table class="table">
@@ -84,7 +86,7 @@
             </tr>
             <thead>
             <tbody>
-    
+
             @{
                 rank = 0;
 
@@ -96,12 +98,12 @@
 
                     <tr>
                         <th scope="row">
-                        @(i > 0 && traderPnL == traders[i - 1].PnL()
-                            ? "-"
-                            : rank.ToString())
+                            @(i > 0 && traderPnL == traders[i - 1].PnL()
+                                  ? "-"
+                                  : rank.ToString())
                         </th>
                         <td>@trader.Name - @trader.Id</td>
-                        
+
                         @{
                             if (traderPnL < 0)
                             {
@@ -112,13 +114,13 @@
                                 <td>$@traderPnL</td>
                             }
                         }
-                        
+
                     </tr>
                 }
             }
-    
+
             </tbody>
         </table>
-    
+
     </div>
-</div>    
+</div>

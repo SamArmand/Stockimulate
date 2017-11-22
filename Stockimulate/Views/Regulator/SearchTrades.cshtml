@@ -1,117 +1,119 @@
 @{
-  Layout = "_NavigationLayout";
+    Layout = "_NavigationLayout";
 }
 
 @model SearchTradesViewModel
 <form class="form-horizontal" role="form" method="post" asp-controller="Regulator">
-<fieldset>
-  <legend><h1>Search Trades</h1></legend>
-    
-  <div class="form-group row">
-    <label class="col-sm-1 control-label">Buyer ID</label>
-    <div class="col-sm-2">
-      <input id="BuyerIdInput" type="number" placeholder="Buyer ID" class="form-control" asp-for="BuyerId"/>        
-    </div>
+    <fieldset>
+        <legend>
+            <h1>Search Trades</h1>
+        </legend>
 
-    <label class="col-sm-1 col-sm-offset-1 control-label">Seller ID</label>
-    <div class="col-sm-2">
-      <input id="SellerIdInput" type="number" placeholder="Seller ID" class="form-control" asp-for="SellerId"/>
-    </div>
-  </div>
-    
-  <br />
+        <div class="form-group row">
+            <label class="col-sm-1 control-label">Buyer ID</label>
+            <div class="col-sm-2">
+                <input id="BuyerIdInput" type="number" placeholder="Buyer ID" class="form-control" asp-for="BuyerId"/>
+            </div>
 
-  <div class="form-group row">
-    <label class="col-sm-1 control-label">Buyer Team ID</label>
-    <div class="col-sm-2">
-      <input id="BuyerTeamIdInput" type="number" placeholder="Buyer Team ID" class="form-control" asp-for="BuyerTeamId"/>        
-    </div>
+            <label class="col-sm-1 col-sm-offset-1 control-label">Seller ID</label>
+            <div class="col-sm-2">
+                <input id="SellerIdInput" type="number" placeholder="Seller ID" class="form-control" asp-for="SellerId"/>
+            </div>
+        </div>
 
-    <label class="col-sm-1 col-sm-offset-1 control-label">Seller Team ID</label>
-    <div class="col-sm-2">
-      <input id="SellerTeamIdInput" type="number" placeholder="Seller Team ID" class="form-control" asp-for="SellerTeamId"/>
-    </div>
-  </div>
+        <br/>
 
-  <br/>
+        <div class="form-group row">
+            <label class="col-sm-1 control-label">Buyer Team ID</label>
+            <div class="col-sm-2">
+                <input id="BuyerTeamIdInput" type="number" placeholder="Buyer Team ID" class="form-control" asp-for="BuyerTeamId"/>
+            </div>
 
-  <div class="form-group row">
-    <label class="col-sm-1 control-label">Security</label>
-    <div class="col-sm-2">
-                
-      <select ID="SecurityDropDownList" class="form-control" asp-for="Symbol">
-        <option value="" selected="selected">Any</option>
-        @foreach (var nameAndSymbol in Security.NamesAndSymbols)
+            <label class="col-sm-1 col-sm-offset-1 control-label">Seller Team ID</label>
+            <div class="col-sm-2">
+                <input id="SellerTeamIdInput" type="number" placeholder="Seller Team ID" class="form-control" asp-for="SellerTeamId"/>
+            </div>
+        </div>
+
+        <br/>
+
+        <div class="form-group row">
+            <label class="col-sm-1 control-label">Security</label>
+            <div class="col-sm-2">
+
+                <select ID="SecurityDropDownList" class="form-control" asp-for="Symbol">
+                    <option value="" selected="selected">Any</option>
+                    @foreach (var nameAndSymbol in Security.NamesAndSymbols)
+                    {
+                        <option>@nameAndSymbol.Key</option>
+                    }
+                </select>
+
+            </div>
+
+            <label class="col-sm-1 col-sm-offset-1 control-label">Flagged</label>
+            <div class="col-sm-2">
+                <select class="form-control" asp-for="Flagged">
+                    <option value="" selected="selected">Any</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+        </div>
+
+        <br/>
+
+        <div class="row">
+            <div class="btn-group col-sm-12">
+
+                <input type="submit" formaction="SearchTrades" value="Cancel" class="btn btn-secondary"/>
+                <input type="submit" formaction="Submit" value="Submit" class="btn btn-primary"/>
+
+            </div>
+        </div>
+
+        <br/>
+
+        @if (Model.Trades != null)
         {
-          <option>@nameAndSymbol.Key</option>
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Buyer</th>
+                    <th>Buyer Team</th>
+                    <th>Seller</th>
+                    <th>Seller Team</th>
+                    <th>Security</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Market Price</th>
+                    <th>Broker</th>
+                    <th>Note</th>
+                </tr>
+                <thead>
+                <tbody>
+
+                @foreach (var trade in Model.Trades)
+                {
+                    <tr@(trade.Flagged ? " class=\"table-danger\"" : string.Empty)>
+                        <td>@trade.Buyer.Id</td>
+                        <td>@trade.Buyer.Team.Id</td>
+                        <td>@trade.Seller.Id</td>
+                        <td>@trade.Seller.Team.Id</td>
+                        <td>@trade.Security.Symbol</td>
+                        <td>@trade.Quantity</td>
+                        <td>@trade.Price</td>
+                        <td>@trade.MarketPrice</td>
+                        <td>@trade.BrokerId</td>
+                        <td>@trade.Note</td>
+                    </tr>
+                }
+
+                </tbody>
+            </table>
         }
-      </select>
 
-    </div>
-
-    <label class="col-sm-1 col-sm-offset-1 control-label">Flagged</label>
-    <div class="col-sm-2">
-      <select class="form-control" asp-for="Flagged">
-        <option value="" selected="selected">Any</option>
-        <option value="true">Yes</option>
-        <option value="false">No</option>
-      </select>
-    </div>
-  </div>
-            
-  <br/>
-
-  <div class="row">
-    <div class="btn-group col-sm-12"> 
-
-      <input type="submit" formaction="SearchTrades" value="Cancel" class="btn btn-secondary"/>
-      <input type="submit" formaction="Submit" value="Submit" class="btn btn-primary"/>
-
-    </div>              
-  </div>
-            
-  <br/>
-            
-  @if (Model.Trades != null)
-  {
-    <table class="table">
-      <thead class="thead-dark">
-      <tr>
-        <th>Buyer</th>
-        <th>Buyer Team</th>
-        <th>Seller</th>
-        <th>Seller Team</th>
-        <th>Security</th>
-        <th>Quantity</th>
-        <th>Price</th>
-        <th>Market Price</th>
-        <th>Broker</th>
-        <th>Note</th>
-      </tr>
-      <thead>
-      <tbody>
-      
-      @foreach (var trade in Model.Trades)
-      {
-      <tr@(trade.Flagged ? " class=\"table-danger\"" : string.Empty)>
-        <td>@trade.Buyer.Id</td>
-        <td>@trade.Buyer.Team.Id</td>
-        <td>@trade.Seller.Id</td>
-        <td>@trade.Seller.Team.Id</td>
-        <td>@trade.Security.Symbol</td>
-        <td>@trade.Quantity</td>
-        <td>@trade.Price</td>
-        <td>@trade.MarketPrice</td>
-        <td>@trade.BrokerId</td>
-        <td>@trade.Note</td>
-      </tr>
-      }
-      
-      </tbody>
-    </table>
-  }
-            
-</fieldset>
+    </fieldset>
 </form>
-    
-    <br/>
+
+<br/>

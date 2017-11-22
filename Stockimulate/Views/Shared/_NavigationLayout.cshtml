@@ -6,66 +6,75 @@
     var role = Model.Login.Role;
 }
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="#"><strong>stock</strong>imulate</a>
-        <div class="collapse navbar-collapse" id="navbar">
-            <ul class="navbar-nav mr-auto mt-2 mt-md-0">
-                
-                @if (!string.IsNullOrEmpty(role))
-                {
-                    if (role == "Administrator")
-                    {
-                        <li class='nav-item'><a class='nav-link' asp-controller="Administrator" asp-action="ControlPanel">Control Panel</a></li>
-                        <li class='nav-item'><a class='nav-link' asp-controller="Administrator" asp-action="Standings">Standings</a></li>
-                        <li class='nav-item'><a class='nav-link' asp-controller="Broker" asp-action="TradeInput" >Trade</a></li>
-                    }
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#"><strong>stock</strong>imulate</a>
+    <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav mr-auto mt-2 mt-md-0">
 
-                    if (role == "Administrator" || role == "Regulator")
-                    {
-                        <li class='nav-item dropdown'>
-                            <a href='#' class='nav-link dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>Anti Fraud</a>
-                            <div class='dropdown-menu'>
-                                <a class='dropdown-item' asp-controller="Regulator" asp-action="SearchTrades">Search Trades</a>
-                                <a class='dropdown-item' asp-controller="Trader" asp-action="Reports">Search Reports</a>
-                            </div>
-                        </li>
-                    }
+            @if (!string.IsNullOrEmpty(role))
+            {
+                if (role == "Administrator")
+                {
+                    <li class='nav-item'>
+                        <a class='nav-link' asp-controller="Administrator" asp-action="ControlPanel">Control Panel</a>
+                    </li>
+                    <li class='nav-item'>
+                        <a class='nav-link' asp-controller="Administrator" asp-action="Standings">Standings</a>
+                    </li>
+                    <li class='nav-item'>
+                        <a class='nav-link' asp-controller="Broker" asp-action="TradeInput">Trade</a>
+                    </li>
                 }
 
-            </ul>
-
-            @if (string.IsNullOrEmpty(role))
-            {
-
-                <form class="form-inline my-2 my-lg-0 login-form" method="post" asp-controller="NavigationLayout" asp-action="Login">
-                    <div class="form-group mr-sm-2">
-                        <input type="text" class="form-control input-sm" placeholder="Username" asp-for="Username">
-                    </div>
-                    <div class="form-group mr-sm-2">
-                        <input type="password" class="form-control input-sm" placeholder="Password" asp-for="Password">
-                    </div>
-                    <input type="submit" class="btn btn-sm btn-primary btn-log" value="Sign In"/>
-                </form>
+                if (role == "Administrator" || role == "Regulator")
+                {
+                    <li class='nav-item dropdown'>
+                        <a href='#' class='nav-link dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>Anti Fraud</a>
+                        <div class='dropdown-menu'>
+                            <a class='dropdown-item' asp-controller="Regulator" asp-action="SearchTrades">Search Trades</a>
+                            <a class='dropdown-item' asp-controller="Trader" asp-action="Reports">Search Reports</a>
+                        </div>
+                    </li>
+                }
             }
 
-            else
-            {
-                <form class="form-inline my-2 my-lg-0" method="post" asp-controller="NavigationLayout" asp-action="Logout">
-                    
-                    <div class="form-group nav-text text-white mr-sm-2">@Model.Login.Username</div>
-                    <button class="btn btn-sm btn-primary btn-log">Log Out</button>
-                    
-                </form>
-            }
-           
-        </div>
-    </nav>
+        </ul>
+
+        @if (string.IsNullOrEmpty(role))
+        {
+            <form class="form-inline my-2 my-lg-0 login-form" method="post" asp-controller="NavigationLayout" asp-action="Login">
+                <div class="form-group mr-sm-2">
+                    <input type="text" class="form-control input-sm" placeholder="Username" asp-for="Username">
+                </div>
+                <div class="form-group mr-sm-2">
+                    <input type="password" class="form-control input-sm" placeholder="Password" asp-for="Password">
+                </div>
+                <input type="submit" class="btn btn-sm btn-primary btn-log" value="Sign In"/>
+            </form>
+        }
+
+        else
+        {
+            <form class="form-inline my-2 my-lg-0" method="post" asp-controller="NavigationLayout" asp-action="Logout">
+
+                <div class="form-group nav-text text-white mr-sm-2">@Model.Login.Username</div>
+                <button class="btn btn-sm btn-primary btn-log">Log Out</button>
+
+            </form>
+        }
+
+    </div>
+</nav>
 
 <div class="container mt-4">
 
     @RenderBody()
 
 </div>
+
+@section Scripts {
+    @RenderSection("scripts", false)
+}

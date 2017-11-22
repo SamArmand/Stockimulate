@@ -43,147 +43,149 @@
 
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.js" integrity="sha256-Ps0pf4Ma5dU+zSI0m+Spwq+9QE5EjL5yt0dfWGPEugQ=" crossorigin="anonymous"></script>
-<script src="https://js.pusher.com/4.1/pusher.min.js"></script>
-<script>
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.js" integrity="sha256-Ps0pf4Ma5dU+zSI0m+Spwq+9QE5EjL5yt0dfWGPEugQ=" crossorigin="anonymous"></script>
+    <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+    <script>
 
-    const tickerPriceH1 = document.getElementById("TickerPriceH1");
-    const statusDiv = document.getElementById("StatusDiv");
-    const statusSpan = document.getElementById("StatusSpan");
-    const daySpan = document.getElementById("DaySpan");
-    const quarterSpan = document.getElementById("QuarterSpan");
-    const tickerChangeDiv = document.getElementById("TickerChangeDiv");
-    const tickerChangeH1 = document.getElementById("TickerChangeH1");
-    const newsH2 = document.getElementById("NewsH2");
-    
-    // ReSharper disable once PossiblyUnassignedProperty
-    const channel = (new Pusher('@Constants.PusherKey',
-        {
-            cluster: '@Constants.PusherCluster',
-            encrypted: true
+        const tickerPriceH1 = document.getElementById("TickerPriceH1");
+        const statusDiv = document.getElementById("StatusDiv");
+        const statusSpan = document.getElementById("StatusSpan");
+        const daySpan = document.getElementById("DaySpan");
+        const quarterSpan = document.getElementById("QuarterSpan");
+        const tickerChangeDiv = document.getElementById("TickerChangeDiv");
+        const tickerChangeH1 = document.getElementById("TickerChangeH1");
+        const newsH2 = document.getElementById("NewsH2");
+
+        // ReSharper disable once PossiblyUnassignedProperty
+        const channel = (new Pusher('@Constants.PusherKey',
+            {
+                cluster: '@Constants.PusherCluster',
+                encrypted: true
 // ReSharper disable once PossiblyUnassignedProperty
-        })).subscribe('stockimulate');
+            })).subscribe('stockimulate');
 
-    channel.bind('update-market',
-        function(message) {
+        channel.bind('update-market',
+            function(message) {
 
-            var effect;
-            var newPrice;
-            
-            if (message.day === 0) {
-                effect = 0;
-                newPrice = message.effects[@Model.TickerId];
-            } else {
-                effect = message.effects[@Model.TickerId];
-                newPrice = parseInt(tickerPriceH1.innerText.substring(1)) + effect;
-                
-                if (message.close) {
-                    statusDiv.className = "card text-white mb-3 text-center bg-danger";
-                    statusSpan.innerHTML = "CLOSED";
-                } else
-                    daySpan.innerHTML = (parseInt(daySpan.innerHTML) + 1);
-            }
+                var effect;
+                var newPrice;
 
-            tickerPriceH1.innerHTML = `$${newPrice}`;
+                if (message.day === 0) {
+                    effect = 0;
+                    newPrice = message.effects[@Model.TickerId];
+                } else {
+                    effect = message.effects[@Model.TickerId];
+                    newPrice = parseInt(tickerPriceH1.innerText.substring(1)) + effect;
 
-            chart.data.datasets[0].data.push({ x: parseInt(message.day), y: newPrice });
-            window.myLine.update();
-
-            if (effect > 0) {
-                tickerChangeDiv.className = "card mb-3 text-center bg-success text-white";
-                tickerChangeH1.innerHTML = `+${effect}`;
-            } else {
-                tickerChangeH1.innerHTML = effect;
-                if (effect < 0)
-                    tickerChangeDiv.className = "card mb-3 text-center bg-danger text-white";
-                else
-                    tickerChangeDiv.className = "card mb-3 text-center bg-warning text-white";
-            }
-
-            if (message.news !== "")
-                newsH2.innerHTML = message.news;
-        });
-
-    channel.bind('open-market',
-        function() {
-            statusDiv.className = "card text-white mb-3 text-center bg-success";
-            statusSpan.innerHTML = "OPEN";
-            daySpan.innerHTML = (parseInt(daySpan.innerHTML) + 1);
-            quarterSpan.innerHTML =
-                (parseInt(quarterSpan.innerHTML) + 1);
-        });
-
-    var chart = {
-        type: 'line',
-        data: {
-            datasets: [
-                {
-                    backgroundColor: '#000000',
-                    borderColor: '#000000',
-                    data: eval(@Model.Data)
+                    if (message.close) {
+                        statusDiv.className = "card text-white mb-3 text-center bg-danger";
+                        statusSpan.innerHTML = "CLOSED";
+                    } else
+                        daySpan.innerHTML = (parseInt(daySpan.innerHTML) + 1);
                 }
-            ]
-        },
-        options: {
-            maintainAspectRatio: false,
-            elements: {
-                line: {
-                    tension: 0, // disables bezier curves
-                    fill: false
-                },
-                point: {
-                    radius: 0
+
+                tickerPriceH1.innerHTML = `$${newPrice}`;
+
+                chart.data.datasets[0].data.push({ x: parseInt(message.day), y: newPrice });
+                window.myLine.update();
+
+                if (effect > 0) {
+                    tickerChangeDiv.className = "card mb-3 text-center bg-success text-white";
+                    tickerChangeH1.innerHTML = `+${effect}`;
+                } else {
+                    tickerChangeH1.innerHTML = effect;
+                    if (effect < 0)
+                        tickerChangeDiv.className = "card mb-3 text-center bg-danger text-white";
+                    else
+                        tickerChangeDiv.className = "card mb-3 text-center bg-warning text-white";
                 }
-            },
-            legend: {
-                display: false
-            },
-            responsive: true,
-            title: {
-                display: true,
-                text: "@Model.TickerNameAndSymbol"
-            },
-            tooltips: {
-                mode: 'index',
-                intersect: false
-            },
-            hover: {
-                mode: 'nearest',
-                intersect: true
-            },
-            scales: {
-                xAxes: [
+
+                if (message.news !== "")
+                    newsH2.innerHTML = message.news;
+            });
+
+        channel.bind('open-market',
+            function() {
+                statusDiv.className = "card text-white mb-3 text-center bg-success";
+                statusSpan.innerHTML = "OPEN";
+                daySpan.innerHTML = (parseInt(daySpan.innerHTML) + 1);
+                quarterSpan.innerHTML =
+                    (parseInt(quarterSpan.innerHTML) + 1);
+            });
+
+        var chart = {
+            type: 'line',
+            data: {
+                datasets: [
                     {
-                        type: 'linear',
-                        display: false,
-                        scaleLabel: {
-                            display: false
-                        },
-                        ticks: {
-                            min: 0,
-                            max: 251
-                        }
-                    }
-                ],
-                yAxes: [
-                    {
-                        type: 'linear',
-                        scaleLabel: {
-                            display: false
-                        },
-                        ticks: {
-                            min: 0,
-                            max: 3000
-                        }
+                        backgroundColor: '#000000',
+                        borderColor: '#000000',
+                        data: eval(@Model.Data)
                     }
                 ]
+            },
+            options: {
+                maintainAspectRatio: false,
+                elements: {
+                    line: {
+                        tension: 0, // disables bezier curves
+                        fill: false
+                    },
+                    point: {
+                        radius: 0
+                    }
+                },
+                legend: {
+                    display: false
+                },
+                responsive: true,
+                title: {
+                    display: true,
+                    text: "@Model.TickerNameAndSymbol"
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    xAxes: [
+                        {
+                            type: 'linear',
+                            display: false,
+                            scaleLabel: {
+                                display: false
+                            },
+                            ticks: {
+                                min: 0,
+                                max: 251
+                            }
+                        }
+                    ],
+                    yAxes: [
+                        {
+                            type: 'linear',
+                            scaleLabel: {
+                                display: false
+                            },
+                            ticks: {
+                                min: 0,
+                                max: 3000
+                            }
+                        }
+                    ]
+                }
             }
-        }
-    };
+        };
 
-    window.onload = function() {
+        window.onload = function() {
 // ReSharper disable once PossiblyUnassignedProperty
-        window.myLine = new window.Chart(document.getElementById("Chart").getContext("2d"), chart);
-    };
+            window.myLine = new window.Chart(document.getElementById("Chart").getContext("2d"), chart);
+        };
 
-</script>
+    </script>
+}
