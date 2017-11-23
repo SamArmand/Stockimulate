@@ -6,7 +6,7 @@
     var symbol = string.Empty;
 }
 <div class="row">
-    <div class="col-8">
+    <div class="col-10">
 
         <form class="form-horizontal" role="form" method="post" asp-controller="Broker">
             <fieldset>
@@ -43,12 +43,12 @@
                 <div class="form-group row">
                     <label class="col-sm-1 col-form-label">Buyer ID</label>
                     <div class="col-sm-2">
-                        <input type="number" placeholder="Buyer ID" class="form-control" asp-for="BuyerId" required/>
+                        <input type="text" placeholder="Buyer ID" class="form-control" asp-for="BuyerId" required/>
                     </div>
 
                     <label class="col-sm-1 col-sm-offset-1 col-form-label">Seller ID</label>
                     <div class="col-sm-2">
-                        <input type="number" placeholder="Seller ID" class="form-control" asp-for="SellerId" required/>
+                        <input type="text" placeholder="Seller ID" class="form-control" asp-for="SellerId" required/>
                     </div>
                 </div>
 
@@ -76,14 +76,14 @@
 
                     <label class="col-sm-1 col-sm-offset-1 col-form-label">Quantity</label>
                     <div class="col-sm-2">
-                        <input type="number" placeholder="Quantity" class="form-control" asp-for="Quantity"/>
+                        <input type="text" placeholder="Quantity" class="form-control" asp-for="Quantity"/>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-sm-1 col-form-label">Price</label>
                     <div class="col-sm-2 ">
-                        <input type="number" placeholder="Price" class="form-control" asp-for="Price"/>
+                        <input type="text" placeholder="Price" class="form-control" asp-for="Price"/>
                     </div>
                 </div>
 
@@ -138,7 +138,7 @@
 
     </div>
 
-    <div class="col-4">
+    <div class="col-2">
         @if (Model.Login.Role != "Administrator")
         {
             @Html.Partial("MiniTickerPartial", new MiniTickerPartialViewModel {Symbol = symbol})
@@ -172,7 +172,8 @@
 
                 var tickerDiv;
                 var priceH4;
-                var changeP;
+                var changeSpan;
+                var caretSpan;
             
                 @if (Model.Login.Role == "Administrator")
                 {
@@ -181,73 +182,86 @@
                         var newPrice;
                     </text>
 
-                    foreach (var security in Security.GetAll())
+                    foreach (var kvp in Security.GetAll())
                     {
-                        var priceH4Id = "PriceH4" + security.Value.Symbol;
-                        var changePId = "ChangeP" + security.Value.Symbol;
-                        var tickerDivId = "TickerDiv" + security.Value.Symbol;
+                        var security = kvp.Value;
+                        var securitySymbol = security.Symbol;
+
+                        var priceH4Id = "PriceH4" + securitySymbol;
+                        var changeSpanId = "ChangeSpan" + securitySymbol;
+                        var tickerDivId = "TickerDiv" + securitySymbol;
+                        var caretSpanId = "CaretSpan" + securitySymbol;
+
                         <text>
                 
                             tickerDiv = document.getElementById("@tickerDivId");
                             priceH4 = document.getElementById("@priceH4Id");
-                            changeP = document.getElementById("@changePId");
+                            changeSpan = document.getElementById("@changeSpanId");
+                            caretSpan = document.getElementById("@caretSpanId");
 
                             if (message.day === 0) {
                                 effect = 0;
-                                newPrice = message.effects[@security.Value.Id];
+                                newPrice = message.effects[@security.Id];
                             } else {
-                                effect = message.effects[@security.Value.Id];
+                                effect = message.effects[@security.Id];
                                 newPrice = parseInt(priceH4.innerText.substring(1)) +
                                     effect;
                             }
 
                             priceH4.innerHTML = `$${newPrice}`;
+                            changeSpan.innerHTML = Math.abs(effect);
 
                             if (effect > 0) {
                                 tickerDiv.className = "card mb-3 bg-success text-white";
-                                changeP.innerHTML = `+${effect}`;
+                                caretSpan.innerHTML = '<i aria-hidden="true" class="fa fa-caret-up"></i>';
+                            } else if (effect < 0) {
+                                tickerDiv.className = "card mb-3 bg-danger text-white";
+                                caretSpan.innerHTML = '<i aria-hidden="true" class="fa fa-caret-down"></i>';
                             } else {
-                                changeP.innerHTML = effect;
-                                if (effect < 0)
-                                    tickerDiv.className = "card mb-3 bg-danger text-white";
-                                else
-                                    tickerDiv.className = "card mb-3 bg-warning text-white";
+                                tickerDiv.className = "card mb-3 bg-warning text-white";
+                                caretSpan.innerHTML = "";
                             }
                         </text>
                     }
                 }
                 else
                 {
-                    var security = Security.GetAll().FirstOrDefault(s => s.Key == symbol);
-                    var priceH4Id = "PriceH4" + security.Value.Symbol;
-                    var changePId = "ChangeP" + security.Value.Symbol;
-                    var tickerDivId = "TickerDiv" + security.Value.Symbol;
+                    var security = Security.GetAll().FirstOrDefault(s => s.Key == symbol).Value;
+                    var securitySymbol = security.Symbol;
+
+                    var priceH4Id = "PriceH4" + securitySymbol;
+                    var changeSpanId = "ChangeSpan" + securitySymbol;
+                    var tickerDivId = "TickerDiv" + securitySymbol;
+                    var caretSpanId = "CaretSpan" + securitySymbol;
                     <text>
                 
                         tickerDiv = document.getElementById("@tickerDivId");
                         priceH4 = document.getElementById("@priceH4Id");
-                        changeP = document.getElementById("@changePId");
+                        changeSpan = document.getElementById("@changeSpanId");
+                        caretSpan = document.getElementById("@caretSpanId");
 
                         if (message.day === 0) {
                             effect = 0;
-                            newPrice = message.effects[@security.Value.Id];
+                            newPrice = message.effects[@security.Id];
                         } else {
-                            effect = message.effects[@security.Value.Id];
+                            effect = message.effects[@security.Id];
                             newPrice = parseInt(priceH4.innerText.substring(1)) +
                                 effect;
                         }
+
+                        changeSpan.innerHTML = Math.abs(effect);
 
                         priceH4.innerHTML = `$${newPrice}`;
 
                         if (effect > 0) {
                             tickerDiv.className = "card mb-3 bg-success text-white";
-                            changeP.innerHTML = `+${effect}`;
+                            caretSpan.innerHTML = '<i aria-hidden="true" class="fa fa-caret-up"></i>';
+                        } else if (effect < 0) {
+                            tickerDiv.className = "card mb-3 bg-danger text-white";
+                            caretSpan.innerHTML = '<i aria-hidden="true" class="fa fa-caret-down"></i>';
                         } else {
-                            changeP.innerHTML = effect;
-                            if (effect < 0)
-                                tickerDiv.className = "card mb-3 bg-danger text-white";
-                            else
-                                tickerDiv.className = "card mb-3 bg-warning text-white";
+                            tickerDiv.className = "card mb-3 bg-warning text-white";
+                            caretSpan.innerHTML = "";
                         }
                     </text>
                 }

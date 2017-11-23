@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Stockimulate.Models;
 
 namespace Stockimulate.ViewModels.Administrator
@@ -12,70 +11,28 @@ namespace Stockimulate.ViewModels.Administrator
 
         public static int Quarter { get; private set; }
         public static int Day { get; private set; }
-        private static Dictionary<string, List<int>> _prices = new Dictionary<string, List<int>>();
+        public static Dictionary<string, List<int>> Prices = new Dictionary<string, List<int>>();
 
-        public readonly string StatusDivCssClass;
-        public readonly string TickerChangeDivCssCLass;
-        public readonly string Data;
+        public string Symbol { get; }
 
-        public readonly int TickerId;
-        public readonly int Price;
-        public readonly string Change;
-        public readonly string TickerNameAndSymbol;
-
-        private static readonly Dictionary<string, int> LastChange = new Dictionary<string, int>();
+        public static readonly Dictionary<string, int> LastChange = new Dictionary<string, int>();
 
         public TickerViewModel(string symbol)
         {
             CheckInitialized();
 
-            var namesAndSymbols = Security.NamesAndSymbols.ToList();
-
-            StatusDivCssClass = MarketStatus == "CLOSED" ? "bg-danger" : "bg-success";
-
-            Day = _prices[symbol].Count;
-            Day -= (Day == 0 || MarketStatus == "OPEN") ? 0 : 1;
-
-            for (var i = 0; i < namesAndSymbols.Count; ++i)
-                if (namesAndSymbols[i].Key == symbol)
-                {
-                    TickerId = i;
-                    break;
-                }
-
-            Price = _prices[symbol].Count == 0 ? 0 : _prices[symbol].Last();
-            var lastChange = LastChange[symbol];
-
-            if (lastChange > 0)
-            {
-                Change = "+" + lastChange;
-                TickerChangeDivCssCLass = "bg-success";
-            }
-
-            else
-            {
-                Change = lastChange.ToString();
-                TickerChangeDivCssCLass = lastChange < 0 ? "bg-danger" : "bg-warning";
-            }
-
-            var stringBuilder = new StringBuilder("[");
-
-            for (var i = 0; i < _prices[symbol].Count; ++i)
-                stringBuilder.Append("{x: " + i + ", y: " + _prices[symbol].ElementAt(i) + "}" +
-                                     (i < _prices[symbol].Count - 1 ? ", " : string.Empty));
-
-            Data = stringBuilder.Append("]").ToString();
-
-            TickerNameAndSymbol = Security.NamesAndSymbols.FirstOrDefault(n => n.Key == symbol).Value + " (" + symbol + ")";
+            Symbol = symbol;
         }
 
         private static void CheckInitialized()
         {
-            if (_prices.Count == 0)
+            if (Prices.Count == 0)
                 foreach (var symbol in Security.NamesAndSymbols.Keys)
-                    _prices.Add(symbol, new List<int>());
+                    Prices.Add(symbol, new List<int>());
 
             if (LastChange.Count != 0) return;
+
+            Day = 0;
 
             foreach (var symbol in Security.NamesAndSymbols.Keys)
                 LastChange.Add(symbol, 0);
@@ -87,11 +44,11 @@ namespace Stockimulate.ViewModels.Administrator
 
             if (tradingDay.Day == 0)
                 foreach (var symbol in Security.NamesAndSymbols.Keys)
-                    _prices[symbol].Add(tradingDay.Effects[symbol]);
+                    Prices[symbol].Add(tradingDay.Effects[symbol]);
             else
                 foreach (var symbol in Security.NamesAndSymbols.Keys)
                 {
-                    _prices[symbol].Add(_prices[symbol].Last() + tradingDay.Effects[symbol]);
+                    Prices[symbol].Add(Prices[symbol].Last() + tradingDay.Effects[symbol]);
                     LastChange[symbol] = tradingDay.Effects[symbol];
                 }
 
@@ -105,7 +62,7 @@ namespace Stockimulate.ViewModels.Administrator
 
         internal static void Reset()
         {
-            _prices = new Dictionary<string, List<int>>();
+            Prices = new Dictionary<string, List<int>>();
 
             Quarter = 0;
             MarketStatus = "CLOSED";
@@ -114,7 +71,7 @@ namespace Stockimulate.ViewModels.Administrator
 
             foreach (var symbol in Security.NamesAndSymbols.Keys)
             {
-                _prices.Add(symbol, new List<int>());
+                Prices.Add(symbol, new List<int>());
                 LastChange[symbol] = 0;
             }
         }

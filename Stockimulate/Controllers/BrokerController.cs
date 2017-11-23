@@ -40,23 +40,17 @@ namespace Stockimulate.Controllers
                     Result = "Warning"
                 });
 
-            var buyerId = viewModel.BuyerId;
-            var sellerId = viewModel.SellerId;
-
-            if (buyerId < 0 || sellerId < 0)
-                return Error("IDs cannot be negative.");
+            if (!int.TryParse(viewModel.BuyerId,out var buyerId) || !int.TryParse(viewModel.SellerId,out var sellerId)
+                || buyerId < 0 || sellerId < 0)
+                return Error("IDs must be non-negative integers.");
             if (buyerId == sellerId)
                 return Error("Buyer ID and Seller ID must be different.");
 
-            var quantity = viewModel.Quantity;
+            if (!int.TryParse(viewModel.Quantity, out var quantity) || quantity < 1)
+                return Error("Quantity must be an integer of at least 1.");
 
-            if (quantity < 1)
-                return Error("Quantity must be at least 1.");
-
-            var price = viewModel.Price;
-
-            if (price < 1)
-                return Error("Price must be at least 1.");
+            if (!int.TryParse(viewModel.Price, out var price) || price < 1)
+                return Error("Price must be an integer of at least 1.");
 
             var buyer = Trader.Get(buyerId);
 
