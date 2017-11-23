@@ -2,11 +2,11 @@
 {
     public sealed class TradeInputViewModel : NavigationLayoutViewModel
     {
-        public int BuyerId { get; set; }
-        public int SellerId { get; set; }
+        public string BuyerId { get; set; }
+        public string SellerId { get; set; }
         public string Symbol { get; set; }
-        public int Price { get; set; }
-        public int Quantity { get; set; }
+        public string Price { get; set; }
+        public string Quantity { get; set; }
         public bool IsChecked { get; set; }
 
         public string ErrorMessage { get; internal set; }

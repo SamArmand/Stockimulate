@@ -22,12 +22,10 @@
 
     var lastChange = MiniTickerPartialViewModel.LastChanges[modelSymbol];
     var cssClass = "bg-warning";
-    var change = lastChange.ToString();
 
     if (lastChange > 0)
     {
         cssClass = "bg-success";
-        change = "+" + lastChange;
     }
     else if (lastChange < 0)
     {
@@ -36,13 +34,31 @@
 
     var tickerDivId = "TickerDiv" + modelSymbol;
     var priceH4Id = "PriceH4" + modelSymbol;
-    var changePId = "ChangeP" + modelSymbol;
+    var changeSpanId = "ChangeSpan" + modelSymbol;
+    var caretSpanId = "CaretSpan" + modelSymbol;
 }
 
 <div id="@tickerDivId" class="card text-white mb-3 @cssClass" style="max-width: 20rem;">
     <div class="card-header">@modelSymbol</div>
     <div class="card-body">
         <h4 id="@priceH4Id" class="card-title">$@MiniTickerPartialViewModel.Prices[modelSymbol]</h4>
-        <p id="@changePId" class="card-text">@change</p>
+
+        <p class="card-text">        
+            <span id="@caretSpanId">
+            
+            @if (lastChange > 0)
+            {
+                <i class="fa fa-caret-up" aria-hidden="true"></i>
+            }
+            else if (lastChange < 0)
+            {
+                <i class="fa fa-caret-down" aria-hidden="true"></i>
+            }
+            
+            </span> 
+            
+            <span id="@changeSpanId">
+                @Math.Abs(lastChange)
+            </span> 
     </div>
 </div>

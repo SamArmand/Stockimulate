@@ -1,4 +1,32 @@
+@using System.Text
 @model TickerViewModel
+
+@{
+    var statusDivCssClass = TickerViewModel.MarketStatus == "CLOSED" ? "bg-danger" : "bg-success";
+
+    var symbol = Model.Symbol;
+
+    var lastChange = TickerViewModel.LastChange[symbol];
+
+    var tickerChangeDivCssCLass = lastChange > 0 ? "bg-success" : (lastChange < 0 ? "bg-danger" : "bg-warning");
+
+    var prices = TickerViewModel.Prices[symbol];
+
+    var price = prices.Count == 0 ? 0 : prices.Last();
+
+    var namesAndSymbols = Security.NamesAndSymbols.ToList();
+
+    var tickerId = -1;
+
+    for (var i = 0; i < namesAndSymbols.Count; ++i)
+    {
+        if (namesAndSymbols[i].Key == symbol)
+        {
+            tickerId = i;
+            break;
+        }
+    }
+}
 
 <div class="container-fluid">
 
@@ -14,22 +42,42 @@
 
             <div class="card text-white mb-3 text-center bg-primary">
                 <div class="card-body">
-                    <h1 id="TickerPriceH1">$@Model.Price</h1>
+                    <h1 id="TickerPriceH1">$@price</h1>
                 </div>
             </div>
 
-            <div class="card text-white mb-3 text-center @Model.TickerChangeDivCssCLass" id="TickerChangeDiv">
+            <div class="card text-white mb-3 text-center @tickerChangeDivCssCLass" id="TickerChangeDiv">
                 <div class="card-body">
-                    <h1 id="TickerChangeH1">@Model.Change</h1>
+                    <h1>
+
+                        <span id="TickerCaretSpan">
+                            @if (lastChange > 0)
+                            {
+                                <i class="fa fa-caret-up" aria-hidden="true"></i>
+                            }
+                            else if (lastChange < 0)
+                            {
+                                <i class="fa fa-caret-down" aria-hidden="true"></i>
+                            }
+
+                        </span>
+
+                        <span id="TickerChangeSpan">
+                            @Math.Abs(lastChange)
+                        </span>
+                    </h1>
                 </div>
             </div>
-            
-            <div class="card text-white mb-3 text-center @Model.StatusDivCssClass" id="StatusDiv" style="height: auto">
+
+            <div class="card text-white mb-3 text-center @statusDivCssClass" id="StatusDiv" style="height: auto">
 
                 <h1>
-                    <div>Q<span id="QuarterSpan">@TickerViewModel.Quarter.ToString()</span></div>  
-                    <div>Day <span id="DaySpan">@TickerViewModel.Day.ToString()</span></div>
-                    <div>Market <span id="StatusSpan">@TickerViewModel.MarketStatus</span></div>
+                    <div>Q<span id="QuarterSpan">@TickerViewModel.Quarter.ToString()</span>
+                    </div>
+                    <div>Day <span id="DaySpan">@TickerViewModel.Day.ToString()</span>
+                    </div>
+                    <div>Market <span id="StatusSpan">@TickerViewModel.MarketStatus</span>
+                    </div>
                 </h1>
             </div>
 
@@ -54,15 +102,16 @@
         const daySpan = document.getElementById("DaySpan");
         const quarterSpan = document.getElementById("QuarterSpan");
         const tickerChangeDiv = document.getElementById("TickerChangeDiv");
-        const tickerChangeH1 = document.getElementById("TickerChangeH1");
+        const tickerChangeSpan = document.getElementById("TickerChangeSpan");
         const newsH2 = document.getElementById("NewsH2");
+        const tickerCaretSpan = document.getElementById("TickerCaretSpan");
 
         // ReSharper disable once PossiblyUnassignedProperty
         const channel = (new Pusher('@Constants.PusherKey',
             {
                 cluster: '@Constants.PusherCluster',
                 encrypted: true
-// ReSharper disable once PossiblyUnassignedProperty
+                // ReSharper disable once PossiblyUnassignedProperty
             })).subscribe('stockimulate');
 
         channel.bind('update-market',
@@ -73,9 +122,9 @@
 
                 if (message.day === 0) {
                     effect = 0;
-                    newPrice = message.effects[@Model.TickerId];
+                    newPrice = message.effects[@tickerId];
                 } else {
-                    effect = message.effects[@Model.TickerId];
+                    effect = message.effects[@tickerId];
                     newPrice = parseInt(tickerPriceH1.innerText.substring(1)) + effect;
 
                     if (message.close) {
@@ -90,15 +139,17 @@
                 chart.data.datasets[0].data.push({ x: parseInt(message.day), y: newPrice });
                 window.myLine.update();
 
+                tickerChangeSpan.innerHTML = Math.abs(effect);
+
                 if (effect > 0) {
                     tickerChangeDiv.className = "card mb-3 text-center bg-success text-white";
-                    tickerChangeH1.innerHTML = `+${effect}`;
+                    tickerCaretSpan.innerHTML = '<i aria-hidden="true" class="fa fa-caret-up"></i>';
+                } else if (effect < 0) {
+                    tickerChangeDiv.className = "card mb-3 text-center bg-danger text-white";
+                    tickerCaretSpan.innerHTML = '<i aria-hidden="true" class="fa fa-caret-down"></i>';
                 } else {
-                    tickerChangeH1.innerHTML = effect;
-                    if (effect < 0)
-                        tickerChangeDiv.className = "card mb-3 text-center bg-danger text-white";
-                    else
-                        tickerChangeDiv.className = "card mb-3 text-center bg-warning text-white";
+                    tickerChangeDiv.className = "card mb-3 text-center bg-warning text-white";
+                    tickerCaretSpan.innerHTML = "";
                 }
 
                 if (message.news !== "")
@@ -121,7 +172,20 @@
                     {
                         backgroundColor: '#000000',
                         borderColor: '#000000',
-                        data: eval(@Model.Data)
+                        
+                        @{
+                            var stringBuilder = new StringBuilder("[");
+
+                            var pricesCount = prices.Count;
+
+                            for (var i = 0; i < pricesCount; ++i)
+                            {
+                                stringBuilder.Append("{x: " + i + ", y: " + prices[i] + "}" +
+                                                     (i < pricesCount - 1 ? ", " : string.Empty));
+                            }
+                        }
+                        
+                        data: eval(@stringBuilder.Append("]").ToString())
                     }
                 ]
             },
@@ -142,7 +206,7 @@
                 responsive: true,
                 title: {
                     display: true,
-                    text: "@Model.TickerNameAndSymbol"
+                    text: "@Security.NamesAndSymbols.FirstOrDefault(n => n.Key == symbol).Value (@symbol)"
                 },
                 tooltips: {
                     mode: 'index',
