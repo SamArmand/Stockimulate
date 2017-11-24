@@ -15,27 +15,24 @@
     var role = Model.Login.Role;
 
     if (role == "Administrator" || role == "Regulator")
-     {
-         <br/>
+    {
+        <br/>
 
-         <div class="row">
-             <div class="col-lg-6">
-                 <form role="form" method="post" asp-controller="Trader">
-                     <div class="input-group">
-                         <input type="text" class="form-control" placeholder="Team ID" aria-label="Team ID" asp-for="TeamId">
-                         <span class="input-group-btn">
-                             <input type="submit" asp-action="Submit" value="Search" class="btn btn-primary" type="button"/>
-                         </span>
-                     </div>
-                 </form>
+        <div class="row">
+            <div class="col-lg-6">
+                <form role="form" method="post" asp-controller="Trader">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Team ID" aria-label="Team ID" asp-for="TeamId">
+                        <span class="input-group-btn">
+                            <input type="submit" asp-action="Submit" value="Search" class="btn btn-primary" type="button"/>
+                        </span>
+                    </div>
+                </form>
 
-             </div>
-         </div>
-     }
-
-
+            </div>
+        </div>
+    }
 }
-
 
 
 <br/>
@@ -43,147 +40,25 @@
 <br/>
 
 @{
-    var team = Model.Team;
 
-    if (team != null)
+    if (role == "Team" && !AppSettings.IsReportsEnabled())
     {
-        <h3>@team.Name - @team.Id</h3>
-        <table class="table">
-            <thead class="thead-dark">
-            <tr>
-                <th>Security</th>
-                <th>Position</th>
-                <th>Current Price</th>
-                <th>Realized P&amp;L</th>
-                <th>Unrealized P&amp;L</th>
-                <th>Total P&amp;L</th>
-            </tr>
-            </thead>
-            <tbody>
+        <div class="alert alert-info" role="alert">
+            <strong>Wait up!</strong> The reports page is not enabled yet. Refresh the page at the end of the quarter.
+        </div>
+    }
+    else
+    {
+        var team = Model.Team;
 
-            @{
-                var prices = Security.GetAll().Values.ToDictionary(x => x.Symbol, x => x.Price);
-                team.Calculate(prices);
-
-                var teamPositions = team.Positions;
-                var teamRealizedPnLs = team.RealizedPnLs;
-                var teamUnrealizedPnLs = team.UnrealizedPnLs;
-                var teamTotalPnLs = team.TotalPnLs;
-
-                foreach (var key in teamPositions.Keys)
-                {
-                    <tr>
-                        <th scope="row">@key</th>
-                        <td>@teamPositions[key]</td>
-                        <td>$@string.Format("{0:n0}", prices[key])</td>
-
-                        @{
-                            var realizedPnL = teamRealizedPnLs[key];
-                            if (realizedPnL < 0)
-                            {
-                                <td style="color: red">($@string.Format("{0:n0}", Math.Abs(realizedPnL)))</td>
-                            }
-                            else
-                            {
-                                <td>$@string.Format("{0:n0}", realizedPnL)</td>
-                            }
-
-                            var unrealizedPnL = teamUnrealizedPnLs[key];
-
-                            if (unrealizedPnL < 0)
-                            {
-                                <td style="color: red">($@string.Format("{0:n0}", Math.Abs(unrealizedPnL)))</td>
-                            }
-                            else
-                            {
-                                <td>$@string.Format("{0:n0}", unrealizedPnL)</td>
-                            }
-
-                            var totalPnL = teamTotalPnLs[key];
-
-                            if (totalPnL < 0)
-                            {
-                                <td style="color: red">($@string.Format("{0:n0}", Math.Abs(totalPnL)))</td>
-                            }
-                            else
-                            {
-                                <td>$@string.Format("{0:n0}", totalPnL)</td>
-                            }
-                        }
-
-                    </tr>
-                }
-
-                var teamAccumulatedPenalties = team.AccumulatedPenalties;
-
-                if (teamAccumulatedPenalties > 0)
-                {
-                    <tr class="table-danger">
-                        <th scope="row">Penalties</th>
-                        <td>@teamAccumulatedPenalties</td>
-                        <td/>
-                        <td/>
-                        <td/>
-                        <td style="color: red">($@string.Format("{0:n0}", team.AccumulatedPenaltiesValue))</td>
-                    </tr>
-                }
-            }
-
-            <tr class="table-active">
-                <th scope="row">Total</th>
-                <td/>
-                <td/>
-                <td/>
-                <td/>
-                
-                @{
-                    var teamPnL = team.PnL();
-
-                    if (teamPnL < 0)
-                    {
-                        <td style="color: red">($@string.Format("{0:n0}", Math.Abs(teamPnL)))</td>
-                    }
-                    else
-                    {
-                        <td>$@string.Format("{0:n0}", teamPnL)</td>
-                    }
-                }
-                  
-            </tr>
-            
-            <tr class="table-active">
-                <th scope="row">Average P&amp;L</th>
-                <td/>
-                <td/>
-                <td/>
-                <td/>
-                
-                @{
-                    var averagePnL = team.AveragePnL();
-
-                    if (averagePnL < 0)
-                    {
-                        <td style="color: red">($@string.Format("{0:n0}", Math.Abs(averagePnL)))</td>
-                    }
-                    else
-                    {
-                        <td>$@string.Format("{0:n0}", averagePnL)</td>
-                    }
-                }
-                
-            </tr>
-            </tbody>
-        </table>
-
-        foreach (var trader in team.Traders)
+        if (team != null)
         {
-            <h3>@trader.Name - @trader.Id</h3>
+            <h3>@team.Name - @team.Id</h3>
             <table class="table">
                 <thead class="thead-dark">
                 <tr>
                     <th>Security</th>
                     <th>Position</th>
-                    <th>Average Open Price</th>
                     <th>Current Price</th>
                     <th>Realized P&amp;L</th>
                     <th>Unrealized P&amp;L</th>
@@ -193,23 +68,23 @@
                 <tbody>
 
                 @{
-                    var traderPostions = trader.Positions;
-                    var traderAverageOpenPrices = trader.AverageOpenPrices;
-                    var traderRealizedPnLs = trader.RealizedPnLs;
-                    var traderUnrealizedPnLs = trader.UnrealizedPnLs;
-                    var traderTotalPnLs = trader.TotalPnLs;
+                    var prices = Security.GetAll().Values.ToDictionary(x => x.Symbol, x => x.Price);
+                    team.Calculate(prices);
 
-                    foreach (var key in traderPostions.Keys)
+                    var teamPositions = team.Positions;
+                    var teamRealizedPnLs = team.RealizedPnLs;
+                    var teamUnrealizedPnLs = team.UnrealizedPnLs;
+                    var teamTotalPnLs = team.TotalPnLs;
+
+                    foreach (var key in teamPositions.Keys)
                     {
                         <tr>
                             <th scope="row">@key</th>
-                            <td>@traderPostions[key]</td>
-                            <td>$@string.Format("{0:n0}", traderAverageOpenPrices[key])</td>
+                            <td>@teamPositions[key]</td>
                             <td>$@string.Format("{0:n0}", prices[key])</td>
-                            
-                            @{
-                                var realizedPnL = traderRealizedPnLs[key];
 
+                            @{
+                                var realizedPnL = teamRealizedPnLs[key];
                                 if (realizedPnL < 0)
                                 {
                                     <td style="color: red">($@string.Format("{0:n0}", Math.Abs(realizedPnL)))</td>
@@ -219,7 +94,7 @@
                                     <td>$@string.Format("{0:n0}", realizedPnL)</td>
                                 }
 
-                                var unrealizedPnL = traderUnrealizedPnLs[key];
+                                var unrealizedPnL = teamUnrealizedPnLs[key];
 
                                 if (unrealizedPnL < 0)
                                 {
@@ -230,7 +105,7 @@
                                     <td>$@string.Format("{0:n0}", unrealizedPnL)</td>
                                 }
 
-                                var totalPnL = traderTotalPnLs[key];
+                                var totalPnL = teamTotalPnLs[key];
 
                                 if (totalPnL < 0)
                                 {
@@ -240,24 +115,22 @@
                                 {
                                     <td>$@string.Format("{0:n0}", totalPnL)</td>
                                 }
-
                             }
-                            
+
                         </tr>
                     }
 
-                    var traderAccumulatedPenalties = trader.AccumulatedPenalties;
+                    var teamAccumulatedPenalties = team.AccumulatedPenalties;
 
-                    if (traderAccumulatedPenalties > 0)
+                    if (teamAccumulatedPenalties > 0)
                     {
                         <tr class="table-danger">
                             <th scope="row">Penalties</th>
-                            <td>@trader.AccumulatedPenalties</td>
+                            <td>@teamAccumulatedPenalties</td>
                             <td/>
                             <td/>
                             <td/>
-                            <td/>
-                            <td style="color: red">($@string.Format("{0:n0}", trader.AccumulatedPenaltiesValue))</td>
+                            <td style="color: red">($@string.Format("{0:n0}", team.AccumulatedPenaltiesValue))</td>
                         </tr>
                     }
                 }
@@ -268,26 +141,160 @@
                     <td/>
                     <td/>
                     <td/>
-                    <td/>
-                    
-                    @{
-                        var traderPnL = trader.PnL();
 
-                        if (traderPnL < 0)
+                    @{
+                        var teamPnL = team.PnL();
+
+                        if (teamPnL < 0)
                         {
-                            <td style="color: red">($@string.Format("{0:n0}", Math.Abs(traderPnL)))</td>
+                            <td style="color: red">($@string.Format("{0:n0}", Math.Abs(teamPnL)))</td>
                         }
                         else
                         {
-                            <td>$@string.Format("{0:n0}", traderPnL)</td>
+                            <td>$@string.Format("{0:n0}", teamPnL)</td>
                         }
                     }
-                    
+
+                </tr>
+
+                <tr class="table-active">
+                    <th scope="row">Average P&amp;L</th>
+                    <td/>
+                    <td/>
+                    <td/>
+                    <td/>
+
+                    @{
+                        var averagePnL = team.AveragePnL();
+
+                        if (averagePnL < 0)
+                        {
+                            <td style="color: red">($@string.Format("{0:n0}", Math.Abs(averagePnL)))</td>
+                        }
+                        else
+                        {
+                            <td>$@string.Format("{0:n0}", averagePnL)</td>
+                        }
+                    }
+
                 </tr>
                 </tbody>
             </table>
+
+            foreach (var trader in team.Traders)
+            {
+                <h3>@trader.Name - @trader.Id</h3>
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Security</th>
+                        <th>Position</th>
+                        <th>Average Open Price</th>
+                        <th>Current Price</th>
+                        <th>Realized P&amp;L</th>
+                        <th>Unrealized P&amp;L</th>
+                        <th>Total P&amp;L</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    @{
+                        var traderPostions = trader.Positions;
+                        var traderAverageOpenPrices = trader.AverageOpenPrices;
+                        var traderRealizedPnLs = trader.RealizedPnLs;
+                        var traderUnrealizedPnLs = trader.UnrealizedPnLs;
+                        var traderTotalPnLs = trader.TotalPnLs;
+
+                        foreach (var key in traderPostions.Keys)
+                        {
+                            <tr>
+                                <th scope="row">@key</th>
+                                <td>@traderPostions[key]</td>
+                                <td>$@string.Format("{0:n0}", traderAverageOpenPrices[key])</td>
+                                <td>$@string.Format("{0:n0}", prices[key])</td>
+
+                                @{
+                                    var realizedPnL = traderRealizedPnLs[key];
+
+                                    if (realizedPnL < 0)
+                                    {
+                                        <td style="color: red">($@string.Format("{0:n0}", Math.Abs(realizedPnL)))</td>
+                                    }
+                                    else
+                                    {
+                                        <td>$@string.Format("{0:n0}", realizedPnL)</td>
+                                    }
+
+                                    var unrealizedPnL = traderUnrealizedPnLs[key];
+
+                                    if (unrealizedPnL < 0)
+                                    {
+                                        <td style="color: red">($@string.Format("{0:n0}", Math.Abs(unrealizedPnL)))</td>
+                                    }
+                                    else
+                                    {
+                                        <td>$@string.Format("{0:n0}", unrealizedPnL)</td>
+                                    }
+
+                                    var totalPnL = traderTotalPnLs[key];
+
+                                    if (totalPnL < 0)
+                                    {
+                                        <td style="color: red">($@string.Format("{0:n0}", Math.Abs(totalPnL)))</td>
+                                    }
+                                    else
+                                    {
+                                        <td>$@string.Format("{0:n0}", totalPnL)</td>
+                                    }
+                                }
+
+                            </tr>
+                        }
+
+                        var traderAccumulatedPenalties = trader.AccumulatedPenalties;
+
+                        if (traderAccumulatedPenalties > 0)
+                        {
+                            <tr class="table-danger">
+                                <th scope="row">Penalties</th>
+                                <td>@trader.AccumulatedPenalties</td>
+                                <td/>
+                                <td/>
+                                <td/>
+                                <td/>
+                                <td style="color: red">($@string.Format("{0:n0}", trader.AccumulatedPenaltiesValue))</td>
+                            </tr>
+                        }
+                    }
+
+                    <tr class="table-active">
+                        <th scope="row">Total</th>
+                        <td/>
+                        <td/>
+                        <td/>
+                        <td/>
+                        <td/>
+
+                        @{
+                            var traderPnL = trader.PnL();
+
+                            if (traderPnL < 0)
+                            {
+                                <td style="color: red">($@string.Format("{0:n0}", Math.Abs(traderPnL)))</td>
+                            }
+                            else
+                            {
+                                <td>$@string.Format("{0:n0}", traderPnL)</td>
+                            }
+                        }
+
+                    </tr>
+                    </tbody>
+                </table>
+            }
         }
     }
 }
+
 
 <br/>
