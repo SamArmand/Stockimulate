@@ -6,7 +6,7 @@
 <div class="row">
 
     <legend>
-        <h1>View Reports</h1>
+        <h1>Reports</h1>
     </legend>
 
 </div><!-- /.row -->
@@ -118,18 +118,18 @@
 
                 if (teamAccumulatedPenalties > 0)
                 {
-                    <tr>
+                    <tr class="table-danger">
                         <th scope="row">Penalties</th>
                         <td>@teamAccumulatedPenalties</td>
                         <td/>
                         <td/>
                         <td/>
-                        <td>$@string.Format("{0:n0}", team.AccumulatedPenaltiesValue)</td>
+                        <td style="color: red">($@string.Format("{0:n0}", team.AccumulatedPenaltiesValue))</td>
                     </tr>
                 }
             }
 
-            <tr>
+            <tr class="table-active">
                 <th scope="row">Total</th>
                 <td/>
                 <td/>
@@ -151,7 +151,7 @@
                   
             </tr>
             
-            <tr>
+            <tr class="table-active">
                 <th scope="row">Average P&amp;L</th>
                 <td/>
                 <td/>
@@ -250,19 +250,19 @@
 
                     if (traderAccumulatedPenalties > 0)
                     {
-                        <tr>
+                        <tr class="table-danger">
                             <th scope="row">Penalties</th>
                             <td>@trader.AccumulatedPenalties</td>
                             <td/>
                             <td/>
                             <td/>
                             <td/>
-                            <td>$@string.Format("{0:n0}", trader.AccumulatedPenaltiesValue)</td>
+                            <td style="color: red">($@string.Format("{0:n0}", trader.AccumulatedPenaltiesValue))</td>
                         </tr>
                     }
                 }
 
-                <tr>
+                <tr class="table-active">
                     <th scope="row">Total</th>
                     <td/>
                     <td/>
