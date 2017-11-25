@@ -4,12 +4,11 @@
 @model ReportsViewModel
 
 <div class="row">
-
     <legend>
-        <h1>Reports</h1>
+        <h1 style="text-align: center;">Reports</h1>
+        <hr/>
     </legend>
-
-</div><!-- /.row -->
+</div>
 
 @{
     var role = Model.Login.Role;
@@ -35,10 +34,6 @@
 }
 
 
-<br/>
-
-<br/>
-
 @{
 
     if (role == "Team" && !AppSettings.IsReportsEnabled())
@@ -53,8 +48,8 @@
 
         if (team != null)
         {
-            <h3>@team.Name - @team.Id</h3>
-            <table class="table">
+            <h3 class="reports">@team.Name - @team.Id</h3>
+            <table class="table reports">
                 <thead class="thead-dark">
                 <tr>
                     <th>Security</th>
@@ -183,8 +178,8 @@
 
             foreach (var trader in team.Traders)
             {
-                <h3>@trader.Name - @trader.Id</h3>
-                <table class="table">
+                <h3 class="reports">@trader.Name - @trader.Id</h3>
+                <table class="table reports">
                     <thead class="thead-dark">
                     <tr>
                         <th>Security</th>
