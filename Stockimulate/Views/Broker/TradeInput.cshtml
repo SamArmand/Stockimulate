@@ -4,9 +4,10 @@
 @model TradeInputViewModel
 @{
     var symbol = string.Empty;
+    var isAdmin = Model.Login.Role == "Administrator";
 }
 <div class="row">
-    <div class="col-10">
+    <div class="col-8">
 
         <form class="form-horizontal" role="form" method="post" asp-controller="Broker">
             <fieldset>
@@ -40,26 +41,20 @@
                 </legend>
 
                 <!-- Text input-->
-                <div class="form-group row">
-                    <label class="col-sm-1 col-form-label">Buyer ID</label>
-                    <div class="col-sm-2">
-                        <input type="text" placeholder="Buyer ID" class="form-control" asp-for="BuyerId" required/>
-                    </div>
-
-                    <label class="col-sm-1 col-sm-offset-1 col-form-label">Seller ID</label>
-                    <div class="col-sm-2">
-                        <input type="text" placeholder="Seller ID" class="form-control" asp-for="SellerId" required/>
-                    </div>
-                </div>
+            <div class="form-group form-row trade">
+                <label class="col-2 col-form-label">Buyer ID</label>
+                <input type="text" placeholder="Buyer ID" class="col-2 form-control" asp-for="BuyerId" required/>
+                <label class="col-2 col-form-label" style="margin-left: 30px;">Seller ID</label>
+                <input type="text" placeholder="Seller ID" class="col-2 form-control" asp-for="SellerId" required/>
+            </div>
+            
 
                 <!-- Text input-->
-                <div class="form-group row">
-                    <label class="col-sm-1 col-form-label">Security</label>
-                    <div class="col-sm-2">
+                <div class="form-group form-row trade">
+                        <label class="col-2 col-form-label">Security</label>
+                        <select class="col-2 form-control" asp-for="Symbol" readonly="@(!isAdmin)">
 
-                        <select class="form-control" asp-for="Symbol">
-
-                            @if (Model.Login.Role == "Administrator")
+                            @if (isAdmin)
                             {
                                 foreach (var security in securities)
                                 {
@@ -71,25 +66,18 @@
                                 <option>@symbol</option>
                             }
                         </select>
-
-                    </div>
-
-                    <label class="col-sm-1 col-sm-offset-1 col-form-label">Quantity</label>
-                    <div class="col-sm-2">
-                        <input type="text" placeholder="Quantity" class="form-control" asp-for="Quantity"/>
-                    </div>
+                        <label class="col-2 col-form-label" style="margin-left: 30px;">Quantity</label>
+                        <input type="text" placeholder="Quantity" class="col-2 form-control" asp-for="Quantity" />
                 </div>
 
-                <div class="form-group row">
-                    <label class="col-sm-1 col-form-label">Price</label>
-                    <div class="col-sm-2 ">
-                        <input type="text" placeholder="Price" class="form-control" asp-for="Price"/>
-                    </div>
+                <div class="form-group form-row trade">
+                    <label class="col-2 col-form-label">Price</label>
+                    <input type="text" placeholder="Price" class="col-2 form-control" asp-for="Price"/>
                 </div>
 
                 <div class="form-group row">
 
-                    <div class="form-check">
+                    <div class="col form-check">
                         <label class="form-check-label">
                             <input type="checkbox" class="form-check-input" asp-for="IsChecked">
                             I have verified that all fields are correct and wish to submit this trade.
@@ -99,10 +87,10 @@
                 </div>
 
                 <div class="row">
-                    <div class="btn-group col-sm-12">
+                    <div class="col btn-group col-sm-12">
 
-                        <input type="submit" formaction="Cancel" value="Cancel" class="btn btn-secondary"/>
-                        <input type="submit" formaction="Submit" value="Submit" class="btn btn-primary"/>
+                        <input type="submit" formaction="Cancel" value="Cancel" class="btn btn-secondary btn-lg"/>
+                        <input type="submit" formaction="Submit" value="Submit" class="btn btn-primary btn-lg"/>
 
                     </div>
                 </div>
@@ -115,18 +103,18 @@
         @switch (Model.Result)
         {
             case "Error":
-                <div class="alert alert-danger alert-error bg-danger col-lg-5">
+                <div class="alert alert-danger alert-error bg-danger col-12 text-white">
                     @Model.ErrorMessage
                 </div>
                 break;
             case "Success":
-                <div class="alert alert-success bg-success col-lg-5">
+                <div class="alert alert-success bg-success col-12 text-white">
                     <a href="#" class="close" data-dismiss="alert">&times;</a>
                     <strong>Success!</strong> Trade is complete.
                 </div>
                 break;
             case "Warning":
-                <div class="alert alert-warning bg-warning col-lg-5">
+                <div class="alert alert-warning bg-warning col-12">
                     <a href="#" class="close" data-dismiss="alert">&times;</a>
                     <strong>Info!</strong> Verify all the fields in the form and check the checkbox before submitting.
                 </div>
@@ -138,7 +126,7 @@
 
     </div>
 
-    <div class="col-2">
+    <div class="col-3 offset-1">
         @if (Model.Login.Role != "Administrator")
         {
             @Html.Partial("MiniTickerPartial", new MiniTickerPartialViewModel {Symbol = symbol})

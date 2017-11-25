@@ -65,6 +65,8 @@ namespace Stockimulate.ViewModels.Administrator
             Prices = new Dictionary<string, List<int>>();
 
             Quarter = 0;
+            Day = 0;
+
             MarketStatus = "CLOSED";
 
             News = string.Empty;
