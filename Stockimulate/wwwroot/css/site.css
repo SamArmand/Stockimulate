@@ -67,6 +67,33 @@ textarea {
     outline: none;
 }
 
+.trade{
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+.trade input {
+    padding: 1px;
+    height: 50px;
+    font-size: 24px;
+}
+.trade select {
+    padding: 1px;
+    height: 50px !important;
+    font-size: 24px;
+}
+
+#NewsH2{
+
+    color:gold;
+    min-height: 100px;
+}
+
+#NewsHeader{
+    color:lightgrey;
+    font-style: italic;
+}
+
 @media screen and (max-width: 375px) {
     h3.reports{
         font-size: 120%;

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
@@ -155,7 +156,8 @@ namespace Stockimulate
             ++_dayNumber;
             var tradingDay = _tradingDays[SimulationMode.ToString()].FirstOrDefault(t => t.Day == _dayNumber);
 
-            if (tradingDay == null) return;
+            if (tradingDay == null)
+                return;
 
             foreach (var security in _securities)
             {
