@@ -24,7 +24,7 @@
             @{
                 var traders = new List<Trader>();
 
-                var teams = Team.GetAll();
+                var teams = Team.GetAll().Where(x => x.Traders.Any()).ToList();
 
                 foreach (var team in teams)
                 {
