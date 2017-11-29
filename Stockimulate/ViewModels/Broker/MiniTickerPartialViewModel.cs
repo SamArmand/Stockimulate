@@ -39,12 +39,12 @@ namespace Stockimulate.ViewModels.Broker
             var symbols = Security.NamesAndSymbols.Keys;
 
             Prices.Clear();
-                foreach (var symbol in symbols)
-                    Prices.Add(symbol, 0);
+            foreach (var symbol in symbols)
+                Prices.Add(symbol, 0);
 
             LastChanges.Clear();
-                foreach (var symbol in symbols)
-                    LastChanges.Add(symbol, 0);
+            foreach (var symbol in symbols)
+                LastChanges.Add(symbol, 0);
         }
     }
 }

@@ -97,9 +97,9 @@ namespace Stockimulate.Models
 
         public int PnL() => TotalPnLs.Sum(e => e.Value) - AccumulatedPenaltiesValue;
 
-        public int AveragePnL() => PnL() / Traders.Count();
+        public int AveragePnL() => Traders.Any() ? PnL() / Traders.Count() : 0;
 
-        public static List<Team> GetAll()
+        public static IEnumerable<Team> GetAll()
         {
             var connection = new SqlConnection(Constants.ConnectionString);
 
