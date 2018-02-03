@@ -22,93 +22,74 @@ namespace Stockimulate.Models
 
         internal static void Update(Security security)
         {
-            var connection = new SqlConnection(Constants.ConnectionString);
+            using (var connection = new SqlConnection(Constants.ConnectionString))
+            using (var command =
+                new SqlCommand("UPDATE Securities SET Price=@Price, LastChange=@LastChange WHERE Symbol=@Symbol;",
+                    connection))
+            {
+                connection.Open();
 
-            var command =
-                new SqlCommand("UPDATE Securities SET Price=@Price, LastChange=@LastChange WHERE Symbol=@Symbol;");
-
-            command.Parameters.AddWithValue("@Price", security.Price);
-            command.Parameters.AddWithValue("@Symbol", security.Symbol);
-            command.Parameters.AddWithValue("@LastChange", security.LastChange);
-
-            connection.Open();
-
-            command.Connection = connection;
-
-            command.ExecuteNonQuery();
-
-            command.Dispose();
-            connection.Dispose();
+                command.Parameters.AddWithValue("@Price", security.Price);
+                command.Parameters.AddWithValue("@Symbol", security.Symbol);
+                command.Parameters.AddWithValue("@LastChange", security.LastChange);
+            }
         }
 
         internal static Security Get(string symbol)
         {
-            var connection = new SqlConnection(Constants.ConnectionString);
-
-            var command =
+            using (var connection = new SqlConnection(Constants.ConnectionString))
+            using (var command =
                 new SqlCommand(
-                    "SELECT Symbol, Price, Name, Id, LastChange FROM Securities WHERE Symbol=@Symbol;");
-
-            command.Parameters.AddWithValue("@Symbol", symbol);
-
-            connection.Open();
-
-            command.Connection = connection;
-
-            var reader = command.ExecuteReader();
-
-            reader.Read();
-
-            var security = new Security
+                    "SELECT Symbol, Price, Name, Id, LastChange FROM Securities WHERE Symbol=@Symbol;", connection))
             {
-                Symbol = symbol,
-                Price = reader.GetInt32(reader.GetOrdinal("Price")),
-                Name = reader.GetString(reader.GetOrdinal("Name")),
-                Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                LastChange = reader.GetInt32(reader.GetOrdinal("LastChange"))
-            };
+                connection.Open();
+                command.Parameters.AddWithValue("@Symbol", symbol);
 
-            reader.Dispose();
-            command.Dispose();
-            connection.Dispose();
+                using (var reader = command.ExecuteReader())
+                {
+                    reader.Read();
 
-            return security;
+                    return new Security
+                    {
+                        Symbol = symbol,
+                        Price = reader.GetInt32(reader.GetOrdinal("Price")),
+                        Name = reader.GetString(reader.GetOrdinal("Name")),
+                        Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                        LastChange = reader.GetInt32(reader.GetOrdinal("LastChange"))
+                    };
+                }
+            }
         }
 
         public static Dictionary<string, Security> GetAll()
         {
-            var connection = new SqlConnection(Constants.ConnectionString);
-
-            var command =
-                new SqlCommand("SELECT Symbol, Price, Name, Id, LastChange FROM Securities;");
-
-            connection.Open();
-
-            command.Connection = connection;
-
-            var reader = command.ExecuteReader();
-
-            var securities = new Dictionary<string, Security>();
-
-            while (reader.Read())
+            using (var connection = new SqlConnection(Constants.ConnectionString))
+            using (var command =
+                new SqlCommand("SELECT Symbol, Price, Name, Id, LastChange FROM Securities;", connection))
             {
-                var symbol = reader.GetString(reader.GetOrdinal("Symbol"));
-
-                securities.Add(symbol, new Security
+                connection.Open();
+                using (var reader = command.ExecuteReader())
                 {
-                    Symbol = symbol,
-                    Price = reader.GetInt32(reader.GetOrdinal("Price")),
-                    Name = reader.GetString(reader.GetOrdinal("Name")),
-                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                    LastChange = reader.GetInt32(reader.GetOrdinal("LastChange"))
-                });
+
+                    var securities = new Dictionary<string, Security>();
+
+                    while (reader.Read())
+                    {
+                        var symbol = reader.GetString(reader.GetOrdinal("Symbol"));
+
+                        securities.Add(symbol, new Security
+                        {
+                            Symbol = symbol,
+                            Price = reader.GetInt32(reader.GetOrdinal("Price")),
+                            Name = reader.GetString(reader.GetOrdinal("Name")),
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            LastChange = reader.GetInt32(reader.GetOrdinal("LastChange"))
+                        });
+                    }
+
+                    return securities;
+                }
             }
-
-            reader.Dispose();
-            command.Dispose();
-            connection.Dispose();
-
-            return securities;
         }
     }
 }

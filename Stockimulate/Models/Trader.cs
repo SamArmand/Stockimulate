@@ -110,70 +110,61 @@ namespace Stockimulate.Models
             }
         }
 
-        public int PnL() => TotalPnLs.Sum(e => e.Value) - AccumulatedPenaltiesValue;
+        public int PnL()
+        {
+            return TotalPnLs.Sum(e => e.Value) - AccumulatedPenaltiesValue;
+        }
 
         internal static Trader Get(int id)
         {
-            var connection = new SqlConnection(Constants.ConnectionString);
+            using (var connection = new SqlConnection(Constants.ConnectionString))
+            using (var command =
+                new SqlCommand("SELECT Name, TeamId FROM Traders WHERE Id=@Id;", connection))
 
-            var command =
-                new SqlCommand("SELECT Name, TeamId FROM Traders WHERE Id=@Id;");
-
-            command.Parameters.AddWithValue("@Id", id);
-
-            connection.Open();
-
-            command.Connection = connection;
-
-            var reader = command.ExecuteReader();
-
-            Trader player = null;
-
-            if (reader.Read())
-                player = new Trader
             {
-                Id = id,
-                Name = reader.GetString(reader.GetOrdinal("Name")),
-                _teamId = reader.GetInt32(reader.GetOrdinal("TeamId"))
-            };
+                connection.Open();
 
-            reader.Dispose();
-            command.Dispose();
-            connection.Dispose();
+                command.Parameters.AddWithValue("@Id", id);
 
-            return player;
+                using (var reader = command.ExecuteReader())
+                {
+                    return reader.Read()
+                        ? new Trader
+                        {
+                            Id = id,
+                            Name = reader.GetString(reader.GetOrdinal("Name")),
+                            _teamId = reader.GetInt32(reader.GetOrdinal("TeamId"))
+                        }
+                        : null;
+                }
+            }
         }
 
         internal static List<Trader> GetInTeam(int teamId)
         {
-            var connection = new SqlConnection(Constants.ConnectionString);
+            using (var connection = new SqlConnection(Constants.ConnectionString))
+            using (var command =
+                new SqlCommand("SELECT Id, Name FROM Traders WHERE TeamId=@TeamId;", connection))
+            {
+                connection.Open();
 
-            var command =
-                new SqlCommand("SELECT Id, Name FROM Traders WHERE TeamId=@TeamId;");
+                command.Parameters.AddWithValue("@TeamId", teamId);
 
-            command.Parameters.AddWithValue("@TeamId", teamId);
-
-            connection.Open();
-
-            command.Connection = connection;
-
-            var reader = command.ExecuteReader();
-
-            var traders = new List<Trader>();
-
-            while (reader.Read())
-                traders.Add(new Trader
+                using (var reader = command.ExecuteReader())
                 {
-                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                    Name = reader.GetString(reader.GetOrdinal("Name")),
-                    _teamId = teamId
-                });
+                    var traders = new List<Trader>();
 
-            reader.Dispose();
-            command.Dispose();
-            connection.Dispose();
+                    while (reader.Read())
+                        traders.Add(new Trader
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Name = reader.GetString(reader.GetOrdinal("Name")),
+                            _teamId = teamId
+                        });
 
-            return traders;
+                    return traders;
+                }
+            }
         }
     }
 }

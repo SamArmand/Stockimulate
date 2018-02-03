@@ -9,35 +9,28 @@ namespace Stockimulate.Models
 
         internal static Login Get(string username, string password)
         {
-            var connection = new SqlConnection(Constants.ConnectionString);
-            connection.Open();
-
-            var command =
+            using (var connection = new SqlConnection(Constants.ConnectionString))
+            using (var command =
                 new SqlCommand(
-                    "SELECT Role, Username FROM Logins WHERE Username=@Username AND Password=@Password;")
-                    {
-                        Connection = connection
-                    };
+                    "SELECT Role, Username FROM Logins WHERE Username=@Username AND Password=@Password;",
+                    connection))
+            {
+                connection.Open();
 
-            command.Parameters.AddWithValue("@Username", username);
-            command.Parameters.AddWithValue("@Password", password);
-            
-            var reader = command.ExecuteReader();
+                command.Parameters.AddWithValue("@Username", username);
+                command.Parameters.AddWithValue("@Password", password);
 
-            Login login = null;
-
-            if (reader.Read())
-                login = new Login
+                using (var reader = command.ExecuteReader())
                 {
-                    Role = reader.GetString(reader.GetOrdinal("Role")),
-                    Username = reader.GetString(reader.GetOrdinal("Username"))
-                };
-
-            reader.Dispose();
-            command.Dispose();
-            connection.Dispose();
-
-            return login;
+                    return reader.Read()
+                        ? new Login
+                        {
+                            Role = reader.GetString(reader.GetOrdinal("Role")),
+                            Username = reader.GetString(reader.GetOrdinal("Username"))
+                        }
+                        : null;
+                }
+            }
         }
     }
 }
