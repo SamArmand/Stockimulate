@@ -13,43 +13,39 @@ namespace Stockimulate.Models
 
         internal static Dictionary<string, List<TradingDay>> GetAll()
         {
-            var connection = new SqlConnection(Constants.ConnectionString);
-
             var queryStringBuilder = new StringBuilder("SELECT Day, News, Mode");
-
             for (var i = 1; i <= Security.NamesAndSymbols.Count; ++i)
                 queryStringBuilder.Append(", Effect" + i);
 
-            var command = new SqlCommand(queryStringBuilder.Append(" FROM TradingDays ORDER BY Day ASC;").ToString());
-
-            connection.Open();
-
-            command.Connection = connection;
-
-            var reader = command.ExecuteReader();
-
-            var tradingDays = new Dictionary<string, List<TradingDay>>();
-
-            while (reader.Read())
+            using (var connection = new SqlConnection(Constants.ConnectionString))
+            using (var command = new SqlCommand(
+                queryStringBuilder.Append(" FROM TradingDays ORDER BY Day ASC;").ToString(),
+                connection))
             {
-                var mode = reader.GetString(reader.GetOrdinal("Mode"));
+                connection.Open();
 
-                if (!tradingDays.ContainsKey(mode)) tradingDays[mode] = new List<TradingDay>();
-
-                tradingDays[mode].Add(new TradingDay
+                using (var reader = command.ExecuteReader())
                 {
-                    Day = reader.GetInt32(reader.GetOrdinal("Day")),
-                    Effects = Security.GetAll().ToDictionary(security => security.Key,
-                        security => reader.GetInt32(reader.GetOrdinal("Effect" + (security.Value.Id + 1)))),
-                    NewsItem = reader.GetString(reader.GetOrdinal("News"))
-                });
+                    var tradingDays = new Dictionary<string, List<TradingDay>>();
+
+                    while (reader.Read())
+                    {
+                        var mode = reader.GetString(reader.GetOrdinal("Mode"));
+
+                        if (!tradingDays.ContainsKey(mode)) tradingDays[mode] = new List<TradingDay>();
+
+                        tradingDays[mode].Add(new TradingDay
+                        {
+                            Day = reader.GetInt32(reader.GetOrdinal("Day")),
+                            Effects = Security.GetAll().ToDictionary(security => security.Key,
+                                security => reader.GetInt32(reader.GetOrdinal("Effect" + (security.Value.Id + 1)))),
+                            NewsItem = reader.GetString(reader.GetOrdinal("News"))
+                        });
+                    }
+
+                    return tradingDays;
+                }
             }
-
-            reader.Dispose();
-            command.Dispose();
-            connection.Dispose();
-
-            return tradingDays;
         }
     }
 }

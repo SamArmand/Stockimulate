@@ -55,80 +55,70 @@ namespace Stockimulate.Models
                 TotalPnLs.Add(key, RealizedPnLs[key] + UnrealizedPnLs[key]);
         }
 
-        internal static Team Get(int id, string code = "", bool needCode = false)
+        public int PnL()
         {
-            var connection = new SqlConnection(Constants.ConnectionString);
-
-            var command = new SqlCommand("SELECT Id, Name FROM Teams WHERE Id=@Id" + (needCode ? " AND Code=@Code" : string.Empty) + ";");
-
-            command.Parameters.AddWithValue("@Id", id);
-
-            if (needCode)
-                command.Parameters.AddWithValue("@Code", code);
-
-            connection.Open();
-
-            command.Connection = connection;
-
-            var reader = command.ExecuteReader();
-
-            if (!reader.HasRows)
-            {
-                reader.Dispose();
-                command.Dispose();
-                connection.Dispose();
-                return null;
-            }
-
-            reader.Read();
-
-            var team = new Team
-            {
-                Id = id,
-                Name = reader.GetString(reader.GetOrdinal("Name"))
-            };
-
-            reader.Dispose();
-            command.Dispose();
-            connection.Dispose();
-
-            return team;
+            return TotalPnLs.Sum(e => e.Value) - AccumulatedPenaltiesValue;
         }
 
-        public int PnL() => TotalPnLs.Sum(e => e.Value) - AccumulatedPenaltiesValue;
+        public int AveragePnL()
+        {
+            return Traders.Any() ? PnL() / Traders.Count() : 0;
+        }
 
-        public int AveragePnL() => Traders.Any() ? PnL() / Traders.Count() : 0;
+        internal static Team Get(int id, string code = "", bool needCode = false)
+        {
+            using (var connection = new SqlConnection(Constants.ConnectionString))
+            using (var command =
+                new SqlCommand(
+                    "SELECT Id, Name FROM Teams WHERE Id=@Id" + (needCode ? " AND Code=@Code" : string.Empty) + ";",
+                    connection))
+            {
+                connection.Open();
+                command.Parameters.AddWithValue("@Id", id);
+
+                if (needCode)
+                    command.Parameters.AddWithValue("@Code", code);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    return reader.Read()
+                        ? new Team
+                        {
+                            Id = id,
+                            Name = reader.GetString(reader.GetOrdinal("Name"))
+                        }
+                        : null;
+                }
+            }
+        }
 
         public static IEnumerable<Team> GetAll()
         {
-            var connection = new SqlConnection(Constants.ConnectionString);
+            using (var connection = new SqlConnection(Constants.ConnectionString))
+            using (var command =
+                new SqlCommand("SELECT Id, Name FROM Teams WHERE NOT Id=@ExchangeId AND NOT Id=@MarketMakersId;",
+                    connection))
+            {
+                connection.Open();
 
-            var command =
-                new SqlCommand("SELECT Id, Name FROM Teams WHERE NOT Id=@ExchangeId AND NOT Id=@MarketMakersId;");
+                command.Parameters.AddWithValue("@ExchangeId", Constants.ExchangeId);
+                command.Parameters.AddWithValue("@MarketMakersId", Constants.MarketMakersId);
 
-            command.Parameters.AddWithValue("@ExchangeId", Constants.ExchangeId);
-            command.Parameters.AddWithValue("@MarketMakersId", Constants.MarketMakersId);
-
-            connection.Open();
-
-            command.Connection = connection;
-
-            var reader = command.ExecuteReader();
-
-            var teams = new List<Team>();
-
-            while (reader.Read())
-                teams.Add(new Team
+                using (var reader = command.ExecuteReader())
                 {
-                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                    Name = reader.GetString(reader.GetOrdinal("Name"))
-                });
+                    var teams = new List<Team>();
 
-            reader.Dispose();
-            command.Dispose();
-            connection.Dispose();
+                    while (reader.Read())
+                        teams.Add(new Team
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Name = reader.GetString(reader.GetOrdinal("Name"))
+                        });
 
-            return teams;
+                    return teams;
+                }
+            }
+
         }
     }
 }
