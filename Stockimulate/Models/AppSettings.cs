@@ -6,61 +6,42 @@ namespace Stockimulate.Models
     {
         public static bool IsReportsEnabled()
         {
-            var connection = new SqlConnection(Constants.ConnectionString);
-            connection.Open();
-
-            var command = new SqlCommand("SELECT ReportsEnabled FROM AppSettings;") 
+            using (var connection = new SqlConnection(Constants.ConnectionString))
+            using (var command = new SqlCommand("SELECT ReportsEnabled FROM AppSettings;", connection))
             {
-                Connection = connection
-            };
+                connection.Open();
 
-            var reader = command.ExecuteReader();
+                using (var reader = command.ExecuteReader())
+                {
+                    reader.Read();
 
-            reader.Read();
-
-            var result = reader.GetBoolean(reader.GetOrdinal("ReportsEnabled"));
-
-            reader.Dispose();
-            command.Dispose();
-            connection.Dispose();
-
-            return result;
+                    return reader.GetBoolean(reader.GetOrdinal("ReportsEnabled"));
+                }
+            }
         }
 
         internal static void UpdateReportsEnabled(bool reportsEnabled)
         {
-            var connection = new SqlConnection(Constants.ConnectionString);
-            connection.Open();
-
-            var command = new SqlCommand("UPDATE AppSettings SET ReportsEnabled=@ReportsEnabled;") 
+            using (var connection = new SqlConnection(Constants.ConnectionString))
+            using (var command = new SqlCommand("UPDATE AppSettings SET ReportsEnabled=@ReportsEnabled;", connection))
             {
-                Connection = connection
-            };
+                connection.Open();
+                command.Parameters.AddWithValue("@ReportsEnabled", reportsEnabled.ToString());
 
-            command.Parameters.AddWithValue("@ReportsEnabled", reportsEnabled.ToString());
-
-            command.ExecuteNonQuery();
-
-            command.Dispose();
-            connection.Dispose();
+                command.ExecuteNonQuery();
+            }
         }
 
         internal static void Reset()
         {
-            var connection = new SqlConnection(Constants.ConnectionString);
-            connection.Open();
-
-            var command =
+            using (var connection = new SqlConnection(Constants.ConnectionString))
+            using (var command =
                 new SqlCommand(
-                    "DELETE FROM Trades; UPDATE Securities SET Price='0', LastChange='0';") 
-                    {
-                        Connection = connection
-                    };
-
-            command.ExecuteNonQuery();
-
-            command.Dispose();
-            connection.Dispose();
+                    "DELETE FROM Trades; UPDATE Securities SET Price='0', LastChange='0';", connection))
+            {
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
         }
 
     }

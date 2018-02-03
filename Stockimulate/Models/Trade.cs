@@ -42,37 +42,34 @@ namespace Stockimulate.Models
 
         internal static void Insert(Trade trade)
         {
-            var connection = new SqlConnection(Constants.ConnectionString);
-
-            var command =
+            using (var connection = new SqlConnection(Constants.ConnectionString))
+            using (var command =
                 new SqlCommand(
-                    "INSERT INTO Trades (BuyerId, SellerId, Symbol, Quantity, Price, MarketPrice, Flagged, BrokerId) VALUES (@BuyerId, @SellerId, @Symbol, @Quantity, @Price, @MarketPrice, @Flagged, @BrokerId);");
+                    "INSERT INTO Trades (BuyerId, SellerId, Symbol, Quantity, Price, MarketPrice, Flagged, BrokerId) VALUES (@BuyerId, @SellerId, @Symbol, @Quantity, @Price, @MarketPrice, @Flagged, @BrokerId);",
+                    connection))
+            {
+                connection.Open();
 
-            command.Parameters.AddWithValue("@BuyerId", trade._buyerId);
-            command.Parameters.AddWithValue("@SellerId", trade._sellerId);
-            command.Parameters.AddWithValue("@Symbol", trade._symbol);
-            command.Parameters.AddWithValue("@Quantity", trade.Quantity);
-            command.Parameters.AddWithValue("@Price", trade.Price);
-            command.Parameters.AddWithValue("@MarketPrice", trade.MarketPrice);
-            command.Parameters.AddWithValue("@Flagged", trade.Flagged);
-            command.Parameters.AddWithValue("@BrokerId", trade.BrokerId);
+                command.Parameters.AddWithValue("@BuyerId", trade._buyerId);
+                command.Parameters.AddWithValue("@SellerId", trade._sellerId);
+                command.Parameters.AddWithValue("@Symbol", trade._symbol);
+                command.Parameters.AddWithValue("@Quantity", trade.Quantity);
+                command.Parameters.AddWithValue("@Price", trade.Price);
+                command.Parameters.AddWithValue("@MarketPrice", trade.MarketPrice);
+                command.Parameters.AddWithValue("@Flagged", trade.Flagged);
+                command.Parameters.AddWithValue("@BrokerId", trade.BrokerId);
 
-            connection.Open();
+                command.Connection = connection;
 
-            command.Connection = connection;
-
-            command.ExecuteNonQuery();
-
-            command.Dispose();
-            connection.Dispose();
+                command.ExecuteNonQuery();
+            }
         }
 
         internal static List<Trade> Get(string buyerId, string buyerTeamId, string sellerId, string sellerTeamId,
             string symbol, string flagged)
         {
-            var connection = new SqlConnection(Constants.ConnectionString);
-
-            var command = new SqlCommand(
+            using (var connection = new SqlConnection(Constants.ConnectionString))
+            using (var command = new SqlCommand(
                 "SELECT Trades.Id AS Id, Buyers.Id AS BuyerId, Buyers.TeamId AS BuyerTeamId, Sellers.Id AS SellerId, " +
                 "Sellers.TeamId AS SellerTeamId, Trades.Symbol AS Symbol, Trades.Quantity AS Quantity, Trades.Price AS Price, Trades.MarketPrice AS MarketPrice, Trades.Flagged AS Flagged, Trades.BrokerId AS BrokerId, Trades.Note AS Note " +
                 "FROM Trades JOIN Traders Buyers ON Trades.BuyerId=Buyers.Id JOIN Traders Sellers ON Trades.SellerId=Sellers.Id " +
@@ -82,87 +79,82 @@ namespace Stockimulate.Models
                 " AND Sellers.TeamId" + (string.IsNullOrEmpty(sellerTeamId) ? ">-1" : "=@SellerTeamId") +
                 " AND Trades.Symbol" + (string.IsNullOrEmpty(symbol) ? " LIKE '%%'" : "=@Symbol") +
                 " AND Trades.Flagged" + (string.IsNullOrEmpty(flagged) ? " LIKE '%%'" : "=@Flagged") +
-                " ORDER BY Trades.Id ASC;");
+                " ORDER BY Trades.Id ASC;",
+                connection))
+            {
 
-            if (!string.IsNullOrEmpty(buyerId))
-                command.Parameters.AddWithValue("@BuyerId", buyerId);
-            if (!string.IsNullOrEmpty(buyerTeamId))
-                command.Parameters.AddWithValue("@BuyerTeamId", buyerTeamId);
-            if (!string.IsNullOrEmpty(sellerId))
-                command.Parameters.AddWithValue("@SellerId", sellerId);
-            if (!string.IsNullOrEmpty(sellerTeamId))
-                command.Parameters.AddWithValue("@SellerTeamId", sellerTeamId);
-            if (!string.IsNullOrEmpty(symbol))
-                command.Parameters.AddWithValue("@Symbol", symbol);
-            if (!string.IsNullOrEmpty(flagged))
-                command.Parameters.AddWithValue("@Flagged", flagged == "Yes");
+                connection.Open();
 
-            connection.Open();
+                if (!string.IsNullOrEmpty(buyerId))
+                    command.Parameters.AddWithValue("@BuyerId", buyerId);
+                if (!string.IsNullOrEmpty(buyerTeamId))
+                    command.Parameters.AddWithValue("@BuyerTeamId", buyerTeamId);
+                if (!string.IsNullOrEmpty(sellerId))
+                    command.Parameters.AddWithValue("@SellerId", sellerId);
+                if (!string.IsNullOrEmpty(sellerTeamId))
+                    command.Parameters.AddWithValue("@SellerTeamId", sellerTeamId);
+                if (!string.IsNullOrEmpty(symbol))
+                    command.Parameters.AddWithValue("@Symbol", symbol);
+                if (!string.IsNullOrEmpty(flagged))
+                    command.Parameters.AddWithValue("@Flagged", flagged == "Yes");
 
-            command.Connection = connection;
+                using (var reader = command.ExecuteReader())
+                {
+                    var trades = new List<Trade>();
 
-            var reader = command.ExecuteReader();
+                    while (reader.Read())
+                        trades.Add(new Trade(
+                            reader.GetInt32(reader.GetOrdinal("BuyerId")),
+                            reader.GetInt32(reader.GetOrdinal("SellerId")),
+                            reader.GetString(reader.GetOrdinal("Symbol")),
+                            reader.GetInt32(reader.GetOrdinal("Quantity")),
+                            reader.GetInt32(reader.GetOrdinal("Price")),
+                            reader.GetInt32(reader.GetOrdinal("MarketPrice")),
+                            reader.GetBoolean(reader.GetOrdinal("Flagged")),
+                            reader.GetString(reader.GetOrdinal("BrokerId"))));
 
-            var trades = new List<Trade>();
-
-            while (reader.Read())
-                trades.Add(new Trade(
-                    reader.GetInt32(reader.GetOrdinal("BuyerId")),
-                    reader.GetInt32(reader.GetOrdinal("SellerId")),
-                    reader.GetString(reader.GetOrdinal("Symbol")),
-                    reader.GetInt32(reader.GetOrdinal("Quantity")),
-                    reader.GetInt32(reader.GetOrdinal("Price")),
-                    reader.GetInt32(reader.GetOrdinal("MarketPrice")),
-                    reader.GetBoolean(reader.GetOrdinal("Flagged")),
-                    reader.GetString(reader.GetOrdinal("BrokerId"))));
-
-            reader.Dispose();
-            command.Dispose();
-            connection.Dispose();
-
-            return trades;
+                    return trades;
+                }
+            }
         }
 
         internal static Dictionary<string, List<Trade>> GetByTrader(int traderId)
         {
-            var connection = new SqlConnection(Constants.ConnectionString);
-
-            var command = new SqlCommand("SELECT Id, BuyerId, SellerId, Symbol, Quantity, Price, MarketPrice, Flagged, BrokerId FROM Trades WHERE BuyerId=@BuyerId OR SellerId=@SellerId ORDER BY Id ASC;");
-
-            command.Parameters.AddWithValue("@BuyerId", traderId);
-            command.Parameters.AddWithValue("@SellerId", traderId);
-
-            connection.Open();
-
-            command.Connection = connection;
-
-            var reader = command.ExecuteReader();
-
-            var trades = new Dictionary<string, List<Trade>>();
-
-            while (reader.Read())
+            using (var connection = new SqlConnection(Constants.ConnectionString))
+            using (var command = new SqlCommand(
+                "SELECT Id, BuyerId, SellerId, Symbol, Quantity, Price, MarketPrice, Flagged, BrokerId FROM Trades WHERE BuyerId=@BuyerId OR SellerId=@SellerId ORDER BY Id ASC;",
+                connection))
             {
-                var symbol = reader.GetString(reader.GetOrdinal("Symbol"));
+                connection.Open();
 
-                if (!trades.ContainsKey(symbol)) trades.Add(symbol, new List<Trade>());
+                command.Parameters.AddWithValue("@BuyerId", traderId);
+                command.Parameters.AddWithValue("@SellerId", traderId);
 
-                trades[symbol].Add(new Trade(
-                    reader.GetInt32(reader.GetOrdinal("BuyerId")),
-                    reader.GetInt32(reader.GetOrdinal("SellerId")),
-                    symbol,
-                    reader.GetInt32(reader.GetOrdinal("Quantity")),
-                    reader.GetInt32(reader.GetOrdinal("Price")),
-                    reader.GetInt32(reader.GetOrdinal("MarketPrice")),
-                    reader.GetBoolean(reader.GetOrdinal("Flagged")),
-                    reader.GetString(reader.GetOrdinal("BrokerId"))
-                    ));
+                using (var reader = command.ExecuteReader())
+                {
+                    var trades = new Dictionary<string, List<Trade>>();
+
+                    while (reader.Read())
+                    {
+                        var symbol = reader.GetString(reader.GetOrdinal("Symbol"));
+
+                        if (!trades.ContainsKey(symbol)) trades.Add(symbol, new List<Trade>());
+
+                        trades[symbol].Add(new Trade(
+                            reader.GetInt32(reader.GetOrdinal("BuyerId")),
+                            reader.GetInt32(reader.GetOrdinal("SellerId")),
+                            symbol,
+                            reader.GetInt32(reader.GetOrdinal("Quantity")),
+                            reader.GetInt32(reader.GetOrdinal("Price")),
+                            reader.GetInt32(reader.GetOrdinal("MarketPrice")),
+                            reader.GetBoolean(reader.GetOrdinal("Flagged")),
+                            reader.GetString(reader.GetOrdinal("BrokerId"))
+                        ));
+                    }
+
+                    return trades;
+                }
             }
-
-            reader.Dispose();
-            command.Dispose();
-            connection.Dispose();
-
-            return trades;
         }
     }
 }
