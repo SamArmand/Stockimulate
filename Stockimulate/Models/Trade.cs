@@ -71,7 +71,7 @@ namespace Stockimulate.Models
             using (var connection = new SqlConnection(Constants.ConnectionString))
             using (var command = new SqlCommand(
                 "SELECT Trades.Id AS Id, Buyers.Id AS BuyerId, Buyers.TeamId AS BuyerTeamId, Sellers.Id AS SellerId, " +
-                "Sellers.TeamId AS SellerTeamId, Trades.Symbol AS Symbol, Trades.Quantity AS Quantity, Trades.Price AS Price, Trades.MarketPrice AS MarketPrice, Trades.Flagged AS Flagged, Trades.BrokerId AS BrokerId, Trades.Note AS Note " +
+                "Sellers.TeamId AS SellerTeamId, Trades.Symbol AS Symbol, Trades.Quantity AS Quantity, Trades.Price AS Price, Trades.MarketPrice AS MarketPrice, Trades.Flagged AS Flagged, Trades.BrokerId AS BrokerId " +
                 "FROM Trades JOIN Traders Buyers ON Trades.BuyerId=Buyers.Id JOIN Traders Sellers ON Trades.SellerId=Sellers.Id " +
                 "WHERE Buyers.Id" + (string.IsNullOrEmpty(buyerId) ? ">-1" : "=@BuyerId") +
                 " AND Sellers.Id" + (string.IsNullOrEmpty(sellerId) ? ">-1" : "=@SellerId") +
