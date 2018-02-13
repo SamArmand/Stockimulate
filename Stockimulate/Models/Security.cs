@@ -32,6 +32,10 @@ namespace Stockimulate.Models
                 command.Parameters.AddWithValue("@Price", security.Price);
                 command.Parameters.AddWithValue("@Symbol", security.Symbol);
                 command.Parameters.AddWithValue("@LastChange", security.LastChange);
+
+                command.Connection = connection;
+
+                command.ExecuteNonQuery();
             }
         }
 
