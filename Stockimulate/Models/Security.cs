@@ -74,7 +74,6 @@ namespace Stockimulate.Models
                 connection.Open();
                 using (var reader = command.ExecuteReader())
                 {
-
                     var securities = new Dictionary<string, Security>();
 
                     while (reader.Read())

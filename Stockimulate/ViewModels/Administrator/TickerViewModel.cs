@@ -26,15 +26,17 @@ namespace Stockimulate.ViewModels.Administrator
 
         private static void CheckInitialized()
         {
+            var symbols = Security.NamesAndSymbols.Keys;
+
             if (Prices.Count == 0)
-                foreach (var symbol in Security.NamesAndSymbols.Keys)
+                foreach (var symbol in symbols)
                     Prices.Add(symbol, new List<int>());
 
             if (LastChange.Count != 0) return;
 
             Day = 0;
 
-            foreach (var symbol in Security.NamesAndSymbols.Keys)
+            foreach (var symbol in symbols)
                 LastChange.Add(symbol, 0);
         }
 
@@ -52,8 +54,10 @@ namespace Stockimulate.ViewModels.Administrator
                     LastChange[symbol] = tradingDay.Effects[symbol];
                 }
 
-            if (tradingDay.NewsItem != string.Empty)
-                News = tradingDay.NewsItem;
+            var newsItem = tradingDay.NewsItem;
+
+            if (newsItem != string.Empty)
+                News = newsItem;
 
             if (close) MarketStatus = "CLOSED";
 
