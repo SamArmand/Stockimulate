@@ -48,7 +48,6 @@ namespace Stockimulate.Models
 
                 AccumulatedPenalties += trader.AccumulatedPenalties;
                 AccumulatedPenaltiesValue += trader.AccumulatedPenaltiesValue;
-
             }
 
             foreach (var key in RealizedPnLs.Keys)
@@ -118,7 +117,6 @@ namespace Stockimulate.Models
                     return teams;
                 }
             }
-
         }
     }
 }

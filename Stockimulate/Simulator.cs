@@ -215,6 +215,7 @@ namespace Stockimulate
                     effects = _securities.Select(security => tradingDay.Effects[security.Key]).ToArray(),
                     close
                 });
+                
             TickerViewModel.Update(tradingDay, close);
             MiniTickerPartialViewModel.Update(tradingDay);
         }
