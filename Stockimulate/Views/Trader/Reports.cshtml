@@ -63,7 +63,7 @@
                 <tbody>
 
                 @{
-                    var prices = Security.GetAll().Values.ToDictionary(x => x.Symbol, x => x.Price);
+                    var prices = Model.Prices;
                     team.Calculate(prices);
 
                     var teamPositions = team.Positions;

@@ -1,13 +1,22 @@
 ﻿using System;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Stockimulate.Models;
+using Stockimulate.Core.Repositories;
 using Stockimulate.ViewModels;
 
 namespace Stockimulate.Controllers
 {
     public sealed class NavigationLayoutController : Controller
     {
+        private readonly ITeamRepository _teamRepository;
+        private readonly ILoginRepository _loginRepository;
+
+        public NavigationLayoutController(ITeamRepository teamRepository, ILoginRepository loginRepository)
+        {
+            _teamRepository = teamRepository;
+            _loginRepository = loginRepository;
+        }
+
         [HttpGet]
         public IActionResult Home() => RedirectToAction("Home", "Public");
 
@@ -28,7 +37,7 @@ namespace Stockimulate.Controllers
 
             try
             {
-                var team = Team.Get(int.Parse(viewModel.Username), viewModel.Password,
+                var team = _teamRepository.Get(int.Parse(viewModel.Username), viewModel.Password,
                     true);
 
                 if (team != null)
@@ -44,7 +53,7 @@ namespace Stockimulate.Controllers
                 //ignore
             }
 
-            var login = Models.Login.Get(viewModel.Username, viewModel.Password);
+            var login = _loginRepository.Get(viewModel.Username, viewModel.Password);
 
             if (login == null)
                 return RedirectToAction("Home", "Public");

@@ -1,4 +1,6 @@
-﻿namespace Stockimulate.ViewModels.Administrator
+﻿using System.Collections.Generic;
+
+namespace Stockimulate.ViewModels.Administrator
 {
     public sealed class ControlPanelViewModel : NavigationLayoutViewModel
     {
@@ -11,5 +13,7 @@
         public string State { get; internal set; }
 
         public string ErrorMessage { get; internal set; }
+
+        public List<string> Symbols { get; internal set; }
     }
 }

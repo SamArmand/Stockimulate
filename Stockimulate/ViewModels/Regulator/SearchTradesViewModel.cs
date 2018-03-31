@@ -13,5 +13,7 @@ namespace Stockimulate.ViewModels.Regulator
         public string SellerTeamId { get; set; }
         public string Symbol { get; set; }
         public string Flagged { get; set; }
+
+        public List<string> Symbols { get; internal set; }
     }
 }
