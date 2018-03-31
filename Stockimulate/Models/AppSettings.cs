@@ -31,18 +31,5 @@ namespace Stockimulate.Models
                 command.ExecuteNonQuery();
             }
         }
-
-        internal static void Reset()
-        {
-            using (var connection = new SqlConnection(Constants.ConnectionString))
-            using (var command =
-                new SqlCommand(
-                    "DELETE FROM Trades; UPDATE Securities SET Price='0', LastChange='0';", connection))
-            {
-                connection.Open();
-                command.ExecuteNonQuery();
-            }
-        }
-
     }
 }

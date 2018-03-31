@@ -1,6 +1,7 @@
 @{
     Layout = "_NavigationLayout";
 }
+@model StandingsViewModel
 
 <legend>
     <h1 style="text-align: center;">Standings</h1>
@@ -24,11 +25,11 @@
             @{
                 var traders = new List<Trader>();
 
-                var teams = Team.GetAll().Where(x => x.Traders.Any()).ToList();
+                var teams = Model.Teams.Where(x => x.Traders.Any()).ToList();
 
                 foreach (var team in teams)
                 {
-                    team.Calculate(Security.GetAll().Values.ToDictionary(x => x.Symbol, x => x.Price));
+                    team.Calculate(Model.Prices);
                 }
 
                 teams = teams.OrderByDescending(t => t.AveragePnL()).ToList();

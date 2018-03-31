@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Stockimulate.Core.Repositories;
 using Stockimulate.Models;
 
 namespace Stockimulate.ViewModels.Broker
@@ -10,19 +12,36 @@ namespace Stockimulate.ViewModels.Broker
         public static readonly Dictionary<string, int> Prices = new Dictionary<string, int>();
         public static readonly Dictionary<string, int> LastChanges = new Dictionary<string, int>();
 
-        internal static void Update(TradingDay tradingDay)
+        public static List<string> Symbols;
+
+        private static ISecurityRepository _securityRepository;
+
+        public MiniTickerPartialViewModel(ISecurityRepository securityRepository)
         {
-            var symbols = Security.NamesAndSymbols.Keys;
+            CheckInitialized(securityRepository);
+        }
+
+        private static void CheckInitialized(ISecurityRepository securityRepository)
+        {
+            _securityRepository = securityRepository;
+
+            if (Symbols == null)
+                Symbols = _securityRepository.GetAll().Select(s => s.Symbol).ToList();
+        }
+
+        internal static void Update(TradingDay tradingDay, ISecurityRepository securityRepository)
+        {
+            CheckInitialized(securityRepository);
 
             if (Prices.Count == 0)
-                foreach (var symbol in symbols)
+                foreach (var symbol in Symbols)
                     Prices.Add(symbol, 0);
 
             if (LastChanges.Count == 0)
-                foreach (var symbol in symbols)
+                foreach (var symbol in Symbols)
                     LastChanges.Add(symbol, 0);
 
-            foreach (var symbol in symbols)
+            foreach (var symbol in Symbols)
             {
                 var effect = tradingDay.Effects[symbol];
 
@@ -34,16 +53,16 @@ namespace Stockimulate.ViewModels.Broker
             }
         }
 
-        internal static void Reset()
+        internal static void Reset(ISecurityRepository securityRepository)
         {
-            var symbols = Security.NamesAndSymbols.Keys;
+            CheckInitialized(securityRepository);
 
             Prices.Clear();
-            foreach (var symbol in symbols)
+            foreach (var symbol in Symbols)
                 Prices.Add(symbol, 0);
 
             LastChanges.Clear();
-            foreach (var symbol in symbols)
+            foreach (var symbol in Symbols)
                 LastChanges.Add(symbol, 0);
         }
     }

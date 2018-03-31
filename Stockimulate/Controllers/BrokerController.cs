@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Stockimulate.Core.Repositories;
 using Stockimulate.Models;
 using Stockimulate.ViewModels.Broker;
 
@@ -8,6 +9,18 @@ namespace Stockimulate.Controllers
 {
     public sealed class BrokerController : Controller
     {
+        private readonly ITraderRepository _traderRepository;
+        private readonly ISecurityRepository _securityRepository;
+        private readonly ITradeRepository _tradeRepository;
+
+        public BrokerController(ITraderRepository traderRepository, ISecurityRepository securityRepository,
+            ITradeRepository tradeRepository)
+        {
+            _traderRepository = traderRepository;
+            _securityRepository = securityRepository;
+            _tradeRepository = tradeRepository;
+        }
+
         [HttpGet]
         public IActionResult TradeInput(TradeInputViewModel viewModel = null)
         {
@@ -17,6 +30,8 @@ namespace Stockimulate.Controllers
                 return RedirectToAction("Home", "Public");
 
             if (viewModel == null) viewModel = new TradeInputViewModel();
+
+            viewModel.SecurityRepository = _securityRepository;
 
             viewModel.Login = new Login
             {
@@ -52,28 +67,37 @@ namespace Stockimulate.Controllers
             if (!int.TryParse(viewModel.Price, out var price) || price < 1)
                 return Error("Price must be an integer of at least 1.");
 
-            var buyer = Trader.Get(buyerId);
+            var buyer = _traderRepository.Get(buyerId);
 
             if (buyer == null)
                 return Error("Buyer does not exist.");
 
-            var seller = Trader.Get(sellerId);
+            var seller = _traderRepository.Get(sellerId);
 
             if (seller == null)
                 return Error("Seller does not exist.");
 
-            var buyerTeamId = buyer.Team.Id;
-            var sellerTeamId = seller.Team.Id;
+            var buyerTeamId = buyer.TeamId;
+            var sellerTeamId = seller.TeamId;
 
             if (buyerTeamId == sellerTeamId)
                 return Error("Buyer and Seller must be on different teams.");
 
             var symbol = viewModel.Symbol;
 
-            var marketPrice = Security.Get(symbol).Price;
+            var marketPrice = _securityRepository.Get(symbol).Price;
 
-            Trade.Insert(new Trade(buyerId, sellerId, symbol, quantity, price, marketPrice,
-                Math.Abs((float) (price - marketPrice) / marketPrice) > Constants.FlagThreshold, HttpContext.Session.GetString("Username")));
+            _tradeRepository.Insert(new Trade
+            {
+                BuyerId = buyerId,
+                SellerId = sellerId,
+                Symbol = symbol,
+                Quantity = quantity,
+                Price = price,
+                MarketPrice = marketPrice,
+                Flagged = Math.Abs((float) (price - marketPrice) / marketPrice) > Constants.FlagThreshold,
+                BrokerId = HttpContext.Session.GetString("Username")
+            });
 
             return TradeInput(new TradeInputViewModel {Result = "Success"});
         }

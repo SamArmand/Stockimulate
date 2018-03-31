@@ -1,4 +1,6 @@
-﻿namespace Stockimulate.ViewModels.Broker
+﻿using Stockimulate.Core.Repositories;
+
+namespace Stockimulate.ViewModels.Broker
 {
     public sealed class TradeInputViewModel : NavigationLayoutViewModel
     {
@@ -11,5 +13,7 @@
 
         public string ErrorMessage { get; internal set; }
         public string Result { get; internal set; }
+
+        public ISecurityRepository SecurityRepository { get; internal set; }
     }
 }

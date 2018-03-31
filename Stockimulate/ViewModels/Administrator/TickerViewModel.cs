@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Stockimulate.Core.Repositories;
 using Stockimulate.Models;
 
 namespace Stockimulate.ViewModels.Administrator
@@ -13,42 +14,41 @@ namespace Stockimulate.ViewModels.Administrator
         public static int Day { get; private set; }
         public static Dictionary<string, List<int>> Prices = new Dictionary<string, List<int>>();
 
-        public string Symbol { get; }
+        public Security Security { get; internal set; }
 
         public static readonly Dictionary<string, int> LastChange = new Dictionary<string, int>();
 
-        public TickerViewModel(string symbol)
-        {
-            CheckInitialized();
+        private static List<string> _symbols;
 
-            Symbol = symbol;
-        }
+        public TickerViewModel(ISecurityRepository securityRepository) => CheckInitialized(securityRepository);
 
-        private static void CheckInitialized()
+        private static void CheckInitialized(ISecurityRepository securityRepository)
         {
-            var symbols = Security.NamesAndSymbols.Keys;
+            if (_symbols == null)
+                _symbols = securityRepository.GetAll()
+                    .ToDictionary(security => security.Symbol, security => security.Name).Keys.ToList();
 
             if (Prices.Count == 0)
-                foreach (var symbol in symbols)
+                foreach (var symbol in _symbols)
                     Prices.Add(symbol, new List<int>());
 
             if (LastChange.Count != 0) return;
 
             Day = 0;
 
-            foreach (var symbol in symbols)
+            foreach (var symbol in _symbols)
                 LastChange.Add(symbol, 0);
         }
 
-        internal static void Update(TradingDay tradingDay, bool close = false)
+        internal static void Update(TradingDay tradingDay, ISecurityRepository securityRepository, bool close = false)
         {
-            CheckInitialized();
+            CheckInitialized(securityRepository);
 
             if (tradingDay.Day == 0)
-                foreach (var symbol in Security.NamesAndSymbols.Keys)
+                foreach (var symbol in _symbols)
                     Prices[symbol].Add(tradingDay.Effects[symbol]);
             else
-                foreach (var symbol in Security.NamesAndSymbols.Keys)
+                foreach (var symbol in _symbols)
                 {
                     Prices[symbol].Add(Prices[symbol].Last() + tradingDay.Effects[symbol]);
                     LastChange[symbol] = tradingDay.Effects[symbol];
@@ -64,8 +64,10 @@ namespace Stockimulate.ViewModels.Administrator
             else if (tradingDay.Day != 0) ++Day;
         }
 
-        internal static void Reset()
+        internal static void Reset(ISecurityRepository securityRepository)
         {
+            CheckInitialized(securityRepository);
+
             Prices = new Dictionary<string, List<int>>();
 
             Quarter = 0;
@@ -75,7 +77,7 @@ namespace Stockimulate.ViewModels.Administrator
 
             News = string.Empty;
 
-            foreach (var symbol in Security.NamesAndSymbols.Keys)
+            foreach (var symbol in _symbols)
             {
                 Prices.Add(symbol, new List<int>());
                 LastChange[symbol] = 0;

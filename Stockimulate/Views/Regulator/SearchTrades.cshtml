@@ -43,9 +43,9 @@
 
                 <select ID="SecurityDropDownList" class="form-control" asp-for="Symbol">
                     <option value="" selected="selected">Any</option>
-                    @foreach (var nameAndSymbol in Security.NamesAndSymbols)
+                    @foreach (var symbol in Model.Symbols)
                     {
-                        <option>@nameAndSymbol.Key</option>
+                        <option>@symbol</option>
                     }
                 </select>
 
@@ -96,10 +96,10 @@
                 @foreach (var trade in Model.Trades)
                 {
                     <tr class="@(trade.Flagged ? "table-danger" : string.Empty)">
-                        <td>@trade.Buyer.Id</td>
-                        <td>@trade.Buyer.Team.Id</td>
-                        <td>@trade.Seller.Id</td>
-                        <td>@trade.Seller.Team.Id</td>
+                        <td>@trade.BuyerId</td>
+                        <td>@trade.Buyer.TeamId</td>
+                        <td>@trade.SellerId</td>
+                        <td>@trade.Seller.TeamId</td>
                         <td>@trade.Security.Symbol</td>
                         <td>@trade.Quantity</td>
                         <td>@trade.Price</td>
