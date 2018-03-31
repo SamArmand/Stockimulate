@@ -1,15 +1,28 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Stockimulate.Core.Repositories;
+using Stockimulate.Enums;
 using Stockimulate.Models;
-using Stockimulate.ViewModels;
 using Stockimulate.ViewModels.Administrator;
 
 namespace Stockimulate.Controllers
 {
     public sealed class AdministratorController : Controller
     {
+        private readonly ISimulator _simulator;
+        private readonly ISecurityRepository _securityRepository;
+        private readonly ITeamRepository _teamRepository;
+
+        public AdministratorController(ISimulator simulator, ISecurityRepository securityRepository, ITeamRepository teamRepository)
+        {
+            _simulator = simulator;
+            _securityRepository = securityRepository;
+            _teamRepository = teamRepository;
+        }
+
         #region ControlPanel
 
         [HttpGet]
@@ -21,6 +34,8 @@ namespace Stockimulate.Controllers
                 return RedirectToAction("Home", "Public");
 
             if (viewModel == null) viewModel = new ControlPanelViewModel();
+
+            viewModel.Symbols = _securityRepository.GetAll().Select(s => s.Symbol).ToList();
 
             viewModel.Login = new Login
             {
@@ -36,30 +51,29 @@ namespace Stockimulate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PlayPracticeAsync(ControlPanelViewModel viewModel) => await PlayAsync(viewModel, Simulator.Mode.Practice);
+        public async Task<IActionResult> PlayPracticeAsync(ControlPanelViewModel viewModel) => await PlayAsync(viewModel, SimulationMode.Practice);
 
         [HttpPost]
-        public async Task<IActionResult> PlayCompetitionAsync(ControlPanelViewModel viewModel) => await PlayAsync(viewModel, Simulator.Mode.Competition);
+        public async Task<IActionResult> PlayCompetitionAsync(ControlPanelViewModel viewModel) => await PlayAsync(viewModel, SimulationMode.Competition);
 
-        private async Task<IActionResult> PlayAsync(ControlPanelViewModel viewModel, Simulator.Mode mode)
+        [HttpPost]
+        private async Task<IActionResult> PlayAsync(ControlPanelViewModel viewModel, SimulationMode mode)
         {
             if (!viewModel.IsVerifiedInput)
                 return ControlPanel(new ControlPanelViewModel {State = "Warning"});
 
-            var simulator = Simulator.Instance;
-
-            switch (simulator.SimulationState)
+            switch (_simulator.SimulationState)
             {
-                case Simulator.State.Playing:
-                case Simulator.State.Paused:
+                case SimulationState.Playing:
+                case SimulationState.Paused:
                     return Error(
                         "Error! Simulator is not READY to play another simulation.\nAnother simulation is in progress.");
-                case Simulator.State.Stopped:
+                case SimulationState.Stopped:
                     return Error(
                         "Error! Simulator is not READY to play another simulation.\nPlease reset the current simulation data.");
-                case Simulator.State.Ready:
-                    simulator.SimulationMode = mode;
-                    await simulator.PlayAsync();
+                case SimulationState.Ready:
+                    _simulator.SimulationMode = mode;
+                    await _simulator.PlayAsync();
                     return RedirectToAction("ControlPanel");
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -72,7 +86,7 @@ namespace Stockimulate.Controllers
             if (!viewModel.IsVerifiedInput)
                 return ControlPanel(new ControlPanelViewModel {State = "Warning"});
 
-            Simulator.Instance.Reset();
+            _simulator.Reset();
 
             return RedirectToAction("ControlPanel");
         }
@@ -83,12 +97,10 @@ namespace Stockimulate.Controllers
             if (!viewModel.IsVerifiedInput)
                 return ControlPanel(new ControlPanelViewModel {State = "Warning"});
 
-            var simulator = Simulator.Instance;
-
-            if (simulator.SimulationState != Simulator.State.Paused)
+            if (_simulator.SimulationState != SimulationState.Paused)
                 return Error("Error! There is no PAUSED simulation in progress.");
 
-            await simulator.PlayAsync();
+            await _simulator.PlayAsync();
 
             return RedirectToAction("ControlPanel");
         }
@@ -102,9 +114,12 @@ namespace Stockimulate.Controllers
             if (viewModel.Price < 0)
                 return Error("Price must be a postive integer!");
 
-            var security = Security.GetAll()[viewModel.Symbol];
+            var security = _securityRepository.GetAll().FirstOrDefault(s => s.Symbol == viewModel.Symbol);
+            if (security == null) return RedirectToAction("ControlPanel");
+
             security.Price = viewModel.Price;
-            Security.Update(security);
+            _securityRepository.Update(security);
+
             return RedirectToAction("ControlPanel");
         }
 
@@ -141,13 +156,15 @@ namespace Stockimulate.Controllers
 
             ViewData["Title"] = "Standings";
 
-            return View(new NavigationLayoutViewModel
+            return View(new StandingsViewModel
             {
                 Login = new Login
                 {
                     Role = role,
                     Username = HttpContext.Session.GetString("Username")
-                }
+                },
+                Teams = _teamRepository.GetAll().ToList(),
+                Prices = _securityRepository.GetAll().ToDictionary(x => x.Symbol, x => x.Price)
             });
         }
 
@@ -168,7 +185,10 @@ namespace Stockimulate.Controllers
 
             ViewData["Title"] = symbol;
 
-            return View(new TickerViewModel(symbol));
+            return View(new TickerViewModel(_securityRepository)
+            {
+                Security = _securityRepository.Get(symbol)
+            });
         }
 
         #endregion

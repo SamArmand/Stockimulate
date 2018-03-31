@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 using PusherServer;
+using Stockimulate.Core.Repositories;
+using Stockimulate.Enums;
 using Stockimulate.Models;
 using Stockimulate.ViewModels.Administrator;
 using Stockimulate.ViewModels.Broker;
@@ -12,7 +15,8 @@ namespace Stockimulate
     /// <summary>
     /// This class handles the simulation logic.
     /// </summary>
-    internal sealed class Simulator
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+    internal sealed class Simulator : ISimulator
     {
         /// <summary>
         /// Object that stores the Pusher server information.
@@ -41,65 +45,47 @@ namespace Stockimulate
         private int _dayNumber;
 
         /// <summary>
-        /// Enum of all possible simulation states.
-        /// </summary>
-        internal enum State
-        {
-            Playing,
-            Paused,
-            Stopped,
-            Ready
-        }
-
-        /// <summary>
-        /// Enum of all possible simulation modes.
-        /// </summary>
-        internal enum Mode
-        {
-            Practice,
-            Competition
-        }
-
-        /// <summary>
         /// Property to keep track of current simulation state.
         /// </summary>
-        internal State SimulationState { get; private set; } = State.Ready;
+        public SimulationState SimulationState { get; private set; } = SimulationState.Ready;
 
         /// <summary>
         /// Property to keep track of current simulation mode.
         /// </summary>
-        internal Mode SimulationMode { private get; set; }
+        public SimulationMode SimulationMode { private get; set; }
 
         /// <summary>
         /// Lists of traded securities. Initialized as current state of all securities.
         /// </summary>
-        private readonly Dictionary<string, Security> _securities = Security.GetAll();
-
-        /// <summary>
-        /// Private instance for singleton pattern.
-        /// </summary>
-        private static Simulator _instance;
-
-        /// <summary>
-        /// Property returns singleton instance, initializing it first if necessary.
-        /// </summary>
-        internal static Simulator Instance => _instance ?? (_instance = new Simulator());
+        private readonly List<Security> _securities;
 
         /// <summary>
         /// Lists of upcoming trading days to simulate.
         /// </summary>
-        private readonly Dictionary<string, List<TradingDay>> _tradingDays = TradingDay.GetAll();
+        private readonly Dictionary<string, List<TradingDay>> _tradingDays;
+
+        private readonly ISecurityRepository _securityRepository;
+        private readonly ITradeRepository _tradeRepository;
 
         /// <summary>
-        /// Private constructor. Sets the Elapsed handler for the timer.
+        /// Constructor. Sets the Elapsed handler for the timer.
         /// </summary>
-        private Simulator() => _timer.Elapsed += UpdateAsync;
+        public Simulator(ISecurityRepository securityRepository, ITradingDayRepository tradingDayRepository, ITradeRepository tradeRepository)
+        {
+            _tradeRepository = tradeRepository;
+            _securityRepository = securityRepository;
+            _securities = _securityRepository.GetAll();
+
+            _tradingDays = tradingDayRepository.GetAll();
+
+            _timer.Elapsed += UpdateAsync;
+        }
 
         /// <summary>
         /// Method to play the simulation and open the market.
         /// </summary>
         /// <returns></returns>
-        internal async Task PlayAsync()
+        public async Task PlayAsync()
         {
             TickerViewModel.OpenMarket();
 
@@ -115,14 +101,14 @@ namespace Stockimulate
 
                 foreach (var security in _securities)
                 {
-                    security.Value.Price += tradingDay.Effects[security.Key];
-                    Security.Update(security.Value);
+                    security.Price += tradingDay.Effects[security.Symbol];
+                    _securityRepository.Update(security);
                 }
 
                 await UpdateMarketAsync(tradingDay, false);
             }
 
-            SimulationState = State.Playing;
+            SimulationState = SimulationState.Playing;
 
             AppSettings.UpdateReportsEnabled(false);
 
@@ -133,12 +119,12 @@ namespace Stockimulate
         /// Method to close the market.
         /// </summary>
         /// <param name="tradingDay"></param>
-        /// <param name="state"></param>
+        /// <param name="simulationState"></param>
         /// <returns></returns>
-        private async Task CloseMarketAsync(TradingDay tradingDay, State state)
+        private async Task CloseMarketAsync(TradingDay tradingDay, SimulationState simulationState)
         {
             _timer.Stop();
-            SimulationState = state;
+            SimulationState = simulationState;
 
             await UpdateMarketAsync(tradingDay, true);
 
@@ -160,21 +146,23 @@ namespace Stockimulate
 
             foreach (var security in _securities)
             {
-                security.Value.Price += tradingDay.Effects[security.Key];
-                security.Value.LastChange = tradingDay.Effects[security.Key];
-                Security.Update(security.Value);
+                var symbol = security.Symbol;
+
+                security.Price += tradingDay.Effects[symbol];
+                security.LastChange = tradingDay.Effects[symbol];
+                _securityRepository.Update(security);
             }
 
             switch (_dayNumber)
             {
-                case Constants.Quarter1Day when SimulationMode == Mode.Competition:
+                case Constants.Quarter1Day when SimulationMode == SimulationMode.Competition:
                 case Constants.Quarter2Day:
                 case Constants.Quarter3Day:
-                    await CloseMarketAsync(tradingDay, State.Paused);
+                    await CloseMarketAsync(tradingDay, SimulationState.Paused);
                     break;
-                case Constants.Quarter1Day when SimulationMode == Mode.Practice:
+                case Constants.Quarter1Day when SimulationMode == SimulationMode.Practice:
                 case Constants.Quarter4Day:
-                    await CloseMarketAsync(tradingDay, State.Stopped);
+                    await CloseMarketAsync(tradingDay, SimulationState.Stopped);
                     break;
                 default:
                     await UpdateMarketAsync(tradingDay, false);
@@ -185,22 +173,23 @@ namespace Stockimulate
         /// <summary>
         /// Resets the market.
         /// </summary>
-        internal void Reset()
+        public void Reset()
         {
             _timer.Stop();
             _dayNumber = 0;
 
             foreach (var security in _securities)
             {
-                security.Value.Price = 0;
-                Security.Update(security.Value);
+                security.Price = 0;
+                _securityRepository.Update(security);
             }
 
-            TickerViewModel.Reset();
-            MiniTickerPartialViewModel.Reset();
-            AppSettings.Reset();
+            _tradeRepository.DeleteAll();
 
-            SimulationState = State.Ready;
+            TickerViewModel.Reset(_securityRepository);
+            MiniTickerPartialViewModel.Reset(_securityRepository);
+
+            SimulationState = SimulationState.Ready;
         }
 
         private async Task UpdateMarketAsync(TradingDay tradingDay, bool close)
@@ -212,12 +201,12 @@ namespace Stockimulate
                 {
                     day = _dayNumber,
                     news = tradingDay.NewsItem,
-                    effects = _securities.Select(security => tradingDay.Effects[security.Key]).ToArray(),
+                    effects = _securities.Select(security => tradingDay.Effects[security.Symbol]).ToArray(),
                     close
                 });
-                
-            TickerViewModel.Update(tradingDay, close);
-            MiniTickerPartialViewModel.Update(tradingDay);
+
+            TickerViewModel.Update(tradingDay, _securityRepository, close);
+            MiniTickerPartialViewModel.Update(tradingDay, _securityRepository);
         }
     }
 }

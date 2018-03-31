@@ -4,7 +4,9 @@
 @{
     var statusDivCssClass = TickerViewModel.MarketStatus == "CLOSED" ? "bg-danger" : "bg-success";
 
-    var symbol = Model.Symbol;
+    var security = Model.Security;
+
+    var symbol = security.Symbol;
 
     var lastChange = TickerViewModel.LastChange[symbol];
 
@@ -13,19 +15,6 @@
     var prices = TickerViewModel.Prices[symbol];
 
     var price = prices.Count == 0 ? 0 : prices.Last();
-
-    var namesAndSymbols = Security.NamesAndSymbols.ToList();
-
-    var tickerId = -1;
-
-    for (var i = 0; i < namesAndSymbols.Count; ++i)
-    {
-        if (namesAndSymbols[i].Key == symbol)
-        {
-            tickerId = i;
-            break;
-        }
-    }
 }
 
 <div class="container-fluid">
@@ -119,15 +108,15 @@
 
         channel.bind('update-market',
             function(message) {
-
+                
                 var effect;
                 var newPrice;
 
                 if (message.day === 0) {
                     effect = 0;
-                    newPrice = message.effects[@tickerId];
+                    newPrice = message.effects[@security.Id];
                 } else {
-                    effect = message.effects[@tickerId];
+                    effect = message.effects[@security.Id];
                     newPrice = parseInt(tickerPriceH1.innerText.substring(1)) + effect;
 
                     if (message.close) {
@@ -209,7 +198,7 @@
                 responsive: true,
                 title: {
                     display: true,
-                    text: "@Security.NamesAndSymbols.FirstOrDefault(n => n.Key == symbol).Value (@symbol)"
+                    text: "@security.Name (@symbol)"
                 },
                 tooltips: {
                     mode: 'index',

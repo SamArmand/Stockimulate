@@ -5,6 +5,7 @@
 @{
     var symbol = string.Empty;
     var isAdmin = Model.Login.Role == "Administrator";
+    var securities = Model.SecurityRepository.GetAll();
 }
 <div class="row">
     <div class="col-8">
@@ -17,15 +18,13 @@
                     <h1>
                         Trade
                         @{
-                            var securities = Security.GetAll();
-
                             try
                             {
                                 var brokerPermission = int.Parse(Model.Login.Username.Substring(6)) % securities.Count;
 
-                                foreach (var security in securities.Where(security => security.Value.Id == brokerPermission))
+                                foreach (var security in securities.Where(security => security.Id == brokerPermission))
                                 {
-                                    symbol = security.Key;
+                                    symbol = security.Symbol;
 
                                     break;
                                 }
@@ -58,7 +57,7 @@
                             {
                                 foreach (var security in securities)
                                 {
-                                    <option>@security.Key</option>
+                                    <option>@security.Symbol</option>
                                 }
                             }
                             else
@@ -129,13 +128,13 @@
     <div class="col-3 offset-1">
         @if (Model.Login.Role != "Administrator")
         {
-            @Html.Partial("MiniTickerPartial", new MiniTickerPartialViewModel {Symbol = symbol})
+            @Html.Partial("MiniTickerPartial", new MiniTickerPartialViewModel(Model.SecurityRepository) {Symbol = symbol})
         }
         else
         {
-            foreach (var key in Security.NamesAndSymbols.Keys)
+            foreach (var security in securities)
             {
-                @Html.Partial("MiniTickerPartial", new MiniTickerPartialViewModel {Symbol = key})
+                @Html.Partial("MiniTickerPartial", new MiniTickerPartialViewModel(Model.SecurityRepository) {Symbol = security.Symbol})
             }
         }
     </div>
@@ -157,7 +156,7 @@
 
         channel.bind('update-market',
             function(message) {
-
+                
                 var tickerDiv;
                 var priceH4;
                 var changeSpan;
@@ -170,9 +169,8 @@
                         var newPrice;
                     </text>
 
-                    foreach (var kvp in Security.GetAll())
+                    foreach (var security in securities)
                     {
-                        var security = kvp.Value;
                         var securitySymbol = security.Symbol;
 
                         var priceH4Id = "PriceH4" + securitySymbol;
@@ -214,7 +212,7 @@
                 }
                 else
                 {
-                    var security = Security.GetAll().FirstOrDefault(s => s.Key == symbol).Value;
+                    var security = securities.FirstOrDefault(s => s.Symbol == symbol);
                     var securitySymbol = security.Symbol;
 
                     var priceH4Id = "PriceH4" + securitySymbol;

@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Stockimulate.Core.Repositories;
 using Stockimulate.Models;
 using Stockimulate.ViewModels.Regulator;
 
@@ -7,6 +9,15 @@ namespace Stockimulate.Controllers
 {
     public sealed class RegulatorController : Controller
     {
+        private readonly ITradeRepository _tradeRepository;
+        private readonly ISecurityRepository _securityRepository;
+
+        public RegulatorController(ITradeRepository tradeRepository, ISecurityRepository securityRepository)
+        {
+            _tradeRepository = tradeRepository;
+            _securityRepository = securityRepository;
+        }
+
         [HttpGet]
         public IActionResult SearchTrades(SearchTradesViewModel viewModel = null)
         {
@@ -16,6 +27,8 @@ namespace Stockimulate.Controllers
                 return RedirectToAction("Home", "Public");
 
             if (viewModel == null) viewModel = new SearchTradesViewModel();
+
+            viewModel.Symbols = _securityRepository.GetAll().Select(s => s.Symbol).ToList();
 
             viewModel.Login = new Login
             {
@@ -33,7 +46,7 @@ namespace Stockimulate.Controllers
         [HttpPost]
         public IActionResult Submit(SearchTradesViewModel viewModel) => SearchTrades(new SearchTradesViewModel
         {
-            Trades = Trade.Get(
+            Trades = _tradeRepository.Get(
                 viewModel.BuyerId,
                 viewModel.BuyerTeamId,
                 viewModel.SellerId,

@@ -1,34 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
 
 namespace Stockimulate.Models
 {
     public sealed class Trader
     {
-        private int _teamId;
+        public Trader()
+        {
+            TradesAsBuyer = new HashSet<Trade>();
+            TradesAsSeller = new HashSet<Trade>();
+        }
 
-        public int Id { get; private set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int TeamId { get; set; }
 
-        public string Name { get; private set; }
+        internal Team Team { get; set; }
+        internal ICollection<Trade> TradesAsBuyer { get; set; }
+        internal ICollection<Trade> TradesAsSeller { get; set; }
 
-        //Lazy load
-        private Team _team;
-        public Team Team => _team ?? (_team = Team.Get(_teamId));
-
-        //Lazy load
-        private Dictionary<string, List<Trade>> _trades;
-        private Dictionary<string, List<Trade>> Trades => _trades ?? (_trades = Trade.GetByTrader(Id));
-
+        [NotMapped]
         public Dictionary<string, int> RealizedPnLs { get; private set; }
+        [NotMapped]
         public Dictionary<string, int> UnrealizedPnLs { get; private set; }
+        [NotMapped]
         public Dictionary<string, int> TotalPnLs { get; private set; }
+        [NotMapped]
         public Dictionary<string, int> Positions { get; private set; }
+        [NotMapped]
         public Dictionary<string, int> AverageOpenPrices { get; private set; }
 
+        [NotMapped]
         public int AccumulatedPenalties { get; private set; }
+        [NotMapped]
         public int AccumulatedPenaltiesValue { get; private set; }
+
+        private Dictionary<string, List<Trade>> Trades()
+        {
+            var trades = new Dictionary<string, List<Trade>>();
+
+            foreach (var trade in TradesAsBuyer.Concat(TradesAsSeller))
+            {
+                var symbol = trade.Symbol;
+                if (!trades.ContainsKey(symbol)) trades.Add(symbol, new List<Trade>());
+
+                trades[symbol].Add(trade);
+            }
+
+            return trades;
+        }
 
         internal void Calculate(Dictionary<string, int> prices)
         {
@@ -38,7 +63,7 @@ namespace Stockimulate.Models
             Positions = new Dictionary<string, int>();
             AverageOpenPrices = new Dictionary<string, int>();
 
-            foreach (var kvp in Trades)
+            foreach (var kvp in Trades())
             {
                 var totalBuyQuantity = 0;
                 var averageBuyPrice = 0;
@@ -53,8 +78,8 @@ namespace Stockimulate.Models
                     var tradePrice = trade.Price;
 
                     //Check for Penalty and Modify Trade Quantity
-                    var potentialPosition = currentPosition + trade.Quantity * (trade.Buyer.Id == Id ? 1 : -1);
-                    if (Id != Constants.ExchangeId && _teamId != Constants.MarketMakersId
+                    var potentialPosition = currentPosition + trade.Quantity * (trade.BuyerId == Id ? 1 : -1);
+                    if (Id != Constants.ExchangeId && TeamId != Constants.MarketMakersId
                         && Math.Abs(potentialPosition) > maxPosition)
                     {
                         var penalty = Math.Abs(potentialPosition) - maxPosition;
@@ -67,7 +92,7 @@ namespace Stockimulate.Models
                     var tradeQuantity = trade.Quantity;
 
                     //Check if Trader is the buyer
-                    if (trade.Buyer.Id == Id)
+                    if (trade.BuyerId == Id)
                     {
                         currentPosition += tradeQuantity;
                         totalBuyQuantity += tradeQuantity;
@@ -110,61 +135,6 @@ namespace Stockimulate.Models
             }
         }
 
-        public int PnL()
-        {
-            return TotalPnLs.Sum(e => e.Value) - AccumulatedPenaltiesValue;
-        }
-
-        internal static Trader Get(int id)
-        {
-            using (var connection = new SqlConnection(Constants.ConnectionString))
-            using (var command =
-                new SqlCommand("SELECT Name, TeamId FROM Traders WHERE Id=@Id;", connection))
-
-            {
-                connection.Open();
-
-                command.Parameters.AddWithValue("@Id", id);
-
-                using (var reader = command.ExecuteReader())
-                {
-                    return reader.Read()
-                        ? new Trader
-                        {
-                            Id = id,
-                            Name = reader.GetString(reader.GetOrdinal("Name")),
-                            _teamId = reader.GetInt32(reader.GetOrdinal("TeamId"))
-                        }
-                        : null;
-                }
-            }
-        }
-
-        internal static List<Trader> GetInTeam(int teamId)
-        {
-            using (var connection = new SqlConnection(Constants.ConnectionString))
-            using (var command =
-                new SqlCommand("SELECT Id, Name FROM Traders WHERE TeamId=@TeamId;", connection))
-            {
-                connection.Open();
-
-                command.Parameters.AddWithValue("@TeamId", teamId);
-
-                using (var reader = command.ExecuteReader())
-                {
-                    var traders = new List<Trader>();
-
-                    while (reader.Read())
-                        traders.Add(new Trader
-                        {
-                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                            Name = reader.GetString(reader.GetOrdinal("Name")),
-                            _teamId = teamId
-                        });
-
-                    return traders;
-                }
-            }
-        }
+        public int PnL() => TotalPnLs.Sum(e => e.Value) - AccumulatedPenaltiesValue;
     }
 }

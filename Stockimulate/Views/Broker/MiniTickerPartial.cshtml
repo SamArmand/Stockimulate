@@ -1,7 +1,7 @@
 @model MiniTickerPartialViewModel
 
 @{
-    var symbols = Security.NamesAndSymbols.Keys;
+    var symbols = MiniTickerPartialViewModel.Symbols;
     var modelSymbol = Model.Symbol;
 
     if (MiniTickerPartialViewModel.Prices.Count == 0)
