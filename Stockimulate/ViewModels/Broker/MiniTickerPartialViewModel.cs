@@ -16,17 +16,14 @@ namespace Stockimulate.ViewModels.Broker
 
         private static ISecurityRepository _securityRepository;
 
-        public MiniTickerPartialViewModel(ISecurityRepository securityRepository)
-        {
-            CheckInitialized(securityRepository);
-        }
+        public MiniTickerPartialViewModel(ISecurityRepository securityRepository) => CheckInitialized(securityRepository);
 
         private static void CheckInitialized(ISecurityRepository securityRepository)
         {
             _securityRepository = securityRepository;
 
             if (Symbols == null)
-                Symbols = _securityRepository.GetAll().Select(s => s.Symbol).ToList();
+                Symbols = _securityRepository.GetAllAsync().Result.Select(s => s.Symbol).ToList();
         }
 
         internal static void Update(TradingDay tradingDay, ISecurityRepository securityRepository)

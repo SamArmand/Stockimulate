@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Stockimulate.Core.Repositories;
@@ -30,14 +31,14 @@ namespace Stockimulate.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(NavigationLayoutViewModel viewModel)
+        public async Task<IActionResult> Login(NavigationLayoutViewModel viewModel)
         {
             if (viewModel.Username == null || viewModel.Password == null)
                 return RedirectToAction("Home", "Public");
 
             try
             {
-                var team = _teamRepository.Get(int.Parse(viewModel.Username), viewModel.Password,
+                var team = _teamRepository.GetAsync(int.Parse(viewModel.Username), viewModel.Password,
                     true);
 
                 if (team != null)
@@ -53,7 +54,7 @@ namespace Stockimulate.Controllers
                 //ignore
             }
 
-            var login = _loginRepository.Get(viewModel.Username, viewModel.Password);
+            var login = await _loginRepository.GetAsync(viewModel.Username, viewModel.Password);
 
             if (login == null)
                 return RedirectToAction("Home", "Public");

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -8,15 +7,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Stockimulate.Core.Repositories;
 using Stockimulate.Persistence;
+// ReSharper disable ClassNeverInstantiated.Global
+// ReSharper disable UnusedMember.Global
 
 namespace Stockimulate
 {
-    [SuppressMessage("ReSharper", "MemberCanBeInternal")]
-    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    public class Startup
+    internal class Startup
     {
+        private readonly IConfigurationRoot _configuration;
+
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -24,15 +23,13 @@ namespace Stockimulate
                 .AddJsonFile("appsettings.json", false, true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
                 .AddEnvironmentVariables();
-            Configuration = builder.Build();
-            Constants.ConnectionString = Configuration.GetConnectionString("MS_TableConnectionString");
-            Constants.PusherAppId = Configuration.GetConnectionString("Pusher_AppId");
-            Constants.PusherSecret = Configuration.GetConnectionString("Pusher_Secret");
-            Constants.PusherKey = Configuration.GetConnectionString("Pusher_Key");
-            Constants.PusherCluster = Configuration.GetConnectionString("Pusher_Cluster");
+            _configuration = builder.Build();
+            Constants.ConnectionString = _configuration.GetConnectionString("MS_TableConnectionString");
+            Constants.PusherAppId = _configuration.GetConnectionString("Pusher_AppId");
+            Constants.PusherSecret = _configuration.GetConnectionString("Pusher_Secret");
+            Constants.PusherKey = _configuration.GetConnectionString("Pusher_Key");
+            Constants.PusherCluster = _configuration.GetConnectionString("Pusher_Cluster");
         }
-
-        public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -60,7 +57,7 @@ namespace Stockimulate
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"))
+            loggerFactory.AddConsole(_configuration.GetSection("Logging"))
                          .AddDebug();
 
             if (env.IsDevelopment())

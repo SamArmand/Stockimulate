@@ -42,28 +42,28 @@ namespace Stockimulate.Models
             {
                 trader.Calculate(prices);
 
-                foreach (var key in trader.TotalPnLs.Keys)
+                foreach (var symbol in trader.TotalPnLs.Keys)
                 {
-                    if (!Positions.ContainsKey(key)) Positions.Add(key, trader.Positions[key]);
-                    else Positions[key] += trader.Positions[key];
+                    if (!Positions.ContainsKey(symbol)) Positions.Add(symbol, trader.Positions[symbol]);
+                    else Positions[symbol] += trader.Positions[symbol];
 
-                    if (!RealizedPnLs.ContainsKey(key)) RealizedPnLs.Add(key, trader.RealizedPnLs[key]);
-                    else RealizedPnLs[key] += trader.RealizedPnLs[key];
+                    if (!RealizedPnLs.ContainsKey(symbol)) RealizedPnLs.Add(symbol, trader.RealizedPnLs[symbol]);
+                    else RealizedPnLs[symbol] += trader.RealizedPnLs[symbol];
 
-                    if (!UnrealizedPnLs.ContainsKey(key)) UnrealizedPnLs.Add(key, trader.UnrealizedPnLs[key]);
-                    else UnrealizedPnLs[key] += trader.UnrealizedPnLs[key];
+                    if (!UnrealizedPnLs.ContainsKey(symbol)) UnrealizedPnLs.Add(symbol, trader.UnrealizedPnLs[symbol]);
+                    else UnrealizedPnLs[symbol] += trader.UnrealizedPnLs[symbol];
                 }
 
                 AccumulatedPenalties += trader.AccumulatedPenalties;
                 AccumulatedPenaltiesValue += trader.AccumulatedPenaltiesValue;
             }
 
-            foreach (var key in RealizedPnLs.Keys)
-                TotalPnLs.Add(key, RealizedPnLs[key] + UnrealizedPnLs[key]);
+            foreach (var symbol in RealizedPnLs.Keys)
+                TotalPnLs.Add(symbol, RealizedPnLs[symbol] + UnrealizedPnLs[symbol]);
         }
 
         public int PnL() => TotalPnLs.Sum(e => e.Value) - AccumulatedPenaltiesValue;
 
-        public int AveragePnL() => Traders.Any() ? PnL() / Traders.Count() : 0;
+        public int AveragePnL() => Traders.Any() ? PnL() / Traders.Count : 0;
     }
 }

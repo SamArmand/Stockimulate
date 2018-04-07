@@ -25,7 +25,7 @@ namespace Stockimulate.ViewModels.Administrator
         private static void CheckInitialized(ISecurityRepository securityRepository)
         {
             if (_symbols == null)
-                _symbols = securityRepository.GetAll()
+                _symbols = securityRepository.GetAllAsync().Result
                     .ToDictionary(security => security.Symbol, security => security.Name).Keys.ToList();
 
             if (Prices.Count == 0)

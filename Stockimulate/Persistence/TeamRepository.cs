@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Stockimulate.Core.Repositories;
 using Stockimulate.Models;
@@ -13,11 +13,11 @@ namespace Stockimulate.Persistence
 
         public TeamRepository(StockimulateContext stockimulateContext) => _stockimulateContext = stockimulateContext;
 
-        public Team Get(int id, string code = "", bool needCode = false) => _stockimulateContext.Teams
+        public async Task<Team> GetAsync(int id, string code = "", bool needCode = false) => await _stockimulateContext.Teams
             .Include(t => t.Traders)
                 .ThenInclude(t => t.TradesAsBuyer)
             .Include(t => t.Traders)
-                .ThenInclude(t => t.TradesAsSeller).FirstOrDefault(t => t.Id == id && (!needCode || t.Code == code));
+                .ThenInclude(t => t.TradesAsSeller).FirstOrDefaultAsync(t => t.Id == id && (!needCode || t.Code == code));
 
         public IEnumerable<Team> GetAll() => _stockimulateContext.Teams
             .Include(t => t.Traders)
