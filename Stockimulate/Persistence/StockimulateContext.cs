@@ -49,6 +49,10 @@ namespace Stockimulate.Persistence
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Price);
+
+                entity.Property(e => e.LastChange);
             })
 
                 .Entity<Team>(entity =>
