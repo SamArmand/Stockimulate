@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Stockimulate.Core.Repositories;
@@ -47,7 +48,7 @@ namespace Stockimulate.Controllers
         }
 
         [HttpPost]
-        public IActionResult Submit(TradeInputViewModel viewModel)
+        public async Task<IActionResult> Submit(TradeInputViewModel viewModel)
         {
             if (!viewModel.IsChecked)
                 return TradeInput(new TradeInputViewModel
@@ -67,12 +68,12 @@ namespace Stockimulate.Controllers
             if (!int.TryParse(viewModel.Price, out var price) || price < 1)
                 return Error("Price must be an integer of at least 1.");
 
-            var buyer = _traderRepository.Get(buyerId);
+            var buyer = await _traderRepository.GetAsync(buyerId);
 
             if (buyer == null)
                 return Error("Buyer does not exist.");
 
-            var seller = _traderRepository.Get(sellerId);
+            var seller = await _traderRepository.GetAsync(sellerId);
 
             if (seller == null)
                 return Error("Seller does not exist.");
@@ -85,9 +86,9 @@ namespace Stockimulate.Controllers
 
             var symbol = viewModel.Symbol;
 
-            var marketPrice = _securityRepository.Get(symbol).Price;
+            var marketPrice = (await _securityRepository.GetAsync(symbol)).Price;
 
-            _tradeRepository.Insert(new Trade
+            await _tradeRepository.InsertAsync(new Trade
             {
                 BuyerId = buyerId,
                 SellerId = sellerId,

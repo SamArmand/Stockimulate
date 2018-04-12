@@ -1,9 +1,10 @@
-﻿using Stockimulate.Models;
+﻿using System.Threading.Tasks;
+using Stockimulate.Models;
 
 namespace Stockimulate.Core.Repositories
 {
     public interface ITraderRepository
     {
-        Trader Get(int id);
+        Task<Trader> GetAsync(int id);
     }
 }

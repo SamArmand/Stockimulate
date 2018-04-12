@@ -1,9 +1,10 @@
-﻿using Stockimulate.Models;
+﻿using System.Threading.Tasks;
+using Stockimulate.Models;
 
 namespace Stockimulate.Core.Repositories
 {
     public interface ILoginRepository
     {
-        Login Get(string username, string password);
+        Task<Login> GetAsync(string username, string password);
     }
 }

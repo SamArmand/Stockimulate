@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Stockimulate.Core.Repositories;
 using Stockimulate.Models;
@@ -13,13 +14,14 @@ namespace Stockimulate.Persistence
 
         public TradeRepository(StockimulateContext stockimulateContext) => _stockimulateContext = stockimulateContext;
 
-        public void Insert(Trade trade)
+        public async Task InsertAsync(Trade trade)
         {
-            _stockimulateContext.Trades.Add(trade);
-            _stockimulateContext.SaveChanges();
+            await _stockimulateContext.Trades.AddAsync(trade);
+            await _stockimulateContext.SaveChangesAsync();
         }
 
-        public List<Trade> Get(string buyerId, string buyerTeamId, string sellerId, string sellerTeamId, string symbol, string flagged) => _stockimulateContext.Trades
+        public List<Trade> Get(string buyerId, string buyerTeamId, string sellerId, string sellerTeamId, string symbol,
+            string flagged) => _stockimulateContext.Trades
             .Include(t => t.Buyer)
             .Include(t => t.Seller)
             .Where(t => (string.IsNullOrEmpty(buyerId) || t.BuyerId == int.Parse(buyerId))
@@ -29,10 +31,6 @@ namespace Stockimulate.Persistence
                         && (string.IsNullOrEmpty(symbol) || t.Symbol == symbol)
                         && (string.IsNullOrEmpty(flagged) || t.Flagged == bool.Parse(flagged))).ToList();
 
-        public void DeleteAll()
-        {
-            _stockimulateContext.Trades.RemoveRange(_stockimulateContext.Trades);
-            _stockimulateContext.SaveChanges();
-        }
+        public async Task DeleteAllAsync() => await _stockimulateContext.BulkDeleteAsync(_stockimulateContext.Trades);
     }
 }

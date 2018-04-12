@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Stockimulate.Core.Repositories;
@@ -19,7 +20,7 @@ namespace Stockimulate.Controllers
         }
 
         [HttpGet]
-        public IActionResult SearchTrades(SearchTradesViewModel viewModel = null)
+        public async Task<IActionResult> SearchTrades(SearchTradesViewModel viewModel = null)
         {
             var role = HttpContext.Session.GetString("Role");
 
@@ -28,7 +29,7 @@ namespace Stockimulate.Controllers
 
             if (viewModel == null) viewModel = new SearchTradesViewModel();
 
-            viewModel.Symbols = _securityRepository.GetAll().Select(s => s.Symbol).ToList();
+            viewModel.Symbols = (await _securityRepository.GetAllAsync()).Select(s => s.Symbol).ToList();
 
             viewModel.Login = new Login
             {
@@ -44,7 +45,7 @@ namespace Stockimulate.Controllers
         }
 
         [HttpPost]
-        public IActionResult Submit(SearchTradesViewModel viewModel) => SearchTrades(new SearchTradesViewModel
+        public async Task<IActionResult> Submit(SearchTradesViewModel viewModel) => await SearchTrades(new SearchTradesViewModel
         {
             Trades = _tradeRepository.Get(
                 viewModel.BuyerId,

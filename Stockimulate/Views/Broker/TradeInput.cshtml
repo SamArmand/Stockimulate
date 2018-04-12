@@ -5,7 +5,7 @@
 @{
     var symbol = string.Empty;
     var isAdmin = Model.Login.Role == "Administrator";
-    var securities = Model.SecurityRepository.GetAll();
+    var securities = await Model.SecurityRepository.GetAllAsync();
 }
 <div class="row">
     <div class="col-8">
@@ -213,6 +213,12 @@
                 else
                 {
                     var security = securities.FirstOrDefault(s => s.Symbol == symbol);
+
+                    if (security == null)
+                    {
+                        throw new Exception();
+                    }
+
                     var securitySymbol = security.Symbol;
 
                     var priceH4Id = "PriceH4" + securitySymbol;

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Stockimulate.Core.Repositories;
@@ -19,7 +20,7 @@ namespace Stockimulate.Controllers
         }
 
         [HttpGet]
-        public IActionResult Reports(ReportsViewModel viewModel = null)
+        public async Task<IActionResult> Reports(ReportsViewModel viewModel = null)
         {
             var role = HttpContext.Session.GetString("Role");
 
@@ -37,9 +38,9 @@ namespace Stockimulate.Controllers
                 Username = username
             };
 
-            if (role.Substring(0, 4) == "Team") viewModel.Team = _teamRepository.Get(int.Parse(username.Substring(4)));
+            if (role.Substring(0, 4) == "Team") viewModel.Team = await _teamRepository.GetAsync(int.Parse(username.Substring(4)));
 
-            viewModel.Prices = _securityRepository.GetAll().ToDictionary(x => x.Symbol, x => x.Price);
+            viewModel.Prices = (await _securityRepository.GetAllAsync()).ToDictionary(x => x.Symbol, x => x.Price);
 
             ModelState.Clear();
 
@@ -49,9 +50,9 @@ namespace Stockimulate.Controllers
         }
 
         [HttpPost]
-        public IActionResult Submit(ReportsViewModel viewModel) => Reports(new ReportsViewModel
+        public async Task<IActionResult> Submit(ReportsViewModel viewModel) => await Reports(new ReportsViewModel
         {
-            Team = _teamRepository.Get(viewModel.TeamId)
+            Team = await _teamRepository.GetAsync(viewModel.TeamId)
         });
     }
 }

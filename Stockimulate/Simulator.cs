@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
@@ -9,13 +8,13 @@ using Stockimulate.Enums;
 using Stockimulate.Models;
 using Stockimulate.ViewModels.Administrator;
 using Stockimulate.ViewModels.Broker;
+// ReSharper disable ClassNeverInstantiated.Global
 
 namespace Stockimulate
 {
     /// <summary>
     /// This class handles the simulation logic.
     /// </summary>
-    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     internal sealed class Simulator : ISimulator
     {
         /// <summary>
@@ -74,9 +73,9 @@ namespace Stockimulate
         {
             _tradeRepository = tradeRepository;
             _securityRepository = securityRepository;
-            _securities = _securityRepository.GetAll();
+            _securities = _securityRepository.GetAllAsync().Result;
 
-            _tradingDays = tradingDayRepository.GetAll();
+            _tradingDays = tradingDayRepository.GetAllAsync().Result;
 
             _timer.Elapsed += UpdateAsync;
         }
@@ -102,7 +101,7 @@ namespace Stockimulate
                 foreach (var security in _securities)
                 {
                     security.Price += tradingDay.Effects[security.Symbol];
-                    _securityRepository.Update(security);
+                    await _securityRepository.UpdateAsync(security);
                 }
 
                 await UpdateMarketAsync(tradingDay, false);
@@ -150,7 +149,7 @@ namespace Stockimulate
 
                 security.Price += tradingDay.Effects[symbol];
                 security.LastChange = tradingDay.Effects[symbol];
-                _securityRepository.Update(security);
+                await _securityRepository.UpdateAsync(security);
             }
 
             switch (_dayNumber)
@@ -181,10 +180,10 @@ namespace Stockimulate
             foreach (var security in _securities)
             {
                 security.Price = 0;
-                _securityRepository.Update(security);
+                _securityRepository.UpdateAsync(security);
             }
 
-            _tradeRepository.DeleteAll();
+            _tradeRepository.DeleteAllAsync();
 
             TickerViewModel.Reset(_securityRepository);
             MiniTickerPartialViewModel.Reset(_securityRepository);

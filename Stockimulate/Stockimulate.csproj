@@ -6,6 +6,7 @@
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
     <PackageReference Include="Microsoft.NetCore.App" Version="2.0.6" />
     <PackageReference Include="PusherServer" Version="4.1.0" />
+    <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="2.1.4" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />

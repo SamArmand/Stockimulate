@@ -26,7 +26,7 @@ namespace Stockimulate.Controllers
         #region ControlPanel
 
         [HttpGet]
-        public IActionResult ControlPanel(ControlPanelViewModel viewModel = null)
+        public async Task<IActionResult> ControlPanel(ControlPanelViewModel viewModel = null)
         {
             var role = HttpContext.Session.GetString("Role");
 
@@ -35,7 +35,7 @@ namespace Stockimulate.Controllers
 
             if (viewModel == null) viewModel = new ControlPanelViewModel();
 
-            viewModel.Symbols = _securityRepository.GetAll().Select(s => s.Symbol).ToList();
+            viewModel.Symbols = (await _securityRepository.GetAllAsync()).Select(s => s.Symbol).ToList();
 
             viewModel.Login = new Login
             {
@@ -60,16 +60,16 @@ namespace Stockimulate.Controllers
         private async Task<IActionResult> PlayAsync(ControlPanelViewModel viewModel, SimulationMode mode)
         {
             if (!viewModel.IsVerifiedInput)
-                return ControlPanel(new ControlPanelViewModel {State = "Warning"});
+                return await ControlPanel(new ControlPanelViewModel {State = "Warning"});
 
             switch (_simulator.SimulationState)
             {
                 case SimulationState.Playing:
                 case SimulationState.Paused:
-                    return Error(
+                    return await Error(
                         "Error! Simulator is not READY to play another simulation.\nAnother simulation is in progress.");
                 case SimulationState.Stopped:
-                    return Error(
+                    return await Error(
                         "Error! Simulator is not READY to play another simulation.\nPlease reset the current simulation data.");
                 case SimulationState.Ready:
                     _simulator.SimulationMode = mode;
@@ -81,10 +81,10 @@ namespace Stockimulate.Controllers
         }
 
         [HttpPost]
-        public IActionResult ResetTrades(ControlPanelViewModel viewModel)
+        public async Task<IActionResult> ResetTrades(ControlPanelViewModel viewModel)
         {
             if (!viewModel.IsVerifiedInput)
-                return ControlPanel(new ControlPanelViewModel {State = "Warning"});
+                return await ControlPanel(new ControlPanelViewModel {State = "Warning"});
 
             _simulator.Reset();
 
@@ -95,10 +95,10 @@ namespace Stockimulate.Controllers
         public async Task<IActionResult> ContinueAsync(ControlPanelViewModel viewModel)
         {
             if (!viewModel.IsVerifiedInput)
-                return ControlPanel(new ControlPanelViewModel {State = "Warning"});
+                return await ControlPanel(new ControlPanelViewModel {State = "Warning"});
 
             if (_simulator.SimulationState != SimulationState.Paused)
-                return Error("Error! There is no PAUSED simulation in progress.");
+                return await Error("Error! There is no PAUSED simulation in progress.");
 
             await _simulator.PlayAsync();
 
@@ -106,35 +106,35 @@ namespace Stockimulate.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdatePrice(ControlPanelViewModel viewModel)
+        public async Task<IActionResult> UpdatePrice(ControlPanelViewModel viewModel)
         {
             if (!viewModel.IsVerifiedInput)
-                return ControlPanel(new ControlPanelViewModel {State = "Warning"});
+                return await ControlPanel(new ControlPanelViewModel {State = "Warning"});
 
             if (viewModel.Price < 0)
-                return Error("Price must be a postive integer!");
+                return await Error("Price must be a postive integer!");
 
-            var security = _securityRepository.GetAll().FirstOrDefault(s => s.Symbol == viewModel.Symbol);
+            var security = await _securityRepository.GetAsync(viewModel.Symbol);
             if (security == null) return RedirectToAction("ControlPanel");
 
             security.Price = viewModel.Price;
-            _securityRepository.Update(security);
+            await _securityRepository.UpdateAsync(security);
 
             return RedirectToAction("ControlPanel");
         }
 
         [HttpPost]
-        public IActionResult ToggleReportsEnabled(ControlPanelViewModel viewModel)
+        public async Task<IActionResult> ToggleReportsEnabled(ControlPanelViewModel viewModel)
         {
             if (!viewModel.IsVerifiedInput)
-                return ControlPanel(new ControlPanelViewModel {State = "Warning"});
+                return await ControlPanel(new ControlPanelViewModel {State = "Warning"});
 
             AppSettings.UpdateReportsEnabled(!AppSettings.IsReportsEnabled());
 
             return RedirectToAction("ControlPanel");
         }
 
-        private IActionResult Error(string errorMessage) => ControlPanel(new ControlPanelViewModel
+        private Task<IActionResult> Error(string errorMessage) => ControlPanel(new ControlPanelViewModel
         {
             State = "Error",
             ErrorMessage = errorMessage
@@ -145,7 +145,7 @@ namespace Stockimulate.Controllers
         #region Standings
 
         [HttpGet]
-        public IActionResult Standings()
+        public async Task<IActionResult> Standings()
         {
             var role = HttpContext.Session.GetString("Role");
 
@@ -164,7 +164,7 @@ namespace Stockimulate.Controllers
                     Username = HttpContext.Session.GetString("Username")
                 },
                 Teams = _teamRepository.GetAll().ToList(),
-                Prices = _securityRepository.GetAll().ToDictionary(x => x.Symbol, x => x.Price)
+                Prices = (await _securityRepository.GetAllAsync()).ToDictionary(x => x.Symbol, x => x.Price)
             });
         }
 
@@ -174,7 +174,7 @@ namespace Stockimulate.Controllers
 
         [HttpGet]
         [Route("Ticker/{symbol}")]
-        public IActionResult Ticker(string symbol)
+        public async Task<IActionResult> Ticker(string symbol)
         {
             var role = HttpContext.Session.GetString("Role");
 
@@ -187,7 +187,7 @@ namespace Stockimulate.Controllers
 
             return View(new TickerViewModel(_securityRepository)
             {
-                Security = _securityRepository.Get(symbol)
+                Security = await _securityRepository.GetAsync(symbol)
             });
         }
 

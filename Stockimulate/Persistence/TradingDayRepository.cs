@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Stockimulate.Core.Repositories;
 using Stockimulate.Models;
 // ReSharper disable ClassNeverInstantiated.Global
@@ -14,9 +15,9 @@ namespace Stockimulate.Persistence
 
         public TradingDayRepository(ISecurityRepository securityRepository) => _securityRepository = securityRepository;
 
-        public Dictionary<string, List<TradingDay>> GetAll()
+        public async Task<Dictionary<string, List<TradingDay>>> GetAllAsync()
         {
-            var securities = _securityRepository.GetAll();
+            var securities = await _securityRepository.GetAllAsync();
 
             var queryStringBuilder = new StringBuilder("SELECT Day, News, Mode");
             for (var i = 1; i <= securities.Count; ++i)

@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Stockimulate.Models;
 
 namespace Stockimulate.Core.Repositories
 {
     public interface ISecurityRepository
     {
-        Security Get(string symbol);
+        Task<Security> GetAsync(string symbol);
 
-        void Update(Security security);
+        Task UpdateAsync(Security security);
 
-        List<Security> GetAll();
+        Task<List<Security>> GetAllAsync();
     }
 }

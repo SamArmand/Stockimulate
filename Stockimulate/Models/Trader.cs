@@ -111,13 +111,15 @@ namespace Stockimulate.Models
                 averageBuyPrice /= totalBuyQuantity > 0 ? totalBuyQuantity : 1;
                 averageSellPrice /= totalSellQuantity > 0 ? totalSellQuantity : 1;
 
+                var symbol = kvp.Key;
+
                 var realizedPnL = (averageSellPrice - averageBuyPrice) * Math.Min(totalBuyQuantity, totalSellQuantity);
 
-                RealizedPnLs.Add(kvp.Key, realizedPnL);
+                RealizedPnLs.Add(symbol, realizedPnL);
 
                 var position = totalBuyQuantity - totalSellQuantity;
 
-                Positions.Add(kvp.Key, position);
+                Positions.Add(symbol, position);
 
                 var averageOpenPrice = 0;
                 if (position > 0)
@@ -125,13 +127,13 @@ namespace Stockimulate.Models
                 else if (position < 0)
                     averageOpenPrice = averageSellPrice;
 
-                AverageOpenPrices.Add(kvp.Key, averageOpenPrice);
+                AverageOpenPrices.Add(symbol, averageOpenPrice);
 
-                var unrealizedPnL = (prices[kvp.Key] - averageOpenPrice) * position;
+                var unrealizedPnL = (prices[symbol] - averageOpenPrice) * position;
 
-                UnrealizedPnLs.Add(kvp.Key, unrealizedPnL);
+                UnrealizedPnLs.Add(symbol, unrealizedPnL);
 
-                TotalPnLs.Add(kvp.Key, realizedPnL + unrealizedPnL);
+                TotalPnLs.Add(symbol, realizedPnL + unrealizedPnL);
             }
         }
 

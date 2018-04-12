@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Stockimulate.Core.Repositories;
 using Stockimulate.Models;
 // ReSharper disable ClassNeverInstantiated.Global
@@ -11,6 +12,6 @@ namespace Stockimulate.Persistence
 
         public TraderRepository(StockimulateContext stockimulateContext) => _stockimulateContext = stockimulateContext;
 
-        public Trader Get(int id) => _stockimulateContext.Traders.FirstOrDefault(t => t.Id == id);
+        public async Task<Trader> GetAsync(int id) => await _stockimulateContext.Traders.FirstOrDefaultAsync(t => t.Id == id);
     }
 }
