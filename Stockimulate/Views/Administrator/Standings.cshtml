@@ -25,7 +25,9 @@
             @{
                 var traders = new List<Trader>();
 
-                var teams = Model.Teams.Where(x => x.Traders.Any()).ToList();
+                var teams = Model.Teams.Where(x => x.Id != Constants.ExchangeId
+                                                   && x.Id != Constants.MarketMakersId
+                                                   && x.Traders.Any()).ToList();
 
                 foreach (var team in teams)
                 {

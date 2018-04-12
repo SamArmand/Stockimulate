@@ -183,7 +183,7 @@ namespace Stockimulate
                 _securityRepository.UpdateAsync(security);
             }
 
-            _tradeRepository.DeleteAllAsync();
+            _tradeRepository.DeleteAll();
 
             TickerViewModel.Reset(_securityRepository);
             MiniTickerPartialViewModel.Reset(_securityRepository);
