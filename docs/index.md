@@ -12,3 +12,13 @@ The platform is built on **ASP.NET Core** hosted on **Microsoft Azure**. The ful
 
 # Features
 
+## Live Stock Ticker
+
+## Submitting New Trades
+
+## Individual and Team Standings
+
+## P&L Reports
+
+## Compliance - Trade Monitoring
+
