@@ -10,7 +10,7 @@ header {
 
 @media (min-width: 992px) {
   header {
-    padding: 156px 0 100px;
+    padding: 150px 0 100px;
   }
 }
 
@@ -19,5 +19,9 @@ section {
 }
 
 .list-img {
-  max-width: 600px;
+  max-width: 500px;
+}
+
+.feature-list {
+  padding: 50px 100px 0;
 }
