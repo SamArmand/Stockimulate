@@ -44,14 +44,14 @@ namespace Stockimulate.Models
 
                 foreach (var symbol in trader.TotalPnLs.Keys)
                 {
-                    if (!Positions.ContainsKey(symbol)) Positions.Add(symbol, trader.Positions[symbol]);
-                    else Positions[symbol] += trader.Positions[symbol];
+                    if (Positions.ContainsKey(symbol)) Positions[symbol] += trader.Positions[symbol];
+                    else Positions.Add(symbol, trader.Positions[symbol]);
 
-                    if (!RealizedPnLs.ContainsKey(symbol)) RealizedPnLs.Add(symbol, trader.RealizedPnLs[symbol]);
-                    else RealizedPnLs[symbol] += trader.RealizedPnLs[symbol];
+                    if (RealizedPnLs.ContainsKey(symbol)) RealizedPnLs[symbol] += trader.RealizedPnLs[symbol];
+                    else RealizedPnLs.Add(symbol, trader.RealizedPnLs[symbol]);
 
-                    if (!UnrealizedPnLs.ContainsKey(symbol)) UnrealizedPnLs.Add(symbol, trader.UnrealizedPnLs[symbol]);
-                    else UnrealizedPnLs[symbol] += trader.UnrealizedPnLs[symbol];
+                    if (UnrealizedPnLs.ContainsKey(symbol)) UnrealizedPnLs[symbol] += trader.UnrealizedPnLs[symbol];
+                    else UnrealizedPnLs.Add(symbol, trader.UnrealizedPnLs[symbol]);
                 }
 
                 AccumulatedPenalties += trader.AccumulatedPenalties;

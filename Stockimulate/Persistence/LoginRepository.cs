@@ -6,9 +6,9 @@ using Stockimulate.Models;
 
 namespace Stockimulate.Persistence
 {
-    internal class LoginRepository : ILoginRepository
+    sealed class LoginRepository : ILoginRepository
     {
-        private readonly StockimulateContext _stockimulateContext;
+        readonly StockimulateContext _stockimulateContext;
 
         public LoginRepository(StockimulateContext stockimulateContext) => _stockimulateContext = stockimulateContext;
 

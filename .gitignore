@@ -300,3 +300,7 @@ __pycache__/
 OpenCover/
 
 Stockimulate/appsettings.json
+
+#Visual Studio Code
+.vscode/
+Stockimulate/.vscode/

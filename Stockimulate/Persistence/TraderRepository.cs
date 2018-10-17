@@ -6,9 +6,9 @@ using Stockimulate.Models;
 
 namespace Stockimulate.Persistence
 {
-    internal class TraderRepository : ITraderRepository
+    sealed class TraderRepository : ITraderRepository
     {
-        private readonly StockimulateContext _stockimulateContext;
+        readonly StockimulateContext _stockimulateContext;
 
         public TraderRepository(StockimulateContext stockimulateContext) => _stockimulateContext = stockimulateContext;
 

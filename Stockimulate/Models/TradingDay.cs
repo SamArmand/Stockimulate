@@ -2,7 +2,7 @@
 
 namespace Stockimulate.Models
 {
-    internal sealed class TradingDay
+    sealed class TradingDay
     {
         internal Dictionary<string, int> Effects { get; set; }
         internal string NewsItem { get; set; }

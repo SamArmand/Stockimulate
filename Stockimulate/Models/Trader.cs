@@ -40,8 +40,16 @@ namespace Stockimulate.Models
         [NotMapped]
         public int AccumulatedPenaltiesValue { get; private set; }
 
-        private Dictionary<string, List<Trade>> Trades()
+        internal void Calculate(Dictionary<string, int> prices)
         {
+            RealizedPnLs = new Dictionary<string, int>();
+            UnrealizedPnLs = new Dictionary<string, int>();
+            TotalPnLs = new Dictionary<string, int>();
+            Positions = new Dictionary<string, int>();
+            AverageOpenPrices = new Dictionary<string, int>();
+
+            const int maxPosition = Constants.MaxPosition;
+
             var trades = new Dictionary<string, List<Trade>>();
 
             foreach (var trade in TradesAsBuyer.Concat(TradesAsSeller))
@@ -52,18 +60,7 @@ namespace Stockimulate.Models
                 trades[symbol].Add(trade);
             }
 
-            return trades;
-        }
-
-        internal void Calculate(Dictionary<string, int> prices)
-        {
-            RealizedPnLs = new Dictionary<string, int>();
-            UnrealizedPnLs = new Dictionary<string, int>();
-            TotalPnLs = new Dictionary<string, int>();
-            Positions = new Dictionary<string, int>();
-            AverageOpenPrices = new Dictionary<string, int>();
-
-            foreach (var kvp in Trades())
+            foreach (var kvp in trades)
             {
                 var totalBuyQuantity = 0;
                 var averageBuyPrice = 0;
@@ -71,7 +68,6 @@ namespace Stockimulate.Models
                 var averageSellPrice = 0;
 
                 var currentPosition = 0;
-                const int maxPosition = Constants.MaxPosition;
 
                 foreach (var trade in kvp.Value)
                 {
@@ -91,9 +87,9 @@ namespace Stockimulate.Models
 
                     var tradeQuantity = trade.Quantity;
 
-                    //Check if Trader is the buyer
                     if (trade.BuyerId == Id)
                     {
+                        //Trader is the buyer
                         currentPosition += tradeQuantity;
                         totalBuyQuantity += tradeQuantity;
                         averageBuyPrice += tradeQuantity * tradePrice;
@@ -113,25 +109,17 @@ namespace Stockimulate.Models
 
                 var symbol = kvp.Key;
 
-                var realizedPnL = (averageSellPrice - averageBuyPrice) * Math.Min(totalBuyQuantity, totalSellQuantity);
-
-                RealizedPnLs.Add(symbol, realizedPnL);
-
                 var position = totalBuyQuantity - totalSellQuantity;
-
                 Positions.Add(symbol, position);
 
-                var averageOpenPrice = 0;
-                if (position > 0)
-                    averageOpenPrice = averageBuyPrice;
-                else if (position < 0)
-                    averageOpenPrice = averageSellPrice;
-
+                var averageOpenPrice = position > 0 ? averageBuyPrice : position < 0 ? averageSellPrice : 0;
                 AverageOpenPrices.Add(symbol, averageOpenPrice);
 
                 var unrealizedPnL = (prices[symbol] - averageOpenPrice) * position;
-
                 UnrealizedPnLs.Add(symbol, unrealizedPnL);
+
+                var realizedPnL = (averageSellPrice - averageBuyPrice) * Math.Min(totalBuyQuantity, totalSellQuantity);
+                RealizedPnLs.Add(symbol, realizedPnL);
 
                 TotalPnLs.Add(symbol, realizedPnL + unrealizedPnL);
             }

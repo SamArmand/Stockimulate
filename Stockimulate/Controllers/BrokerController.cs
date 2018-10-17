@@ -10,9 +10,9 @@ namespace Stockimulate.Controllers
 {
     public sealed class BrokerController : Controller
     {
-        private readonly ITraderRepository _traderRepository;
-        private readonly ISecurityRepository _securityRepository;
-        private readonly ITradeRepository _tradeRepository;
+        readonly ITraderRepository _traderRepository;
+        readonly ISecurityRepository _securityRepository;
+        readonly ITradeRepository _tradeRepository;
 
         public BrokerController(ITraderRepository traderRepository, ISecurityRepository securityRepository,
             ITradeRepository tradeRepository)
@@ -106,7 +106,7 @@ namespace Stockimulate.Controllers
         [HttpPost]
         public IActionResult Cancel() => TradeInput();
 
-        private IActionResult Error(string errorMessage) => TradeInput(new TradeInputViewModel
+        IActionResult Error(string errorMessage) => TradeInput(new TradeInputViewModel
         {
             Result = "Error",
             ErrorMessage = errorMessage

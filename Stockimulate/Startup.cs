@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Stockimulate.Core;
 using Stockimulate.Core.Repositories;
 using Stockimulate.Persistence;
 // ReSharper disable ClassNeverInstantiated.Global
@@ -12,9 +13,9 @@ using Stockimulate.Persistence;
 
 namespace Stockimulate
 {
-    internal class Startup
+    sealed class Startup
     {
-        private readonly IConfigurationRoot _configuration;
+        readonly IConfigurationRoot _configuration;
 
         public Startup(IHostingEnvironment env)
         {

@@ -8,9 +8,9 @@ using Stockimulate.Models;
 
 namespace Stockimulate.Persistence
 {
-    internal class SecurityRepository : ISecurityRepository
+    sealed class SecurityRepository : ISecurityRepository
     {
-        private readonly StockimulateContext _stockimulateContext;
+        readonly StockimulateContext _stockimulateContext;
 
         public SecurityRepository(StockimulateContext stockimulateContext) => _stockimulateContext = stockimulateContext;
 

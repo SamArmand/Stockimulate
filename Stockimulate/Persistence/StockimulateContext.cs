@@ -5,7 +5,7 @@ using Stockimulate.Models;
 
 namespace Stockimulate.Persistence
 {
-    internal class StockimulateContext : DbContext
+    class StockimulateContext : DbContext
     {
         public virtual DbSet<Login> Logins { get; set; }
         public virtual DbSet<Security> Securities { get; set; }

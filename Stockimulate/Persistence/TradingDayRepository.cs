@@ -9,9 +9,9 @@ using Stockimulate.Models;
 
 namespace Stockimulate.Persistence
 {
-    internal class TradingDayRepository : ITradingDayRepository
+    sealed class TradingDayRepository : ITradingDayRepository
     {
-        private readonly ISecurityRepository _securityRepository;
+        readonly ISecurityRepository _securityRepository;
 
         public TradingDayRepository(ISecurityRepository securityRepository) => _securityRepository = securityRepository;
 

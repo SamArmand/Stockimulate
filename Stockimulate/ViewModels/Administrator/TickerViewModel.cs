@@ -18,11 +18,11 @@ namespace Stockimulate.ViewModels.Administrator
 
         public static readonly Dictionary<string, int> LastChange = new Dictionary<string, int>();
 
-        private static List<string> _symbols;
+        static List<string> _symbols;
 
         public TickerViewModel(ISecurityRepository securityRepository) => CheckInitialized(securityRepository);
 
-        private static void CheckInitialized(ISecurityRepository securityRepository)
+        static void CheckInitialized(ISecurityRepository securityRepository)
         {
             if (_symbols == null)
                 _symbols = securityRepository.GetAllAsync().Result

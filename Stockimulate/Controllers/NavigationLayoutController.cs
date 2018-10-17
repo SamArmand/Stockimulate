@@ -9,8 +9,8 @@ namespace Stockimulate.Controllers
 {
     public sealed class NavigationLayoutController : Controller
     {
-        private readonly ITeamRepository _teamRepository;
-        private readonly ILoginRepository _loginRepository;
+        readonly ITeamRepository _teamRepository;
+        readonly ILoginRepository _loginRepository;
 
         public NavigationLayoutController(ITeamRepository teamRepository, ILoginRepository loginRepository)
         {

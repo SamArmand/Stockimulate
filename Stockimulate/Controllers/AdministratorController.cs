@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Stockimulate.Core;
 using Stockimulate.Core.Repositories;
 using Stockimulate.Enums;
 using Stockimulate.Models;
@@ -12,9 +13,9 @@ namespace Stockimulate.Controllers
 {
     public sealed class AdministratorController : Controller
     {
-        private readonly ISimulator _simulator;
-        private readonly ISecurityRepository _securityRepository;
-        private readonly ITeamRepository _teamRepository;
+        readonly ISimulator _simulator;
+        readonly ISecurityRepository _securityRepository;
+        readonly ITeamRepository _teamRepository;
 
         public AdministratorController(ISimulator simulator, ISecurityRepository securityRepository, ITeamRepository teamRepository)
         {
@@ -56,8 +57,7 @@ namespace Stockimulate.Controllers
         [HttpPost]
         public async Task<IActionResult> PlayCompetitionAsync(ControlPanelViewModel viewModel) => await PlayAsync(viewModel, SimulationMode.Competition);
 
-        [HttpPost]
-        private async Task<IActionResult> PlayAsync(ControlPanelViewModel viewModel, SimulationMode mode)
+        async Task<IActionResult> PlayAsync(ControlPanelViewModel viewModel, SimulationMode mode)
         {
             if (!viewModel.IsVerifiedInput)
                 return await ControlPanel(new ControlPanelViewModel {State = "Warning"});
@@ -134,7 +134,7 @@ namespace Stockimulate.Controllers
             return RedirectToAction("ControlPanel");
         }
 
-        private Task<IActionResult> Error(string errorMessage) => ControlPanel(new ControlPanelViewModel
+        Task<IActionResult> Error(string errorMessage) => ControlPanel(new ControlPanelViewModel
         {
             State = "Error",
             ErrorMessage = errorMessage

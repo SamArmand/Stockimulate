@@ -7,9 +7,9 @@ using Stockimulate.Models;
 
 namespace Stockimulate.Persistence
 {
-    internal class TeamRepository : ITeamRepository
+    sealed class TeamRepository : ITeamRepository
     {
-        private readonly StockimulateContext _stockimulateContext;
+        readonly StockimulateContext _stockimulateContext;
 
         public TeamRepository(StockimulateContext stockimulateContext) => _stockimulateContext = stockimulateContext;
 

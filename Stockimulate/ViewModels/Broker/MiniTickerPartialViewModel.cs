@@ -14,11 +14,11 @@ namespace Stockimulate.ViewModels.Broker
 
         public static List<string> Symbols;
 
-        private static ISecurityRepository _securityRepository;
+        static ISecurityRepository _securityRepository;
 
         public MiniTickerPartialViewModel(ISecurityRepository securityRepository) => CheckInitialized(securityRepository);
 
-        private static void CheckInitialized(ISecurityRepository securityRepository)
+        static void CheckInitialized(ISecurityRepository securityRepository)
         {
             _securityRepository = securityRepository;
 

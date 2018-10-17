@@ -4,7 +4,7 @@ using Stockimulate.Models;
 
 namespace Stockimulate.Core.Repositories
 {
-    internal interface ITradingDayRepository
+    interface ITradingDayRepository
     {
         Task<Dictionary<string, List<TradingDay>>> GetAllAsync();
     }

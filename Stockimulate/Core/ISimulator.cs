@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Stockimulate.Enums;
 
-namespace Stockimulate.Core.Repositories
+namespace Stockimulate.Core
 {
     public interface ISimulator
     {

@@ -10,8 +10,8 @@ namespace Stockimulate.Controllers
 {
     public sealed class TraderController : Controller
     {
-        private readonly ITeamRepository _teamRepository;
-        private readonly ISecurityRepository _securityRepository;
+        readonly ITeamRepository _teamRepository;
+        readonly ISecurityRepository _securityRepository;
 
         public TraderController(ITeamRepository teamRepository, ISecurityRepository securityRepository)
         {

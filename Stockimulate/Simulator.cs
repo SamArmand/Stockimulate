@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 using PusherServer;
+using Stockimulate.Core;
 using Stockimulate.Core.Repositories;
 using Stockimulate.Enums;
 using Stockimulate.Models;
@@ -15,12 +16,12 @@ namespace Stockimulate
     /// <summary>
     /// This class handles the simulation logic.
     /// </summary>
-    internal sealed class Simulator : ISimulator
+    sealed class Simulator : ISimulator
     {
         /// <summary>
         /// Object that stores the Pusher server information.
         /// </summary>
-        private readonly Pusher _pusher = new Pusher(
+        readonly Pusher _pusher = new Pusher(
             Constants.PusherAppId,
             Constants.PusherKey,
             Constants.PusherSecret,
@@ -33,7 +34,7 @@ namespace Stockimulate
         /// <summary>
         /// The timer that counts the time between trading days.
         /// </summary>
-        private readonly Timer _timer = new Timer
+        readonly Timer _timer = new Timer
         {
             Interval = Constants.TimerInterval
         };
@@ -41,7 +42,7 @@ namespace Stockimulate
         /// <summary>
         /// Variable that keeps track of the current trading day.
         /// </summary>
-        private int _dayNumber;
+        int _dayNumber;
 
         /// <summary>
         /// Property to keep track of current simulation state.
@@ -56,15 +57,15 @@ namespace Stockimulate
         /// <summary>
         /// Lists of traded securities. Initialized as current state of all securities.
         /// </summary>
-        private readonly List<Security> _securities;
+        readonly List<Security> _securities;
 
         /// <summary>
         /// Lists of upcoming trading days to simulate.
         /// </summary>
-        private readonly Dictionary<string, List<TradingDay>> _tradingDays;
+        readonly Dictionary<string, List<TradingDay>> _tradingDays;
 
-        private readonly ISecurityRepository _securityRepository;
-        private readonly ITradeRepository _tradeRepository;
+        readonly ISecurityRepository _securityRepository;
+        readonly ITradeRepository _tradeRepository;
 
         /// <summary>
         /// Constructor. Sets the Elapsed handler for the timer.
@@ -104,7 +105,7 @@ namespace Stockimulate
                     await _securityRepository.UpdateAsync(security);
                 }
 
-                await UpdateMarketAsync(tradingDay, false);
+                await UpdateMarketAsync(tradingDay);
             }
 
             SimulationState = SimulationState.Playing;
@@ -120,14 +121,14 @@ namespace Stockimulate
         /// <param name="tradingDay"></param>
         /// <param name="simulationState"></param>
         /// <returns></returns>
-        private async Task CloseMarketAsync(TradingDay tradingDay, SimulationState simulationState)
+        async Task CloseMarketAsync(TradingDay tradingDay, SimulationState simulationState)
         {
             _timer.Stop();
             SimulationState = simulationState;
 
-            await UpdateMarketAsync(tradingDay, true);
-
             AppSettings.UpdateReportsEnabled(true);
+
+            await UpdateMarketAsync(tradingDay, true);
         }
 
         /// <summary>
@@ -135,20 +136,18 @@ namespace Stockimulate
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
-        private async void UpdateAsync(object source, ElapsedEventArgs e)
+        async void UpdateAsync(object source, ElapsedEventArgs e)
         {
-            ++_dayNumber;
-            var tradingDay = _tradingDays[SimulationMode.ToString()].FirstOrDefault(t => t.Day == _dayNumber);
+            var tradingDay = _tradingDays[SimulationMode.ToString()].FirstOrDefault(t => t.Day == ++_dayNumber);
 
-            if (tradingDay == null)
-                return;
+            if (tradingDay == null) return;
 
             foreach (var security in _securities)
             {
-                var symbol = security.Symbol;
+                var effect = tradingDay.Effects[security.Symbol];
 
-                security.Price += tradingDay.Effects[symbol];
-                security.LastChange = tradingDay.Effects[symbol];
+                security.Price += effect;
+                security.LastChange = effect;
                 await _securityRepository.UpdateAsync(security);
             }
 
@@ -164,7 +163,7 @@ namespace Stockimulate
                     await CloseMarketAsync(tradingDay, SimulationState.Stopped);
                     break;
                 default:
-                    await UpdateMarketAsync(tradingDay, false);
+                    await UpdateMarketAsync(tradingDay);
                     break;
             }
         }
@@ -191,8 +190,11 @@ namespace Stockimulate
             SimulationState = SimulationState.Ready;
         }
 
-        private async Task UpdateMarketAsync(TradingDay tradingDay, bool close)
+        async Task UpdateMarketAsync(TradingDay tradingDay, bool close = false)
         {
+            TickerViewModel.Update(tradingDay, _securityRepository, close);
+            MiniTickerPartialViewModel.Update(tradingDay, _securityRepository);
+
             await _pusher.TriggerAsync(
                 "stockimulate",
                 "update-market",
@@ -203,9 +205,6 @@ namespace Stockimulate
                     effects = _securities.Select(security => tradingDay.Effects[security.Symbol]).ToArray(),
                     close
                 });
-
-            TickerViewModel.Update(tradingDay, _securityRepository, close);
-            MiniTickerPartialViewModel.Update(tradingDay, _securityRepository);
         }
     }
 }
