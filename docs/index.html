@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Stockimulate</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/scrolling-nav.css" rel="stylesheet">
+
+  </head>
+
+  <body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top"><b>stock</b>imulate</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#features">Features</a>
+              </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#tech-stack">Tech Stack</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#acknowledgements">Acknowledgements</a>
+              </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="bg-primary text-white">
+      <div class="container text-center">
+        <h1><b>stock</b>imulate</h1>
+        <p class="lead">A platform for open outcry stock exchange simulations</p>
+        <a href="https://github.com/SamArmand/Stockimulate" class="btn btn-outline-light"><i class="fab fa-github" data-fa-transform="grow-10"></i>&nbsp;&nbsp;View on GitHub</a>
+      </div>
+    </header>
+
+    <section id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>About this page</h2>
+            <p class="lead">
+              Stockimulate is a platform for open outcry stock exchange simulation competitions.
+              Initially developed as a undergraduate project at <b>Concordia University</b> to run the <b>2014 
+              John Molson Stock Exchange (JMSX)</b> competition, the platform has undergone several rounds of
+              improvement for each edition of JMSX and has recently been adopted by <b><em>Collège Jean-de-Brébeuf</em></b>
+              to run their very own competition.
+            </p>
+            <p class="lead">
+              The project is now open-sourced on GitHub through the MIT License.
+            </p>  
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>Features</h2>
+            <p class="lead">New features and improvements are always in the pipeline. Below is a list of Stockimulate's most useful features.</p>
+          </div>
+          <ul class="list-unstyled feature-list">
+            <li class="media">
+              <img class="mr-3 list-img border border-dark" src="img/ticker.jpeg" alt="Generic placeholder image">
+              <div class="media-body">
+                <h5 class="mt-0 mb-1">Real-time Stock Ticker</h5>
+                <p>
+                  The platform features a real-time ticker for each fictitious traded instrument. The ticker includes the current price,
+                  the last change as well as the current quarter, day, and market status (open, or closed).
+                </p>
+                <p>
+                  This page also includes a box for news headlines. Prices, changes, and news are fed to the page and updated dynamically.
+                </p>
+              </div>
+            </li>
+            <li class="media my-4">
+              <img class="mr-3 list-img border border-dark" src="img/trade.jpeg" alt="Generic placeholder image">
+              <div class="media-body">
+                <h5 class="mt-0 mb-1">Trade Entry Form</h5>
+                <p>
+                  Trades are submitted to into the system through a user-friendly and error-tolerant form. In the context of a competition,
+                  this form will be password-protected and accessible only by volunteers who will be in charge of inputing
+                  participants' trades. Furtheremore, volunteers can be limited to which instruments they're allowed to process trades for,
+                  which is particularly useful if the trading floor is divided into individual trading pits for each instrument. 
+                </p>
+              </div>
+            </li>
+            <li class="media">
+              <img class="mr-3 list-img border border-dark" src="img/report.jpeg" alt="Generic placeholder image">
+              <div class="media-body">
+                <h5 class="mt-0 mb-1">Profit &amp; Loss Reports</h5>
+                <p>
+                  As part of the competition, teams and players can keep track of their performance by viewing their 
+                  cumulative P&amp;L reports. The report includes individual P&amp;L as well as team P&amp;L, each segmented
+                  into realized and unrealized components for each traded instrument, using the spot price as theoretical 
+                  exit price.
+                </p>
+                <p>
+                  The team's average individual P&amp;L is also given for reference purposes since teams are ranked on 
+                  average P&amp;L in order to factor in teams of different sizes.
+                </p>
+                <p>
+                  The current position, average open price, and current spot price are also displayed in the report.
+                </p>
+              </div>
+            </li>
+            <li class="media my-4">
+              <img class="mr-3 list-img border border-dark" src="img/search_trades.jpeg" alt="Generic placeholder image">
+              <div class="media-body">
+                <h5 class="mt-0 mb-1">Trade Monitoring</h5>
+                <p>
+                  As this is a simulation, it is expected that teams and participants will try to cheat through collusion.
+                  Fortunately, the platform features a page where an administrator can search through trades. Trades flagged
+                  by the system for having too large of discrepancy between the trade price and spot price at the time of trade
+                  will be highlighted in <b class="text-danger">red</b>.
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="tech-stack">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 mx-auto">
+              <h2>Tech Stack</h2>
+              <p class="lead">Stockimulate is implemented as an <b>ASP.NET Core MVC</b> application with a 
+                plain-old <b>HTML5</b>, <b>CSS3</b>, and <b>JavaScript</b> front-end, with the unparalelled
+                magic of <b>Bootstrap</b> with <b>Font Awesome</b> glyphs.  
+              </p>
+              <p>
+                The ticker charts are implemented using <b>Chart.js</b>.
+              </p>
+              <p>
+                Real-time updates are made possible through the use of <b>Pusher</b>.
+              </p>
+              <p>
+                The platform is designed for hosting on a <b>Microsoft Azure App Service</b>.
+              </p>
+              <p>
+                The code is hosted on <b>GitHub</b> as a public repository open-sourced with the <b>MIT License</b>.
+              </p>
+              <p>
+                Debugging was primarily done on <b>Google Chrome</b> but various other browsers were used for testing
+                and compatibility purposes, including <b>Safari</b>, <b>Mozilla Firefox</b>, <b>Microsoft Edge</b>,
+                and <b>Internet Explorer</b>.
+              </p>
+              <p>
+                Development of the current version was mostly done on <b>Visual Studio Code</b> (I opted 
+                for the <b>Insiders</b> build). Although I feel it necessary to also acknowledge <b>Microsoft</b> 
+                for their wonderful work on <b>Visual Studio for Mac</b> as well as well as the various earlier 
+                versions of <b>Visual Studio</b> without which this project would never have seen the light of day,
+                back when it was powered by ASP.NET Web Forms.
+              </p>
+              <p>
+                I also took advantage of <b>JetBrains'</b> phenomenal new .NET IDE, <b>Rider</b> as well as the 
+                invaluable <b>ReSharper</b> add-on for Visual Studio, all of which were made available through 
+                generous trial and student licenses as well as Early Access Previews.
+              </p>
+              <a frameborder="0" data-theme="light" data-layers="1,2,3,4" data-stack-embed="true" href="https://embed.stackshare.io/stacks/embed/78ce88dca0b920c72dd54118ab1f20"/></a>    <script async src="https://cdn1.stackshare.io/javascripts/client-code.js" charset="utf-8"></script>
+            </div>
+          </div>
+        </div>
+    </section>
+
+    <section id="acknowledgements" class="bg-light">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 mx-auto">
+              <h2>Acknowledgements</h2>
+              <p class="lead">
+                Many people have contributed to this project in some shape or form over the years and I'd like to
+                acknowledge them all. I'm sorry if I forgot anyone.
+              </p>
+
+              <p>
+                <b>Jessica Falco</b> and <b>George Valergas</b> for their front-end wisdom.
+              </p>
+
+              <p>
+                <b>John Akhras</b>, <b>Charles Lachapelle</b>, <b>Jen Paragios</b>, <b>Medrick Santavicca</b>, 
+                <b>Alejandro Vivanco</b>, <b>Naji Baydoun</b>, <b>Felix Lebrun</b> and the rest of the folks at 
+                <b>FISA</b> for sharing their financial knowledge and getting me involved in this project.
+              </p>
+
+              <p>
+                <b>Dr. Terry Fancott</b> at Concordia University for his wonderful support (and the generous A+).
+              </p>
+
+              <p>
+                <b>Amine Hadbi</b> for stress testing the living **** out of it and kicking *** at every competition 
+                it's been used for.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Stockimulate 2018</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom JavaScript for this theme -->
+    <script src="js/scrolling-nav.js"></script>
+
+  </body>
+
+</html>

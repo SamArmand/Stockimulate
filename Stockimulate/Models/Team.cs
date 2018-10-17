@@ -1,26 +1,34 @@
 ﻿using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
 
 namespace Stockimulate.Models
 {
     public sealed class Team
     {
-        public int Id { get; private set; }
+        public Team() => Traders = new HashSet<Trader>();
 
-        public string Name { get; private set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        internal string Code { get; set; }
 
-        //Lazy
-        private List<Trader> _traders;
+        public ICollection<Trader> Traders { get; set; }
 
-        public IEnumerable<Trader> Traders => _traders ?? (_traders = Trader.GetInTeam(Id));
-
+        [NotMapped]
         public Dictionary<string, int> RealizedPnLs { get; private set; }
+        [NotMapped]
         public Dictionary<string, int> UnrealizedPnLs { get; private set; }
+        [NotMapped]
         public Dictionary<string, int> TotalPnLs { get; private set; }
+        [NotMapped]
         public Dictionary<string, int> Positions { get; private set; }
 
+        [NotMapped]
         public int AccumulatedPenalties { get; private set; }
+        [NotMapped]
         public int AccumulatedPenaltiesValue { get; private set; }
 
         public void Calculate(Dictionary<string, int> prices)
@@ -34,91 +42,28 @@ namespace Stockimulate.Models
             {
                 trader.Calculate(prices);
 
-                foreach (var key in trader.TotalPnLs.Keys)
+                foreach (var symbol in trader.TotalPnLs.Keys)
                 {
-                    if (!Positions.ContainsKey(key)) Positions.Add(key, trader.Positions[key]);
-                    else Positions[key] += trader.Positions[key];
+                    if (Positions.ContainsKey(symbol)) Positions[symbol] += trader.Positions[symbol];
+                    else Positions.Add(symbol, trader.Positions[symbol]);
 
-                    if (!RealizedPnLs.ContainsKey(key)) RealizedPnLs.Add(key, trader.RealizedPnLs[key]);
-                    else RealizedPnLs[key] += trader.RealizedPnLs[key];
+                    if (RealizedPnLs.ContainsKey(symbol)) RealizedPnLs[symbol] += trader.RealizedPnLs[symbol];
+                    else RealizedPnLs.Add(symbol, trader.RealizedPnLs[symbol]);
 
-                    if (!UnrealizedPnLs.ContainsKey(key)) UnrealizedPnLs.Add(key, trader.UnrealizedPnLs[key]);
-                    else UnrealizedPnLs[key] += trader.UnrealizedPnLs[key];
+                    if (UnrealizedPnLs.ContainsKey(symbol)) UnrealizedPnLs[symbol] += trader.UnrealizedPnLs[symbol];
+                    else UnrealizedPnLs.Add(symbol, trader.UnrealizedPnLs[symbol]);
                 }
 
                 AccumulatedPenalties += trader.AccumulatedPenalties;
                 AccumulatedPenaltiesValue += trader.AccumulatedPenaltiesValue;
-
             }
 
-            foreach (var key in RealizedPnLs.Keys)
-                TotalPnLs.Add(key, RealizedPnLs[key] + UnrealizedPnLs[key]);
+            foreach (var symbol in RealizedPnLs.Keys)
+                TotalPnLs.Add(symbol, RealizedPnLs[symbol] + UnrealizedPnLs[symbol]);
         }
 
-        public int PnL()
-        {
-            return TotalPnLs.Sum(e => e.Value) - AccumulatedPenaltiesValue;
-        }
+        public int PnL() => TotalPnLs.Sum(e => e.Value) - AccumulatedPenaltiesValue;
 
-        public int AveragePnL()
-        {
-            return Traders.Any() ? PnL() / Traders.Count() : 0;
-        }
-
-        internal static Team Get(int id, string code = "", bool needCode = false)
-        {
-            using (var connection = new SqlConnection(Constants.ConnectionString))
-            using (var command =
-                new SqlCommand(
-                    "SELECT Id, Name FROM Teams WHERE Id=@Id" + (needCode ? " AND Code=@Code" : string.Empty) + ";",
-                    connection))
-            {
-                connection.Open();
-                command.Parameters.AddWithValue("@Id", id);
-
-                if (needCode)
-                    command.Parameters.AddWithValue("@Code", code);
-
-                using (var reader = command.ExecuteReader())
-                {
-                    return reader.Read()
-                        ? new Team
-                        {
-                            Id = id,
-                            Name = reader.GetString(reader.GetOrdinal("Name"))
-                        }
-                        : null;
-                }
-            }
-        }
-
-        public static IEnumerable<Team> GetAll()
-        {
-            using (var connection = new SqlConnection(Constants.ConnectionString))
-            using (var command =
-                new SqlCommand("SELECT Id, Name FROM Teams WHERE NOT Id=@ExchangeId AND NOT Id=@MarketMakersId;",
-                    connection))
-            {
-                connection.Open();
-
-                command.Parameters.AddWithValue("@ExchangeId", Constants.ExchangeId);
-                command.Parameters.AddWithValue("@MarketMakersId", Constants.MarketMakersId);
-
-                using (var reader = command.ExecuteReader())
-                {
-                    var teams = new List<Team>();
-
-                    while (reader.Read())
-                        teams.Add(new Team
-                        {
-                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                            Name = reader.GetString(reader.GetOrdinal("Name"))
-                        });
-
-                    return teams;
-                }
-            }
-
-        }
+        public int AveragePnL() => Traders.Any() ? PnL() / Traders.Count : 0;
     }
 }

@@ -298,3 +298,9 @@ __pycache__/
 
 # OpenCover UI analysis results
 OpenCover/
+
+Stockimulate/appsettings.json
+
+#Visual Studio Code
+.vscode/
+Stockimulate/.vscode/

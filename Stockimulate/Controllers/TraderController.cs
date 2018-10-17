@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Stockimulate.Core.Repositories;
 using Stockimulate.Models;
 using Stockimulate.ViewModels.Trader;
 
@@ -7,8 +10,17 @@ namespace Stockimulate.Controllers
 {
     public sealed class TraderController : Controller
     {
+        readonly ITeamRepository _teamRepository;
+        readonly ISecurityRepository _securityRepository;
+
+        public TraderController(ITeamRepository teamRepository, ISecurityRepository securityRepository)
+        {
+            _teamRepository = teamRepository;
+            _securityRepository = securityRepository;
+        }
+
         [HttpGet]
-        public IActionResult Reports(ReportsViewModel viewModel = null)
+        public async Task<IActionResult> Reports(ReportsViewModel viewModel = null)
         {
             var role = HttpContext.Session.GetString("Role");
 
@@ -26,7 +38,9 @@ namespace Stockimulate.Controllers
                 Username = username
             };
 
-            if (role.Substring(0, 4) == "Team") viewModel.Team = Team.Get(int.Parse(username.Substring(4)));
+            if (role.Substring(0, 4) == "Team") viewModel.Team = await _teamRepository.GetAsync(int.Parse(username.Substring(4)));
+
+            viewModel.Prices = (await _securityRepository.GetAllAsync()).ToDictionary(x => x.Symbol, x => x.Price);
 
             ModelState.Clear();
 
@@ -36,9 +50,9 @@ namespace Stockimulate.Controllers
         }
 
         [HttpPost]
-        public IActionResult Submit(ReportsViewModel viewModel) => Reports(new ReportsViewModel
+        public async Task<IActionResult> Submit(ReportsViewModel viewModel) => await Reports(new ReportsViewModel
         {
-            Team = Team.Get(viewModel.TeamId)
+            Team = await _teamRepository.GetAsync(viewModel.TeamId)
         });
     }
 }

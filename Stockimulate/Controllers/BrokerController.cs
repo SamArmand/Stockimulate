@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Stockimulate.Core.Repositories;
 using Stockimulate.Models;
 using Stockimulate.ViewModels.Broker;
 
@@ -8,6 +10,18 @@ namespace Stockimulate.Controllers
 {
     public sealed class BrokerController : Controller
     {
+        readonly ITraderRepository _traderRepository;
+        readonly ISecurityRepository _securityRepository;
+        readonly ITradeRepository _tradeRepository;
+
+        public BrokerController(ITraderRepository traderRepository, ISecurityRepository securityRepository,
+            ITradeRepository tradeRepository)
+        {
+            _traderRepository = traderRepository;
+            _securityRepository = securityRepository;
+            _tradeRepository = tradeRepository;
+        }
+
         [HttpGet]
         public IActionResult TradeInput(TradeInputViewModel viewModel = null)
         {
@@ -17,6 +31,8 @@ namespace Stockimulate.Controllers
                 return RedirectToAction("Home", "Public");
 
             if (viewModel == null) viewModel = new TradeInputViewModel();
+
+            viewModel.SecurityRepository = _securityRepository;
 
             viewModel.Login = new Login
             {
@@ -32,7 +48,7 @@ namespace Stockimulate.Controllers
         }
 
         [HttpPost]
-        public IActionResult Submit(TradeInputViewModel viewModel)
+        public async Task<IActionResult> Submit(TradeInputViewModel viewModel)
         {
             if (!viewModel.IsChecked)
                 return TradeInput(new TradeInputViewModel
@@ -52,28 +68,37 @@ namespace Stockimulate.Controllers
             if (!int.TryParse(viewModel.Price, out var price) || price < 1)
                 return Error("Price must be an integer of at least 1.");
 
-            var buyer = Trader.Get(buyerId);
+            var buyer = await _traderRepository.GetAsync(buyerId);
 
             if (buyer == null)
                 return Error("Buyer does not exist.");
 
-            var seller = Trader.Get(sellerId);
+            var seller = await _traderRepository.GetAsync(sellerId);
 
             if (seller == null)
                 return Error("Seller does not exist.");
 
-            var buyerTeamId = buyer.Team.Id;
-            var sellerTeamId = seller.Team.Id;
+            var buyerTeamId = buyer.TeamId;
+            var sellerTeamId = seller.TeamId;
 
             if (buyerTeamId == sellerTeamId)
                 return Error("Buyer and Seller must be on different teams.");
 
             var symbol = viewModel.Symbol;
 
-            var marketPrice = Security.Get(symbol).Price;
+            var marketPrice = (await _securityRepository.GetAsync(symbol)).Price;
 
-            Trade.Insert(new Trade(buyerId, sellerId, symbol, quantity, price, marketPrice,
-                Math.Abs((float) (price - marketPrice) / marketPrice) > Constants.FlagThreshold, HttpContext.Session.GetString("Username")));
+            await _tradeRepository.InsertAsync(new Trade
+            {
+                BuyerId = buyerId,
+                SellerId = sellerId,
+                Symbol = symbol,
+                Quantity = quantity,
+                Price = price,
+                MarketPrice = marketPrice,
+                Flagged = Math.Abs((float) (price - marketPrice) / marketPrice) > Constants.FlagThreshold,
+                BrokerId = HttpContext.Session.GetString("Username")
+            });
 
             return TradeInput(new TradeInputViewModel {Result = "Success"});
         }
@@ -81,7 +106,7 @@ namespace Stockimulate.Controllers
         [HttpPost]
         public IActionResult Cancel() => TradeInput();
 
-        private IActionResult Error(string errorMessage) => TradeInput(new TradeInputViewModel
+        IActionResult Error(string errorMessage) => TradeInput(new TradeInputViewModel
         {
             Result = "Error",
             ErrorMessage = errorMessage
