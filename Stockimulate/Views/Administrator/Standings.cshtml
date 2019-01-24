@@ -58,11 +58,11 @@
 
                             if (teamAveragePnL < 0)
                             {
-                                <td style="color: red">($@string.Format("{0:n0}", Math.Abs(teamAveragePnL)))</td>
+                                <td style="color: red">($@($"{Math.Abs(teamAveragePnL):n0}"))</td>
                             }
                             else
                             {
-                                <td>$@string.Format("{0:n0}", teamAveragePnL)</td>
+                                <td>$@($"{teamAveragePnL:n0}")</td>
                             }
                         }
 
@@ -111,11 +111,11 @@
                         @{
                             if (traderPnL < 0)
                             {
-                                <td style="color: red">($@string.Format("{0:n0}", Math.Abs(traderPnL)))</td>
+                                <td style="color: red">($@($"{Math.Abs(traderPnL):n0}"))</td>
                             }
                             else
                             {
-                                <td>$@string.Format("{0:n0}", traderPnL)</td>
+                                <td>$@($"{traderPnL:n0}")</td>
                             }
                         }
 
