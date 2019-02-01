@@ -25,11 +25,11 @@ namespace Stockimulate
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
                 .AddEnvironmentVariables();
             _configuration = builder.Build();
-            Constants.ConnectionString = _configuration["MS_TableConnectionString"];
-            Constants.PusherAppId = _configuration["Pusher_AppId"];
-            Constants.PusherSecret = _configuration["Pusher_Secret"];
-            Constants.PusherKey = _configuration["Pusher_Key"];
-            Constants.PusherCluster = _configuration["Pusher_Cluster"];
+            Constants.ConnectionString = _configuration.GetConnectionString("MS_TableConnectionString");
+            Constants.PusherAppId = _configuration.GetConnectionString("Pusher_AppId");
+            Constants.PusherSecret = _configuration.GetConnectionString("Pusher_Secret");
+            Constants.PusherKey = _configuration.GetConnectionString("Pusher_Key");
+            Constants.PusherCluster = _configuration.GetConnectionString("Pusher_Cluster");
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
