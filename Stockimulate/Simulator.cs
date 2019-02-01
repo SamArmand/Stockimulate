@@ -138,7 +138,8 @@ namespace Stockimulate
         /// <param name="e"></param>
         async void UpdateAsync(object source, ElapsedEventArgs e)
         {
-            var tradingDay = _tradingDays[SimulationMode.ToString()].FirstOrDefault(t => t.Day == ++_dayNumber);
+            ++_dayNumber;
+            var tradingDay = _tradingDays[SimulationMode.ToString()].FirstOrDefault(t => t.Day == _dayNumber);
 
             if (tradingDay == null) return;
 
