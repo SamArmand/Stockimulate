@@ -48,34 +48,37 @@
             </div>
 
             <div class="form-group row">
-                <div class="col-12">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">Security</div>
+                <div class="form-row align-items-center">
+                    <div class="col-auto">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Security</div>
+                            </div>
+                            <div class="input-group form-control">
+                                <select asp-for="Symbol" class="">
+                                    @foreach (var symbol in Model.Symbols)
+                                    {
+                                        <option>@symbol</option>
+                                    }
+                                </select>
+                            </div>
                         </div>
-                        <span class="input-group form-control col-sm-2">
-                            <select asp-for="Symbol" class="">
-                                @foreach (var symbol in Model.Symbols)
-                                {
-                                    <option>@symbol</option>
-                                }
-                            </select>
-                        </span>
                     </div>
-                    <div class="input-group">
+                    <div class="col-auto">
+                        <div class="input-group">
 
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">$</div>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">$</div>
+                            </div>
+                            <input type="number" asp-for="Price" placeholder="Price" class="form-control"/>
                         </div>
-                        <input type="number" asp-for="Price" placeholder="Price" class="form-control col-sm-2"/>
                     </div>
 
-                        <input type="submit" class="btn btn-primary" value="Update" formaction="UpdatePrice"/>
-
-                    
+                    <input type="submit" class="btn btn-primary" value="Update" formaction="UpdatePrice"/>  
                 </div>
-            </div>
 
+
+            </div>
 
             <div class="form-group row">
                 <label id="ReportsEnabledSpan">

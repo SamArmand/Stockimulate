@@ -89,6 +89,7 @@
                     <th>Market Price</th>
                     <th>Broker</th>
                     <th>Note</th>
+                    <th></th>
                 </tr>
                 <thead>
                 <tbody>
@@ -106,6 +107,10 @@
                         <td>@trade.MarketPrice</td>
                         <td>@trade.BrokerId</td>
                         <td>@trade.Note</td>
+                        <td>
+                            @* <button value="@trade.Id" asp-action="DeleteTrade" class="btn btn-danger text-white" asp-for="TradeToDelete"><i class="fa fa-trash" aria-hidden="true"></i></button> *@
+                            <input type="submit" formaction="DeleteTrade" value="@trade.Id" class="btn btn-danger" asp-for="TradeToDelete">
+                        </td>
                     </tr>
                 }
 

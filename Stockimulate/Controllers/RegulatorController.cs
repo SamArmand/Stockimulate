@@ -47,6 +47,12 @@ namespace Stockimulate.Controllers
         [HttpPost]
         public async Task<IActionResult> Submit(SearchTradesViewModel viewModel) => await SearchTrades(new SearchTradesViewModel
         {
+            BuyerId = viewModel.BuyerId,
+            BuyerTeamId = viewModel.BuyerTeamId,
+            SellerId = viewModel.SellerId,
+            SellerTeamId = viewModel.SellerTeamId,
+            Symbol = viewModel.Symbol,
+            Flagged = viewModel.Flagged,
             Trades = _tradeRepository.Get(
                 viewModel.BuyerId,
                 viewModel.BuyerTeamId,
@@ -55,5 +61,13 @@ namespace Stockimulate.Controllers
                 viewModel.Symbol,
                 viewModel.Flagged)
         });
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteTrade(SearchTradesViewModel viewModel)
+        {
+            await _tradeRepository.Delete(viewModel.TradeToDelete);
+
+            return await Submit(viewModel);
+        }
     }
 }

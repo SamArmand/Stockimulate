@@ -86,7 +86,7 @@ namespace Stockimulate.Controllers
             if (!viewModel.IsVerifiedInput)
                 return await ControlPanel(new ControlPanelViewModel {State = "Warning"});
 
-            _simulator.Reset();
+            await _simulator.Reset();
 
             return RedirectToAction("ControlPanel");
         }

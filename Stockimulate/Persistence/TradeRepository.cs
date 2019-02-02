@@ -31,6 +31,16 @@ namespace Stockimulate.Persistence
                         && (string.IsNullOrEmpty(symbol) || t.Symbol == symbol)
                         && (string.IsNullOrEmpty(flagged) || t.Flagged == bool.Parse(flagged))).ToList();
 
-        public void DeleteAll() => _stockimulateContext.RemoveRange(_stockimulateContext.Trades);
+        public async Task DeleteAll()
+        {
+            _stockimulateContext.RemoveRange(_stockimulateContext.Trades);
+            await _stockimulateContext.SaveChangesAsync();
+        }
+
+        public async Task Delete(int id)
+        {
+            _stockimulateContext.Trades.Remove(await _stockimulateContext.Trades.FirstOrDefaultAsync(t => t.Id == id));
+            await _stockimulateContext.SaveChangesAsync();
+        }
     }
 }

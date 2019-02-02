@@ -15,5 +15,7 @@ namespace Stockimulate.ViewModels.Regulator
         public string Flagged { get; set; }
 
         public List<string> Symbols { get; internal set; }
+
+        public int TradeToDelete { get; set; }
     }
 }

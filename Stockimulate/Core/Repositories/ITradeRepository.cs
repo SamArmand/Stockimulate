@@ -11,6 +11,8 @@ namespace Stockimulate.Core.Repositories
         List<Trade> Get(string buyerId, string buyerTeamId, string sellerId, string sellerTeamId,
             string symbol, string flagged);
 
-        void DeleteAll();
+        Task DeleteAll();
+
+        Task Delete(int id);
     }
 }

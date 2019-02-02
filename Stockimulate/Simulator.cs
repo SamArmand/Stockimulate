@@ -172,7 +172,7 @@ namespace Stockimulate
         /// <summary>
         /// Resets the market.
         /// </summary>
-        public void Reset()
+        public async Task Reset()
         {
             _timer.Stop();
             _dayNumber = 0;
@@ -180,10 +180,10 @@ namespace Stockimulate
             foreach (var security in _securities)
             {
                 security.Price = 0;
-                _securityRepository.UpdateAsync(security);
+                await _securityRepository.UpdateAsync(security);
             }
 
-            _tradeRepository.DeleteAll();
+            await _tradeRepository.DeleteAll();
 
             TickerViewModel.Reset(_securityRepository);
             MiniTickerPartialViewModel.Reset(_securityRepository);

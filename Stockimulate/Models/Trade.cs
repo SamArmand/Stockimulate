@@ -5,7 +5,7 @@ namespace Stockimulate.Models
 {
     public sealed class Trade
     {
-        internal int Id { get; set; }
+        public int Id { get; set; }
         public int BuyerId { get; internal set; }
         public int SellerId { get; internal set; }
         internal string Symbol { get; set; }

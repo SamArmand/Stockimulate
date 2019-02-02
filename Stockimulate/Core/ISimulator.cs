@@ -11,6 +11,6 @@ namespace Stockimulate.Core
 
         Task PlayAsync();
 
-        void Reset();
+        Task Reset();
     }
 }
