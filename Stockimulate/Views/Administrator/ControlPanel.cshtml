@@ -50,7 +50,9 @@
             <div class="form-group row">
                 <div class="col-12">
                     <div class="input-group">
-                        <span class="input-group-addon">Security</span>
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Security</div>
+                        </div>
                         <span class="input-group form-control col-sm-2">
                             <select asp-for="Symbol" class="">
                                 @foreach (var symbol in Model.Symbols)
@@ -59,11 +61,18 @@
                                 }
                             </select>
                         </span>
-                        <span class="input-group-addon">$</span>
+                    </div>
+                    <div class="input-group">
+
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">$</div>
+                        </div>
                         <input type="number" asp-for="Price" placeholder="Price" class="form-control col-sm-2"/>
-                        <input type="submit" class="btn btn-primary" value="Update" formaction="UpdatePrice"/>
                     </div>
 
+                        <input type="submit" class="btn btn-primary" value="Update" formaction="UpdatePrice"/>
+
+                    
                 </div>
             </div>
 
