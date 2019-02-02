@@ -62,6 +62,8 @@ namespace Stockimulate.Controllers
                 viewModel.Flagged)
         });
 
+        public async Task<IActionResult> Cancel() => await SearchTrades();
+
         [HttpPost]
         public async Task<IActionResult> DeleteTrade(SearchTradesViewModel viewModel)
         {

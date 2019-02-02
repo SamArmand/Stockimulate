@@ -60,37 +60,22 @@ namespace Stockimulate.Models
                 trades[symbol].Add(trade);
             }
 
-            foreach (var kvp in trades)
+            foreach (var (symbol, value) in trades)
             {
                 var totalBuyQuantity = 0;
                 var averageBuyPrice = 0;
                 var totalSellQuantity = 0;
                 var averageSellPrice = 0;
 
-                var currentPosition = 0;
-
-                foreach (var trade in kvp.Value)
+                foreach (var trade in value)
                 {
                     var tradePrice = trade.Price;
-
-                    //Check for Penalty and Modify Trade Quantity
-                    var potentialPosition = currentPosition + trade.Quantity * (trade.BuyerId == Id ? 1 : -1);
-                    if (Id != Constants.ExchangeId && TeamId != Constants.MarketMakersId
-                        && Math.Abs(potentialPosition) > maxPosition)
-                    {
-                        var penalty = Math.Abs(potentialPosition) - maxPosition;
-                        trade.Quantity -= penalty;
-                        AccumulatedPenalties += penalty;
-                        AccumulatedPenaltiesValue += penalty * tradePrice;
-                        trade.Note = "Penalty: " + penalty;
-                    }
 
                     var tradeQuantity = trade.Quantity;
 
                     if (trade.BuyerId == Id)
                     {
                         //Trader is the buyer
-                        currentPosition += tradeQuantity;
                         totalBuyQuantity += tradeQuantity;
                         averageBuyPrice += tradeQuantity * tradePrice;
                     }
@@ -98,7 +83,6 @@ namespace Stockimulate.Models
                     else
                     {
                         //Trader is the seller
-                        currentPosition -= tradeQuantity;
                         totalSellQuantity += tradeQuantity;
                         averageSellPrice += tradeQuantity * tradePrice;
                     }
@@ -107,10 +91,15 @@ namespace Stockimulate.Models
                 averageBuyPrice /= totalBuyQuantity > 0 ? totalBuyQuantity : 1;
                 averageSellPrice /= totalSellQuantity > 0 ? totalSellQuantity : 1;
 
-                var symbol = kvp.Key;
-
                 var position = totalBuyQuantity - totalSellQuantity;
                 Positions.Add(symbol, position);
+
+                if (Id != Constants.ExchangeId && TeamId != Constants.MarketMakersId
+                                              && Math.Abs(position) > maxPosition)
+                {
+                    AccumulatedPenalties = Math.Abs(position) - maxPosition;
+                    AccumulatedPenaltiesValue = AccumulatedPenalties * prices[symbol];
+                }
 
                 var averageOpenPrice = position > 0 ? averageBuyPrice : position < 0 ? averageSellPrice : 0;
                 AverageOpenPrices.Add(symbol, averageOpenPrice);
