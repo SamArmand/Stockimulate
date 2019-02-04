@@ -47,6 +47,8 @@ namespace Stockimulate.Models
             TotalPnLs = new Dictionary<string, int>();
             Positions = new Dictionary<string, int>();
             AverageOpenPrices = new Dictionary<string, int>();
+            AccumulatedPenalties = 0;
+            AccumulatedPenaltiesValue = 0;
 
             const int maxPosition = Constants.MaxPosition;
 
@@ -95,10 +97,11 @@ namespace Stockimulate.Models
                 Positions.Add(symbol, position);
 
                 if (Id != Constants.ExchangeId && TeamId != Constants.MarketMakersId
-                                              && Math.Abs(position) > maxPosition)
+                                               && Math.Abs(position) > maxPosition)
                 {
-                    AccumulatedPenalties = Math.Abs(position) - maxPosition;
-                    AccumulatedPenaltiesValue = AccumulatedPenalties * prices[symbol];
+                    var penalties = Math.Abs(position) - maxPosition;
+                    AccumulatedPenalties += penalties;
+                    AccumulatedPenaltiesValue += penalties * prices[symbol];
                 }
 
                 var averageOpenPrice = position > 0 ? averageBuyPrice : position < 0 ? averageSellPrice : 0;
